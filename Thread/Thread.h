@@ -1,10 +1,7 @@
 
 //------------------------------//
-//   Coded by 番茄_summer
-//   @20171002
+//   Coded by 番茄
 //   @summer studio
-//
-//   River flows in summer
 //------------------------------//
 
 #include <iostream>
@@ -34,8 +31,12 @@ public:
     int GetThreadState();      // 获取线程状态 
 
 private:  
-    pthread_t m_ptd_ThreadID;   // 线程ID  
+    pthread_t m_ptt_ThreadID;   // 线程ID  
     int m_int_ThreadStatus;   // 线程状态
     static void *thread_proxy_func(void *args);   // 获取执行方法的指针
     void* run();   // 内部执行方法
 };
+
+//------------------------------//
+//   River flows in summer
+//------------------------------//

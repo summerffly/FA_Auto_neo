@@ -1,15 +1,16 @@
 
 //------------------------------//
-//   Coded by 番茄_summer
-//   @20171003
+//   Coded by 番茄
 //   @summer studio
-//
-//   River flows in summer
 //------------------------------//
 
+#include <regex>
 #include "FileOPer.h"
 
 using namespace std;
+
+string pattern_end = "^---$";
+regex RE_end(pattern_end);
 
 CFileOper::CFileOper()
 {
@@ -49,7 +50,7 @@ CFileOper::CFileOper(const char *cha_FileName)
 
 CFileOper::~CFileOper()
 {
-    // do nothing
+    // Do Nothing
 }
 
 int CFileOper::GetLineNum()
@@ -61,3 +62,78 @@ string CFileOper::GetLine(const int int_LineIndex)
 {
     return m_vec_Line.at(int_LineIndex);
 }
+
+bool CFileOper::GetModFlag()
+{
+    return m_bol_ModFlag;
+}
+
+int CFileOper::InsertLine(const int int_LineIndex, const string str_LineContent)
+{
+    vector<string>::iterator iter;
+    iter = m_vec_Line.begin();
+    iter += int_LineIndex;
+
+    m_vec_Line.insert(iter, str_LineContent);
+    m_int_LineNum++;
+    m_bol_ModFlag = true;
+
+    return 0;
+}
+
+int CFileOper::ModifyLine(const int int_LineIndex, const string str_LineContent)
+{
+    vector<string>::iterator iter;
+    iter = m_vec_Line.begin();
+    iter += int_LineIndex;
+
+    m_vec_Line.erase(iter);
+    m_vec_Line.insert(iter, str_LineContent);
+    m_bol_ModFlag = true;
+
+    return 0;
+}
+
+int CFileOper::DeleteLine(const int int_LineIndex)
+{
+    vector<string>::iterator iter;
+    iter = m_vec_Line.begin();
+    iter += int_LineIndex;
+
+    m_vec_Line.erase(iter);
+    m_int_LineNum--;
+    m_bol_ModFlag = true;
+
+    return 0;
+}
+
+int CFileOper::FileWriter(const char *cha_FileName)
+{
+    ofstream ofile(cha_FileName);
+    
+    if(!ofile.is_open())
+    {
+        cout << "----------------------------------------" << endl;
+        cout << ">>>         Write File Error         <<<" << endl;
+        cout << "----------------------------------------" << endl;
+        return -1;
+    }
+        
+    for(int i = 1; i <= m_int_LineNum; i++)
+    {
+        ofile << m_vec_Line.at(i).c_str() << endl;
+            
+        if( regex_match(m_vec_Line.at(i), RE_end) )
+        {
+            break;
+        }
+    }
+
+    ofile.close();
+        
+    return 0;
+}
+
+//------------------------------//
+//   River flows in summer
+//------------------------------//

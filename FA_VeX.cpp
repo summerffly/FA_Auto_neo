@@ -1,13 +1,8 @@
 
 //------------------------------//
-//   Coded by 番茄_summer
-//   @20171002
+//   Coded by 番茄
 //   @summer studio
-//
-//   River flows in summer
 //------------------------------//
-
-/*--------------------  CODE_ORIGIN @ 番茄  --------------------*/
 
 #include <iostream>
 #include <string>
@@ -17,10 +12,9 @@
 #include "./FileOPer/FileOPer.h"
 #include "./Thread/MultiThread.h"
 
+/*--------------------  DEFINE  --------------------*/
 
-/*--------------------  DEFINE Library  --------------------*/
-
-#define MAX_COMMAND     128      // 命令最大字符数
+#define MAX_COMMAND     128     // 命令最大字符数
 #define MAX_LINE_CHAR   128     // 每行最大字符数
 #define MAX_LINE        256     // 最大支持行数
 
@@ -35,7 +29,7 @@ double showtcost(struct timeval tst, struct timeval ted);
 
 int main(int argc, char **argv, char *env[])
 {
-    CFileOper FileDemo = CFileOper("./FA_TVT.md");
+    CFileOper FileVe = CFileOper("./FA_TVT_ve.md");
 
     struct timeval tst,ted;
 
@@ -87,38 +81,44 @@ int main(int argc, char **argv, char *env[])
         }
 
         /* * * * * * * * * * * * * * * * * * * * * * */
-        /* * * * * * * *     demo      * * * * * * * */
+        //   Verify file读写类
         /* * * * * * * * * * * * * * * * * * * * * * */
-        else if( CMD_argv.begin()->compare("demoaa") == 0 )
+        else if( CMD_argv.begin()->compare("ve-file") == 0 )
         {   
-            int lineIndex = 0;
-            cout << "LineInedx: ";
-            cin >> lineIndex;
+            //int lineIndex = 0;
+            //cout << "LineInedx: ";
+            //cin >> lineIndex;
 
             gettimeofday(&tst, NULL);   ////////////////////////////// TimePoint_START
 
-            cout << "File Line: " << FileDemo.GetLine(lineIndex) << endl;
+            FileVe.DeleteLine(8);
+            if(FileVe.GetModFlag() == true)
+            {
+                FileVe.FileWriter("./FA_TVT_ve.md");
+            }
 
             gettimeofday(&ted, NULL);   ////////////////////////////// TimePoint_END
             showtcost(tst, ted);
             cout << "----------------------------------------" << endl;
 
-            cin.ignore();
+            //cin.ignore();
             continue;
         }
 
         /* * * * * * * * * * * * * * * * * * * * * * */
-        /* * * * * * * *     demo      * * * * * * * */
+        //   验证多线程同步机制
         /* * * * * * * * * * * * * * * * * * * * * * */
-        else if( CMD_argv.begin()->compare("demobb") == 0 )
+        else if( CMD_argv.begin()->compare("ve-mutex") == 0 )
         {   
             CMultiThread mttest_a;
             CMultiThread mttest_b;
+            CMultiThread mttest_c;
             mttest_a.Start();
-            sleep(1);
             mttest_b.Start();
+            mttest_c.Start();
             mttest_a.Join();
             mttest_b.Join();
+            mttest_c.Join();
 
             continue;
         }
@@ -178,7 +178,6 @@ double showtcost(struct timeval tst, struct timeval ted)
     return tcost_ms;
 }
 
-
-/*--------------------  CODE_END @ 番茄  --------------------*/
-
-
+//------------------------------//
+//   River flows in summer
+//------------------------------//

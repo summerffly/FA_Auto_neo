@@ -1,10 +1,7 @@
 
 //------------------------------//
-//   Coded by 番茄_summer
-//   @20171002
+//   Coded by 番茄
 //   @summer studio
-//
-//   River flows in summer
 //------------------------------//
 
 #include "Thread.h"
@@ -13,8 +10,16 @@
 using namespace std;
 
 class CMultiThread: public CThread
-{  
-public:  
+{
+public:
+    CMultiThread();    // 构造函数
+    ~CMultiThread();    // 析构函数
+
     void Run();
-    //static pthread_mutex_t mutex;   // 互斥量同步
+
+    static pthread_mutex_t mutex;   // 互斥量同步
 };
+
+//------------------------------//
+//   River flows in summer
+//------------------------------//

@@ -1,10 +1,7 @@
 
 //------------------------------//
-//   Coded by 番茄_summer
-//   @20171003
+//   Coded by 番茄
 //   @summer studio
-//
-//   River flows in summer
 //------------------------------//
 
 #include "Thread.h"
@@ -13,7 +10,7 @@ using namespace std;
 
 CThread::CThread()  
 {  
-    m_ptd_ThreadID = 0;
+    m_ptt_ThreadID = 0;
     m_int_ThreadStatus = THREAD_STATUS_NEW;
 }
 
@@ -25,12 +22,12 @@ CThread::~CThread()
 bool CThread::Start()
 {
     //int iRet = 0;
-    return pthread_create(&m_ptd_ThreadID, NULL, thread_proxy_func, this);
+    return pthread_create(&m_ptt_ThreadID, NULL, thread_proxy_func, this);
 }
 
 pthread_t CThread::GetThreadID()
 {
-    return m_ptd_ThreadID;
+    return m_ptt_ThreadID;
 }
 
 int CThread::GetThreadState()
@@ -40,16 +37,16 @@ int CThread::GetThreadState()
   
 void CThread::Join()  
 {  
-    if (m_ptd_ThreadID > 0)
+    if (m_ptt_ThreadID > 0)
     {
-        pthread_join(m_ptd_ThreadID, NULL);
+        pthread_join(m_ptt_ThreadID, NULL);
     }
 }
 
 /*
 void CThread::Join(unsigned long millisTime)  
 {  
-    if( m_ptd_ThreadID == 0 )
+    if( m_ptt_ThreadID == 0 )
     {
         return;
     }
@@ -73,16 +70,20 @@ void CThread::Join(unsigned long millisTime)
 void *CThread::thread_proxy_func(void *args)
 {
     CThread *pThread = static_cast<CThread *>(args);
-    pThread->run();
+    pThread->Run();
     return NULL;
 }
 
-void *CThread::run()  
+void *CThread::run()
 {
     m_int_ThreadStatus = THREAD_STATUS_RUNNING;
-    m_ptd_ThreadID = pthread_self();
+    m_ptt_ThreadID = pthread_self();
     Run();
     m_int_ThreadStatus = THREAD_STATUS_EXIT;
-    m_ptd_ThreadID = 0;
+    m_ptt_ThreadID = 0;
     pthread_exit(NULL);
 }
+
+//------------------------------//
+//   River flows in summer
+//------------------------------//
