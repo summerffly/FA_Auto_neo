@@ -1,19 +1,25 @@
 
-FA_VeX: FA_VeX.o ./Thread/Thread.o ./Thread/MultiThread.o ./FileOPer/FileOPer.o
-	g++ -o FA_VeX FA_VeX.o ./Thread/Thread.o ./Thread/MultiThread.o ./FileOPer/FileOPer.o
+pt = ./Thread/
+pf = ./FileOPer/
+
+FA_VeX: FA_VeX.o $(pt)Thread.o $(pt)MultiThread.o $(pt)FileThread.o $(pf)FileOPer.o
+	g++ -o FA_VeX FA_VeX.o $(pt)Thread.o $(pt)MultiThread.o $(pt)FileThread.o $(pf)FileOPer.o
 
 FA_VeX.o: FA_VeX.cpp
 	g++ -c FA_VeX.cpp
 
-Thread.o: ./Thread/Thread.cpp ./Thread/Thread.h
-	g++ -c ./Thread/Thread.cpp
+Thread.o: $(pt)Thread.h $(pt)Thread.cpp
+	g++ -c $(pt)Thread.cpp
 
-MultiThread.o: ./Thread/MultiThread.cpp ./Thread/MultiThread.h
-	g++ -c ./Thread/MultiThread.cpp
+MultiThread.o: $(pt)MultiThread.h $(pt)MultiThread.cpp
+	g++ -c $(pt)MultiThread.cpp
 
-FileOPer.o: ./FileOPer/FileOPer.cpp
-	g++ -c ./FileOPer/FileOPer.cpp
+FileThread.o: $(pt)FileThread.h $(pt)FileThread.cpp
+	g++ -c $(pt)FileThread.cpp
+
+FileOPer.o: $(pf)FileOPer.h $(pf)FileOPer.cpp
+	g++ -c $(pf)FileOPer.cpp
 
 .PHONY:clean
 clean:
-	rm ./Thread/*.o ./FileOPer/*.o *.o FA_VeX
+	rm $(pt)*.o $(pf)*.o *.o FA_VeX

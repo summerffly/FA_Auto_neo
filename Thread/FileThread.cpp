@@ -5,14 +5,14 @@
 //------------------------------//
 
 #include <regex>
-#include "FileOPer.h"
+#include "FileThread.h"
 
 using namespace std;
 
-string pattern_end = "^---$";
-regex RE_end(pattern_end);
+string pattern_end_t = "^---$";
+regex RE_end_t(pattern_end_t);
 
-CFileOper::CFileOper()
+CFileThread::CFileThread()
 {
     //m_str_FilePath
     //m_str_FileName
@@ -21,7 +21,7 @@ CFileOper::CFileOper()
     m_vec_Line.push_back("LINE 0 BY SUMMER");
 }
 
-CFileOper::CFileOper(const char *cha_FileName)
+CFileThread::CFileThread(const char *cha_FileName)
 {
     m_bol_ModFlag = false;
     m_int_LineNum = 0;
@@ -48,27 +48,27 @@ CFileOper::CFileOper(const char *cha_FileName)
     ifile.close();
 }
 
-CFileOper::~CFileOper()
+CFileThread::~CFileThread()
 {
     // Do Nothing
 }
 
-int CFileOper::GetLineNum()
+int CFileThread::GetLineNum()
 {
     return m_int_LineNum;
 }
 
-string CFileOper::GetLine(const int int_LineIndex)
+string CFileThread::GetLine(const int int_LineIndex)
 {
     return m_vec_Line.at(int_LineIndex);
 }
 
-bool CFileOper::GetModFlag()
+bool CFileThread::GetModFlag()
 {
     return m_bol_ModFlag;
 }
 
-int CFileOper::InsertLine(const int int_LineIndex, const string str_LineContent)
+int CFileThread::InsertLine(const int int_LineIndex, const string str_LineContent)
 {
     vector<string>::iterator iter;
     iter = m_vec_Line.begin();
@@ -81,7 +81,7 @@ int CFileOper::InsertLine(const int int_LineIndex, const string str_LineContent)
     return 0;
 }
 
-int CFileOper::ModifyLine(const int int_LineIndex, const string str_LineContent)
+int CFileThread::ModifyLine(const int int_LineIndex, const string str_LineContent)
 {
     vector<string>::iterator iter;
     iter = m_vec_Line.begin();
@@ -94,7 +94,7 @@ int CFileOper::ModifyLine(const int int_LineIndex, const string str_LineContent)
     return 0;
 }
 
-int CFileOper::DeleteLine(const int int_LineIndex)
+int CFileThread::DeleteLine(const int int_LineIndex)
 {
     vector<string>::iterator iter;
     iter = m_vec_Line.begin();
@@ -107,7 +107,7 @@ int CFileOper::DeleteLine(const int int_LineIndex)
     return 0;
 }
 
-int CFileOper::FileWriter(const char *cha_FileName)
+int CFileThread::FileWriter(const char *cha_FileName)
 {
     ofstream ofile(cha_FileName);
     
@@ -123,7 +123,7 @@ int CFileOper::FileWriter(const char *cha_FileName)
     {
         ofile << m_vec_Line.at(i).c_str() << endl;
             
-        if( regex_match(m_vec_Line.at(i), RE_end) )
+        if( regex_match(m_vec_Line.at(i), RE_end_t) )
         {
             break;
         }
@@ -132,6 +132,26 @@ int CFileOper::FileWriter(const char *cha_FileName)
     ofile.close();
         
     return 0;
+}
+
+void CFileThread::Run()
+{  
+    pthread_mutex_lock(&mutex);
+	
+	while(m_bol_ModFlag == false)
+	{
+        cout << "before pthread_cond_wait()" << endl;
+        pthread_cond_wait(&cond, &mutex);
+        cout << "after pthread_cond_wait()" << endl;
+
+        FileWriter("./FA_TVT_VeXT.md");
+        cout << "Call FileWriter()" << endl;
+        m_bol_ModFlag = false;
+
+        continue;
+    }
+    
+	pthread_mutex_unlock(&mutex);
 }
 
 //------------------------------//

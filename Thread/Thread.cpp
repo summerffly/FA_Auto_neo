@@ -8,15 +8,22 @@
 
 using namespace std;
 
+pthread_mutex_t CThread::mutex;
+pthread_cond_t CThread::cond;
+
 CThread::CThread()  
 {  
     m_ptt_ThreadID = 0;
     m_int_ThreadStatus = THREAD_STATUS_NEW;
+
+    pthread_mutex_init(&mutex, NULL);
+    pthread_cond_init(&cond, NULL);
 }
 
 CThread::~CThread()  
 {  
-    // Do Nothing
+    pthread_mutex_destroy(&mutex);
+    pthread_cond_destroy(&cond);
 }
 
 bool CThread::Start()

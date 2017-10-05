@@ -11,6 +11,7 @@
 
 #include "./FileOPer/FileOPer.h"
 #include "./Thread/MultiThread.h"
+#include "./Thread/FileThread.h"
 
 /*--------------------  DEFINE  --------------------*/
 
@@ -29,7 +30,7 @@ double showtcost(struct timeval tst, struct timeval ted);
 
 int main(int argc, char **argv, char *env[])
 {
-    CFileOper FileVe = CFileOper("./FA_TVT_ve.md");
+    CFileOper FileVe = CFileOper("./FA_TVT_VeX.md");
 
     struct timeval tst,ted;
 
@@ -81,6 +82,39 @@ int main(int argc, char **argv, char *env[])
         }
 
         /* * * * * * * * * * * * * * * * * * * * * * */
+        //   Verify FileThread线程
+        /* * * * * * * * * * * * * * * * * * * * * * */
+        else if( CMD_argv.begin()->compare("ve-filet") == 0 )
+        {   
+            CFileThread FileVeT = CFileThread("./FA_TVT_VeXT.md");
+
+            FileVeT.Start();
+
+            sleep(10);
+
+            FileVeT.InsertLine(8, "THREAD TEST");
+
+            pthread_mutex_lock(&FileVeT.mutex);
+            pthread_cond_signal(&FileVeT.cond);    
+            pthread_mutex_unlock(&FileVeT.mutex);
+
+            sleep(10);
+
+            FileVeT.DeleteLine(8);
+
+            pthread_mutex_lock(&FileVeT.mutex);
+            pthread_cond_signal(&FileVeT.cond);    
+            pthread_mutex_unlock(&FileVeT.mutex);
+
+            sleep(5);
+
+            FileVeT.Join();
+
+            //cin.ignore();
+            continue;
+        }
+
+        /* * * * * * * * * * * * * * * * * * * * * * */
         //   Verify file读写类
         /* * * * * * * * * * * * * * * * * * * * * * */
         else if( CMD_argv.begin()->compare("ve-file") == 0 )
@@ -94,7 +128,7 @@ int main(int argc, char **argv, char *env[])
             FileVe.DeleteLine(8);
             if(FileVe.GetModFlag() == true)
             {
-                FileVe.FileWriter("./FA_TVT_ve.md");
+                FileVe.FileWriter("./FA_TVT_VeX.md");
             }
 
             gettimeofday(&ted, NULL);   ////////////////////////////// TimePoint_END
@@ -113,9 +147,11 @@ int main(int argc, char **argv, char *env[])
             CMultiThread mttest_a;
             CMultiThread mttest_b;
             CMultiThread mttest_c;
+
             mttest_a.Start();
             mttest_b.Start();
             mttest_c.Start();
+            
             mttest_a.Join();
             mttest_b.Join();
             mttest_c.Join();

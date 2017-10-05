@@ -8,16 +8,16 @@
 
 using namespace std;
 
-pthread_mutex_t CMultiThread::mutex;
+//pthread_mutex_t CMultiThread::mutex;
 
 CMultiThread::CMultiThread()
 {
-    pthread_mutex_init(&mutex, NULL);
+    //pthread_mutex_init(&mutex, NULL);
 }
 
 CMultiThread::~CMultiThread()
 {
-    pthread_mutex_destroy(&mutex);
+    //pthread_mutex_destroy(&mutex);
 }
 
 void CMultiThread::Run()

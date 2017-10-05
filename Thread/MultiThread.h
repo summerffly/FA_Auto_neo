@@ -4,6 +4,8 @@
 //   @summer studio
 //------------------------------//
 
+#pragma once
+
 #include "Thread.h"
 #include <unistd.h>
 
@@ -16,8 +18,6 @@ public:
     ~CMultiThread();    // 析构函数
 
     void Run();
-
-    static pthread_mutex_t mutex;   // 互斥量同步
 };
 
 //------------------------------//

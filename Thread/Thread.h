@@ -4,6 +4,8 @@
 //   @summer studio
 //------------------------------//
 
+#pragma once
+
 #include <iostream>
 #include <pthread.h>
 
@@ -28,7 +30,10 @@ public:
     //void Join(unsigned long millisTime);   // 等待线程退出或者超时
     
     pthread_t GetThreadID();   // 获取线程ID
-    int GetThreadState();      // 获取线程状态 
+    int GetThreadState();      // 获取线程状态
+
+    static pthread_mutex_t mutex;   // 互斥量同步
+    static pthread_cond_t cond;     // 条件变量同步
 
 private:  
     pthread_t m_ptt_ThreadID;   // 线程ID  
