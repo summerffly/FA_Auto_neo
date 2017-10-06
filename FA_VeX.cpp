@@ -9,17 +9,13 @@
 #include <vector>
 #include <sys/time.h>
 
+#include "./X_Frame/DefLib.h"
 #include "./FileOPer/FileOPer.h"
 #include "./Thread/MultiThread.h"
 #include "./Thread/FileThread.h"
 
-/*--------------------  DEFINE  --------------------*/
-
-#define MAX_COMMAND     128     // 命令最大字符数
-#define MAX_LINE_CHAR   128     // 每行最大字符数
-#define MAX_LINE        256     // 最大支持行数
-
 using namespace std;
+
 
 /*--------------------  函数声明  --------------------*/
 
@@ -93,18 +89,12 @@ int main(int argc, char **argv, char *env[])
             sleep(10);
 
             FileVeT.InsertLine(8, "THREAD TEST");
-
-            pthread_mutex_lock(&FileVeT.mutex);
-            pthread_cond_signal(&FileVeT.cond);    
-            pthread_mutex_unlock(&FileVeT.mutex);
+            FileVeT.Control();
 
             sleep(10);
 
             FileVeT.DeleteLine(8);
-
-            pthread_mutex_lock(&FileVeT.mutex);
-            pthread_cond_signal(&FileVeT.cond);    
-            pthread_mutex_unlock(&FileVeT.mutex);
+            FileVeT.Control();
 
             sleep(5);
 

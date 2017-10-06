@@ -14,9 +14,8 @@
 
 #include "Thread.h"
 
-#define MAX_LINE_CHAR   128     // 每行最大字符数
-
 using namespace std;
+
 
 class CFileThread: public CThread
 {
@@ -36,6 +35,7 @@ public:
     int FileWriter(const char *cha_FileName);
 
     void Run();
+    void Control();
 
 private:
     string m_str_FilePath;   // .md文件路径

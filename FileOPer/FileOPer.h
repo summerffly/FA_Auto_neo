@@ -4,15 +4,16 @@
 //   @summer studio
 //------------------------------//
 
+#pragma once
+
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <string>
 #include <vector>
 
-#define MAX_LINE_CHAR   128     // 每行最大字符数
-
 using namespace std;
+
 
 class CFileOper
 {

@@ -4,13 +4,16 @@
 //   @summer studio
 //------------------------------//
 
-#include <regex>
 #include "FileThread.h"
+
+#include "../X_Frame/RegExLib.h"
+#include "../X_Frame/DefLib.h"
 
 using namespace std;
 
-string pattern_end_t = "^---$";
-regex RE_end_t(pattern_end_t);
+extern string pattern_eof;
+extern regex RE_eof;
+
 
 CFileThread::CFileThread()
 {
@@ -123,7 +126,7 @@ int CFileThread::FileWriter(const char *cha_FileName)
     {
         ofile << m_vec_Line.at(i).c_str() << endl;
             
-        if( regex_match(m_vec_Line.at(i), RE_end_t) )
+        if( regex_match(m_vec_Line.at(i), RE_eof) )
         {
             break;
         }
@@ -152,6 +155,13 @@ void CFileThread::Run()
     }
     
 	pthread_mutex_unlock(&mutex);
+}
+
+void CFileThread::Control()
+{
+    pthread_mutex_lock(&mutex);
+    pthread_cond_signal(&cond);    
+    pthread_mutex_unlock(&mutex);
 }
 
 //------------------------------//

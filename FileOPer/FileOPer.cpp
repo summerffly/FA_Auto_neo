@@ -4,13 +4,16 @@
 //   @summer studio
 //------------------------------//
 
-#include <regex>
 #include "FileOPer.h"
+
+#include "../X_Frame/RegExLib.h"
+#include "../X_Frame/DefLib.h"
 
 using namespace std;
 
-string pattern_end = "^---$";
-regex RE_end(pattern_end);
+extern string pattern_eof;
+extern regex RE_eof;
+
 
 CFileOper::CFileOper()
 {
@@ -123,7 +126,7 @@ int CFileOper::FileWriter(const char *cha_FileName)
     {
         ofile << m_vec_Line.at(i).c_str() << endl;
             
-        if( regex_match(m_vec_Line.at(i), RE_end) )
+        if( regex_match(m_vec_Line.at(i), RE_eof) )
         {
             break;
         }
