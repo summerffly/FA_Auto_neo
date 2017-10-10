@@ -15,6 +15,8 @@
 #include "./Thread/MultiThread.h"
 #include "./Thread/FileThread.h"
 
+#include "./EP_Layer/LineEPer.h"
+
 using namespace std;
 
 
@@ -72,9 +74,24 @@ int main(int argc, char **argv, char *env[])
         }
 
         /* * * * * * * * * * * * * * * * * * * * * * */
+        //   Verify CLineEPer
+        /* * * * * * * * * * * * * * * * * * * * * * */
+        else if( !X_CMD.GetCmd(0).compare("ve") && !X_CMD.GetCmd(1).compare("line") )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            cout << "ve line" << endl;
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /* * * * * * * * * * * * * * * * * * * * * * */
         //   Verify FileThread线程
         /* * * * * * * * * * * * * * * * * * * * * * */
-        else if( X_CMD.GetCmdFront().compare("ve-filet") == 0 )
+        else if( !X_CMD.GetCmdFront().compare("ve-filet") )
         {
             FileVeT.Start();
 
