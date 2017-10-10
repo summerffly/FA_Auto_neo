@@ -53,13 +53,25 @@ string CCmdTarget::GetCmd(const int int_CmdIndex)
     return m_vec_Cmd.at(int_CmdIndex);
 }
 
-string CCmdTarget::GetCmdTail()
+string CCmdTarget::GetCmdFront()
+{
+    return m_vec_Cmd.front();
+}
+
+string CCmdTarget::GetCmdBack()
 {
     return m_vec_Cmd.back();
 }
 
+void CCmdTarget::TagTimeBait()
+{
+    gettimeofday(&m_tvl_begin, NULL);
+}
+
 double CCmdTarget::ShowTimeGap()
 {
+    gettimeofday(&m_tvl_end, NULL);
+
     long tgap_us;
     double tgap_ms;
 

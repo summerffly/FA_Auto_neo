@@ -22,49 +22,51 @@ int main(int argc, char **argv, char *env[])
 {
     cout << "----------------------------------------" << endl;
     cout << "----------------------------------------" << endl;
-    cout << "| |        DEMO for X Project        | |" << endl;
+    cout << "| |         Verify X Project         | |" << endl;
     cout << "| |      >>>  番茄_summer  <<<       | |" << endl;
     cout << "----------------------------------------" << endl;
     cout << "----------------------------------------" << endl;
 
-
     CFileOper FileVe = CFileOper("./FA_TVT_VeX.md");
+    CFileThread FileVeT = CFileThread("./FA_TVT_VeXT.md");    
 
-    // advanced_CMD循环模式
+    // Advanced_CMD循环模式
     CCmdTarget X_CMD = CCmdTarget();
-    char advanced_CMD[MAX_COMMAND];
+    char CMD_linebuffer[MAX_COMMAND];
     
     while(1)
     {
         cout << "CMD >>> ";
-        cin.getline(advanced_CMD, MAX_COMMAND);
+        cin.getline(CMD_linebuffer, MAX_COMMAND);
 
         // 判断是否输入空行
-        if( X_CMD.CmdParser(advanced_CMD) == -1 )
+        if( X_CMD.CmdParser(CMD_linebuffer) == -1 )
         {
-            cout << "CMD is blank line !" << endl;
+            cout << "### Blank CMD !!!" << endl;
             cout << "----------------------------------------" << endl;
             
             continue;
         }
         
         // 判断是否输入撤销CMD
-        if( X_CMD.GetCmdTail().compare("cancel") == 0 )
+        if( X_CMD.GetCmdBack().compare("cancel") == 0 )
         {
-            cout << "CMD canceled !" << endl;
+            cout << "### CMD canceled !" << endl;
             cout << "----------------------------------------" << endl;
             
             continue;
         }
 
         /* * * * * * * * * * * * * * * * * * * * * * */
-        /* * * * * * * *    关闭系统    * * * * * * * */
+        //   关闭X工程
         /* * * * * * * * * * * * * * * * * * * * * * */
-        if( X_CMD.GetCmd(0).compare("sd") == 0 )
+        if( X_CMD.GetCmdFront().compare("sd") == 0 )
         {
+            cout << "----------------------------------------" << endl;            
             cout << "----------------------------------------" << endl;
-            cout << "|-----     DEMO for X SHUTDOWN    -----|" << endl;
+            cout << "|-----      Verify X SHUTDOWN     -----|" << endl;
             cout << "----------------------------------------" << endl;
+            cout << "----------------------------------------" << endl;            
 
             break;
         }
@@ -72,10 +74,8 @@ int main(int argc, char **argv, char *env[])
         /* * * * * * * * * * * * * * * * * * * * * * */
         //   Verify FileThread线程
         /* * * * * * * * * * * * * * * * * * * * * * */
-        else if( X_CMD.GetCmd(0).compare("ve-filet") == 0 )
-        {   
-            CFileThread FileVeT = CFileThread("./FA_TVT_VeXT.md");
-
+        else if( X_CMD.GetCmdFront().compare("ve-filet") == 0 )
+        {
             FileVeT.Start();
 
             sleep(10);
@@ -99,14 +99,9 @@ int main(int argc, char **argv, char *env[])
         /* * * * * * * * * * * * * * * * * * * * * * */
         //   Verify file读写类
         /* * * * * * * * * * * * * * * * * * * * * * */
-        else if( X_CMD.GetCmd(0).compare("ve-file") == 0 )
+        else if( X_CMD.GetCmdFront().compare("ve-file") == 0 )
         {   
-            //int lineIndex = 0;
-            //cout << "LineInedx: ";
-            //cin >> lineIndex;
-
-            //gettimeofday(&tst, NULL);   ////////////////////////////// TimePoint_START
-            gettimeofday(&CCmdTarget::m_tvl_begin, NULL);   ////////////////////////////// TimePoint_START
+            CCmdTarget::TagTimeBait();
 
             FileVe.DeleteLine(8);
             if(FileVe.GetModFlag() == true)
@@ -114,9 +109,6 @@ int main(int argc, char **argv, char *env[])
                 FileVe.FileWriter("./FA_TVT_VeX.md");
             }
 
-            //gettimeofday(&ted, NULL);   ////////////////////////////// TimePoint_END
-            gettimeofday(&CCmdTarget::m_tvl_end, NULL);   ////////////////////////////// TimePoint_END
-            //showtcost(tst, ted);
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
 
@@ -127,7 +119,7 @@ int main(int argc, char **argv, char *env[])
         /* * * * * * * * * * * * * * * * * * * * * * */
         //   验证多线程同步机制
         /* * * * * * * * * * * * * * * * * * * * * * */
-        else if( X_CMD.GetCmd(0).compare("ve-mutex") == 0 )
+        else if( X_CMD.GetCmdFront().compare("ve-mutex") == 0 )
         {   
             CMultiThread mttest_a;
             CMultiThread mttest_b;
@@ -146,8 +138,7 @@ int main(int argc, char **argv, char *env[])
 
         else
         {
-            cout << "----------------------------------------" << endl;
-            cout << ">>>             Error CMD            <<<" << endl;
+            cout << "### Error CMD !!!" << endl;
             cout << "----------------------------------------" << endl;
 
             continue;
@@ -156,7 +147,6 @@ int main(int argc, char **argv, char *env[])
 
     return 0;
 }
-
 
 //------------------------------//
 //   River flows in summer
