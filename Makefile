@@ -34,7 +34,7 @@ RegExLib.o: $(px)RegExLib.h $(px)RegExLib.cpp
 X_CmdTarget.o: $(px)X_CmdTarget.h $(px)X_CmdTarget.cpp
 	g++ -c $(px)X_CmdTarget.cpp
 
-LineEPer.o: $(lep)LineEPer.h $(lep)LineEPer.cpp
+LineEPer.o: $(lep)EP_Layer_DEF.h $(lep)LineEPer.h $(lep)LineEPer.cpp
 	g++ -c $(lep)LineEPer.cpp
 
 .PHONY:clean

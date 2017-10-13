@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <regex>
 #include <sys/time.h>
 
 #include "./X_Frame/DefLib.h"
@@ -149,6 +150,38 @@ int main(int argc, char **argv, char *env[])
             mttest_a.Join();
             mttest_b.Join();
             mttest_c.Join();
+
+            continue;
+        }
+
+        /* * * * * * * * * * * * * * * * * * * * * * */
+        //   验证RegEx
+        /* * * * * * * * * * * * * * * * * * * * * * */
+        else if( X_CMD.GetCmdFront().compare("ve-re") == 0 )
+        {   
+            //CFileOper FileVe = CFileOper("./FA_TVT_VeX.md");
+            int lineindex = atoi(X_CMD.GetCmd(1).c_str());
+            cout << lineindex << endl;
+
+            CLineEPer LineEPVe = CLineEPer("./FA_TVT_VeX.md", lineindex, FileVe.GetLine(lineindex).c_str());
+
+            cout << LineEPVe.GetLineContent() << endl;
+
+            #if 0
+            regex REP("^(`)(\\+|-)( )(\\d{1,})(` )(.{1,})$");
+            smatch sm;
+
+            if( regex_match(FileVe.GetLine(1), sm, REP) )
+            {
+                cout << "string matched" << endl;
+                cout << "size: " << sm.size() << endl;
+            }
+
+            for(int i = 0; i < sm.size(); i++ )
+            {
+                cout << sm[i] << endl;
+            }
+            #endif
 
             continue;
         }

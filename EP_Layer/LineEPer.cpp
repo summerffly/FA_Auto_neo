@@ -5,6 +5,7 @@
 //------------------------------//
 
 #include "LineEPer.h"
+#include "EP_Layer_DEF.h"
 
 using namespace std;
 
@@ -12,19 +13,23 @@ using namespace std;
 CLineEPer::CLineEPer()
 {
     m_str_ParentFileName = "";
-    m_bol_LineModFlag = false;
     m_int_LineIndex = 0;
     m_uni_LineType = 0;
-    m_uni_LineValuePM = true;
+    m_bol_LineValuePM = true;
     m_uni_LineValue = 0;
     m_str_LineContent = "";
     m_str_FullLine = "";
+    m_bol_LineModFlag = false;
 }
 
-CLineEPer::CLineEPer(const char *cha_FileName, const char *cha_LineBuffer)
+CLineEPer::CLineEPer(const char *cha_FileName, const int int_LineIndex, const char *cha_LineBuffer)
 {
     m_str_ParentFileName = cha_FileName;
-    LineParser(cha_LineBuffer);
+    m_int_LineIndex = int_LineIndex;
+    m_str_FullLine = cha_LineBuffer;
+    m_bol_LineModFlag = false;
+
+    LineParser();
 }
 
 CLineEPer::~CLineEPer()
@@ -32,12 +37,124 @@ CLineEPer::~CLineEPer()
     // Do Nothing
 }
 
-int CLineEPer::LineParser(const char *cha_LineBuffer)
+int CLineEPer::LineParser()
 {
-    m_str_FullLine = cha_LineBuffer;
+    smatch str_Match;
 
+    while(1)
+    {
+        if( regex_match(m_str_FullLine, str_Match, REP_HeadTitle) )
+        {
+            m_uni_LineType = LTYPE_HEADTITLE;
+            m_bol_LineValuePM = true;
+            m_uni_LineValue = 0;
+            m_str_LineContent = m_str_FullLine;
+
+            break;
+        }
+        else if( regex_match(m_str_FullLine, str_Match, REP_SubTitle) )
+        {
+            m_uni_LineType = LTYPE_SUBTITLE;
+
+            if( regex_match(m_str_FullLine, str_Match, REP_MonthTitle) )
+            {
+                m_uni_LineType = LTYPE_MONTHTITLE;
+            }
+
+            m_bol_LineValuePM = true;
+            m_uni_LineValue = 0;
+            m_str_LineContent = m_str_FullLine;
+
+            break;
+        }
+        else if( regex_match(m_str_FullLine, str_Match, REP_Blank) )
+        {
+            m_uni_LineType = LTYPE_BLANK;
+            m_bol_LineValuePM = true;
+            m_uni_LineValue = 0;
+            m_str_LineContent = m_str_FullLine;
+
+            break;
+        }
+        else if( regex_match(m_str_FullLine, str_Match, REP_Delimiter) )
+        {
+            m_uni_LineType = LTYPE_DELIMITER;
+            m_bol_LineValuePM = true;
+            m_uni_LineValue = 0;
+            m_str_LineContent = m_str_FullLine;
+
+            break;
+        }
+        else if( regex_match(m_str_FullLine, str_Match, REP_EOF) )
+        {
+            m_uni_LineType = LTYPE_EOF;
+            m_bol_LineValuePM = true;
+            m_uni_LineValue = 0;
+            m_str_LineContent = m_str_FullLine;
+
+            break;
+        }
+        else if( regex_match(m_str_FullLine, str_Match, REP_FBric_Aggr) )
+        {
+            m_uni_LineType = LTYPE_FBIRC_AGGR;
+
+            m_str_LineContent = str_Match[1];
+
+            break;
+        }
+        else if( regex_match(m_str_FullLine, str_Match, REP_FBric_TitleSum) )
+        {
+            m_uni_LineType = LTYPE_FBIRC_TITLESUM;
+
+            m_str_LineContent = "";
+            
+            break;
+        }
+        else if( regex_match(m_str_FullLine, str_Match, REP_FBric_MonthSum) )
+        {
+            m_uni_LineType = LTYPE_FBIRC_MONTHSUM;
+
+            m_str_LineContent = str_Match[2];
+            m_str_LineContent += str_Match[3];
+
+            break;
+        }
+        else if( regex_match(m_str_FullLine, str_Match, REP_FBric_LineUnit) )
+        {
+            m_uni_LineType = LTYPE_FBIRC_LINEUINT;
+
+            m_str_LineContent = str_Match[6];
+
+            break;
+        }
+        else
+        {
+            cout << "----------------------------------------" << endl;
+            cout << "!!!    Line Type RegEx Un-matched    !!!" << endl;
+            cout << "----------------------------------------" << endl;
+
+            return -1;
+        }
+    }
     return 0;
 }
+
+int CLineEPer::GetLineType()
+{
+    return m_uni_LineType;
+}
+
+string CLineEPer::GetLineContent()
+{
+    return m_str_LineContent;
+}
+
+string CLineEPer::GetFullLine()
+{
+    return m_str_FullLine;
+}
+
+
 
 
 
