@@ -6,7 +6,7 @@ lop = ./OP_Layer/
 lep = ./EP_Layer/
 lfa = ./FA_Layer/
 
-obj_X = $(pf)FileOPer.o $(px)RegExLib.o $(px)X_CmdTarget.o
+obj_X = $(pf)FileOPer.o $(px)RegExLib.o $(px)X_CmdTarget.o $(px)tinyxml2.o
 obj_thread = $(pt)Thread.o $(pt)MultiThread.o $(pt)FileThread.o
 obj_EP = $(lep)LineEPer.o
 
@@ -36,6 +36,9 @@ X_CmdTarget.o: $(px)X_CmdTarget.h $(px)X_CmdTarget.cpp
 
 LineEPer.o: $(lep)EP_Layer_DEF.h $(lep)LineEPer.h $(lep)LineEPer.cpp
 	g++ -c $(lep)LineEPer.cpp
+
+tinyxml2.o: $(px)tinyxml2.h $(px)tinyxml2.cpp
+	g++ -c $(px)tinyxml2.cpp
 
 .PHONY:clean
 clean:

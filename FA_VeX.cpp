@@ -18,7 +18,11 @@
 
 #include "./EP_Layer/LineEPer.h"
 
+#include "./X_Frame/tinyxml2.h"
+
+
 using namespace std;
+using namespace tinyxml2;
 
 
 int main(int argc, char **argv, char *env[])
@@ -182,6 +186,30 @@ int main(int argc, char **argv, char *env[])
                 cout << sm[i] << endl;
             }
             #endif
+
+            continue;
+        }
+
+        /* * * * * * * * * * * * * * * * * * * * * * */
+        //   Verify tinyxml2
+        /* * * * * * * * * * * * * * * * * * * * * * */
+        else if( X_CMD.GetCmdFront().compare("ve-xml") == 0 )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            // 定义一个XMLDocument类指针
+            XMLDocument *pDoc = new XMLDocument();
+            if (NULL==pDoc)
+            {
+                return false;
+            }
+
+            pDoc->LoadFile("./test.xml");
+
+            pDoc->Print();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
 
             continue;
         }
