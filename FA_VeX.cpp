@@ -12,17 +12,15 @@
 
 #include "./X_Frame/DefLib.h"
 #include "./X_Frame/X_CmdTarget.h"
+#include "./X_Frame/X_XMLParser.h"
+
+#include "./EP_Layer/LineEPer.h"
+
 #include "./FileOPer/FileOPer.h"
 #include "./Thread/MultiThread.h"
 #include "./Thread/FileThread.h"
 
-#include "./EP_Layer/LineEPer.h"
-
-#include "./X_Frame/tinyxml2.h"
-
-
 using namespace std;
-using namespace tinyxml2;
 
 
 int main(int argc, char **argv, char *env[])
@@ -190,23 +188,17 @@ int main(int argc, char **argv, char *env[])
             continue;
         }
 
-        /* * * * * * * * * * * * * * * * * * * * * * */
+        /**************************************************/
         //   Verify tinyxml2
-        /* * * * * * * * * * * * * * * * * * * * * * */
+        /**************************************************/
         else if( X_CMD.GetCmdFront().compare("ve-xml") == 0 )
         {   
             CCmdTarget::TagTimeBait();
 
-            // 定义一个XMLDocument类指针
-            XMLDocument *pDoc = new XMLDocument();
-            if (NULL==pDoc)
-            {
-                return false;
-            }
-
-            pDoc->LoadFile("./test.xml");
-
-            pDoc->Print();
+            CXMLParser xml_ve("./summertest.xml");
+            //xml_ve.InsertElement();
+            //xml_ve.ModifyElement();
+            xml_ve.PrintXML();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
