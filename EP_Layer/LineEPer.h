@@ -20,10 +20,12 @@ public:
     ~CLineEPer();
 
     int LineParser();
+    void ValuePMParser(string str_ValuePM);
 
     int GetLineType();
     string GetLineContent();
     string GetFullLine();
+    bool GetLineValuePM();
 
 private:
     string m_str_ParentFileName;     // 所属.md文件名称

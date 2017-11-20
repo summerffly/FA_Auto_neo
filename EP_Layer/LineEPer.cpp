@@ -97,6 +97,7 @@ int CLineEPer::LineParser()
         else if( regex_match(m_str_FullLine, str_Match, REP_FBric_Aggr) )
         {
             m_uni_LineType = LTYPE_FBIRC_AGGR;
+            ValuePMParser(str_Match[3]);
 
             m_str_LineContent = str_Match[1];
 
@@ -105,6 +106,7 @@ int CLineEPer::LineParser()
         else if( regex_match(m_str_FullLine, str_Match, REP_FBric_TitleSum) )
         {
             m_uni_LineType = LTYPE_FBIRC_TITLESUM;
+            ValuePMParser(str_Match[2]);
 
             m_str_LineContent = "";
             
@@ -113,6 +115,7 @@ int CLineEPer::LineParser()
         else if( regex_match(m_str_FullLine, str_Match, REP_FBric_MonthSum) )
         {
             m_uni_LineType = LTYPE_FBIRC_MONTHSUM;
+            ValuePMParser(str_Match[5]);
 
             m_str_LineContent = str_Match[2];
             m_str_LineContent += str_Match[3];
@@ -122,6 +125,7 @@ int CLineEPer::LineParser()
         else if( regex_match(m_str_FullLine, str_Match, REP_FBric_LineUnit) )
         {
             m_uni_LineType = LTYPE_FBIRC_LINEUINT;
+            ValuePMParser(str_Match[2]);
 
             m_str_LineContent = str_Match[6];
 
@@ -139,6 +143,18 @@ int CLineEPer::LineParser()
     return 0;
 }
 
+void CLineEPer::ValuePMParser(string str_ValuePM)
+{
+    if('+' == str_ValuePM.at(0))
+    {
+        m_bol_LineValuePM = true;
+    }
+    else
+    {
+        m_bol_LineValuePM = false;
+    }
+}
+
 int CLineEPer::GetLineType()
 {
     return m_uni_LineType;
@@ -152,6 +168,11 @@ string CLineEPer::GetLineContent()
 string CLineEPer::GetFullLine()
 {
     return m_str_FullLine;
+}
+
+bool CLineEPer::GetLineValuePM()
+{
+    return m_bol_LineValuePM;
 }
 
 

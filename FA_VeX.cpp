@@ -156,34 +156,22 @@ int main(int argc, char **argv, char *env[])
             continue;
         }
 
-        /* * * * * * * * * * * * * * * * * * * * * * */
-        //   验证RegEx
-        /* * * * * * * * * * * * * * * * * * * * * * */
-        else if( X_CMD.GetCmdFront().compare("ve-re") == 0 )
+        /**************************************************/
+        //   Verify LineEPer
+        /**************************************************/
+        else if( X_CMD.GetCmdFront().compare("ve-line") == 0 )
         {   
-            //CFileOper FileVe = CFileOper("./FA_TVT_VeX.md");
+            CFileOper FileVeLine = CFileOper("./life.M.md");
             int lineindex = atoi(X_CMD.GetCmd(1).c_str());
-            cout << lineindex << endl;
 
-            CLineEPer LineEPVe = CLineEPer("./FA_TVT_VeX.md", lineindex, FileVe.GetLine(lineindex).c_str());
+            CLineEPer LineEPVe = CLineEPer("./life.M.md", lineindex, FileVeLine.GetLine(lineindex).c_str());
 
-            cout << LineEPVe.GetLineContent() << endl;
+            cout << LineEPVe.GetFullLine() << endl;
 
-            #if 0
-            regex REP("^(`)(\\+|-)( )(\\d{1,})(` )(.{1,})$");
-            smatch sm;
-
-            if( regex_match(FileVe.GetLine(1), sm, REP) )
-            {
-                cout << "string matched" << endl;
-                cout << "size: " << sm.size() << endl;
-            }
-
-            for(int i = 0; i < sm.size(); i++ )
-            {
-                cout << sm[i] << endl;
-            }
-            #endif
+            if(LineEPVe.GetLineValuePM())
+                cout << "+" << endl;
+            else
+                cout << "-" << endl;
 
             continue;
         }
