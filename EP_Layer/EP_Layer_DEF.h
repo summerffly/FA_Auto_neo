@@ -41,5 +41,5 @@ regex REP_FBric_LineUnit("^(`)(\\+|-)( )(\\d{1,})(` )(.{1,})$");
 
 
 //------------------------------//
-//   River flows in summer
+//   river flows in summer
 //------------------------------//

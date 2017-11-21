@@ -1,6 +1,6 @@
 
 //------------------------------//
-//   Coded by 番茄
+//   coded by 番茄
 //   @summer studio
 //------------------------------//
 
@@ -22,14 +22,23 @@ public:
     int LineParser();
     void ValuePMParser(string str_ValuePM);
 
-    int GetLineType();
+    string GetParentFileName();
+    unsigned int GetLineIndex();
+    unsigned int GetLineType();
+    bool GetLineValuePM();
+    unsigned int GeLineValue();
     string GetLineContent();
     string GetFullLine();
-    bool GetLineValuePM();
+    bool GetLineModFlag();
+
+    void SetLineValuePM(const bool bol_LineValuePM);
+    void SetLineValue(const unsigned int uni_LineValue);
+
+    void UpdateFullLine();
 
 private:
     string m_str_ParentFileName;     // 所属.md文件名称
-    int m_int_LineIndex;             // 行号
+    unsigned int m_uni_LineIndex;    // 行号
     unsigned int m_uni_LineType;     // 行类型
     bool m_bol_LineValuePM;          // 行金额正负
     unsigned int m_uni_LineValue;    // 行金额
@@ -39,5 +48,5 @@ private:
 };
 
 //------------------------------//
-//   River flows in summer
+//   river flows in summer
 //------------------------------//

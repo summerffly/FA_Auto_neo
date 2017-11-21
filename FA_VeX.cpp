@@ -77,21 +77,6 @@ int main(int argc, char **argv, char *env[])
         }
 
         /* * * * * * * * * * * * * * * * * * * * * * */
-        //   Verify CLineEPer
-        /* * * * * * * * * * * * * * * * * * * * * * */
-        else if( !X_CMD.GetCmd(0).compare("ve") && !X_CMD.GetCmd(1).compare("line") )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            cout << "ve line" << endl;
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /* * * * * * * * * * * * * * * * * * * * * * */
         //   Verify FileThread线程
         /* * * * * * * * * * * * * * * * * * * * * * */
         else if( !X_CMD.GetCmdFront().compare("ve-filet") )
@@ -160,18 +145,18 @@ int main(int argc, char **argv, char *env[])
         //   Verify LineEPer
         /**************************************************/
         else if( X_CMD.GetCmdFront().compare("ve-line") == 0 )
-        {   
-            CFileOper FileVeLine = CFileOper("./life.M.md");
+        {
             int lineindex = atoi(X_CMD.GetCmd(1).c_str());
 
-            CLineEPer LineEPVe = CLineEPer("./life.M.md", lineindex, FileVeLine.GetLine(lineindex).c_str());
+            CLineEPer LineEPVe = CLineEPer("./FA_TVT_VeX.md", lineindex, FileVe.GetLine(lineindex).c_str());
 
             cout << LineEPVe.GetFullLine() << endl;
 
-            if(LineEPVe.GetLineValuePM())
-                cout << "+" << endl;
-            else
-                cout << "-" << endl;
+            LineEPVe.SetLineValue(678);
+            LineEPVe.UpdateFullLine();
+
+            FileVe.ModifyLine(lineindex, LineEPVe.GetFullLine());
+            FileVe.FileWriter("./FA_TVT_VeX.md");
 
             continue;
         }
@@ -207,5 +192,5 @@ int main(int argc, char **argv, char *env[])
 }
 
 //------------------------------//
-//   River flows in summer
+//   river flows in summer
 //------------------------------//
