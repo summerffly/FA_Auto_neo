@@ -206,7 +206,7 @@ bool CLineEPer::GetLineModFlag()
     return m_bol_LineModFlag;
 }
 
-void SetLineValuePM(const bool bol_LineValuePM);
+void CLineEPer::SetLineValuePM(const bool bol_LineValuePM)
 {
     m_bol_LineValuePM = bol_LineValuePM;
     m_bol_LineModFlag = true;
@@ -216,6 +216,11 @@ void CLineEPer::SetLineValue(const unsigned int uni_LineValue)
 {
     m_uni_LineValue = uni_LineValue;
     m_bol_LineModFlag = true;
+}
+
+void CLineEPer::SetLineModFlag(const bool bol_LineModFlag)
+{
+    m_bol_LineModFlag = bol_LineModFlag;
 }
 
 void CLineEPer::UpdateFullLine()

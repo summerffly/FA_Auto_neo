@@ -33,6 +33,7 @@ public:
 
     void SetLineValuePM(const bool bol_LineValuePM);
     void SetLineValue(const unsigned int uni_LineValue);
+    void SetLineModFlag(const bool bol_LineModFlag);
 
     void UpdateFullLine();
 

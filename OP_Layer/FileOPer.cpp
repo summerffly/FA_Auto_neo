@@ -30,25 +30,7 @@ CFileOper::CFileOper(const char *cha_FileName)
     m_int_LineNum = 0;
     m_vec_Line.push_back("LINE 0 BY SUMMER");
 
-    char cha_buffer[MAX_LINE_CHAR];
-    
-    ifstream ifile(cha_FileName);
-
-    if(ifile.is_open() == 0)
-    {
-        cout << "----------------------------------------" << endl;
-        cout << ">>>          Read File Error         <<<" << endl;
-        cout << "----------------------------------------" << endl;
-    }
-
-    while(!ifile.eof())
-    {
-        ifile.getline(cha_buffer, MAX_LINE_CHAR);
-        m_vec_Line.push_back(cha_buffer);
-        m_int_LineNum++;
-    }
-    
-    ifile.close();
+    FileReader(cha_FileName);
 }
 
 CFileOper::~CFileOper()
@@ -110,6 +92,63 @@ int CFileOper::DeleteLine(const int int_LineIndex)
     return 0;
 }
 
+int CFileOper::FileReader(const char *cha_FileName)
+{
+    ifstream ifile(cha_FileName);
+
+    if(ifile.is_open() == 0)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!          Read File Error         !!!" << endl;
+        cout << "----------------------------------------" << endl;
+        return -1;
+    }
+
+    char cha_buffer[MAX_LINE_CHAR];
+
+    while(!ifile.eof())
+    {
+        ifile.getline(cha_buffer, MAX_LINE_CHAR);
+        m_vec_Line.push_back(cha_buffer);
+        m_int_LineNum++;
+    }
+    
+    ifile.close();
+
+    return 0;
+}
+
+// 写回.md文件原始路径   // 需要先解析m_str_FilePath+m_str_FileName
+#if 0
+int CFileOper::FileWriter()
+{
+    ofstream ofile(m_str_FilePath.c_str());
+    
+    if(!ofile.is_open())
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!         Write File Error         !!!" << endl;
+        cout << "----------------------------------------" << endl;
+        return -1;
+    }
+        
+    for(int i = 1; i <= m_int_LineNum; i++)
+    {
+        ofile << m_vec_Line.at(i).c_str() << endl;
+            
+        if( regex_match(m_vec_Line.at(i), RE_eof) )
+        {
+            break;
+        }
+    }
+
+    ofile.close();
+        
+    return 0;
+}
+#endif
+
+// 写入.md文件指定路径
 int CFileOper::FileWriter(const char *cha_FileName)
 {
     ofstream ofile(cha_FileName);
@@ -117,7 +156,7 @@ int CFileOper::FileWriter(const char *cha_FileName)
     if(!ofile.is_open())
     {
         cout << "----------------------------------------" << endl;
-        cout << ">>>         Write File Error         <<<" << endl;
+        cout << "!!!         Write File Error         !!!" << endl;
         cout << "----------------------------------------" << endl;
         return -1;
     }
@@ -138,5 +177,5 @@ int CFileOper::FileWriter(const char *cha_FileName)
 }
 
 //------------------------------//
-//   River flows in summer
+//   river flows in summer
 //------------------------------//

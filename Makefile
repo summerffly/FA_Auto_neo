@@ -1,17 +1,17 @@
 
 px = ./X_Frame/
 pt = ./Thread/
-pf = ./FileOPer/
 lop = ./OP_Layer/
 lep = ./EP_Layer/
 lfa = ./FA_Layer/
 
-obj_X = $(pf)FileOPer.o $(px)RegExLib.o $(px)X_CmdTarget.o $(px)X_XMLParser.o $(px)tinyxml2.o
+obj_X = $(px)RegExLib.o $(px)X_CmdTarget.o $(px)X_XMLParser.o $(px)tinyxml2.o
 obj_thread = $(pt)Thread.o $(pt)MultiThread.o $(pt)FileThread.o
+obj_OP = $(lop)FileOPer.o
 obj_EP = $(lep)LineEPer.o
 
-FA_VeX: FA_VeX.o $(obj_X) $(obj_thread) $(obj_EP)
-	g++ -o FA_VeX FA_VeX.o $(obj_X) $(obj_thread) $(obj_EP)
+FA_VeX: FA_VeX.o $(obj_X) $(obj_thread) $(obj_OP) $(obj_EP)
+	g++ -o FA_VeX FA_VeX.o $(obj_X) $(obj_thread) $(obj_OP) $(obj_EP)
 
 FA_VeX.o: FA_VeX.cpp
 	g++ -c FA_VeX.cpp
@@ -37,13 +37,12 @@ MultiThread.o: $(pt)MultiThread.h $(pt)MultiThread.cpp
 FileThread.o: $(pt)FileThread.h $(pt)FileThread.cpp
 	g++ -c $(pt)FileThread.cpp
 
-FileOPer.o: $(pf)FileOPer.h $(pf)FileOPer.cpp
-	g++ -c $(pf)FileOPer.cpp
-
+FileOPer.o: $(lop)FileOPer.h $(lop)FileOPer.cpp
+	g++ -c $(lop)FileOPer.cpp
 
 LineEPer.o: $(lep)EP_Layer_DEF.h $(lep)LineEPer.h $(lep)LineEPer.cpp
 	g++ -c $(lep)LineEPer.cpp
 
 .PHONY:clean
 clean:
-	rm $(px)*.o $(pt)*.o $(pf)*.o $(lep)*.o *.o FA_VeX
+	rm $(px)*.o $(pt)*.o $(lop)*.o $(lep)*.o *.o FA_VeX
