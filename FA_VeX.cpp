@@ -16,6 +16,7 @@
 
 #include "./OP_Layer/FileOPer.h"
 #include "./EP_Layer/LineEPer.h"
+#include "./EP_Layer/FileManager.h"
 
 #include "./Thread/MultiThread.h"
 #include "./Thread/FileThread.h"
@@ -32,7 +33,8 @@ int main(int argc, char **argv, char *env[])
     cout << "----------------------------------------" << endl;
     cout << "----------------------------------------" << endl;
 
-    CFileOper FileVe = CFileOper("./FA_TVT_VeX.md");
+    CFileOPer FileVe = CFileOPer("./FA_TVT_VeX.md");
+    CFileManager FileManagerVe = CFileManager("./FA_TVT_VeX.md");
     CFileThread FileVeT = CFileThread("./FA_TVT_VeXT.md");    
 
     // Advanced_CMD循环模式
@@ -157,6 +159,23 @@ int main(int argc, char **argv, char *env[])
 
             FileVe.ModifyLine(lineindex, LineEPVe.GetFullLine());
             FileVe.FileWriter("./FA_TVT_VeX.md");
+
+            continue;
+        }
+
+        /**************************************************/
+        //   Verify FileManager
+        /**************************************************/
+        else if( X_CMD.GetCmdFront().compare("ve-fm") == 0 )
+        {
+            //int lineindex = atoi(X_CMD.GetCmd(1).c_str());
+            //cout << FileManagerVe.GetFullLine(lineindex) << endl;
+
+            int linemax = FileManagerVe.GetLineNum();
+            for(int i=1; i<=linemax; i++)
+            {
+                cout << FileManagerVe.GetFullLine(i) << endl;
+            }
 
             continue;
         }

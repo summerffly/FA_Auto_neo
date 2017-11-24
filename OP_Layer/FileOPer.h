@@ -15,12 +15,12 @@
 using namespace std;
 
 
-class CFileOper
+class CFileOPer
 {
 public:
-    CFileOper();
-    CFileOper(const char *cha_FileName);
-    ~CFileOper();
+    CFileOPer();
+    CFileOPer(const char *cha_FileName);
+    ~CFileOPer();
 
     int GetLineNum();
     bool GetModFlag();

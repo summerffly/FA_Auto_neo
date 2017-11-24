@@ -8,7 +8,7 @@ lfa = ./FA_Layer/
 obj_X = $(px)RegExLib.o $(px)X_CmdTarget.o $(px)X_XMLParser.o $(px)tinyxml2.o
 obj_thread = $(pt)Thread.o $(pt)MultiThread.o $(pt)FileThread.o
 obj_OP = $(lop)FileOPer.o
-obj_EP = $(lep)LineEPer.o
+obj_EP = $(lep)LineEPer.o $(lep)FileManager.o
 
 FA_VeX: FA_VeX.o $(obj_X) $(obj_thread) $(obj_OP) $(obj_EP)
 	g++ -o FA_VeX FA_VeX.o $(obj_X) $(obj_thread) $(obj_OP) $(obj_EP)
@@ -42,6 +42,9 @@ FileOPer.o: $(lop)FileOPer.h $(lop)FileOPer.cpp
 
 LineEPer.o: $(lep)EP_Layer_DEF.h $(lep)LineEPer.h $(lep)LineEPer.cpp
 	g++ -c $(lep)LineEPer.cpp
+
+FileManager.o: $(lep)FileManager.h $(lep)FileManager.cpp
+	g++ -c $(lep)FileManager.cpp
 
 .PHONY:clean
 clean:

@@ -39,8 +39,6 @@ CLineEPer::~CLineEPer()
 
 int CLineEPer::LineParser()
 {
-    cout << "test" << endl;
-
     smatch str_Match;
 
     while(1)

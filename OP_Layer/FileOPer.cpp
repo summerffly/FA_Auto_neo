@@ -15,7 +15,7 @@ extern string pattern_eof;
 extern regex RE_eof;
 
 
-CFileOper::CFileOper()
+CFileOPer::CFileOPer()
 {
     //m_str_FilePath
     //m_str_FileName
@@ -24,7 +24,7 @@ CFileOper::CFileOper()
     m_vec_Line.push_back("LINE 0 BY SUMMER");
 }
 
-CFileOper::CFileOper(const char *cha_FileName)
+CFileOPer::CFileOPer(const char *cha_FileName)
 {
     m_bol_ModFlag = false;
     m_int_LineNum = 0;
@@ -33,27 +33,27 @@ CFileOper::CFileOper(const char *cha_FileName)
     FileReader(cha_FileName);
 }
 
-CFileOper::~CFileOper()
+CFileOPer::~CFileOPer()
 {
     // Do Nothing
 }
 
-int CFileOper::GetLineNum()
+int CFileOPer::GetLineNum()
 {
     return m_int_LineNum;
 }
 
-string CFileOper::GetLine(const int int_LineIndex)
+string CFileOPer::GetLine(const int int_LineIndex)
 {
     return m_vec_Line.at(int_LineIndex);
 }
 
-bool CFileOper::GetModFlag()
+bool CFileOPer::GetModFlag()
 {
     return m_bol_ModFlag;
 }
 
-int CFileOper::InsertLine(const int int_LineIndex, const string str_LineContent)
+int CFileOPer::InsertLine(const int int_LineIndex, const string str_LineContent)
 {
     vector<string>::iterator iter;
     iter = m_vec_Line.begin();
@@ -66,7 +66,7 @@ int CFileOper::InsertLine(const int int_LineIndex, const string str_LineContent)
     return 0;
 }
 
-int CFileOper::ModifyLine(const int int_LineIndex, const string str_LineContent)
+int CFileOPer::ModifyLine(const int int_LineIndex, const string str_LineContent)
 {
     vector<string>::iterator iter;
     iter = m_vec_Line.begin();
@@ -79,7 +79,7 @@ int CFileOper::ModifyLine(const int int_LineIndex, const string str_LineContent)
     return 0;
 }
 
-int CFileOper::DeleteLine(const int int_LineIndex)
+int CFileOPer::DeleteLine(const int int_LineIndex)
 {
     vector<string>::iterator iter;
     iter = m_vec_Line.begin();
@@ -92,7 +92,7 @@ int CFileOper::DeleteLine(const int int_LineIndex)
     return 0;
 }
 
-int CFileOper::FileReader(const char *cha_FileName)
+int CFileOPer::FileReader(const char *cha_FileName)
 {
     ifstream ifile(cha_FileName);
 
@@ -120,7 +120,7 @@ int CFileOper::FileReader(const char *cha_FileName)
 
 // 写回.md文件原始路径   // 需要先解析m_str_FilePath+m_str_FileName
 #if 0
-int CFileOper::FileWriter()
+int CFileOPer::FileWriter()
 {
     ofstream ofile(m_str_FilePath.c_str());
     
@@ -149,7 +149,7 @@ int CFileOper::FileWriter()
 #endif
 
 // 写入.md文件指定路径
-int CFileOper::FileWriter(const char *cha_FileName)
+int CFileOPer::FileWriter(const char *cha_FileName)
 {
     ofstream ofile(cha_FileName);
     
