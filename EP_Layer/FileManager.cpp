@@ -45,9 +45,20 @@ int CFileManager::GetLineNum()
     return m_int_LineNum;
 }
 
+int CFileManager::FileWriter(const char *cha_FileName)
+{
+    return m_cls_FileOPer.FileWriter(cha_FileName);
+}
+
 string CFileManager::GetFullLine(const int int_LineIndex)
 {
     return m_vec_cls_Line.at(int_LineIndex).GetFullLine();
+}
+
+void CFileManager::SetLineValue(const int int_LineIndex, const int int_LineValue)
+{
+    m_vec_cls_Line.at(int_LineIndex).SetLineValue(int_LineValue);
+    m_cls_FileOPer.ModifyLine(int_LineIndex, m_vec_cls_Line.at(int_LineIndex).GetFullLine());
 }
 
 

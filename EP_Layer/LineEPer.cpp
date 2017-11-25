@@ -16,7 +16,8 @@ CLineEPer::CLineEPer()
     m_uni_LineIndex = 0;
     m_uni_LineType = 0;
     m_bol_LineValuePM = true;
-    m_uni_LineValue = 0;
+    m_uni_LineValueABS = 0;
+    m_int_LineValue = 0;
     m_str_LineContent = "";
     m_str_FullLine = "";
     m_bol_LineModFlag = false;
@@ -30,6 +31,7 @@ CLineEPer::CLineEPer(const char *cha_FileName, const int int_LineIndex, const ch
     m_bol_LineModFlag = false;
 
     LineParser();
+    UpdateValue(true);
 }
 
 CLineEPer::~CLineEPer()
@@ -47,7 +49,8 @@ int CLineEPer::LineParser()
         {
             m_uni_LineType = LTYPE_HEADTITLE;
             m_bol_LineValuePM = true;
-            m_uni_LineValue = 0;
+            m_uni_LineValueABS = 0;
+            m_int_LineValue = 0;
             m_str_LineContent = m_str_FullLine;
 
             break;
@@ -57,7 +60,8 @@ int CLineEPer::LineParser()
         {
             m_uni_LineType = LTYPE_MONTHTITLE;
             m_bol_LineValuePM = true;
-            m_uni_LineValue = 0;
+            m_uni_LineValueABS = 0;
+            m_int_LineValue = 0;
             m_str_LineContent = m_str_FullLine;
 
             break;
@@ -66,7 +70,8 @@ int CLineEPer::LineParser()
         {
             m_uni_LineType = LTYPE_SUBTITLE;
             m_bol_LineValuePM = true;
-            m_uni_LineValue = 0;
+            m_uni_LineValueABS = 0;
+            m_int_LineValue = 0;
             m_str_LineContent = m_str_FullLine;
 
             break;
@@ -75,7 +80,8 @@ int CLineEPer::LineParser()
         {
             m_uni_LineType = LTYPE_BLANK;
             m_bol_LineValuePM = true;
-            m_uni_LineValue = 0;
+            m_uni_LineValueABS = 0;
+            m_int_LineValue = 0;
             m_str_LineContent = m_str_FullLine;
 
             break;
@@ -84,7 +90,8 @@ int CLineEPer::LineParser()
         {
             m_uni_LineType = LTYPE_DELIMITER;
             m_bol_LineValuePM = true;
-            m_uni_LineValue = 0;
+            m_uni_LineValueABS = 0;
+            m_int_LineValue = 0;
             m_str_LineContent = m_str_FullLine;
 
             break;
@@ -93,7 +100,8 @@ int CLineEPer::LineParser()
         {
             m_uni_LineType = LTYPE_EOF;
             m_bol_LineValuePM = true;
-            m_uni_LineValue = 0;
+            m_uni_LineValueABS = 0;
+            m_int_LineValue = 0;
             m_str_LineContent = m_str_FullLine;
 
             break;
@@ -104,7 +112,7 @@ int CLineEPer::LineParser()
             m_uni_LineType = LTYPE_FBIRC_MONTHSUM;
             ValuePMParser(str_Match[5]);
             string str_ValueTemp = str_Match[6];
-            m_uni_LineValue = atoi(str_ValueTemp.c_str());
+            m_uni_LineValueABS = atoi(str_ValueTemp.c_str());
             m_str_LineContent = str_Match[2];
             m_str_LineContent += str_Match[3];
 
@@ -115,7 +123,7 @@ int CLineEPer::LineParser()
             m_uni_LineType = LTYPE_FBIRC_AGGR;
             ValuePMParser(str_Match[3]);
             string str_ValueTemp = str_Match[4];
-            m_uni_LineValue = atoi(str_ValueTemp.c_str());
+            m_uni_LineValueABS = atoi(str_ValueTemp.c_str());
             m_str_LineContent = str_Match[1];
 
             break;
@@ -125,7 +133,7 @@ int CLineEPer::LineParser()
             m_uni_LineType = LTYPE_FBIRC_TITLESUM;
             ValuePMParser(str_Match[2]);
             string str_ValueTemp = str_Match[3];
-            m_uni_LineValue = atoi(str_ValueTemp.c_str());
+            m_uni_LineValueABS = atoi(str_ValueTemp.c_str());
             m_str_LineContent = "";
             
             break;
@@ -135,7 +143,7 @@ int CLineEPer::LineParser()
             m_uni_LineType = LTYPE_FBIRC_LINEUINT;
             ValuePMParser(str_Match[2]);
             string str_ValueTemp = str_Match[4];
-            m_uni_LineValue = atoi(str_ValueTemp.c_str());
+            m_uni_LineValueABS = atoi(str_ValueTemp.c_str());
             m_str_LineContent = str_Match[6];
 
             break;
@@ -184,9 +192,9 @@ bool CLineEPer::GetLineValuePM()
     return m_bol_LineValuePM;
 }
 
-unsigned int CLineEPer::GeLineValue()
+unsigned int CLineEPer::GeLineValueABS()
 {
-    return m_uni_LineValue;
+    return m_uni_LineValueABS;
 }
 
 string CLineEPer::GetLineContent()
@@ -207,13 +215,25 @@ bool CLineEPer::GetLineModFlag()
 void CLineEPer::SetLineValuePM(const bool bol_LineValuePM)
 {
     m_bol_LineValuePM = bol_LineValuePM;
+    UpdateValue(true);
     m_bol_LineModFlag = true;
+    UpdateFullLine();
 }
 
-void CLineEPer::SetLineValue(const unsigned int uni_LineValue)
+void CLineEPer::SetLineValueABS(const unsigned int uni_LineValueABS)
 {
-    m_uni_LineValue = uni_LineValue;
+    m_uni_LineValueABS = uni_LineValueABS;
+    UpdateValue(true);
     m_bol_LineModFlag = true;
+    UpdateFullLine();
+}
+
+void CLineEPer::SetLineValue(const int int_LineValue)
+{
+    m_int_LineValue = int_LineValue;
+    UpdateValue(false);
+    m_bol_LineModFlag = true;
+    UpdateFullLine();
 }
 
 void CLineEPer::SetLineModFlag(const bool bol_LineModFlag)
@@ -221,6 +241,33 @@ void CLineEPer::SetLineModFlag(const bool bol_LineModFlag)
     m_bol_LineModFlag = bol_LineModFlag;
 }
 
+// 通过UpdateValue()，保证了Value/ValuePM&ABS的同步一致性
+void CLineEPer::UpdateValue(bool bol_UpdateDirection)
+{
+    if(bol_UpdateDirection)   // TRUE: 更新Value
+    {
+        if(m_bol_LineValuePM)
+            m_int_LineValue = m_uni_LineValueABS;
+        else
+            m_int_LineValue = (-1) * (int)m_uni_LineValueABS;
+    }
+    else   // FALSE: 更新ValuePM&ABS
+    {
+        if(m_int_LineValue > 0)
+        {
+            m_bol_LineValuePM = true;
+            m_uni_LineValueABS = m_int_LineValue;
+        }
+        else
+        {
+            m_bol_LineValuePM = false;
+            m_uni_LineValueABS = (-1) * m_int_LineValue;
+        }
+    }
+
+}
+
+// tips 番茄@20171125 - 目前只支持更新包含金额的行
 void CLineEPer::UpdateFullLine()
 {
     if(m_bol_LineModFlag == false)
@@ -239,7 +286,7 @@ void CLineEPer::UpdateFullLine()
                     m_str_FullLine += "+";
                 else
                     m_str_FullLine += "-";
-                sprintf(cha_Value, "%d", m_uni_LineValue);
+                sprintf(cha_Value, "%d", m_uni_LineValueABS);
                 m_str_FullLine += cha_Value;
             }
             break;
@@ -251,7 +298,7 @@ void CLineEPer::UpdateFullLine()
                     m_str_FullLine += "+";
                 else
                     m_str_FullLine += "-";
-                sprintf(cha_Value, "%d", m_uni_LineValue);
+                sprintf(cha_Value, "%d", m_uni_LineValueABS);
                 m_str_FullLine += cha_Value;
             }
             break;
@@ -265,7 +312,7 @@ void CLineEPer::UpdateFullLine()
                     m_str_FullLine += "+";
                 else
                     m_str_FullLine += "-";
-                sprintf(cha_Value, "%d", m_uni_LineValue);
+                sprintf(cha_Value, "%d", m_uni_LineValueABS);
                 m_str_FullLine += cha_Value;
             }
             break;
@@ -278,7 +325,7 @@ void CLineEPer::UpdateFullLine()
                 else
                     m_str_FullLine += "-";
                 m_str_FullLine += " ";
-                sprintf(cha_Value, "%d", m_uni_LineValue);
+                sprintf(cha_Value, "%d", m_uni_LineValueABS);
                 m_str_FullLine += cha_Value;
                 m_str_FullLine += "` ";
                 m_str_FullLine += m_str_LineContent;
@@ -296,8 +343,6 @@ void CLineEPer::UpdateFullLine()
 
     delete []cha_Value;
 }
-
-
 
 
 //------------------------------//

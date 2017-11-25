@@ -168,14 +168,10 @@ int main(int argc, char **argv, char *env[])
         /**************************************************/
         else if( X_CMD.GetCmdFront().compare("ve-fm") == 0 )
         {
-            //int lineindex = atoi(X_CMD.GetCmd(1).c_str());
-            //cout << FileManagerVe.GetFullLine(lineindex) << endl;
+            int lineindex = atoi(X_CMD.GetCmd(1).c_str());
+            FileManagerVe.SetLineValue(lineindex, -666);
 
-            int linemax = FileManagerVe.GetLineNum();
-            for(int i=1; i<=linemax; i++)
-            {
-                cout << FileManagerVe.GetFullLine(i) << endl;
-            }
+            FileManagerVe.FileWriter("./FA_TVT_VeX.md");
 
             continue;
         }

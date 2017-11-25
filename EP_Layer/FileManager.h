@@ -20,9 +20,19 @@ public:
     ~CFileManager();
 
     void VecLineInit();
-
     int GetLineNum();
+
+    /****************************************/
+    //   .md文件操作区
+    /****************************************/
+    int FileWriter(const char *cha_FileName);
+
+    /****************************************/
+    //   行操作区
+    /****************************************/
     string GetFullLine(const int int_LineIndex);
+
+    void SetLineValue(const int int_LineIndex, const int int_LineValue);
 
 private:
     string m_str_FileName;              // .md文件名称
