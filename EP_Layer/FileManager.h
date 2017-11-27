@@ -25,7 +25,8 @@ public:
     /****************************************/
     //   .md文件操作区
     /****************************************/
-    int FileWriter(const char *cha_FileName);
+    int FileWriter();
+    int FileWriter(const char *cha_FullFileName);
 
     /****************************************/
     //   行操作区

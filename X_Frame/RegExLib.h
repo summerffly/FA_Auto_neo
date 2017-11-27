@@ -13,6 +13,9 @@
 using namespace std;
 
 
+extern string pattern_fullfilename;
+extern regex RE_fullfilename;
+
 extern string pattern_eof;
 extern regex RE_eof;
 

@@ -8,10 +8,10 @@
 #define _DEFLIB_H_
 
 
-#define MAX_COMMAND     128     // CMD最大字符数
-#define MAX_LINE_CHAR   128     // .md文件_每行最大字符数
-#define MAX_LINE        512     // .md文件_最大支持行数
-
+#define MAX_COMMAND         128     // CMD最大字符数
+#define MAX_FULLFILENAME    128     // .md文件_最大文件全名长度
+#define MAX_LINE_CHAR       128     // .md文件_每行最大字符数
+#define MAX_LINE            512     // .md文件_最大支持行数
 
 #endif
 

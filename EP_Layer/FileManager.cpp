@@ -45,9 +45,14 @@ int CFileManager::GetLineNum()
     return m_int_LineNum;
 }
 
-int CFileManager::FileWriter(const char *cha_FileName)
+int CFileManager::FileWriter()
 {
-    return m_cls_FileOPer.FileWriter(cha_FileName);
+    return m_cls_FileOPer.FileWriter();
+}
+
+int CFileManager::FileWriter(const char *cha_FullFileName)
+{
+    return m_cls_FileOPer.FileWriter(cha_FullFileName);
 }
 
 string CFileManager::GetFullLine(const int int_LineIndex)

@@ -35,7 +35,7 @@ int main(int argc, char **argv, char *env[])
 
     CFileOPer FileVe = CFileOPer("./FA_TVT_VeX.md");
     CFileManager FileManagerVe = CFileManager("./FA_TVT_VeX.md");
-    CFileThread FileVeT = CFileThread("./FA_TVT_VeXT.md");    
+    CFileThread FileVeT = CFileThread("./FA_TVT_VeXT.md");
 
     // Advanced_CMD循环模式
     CCmdTarget X_CMD = CCmdTarget();
@@ -103,23 +103,21 @@ int main(int argc, char **argv, char *env[])
             continue;
         }
 
-        /* * * * * * * * * * * * * * * * * * * * * * */
-        //   Verify file读写类
-        /* * * * * * * * * * * * * * * * * * * * * * */
+        /**************************************************/
+        //   Verify FileOPer
+        /**************************************************/
         else if( X_CMD.GetCmdFront().compare("ve-file") == 0 )
         {   
             CCmdTarget::TagTimeBait();
 
-            FileVe.DeleteLine(8);
-            if(FileVe.GetModFlag() == true)
-            {
-                FileVe.FileWriter("./FA_TVT_VeX.md");
-            }
+            CFileOPer FileVeV = CFileOPer("./FileTest/FileTestTest/FA_TVT_VeX.md");
+
+            cout << FileVeV.GetFilePath() << endl;
+            cout << FileVeV.GetFileName() << endl;
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
 
-            //cin.ignore();
             continue;
         }
 
@@ -154,11 +152,11 @@ int main(int argc, char **argv, char *env[])
 
             cout << LineEPVe.GetFullLine() << endl;
 
-            LineEPVe.SetLineValue(678);
+            LineEPVe.SetLineValue(-888);
             LineEPVe.UpdateFullLine();
 
             FileVe.ModifyLine(lineindex, LineEPVe.GetFullLine());
-            FileVe.FileWriter("./FA_TVT_VeX.md");
+            FileVe.FileWriter();
 
             continue;
         }
@@ -169,9 +167,9 @@ int main(int argc, char **argv, char *env[])
         else if( X_CMD.GetCmdFront().compare("ve-fm") == 0 )
         {
             int lineindex = atoi(X_CMD.GetCmd(1).c_str());
-            FileManagerVe.SetLineValue(lineindex, -666);
+            FileManagerVe.SetLineValue(lineindex, +666);
 
-            FileManagerVe.FileWriter("./FA_TVT_VeX.md");
+            FileManagerVe.FileWriter();
 
             continue;
         }
