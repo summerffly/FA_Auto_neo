@@ -19,6 +19,7 @@ CFileManager::CFileManager(const char *cha_FileName)
     m_str_FileName = cha_FileName;
     m_cls_FileOPer = CFileOPer(cha_FileName);
     m_int_LineNum = m_cls_FileOPer.GetLineNum();
+
     VecLineInit();
 }
 
@@ -66,6 +67,36 @@ void CFileManager::SetLineValue(const int int_LineIndex, const int int_LineValue
     m_cls_FileOPer.ModifyLine(int_LineIndex, m_vec_cls_Line.at(int_LineIndex).GetFullLine());
 }
 
+int CFileManager::SearchLineKey(const char *cha_Key)
+{
+    m_vec_uni_LineIndex.clear();
+
+    for(int i=1; i <= m_int_LineNum; i++)
+    {
+        if( m_vec_cls_Line.at(i).IsContainKey(cha_Key) )
+        {
+            m_vec_uni_LineIndex.push_back(i);
+        }
+    }
+
+    return m_vec_uni_LineIndex.size();
+}
+
+string CFileManager::GetSearchLine(const int int_VecIndex)
+{
+    if( int_VecIndex > m_vec_uni_LineIndex.size())
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!      Over Search Vector Size     !!!" << endl;
+        cout << "----------------------------------------" << endl;
+
+        return "ERROR";
+    }
+    else
+    {
+        return m_vec_cls_Line.at(m_vec_uni_LineIndex.at(int_VecIndex - 1)).GetFullLine();
+    }
+}
 
 //------------------------------//
 //   river flows in summer

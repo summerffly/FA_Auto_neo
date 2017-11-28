@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <string>
+#include <regex>
 
 using namespace std;
 
@@ -25,19 +26,23 @@ public:
     string GetParentFileName();
     unsigned int GetLineIndex();
     unsigned int GetLineType();
-    bool GetLineValuePM();
-    unsigned int GeLineValueABS();
     string GetLineContent();
     string GetFullLine();
+    bool GetLineValuePM();
+    unsigned int GeLineValueABS();
+    int GeLineValue();
     bool GetLineModFlag();
 
     void SetLineValuePM(const bool bol_LineValuePM);
     void SetLineValueABS(const unsigned int uni_LineValueABS);
     void SetLineValue(const int int_LineValue);
+
     void SetLineModFlag(const bool bol_LineModFlag);
 
     void UpdateValue(bool bol_UpdateDirection);
     void UpdateFullLine();
+
+    bool IsContainKey(const char *cha_Key);
 
 private:
     string m_str_ParentFileName;        // 所属.md文件名称

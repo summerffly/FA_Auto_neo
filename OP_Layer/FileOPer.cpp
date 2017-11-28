@@ -30,7 +30,6 @@ CFileOPer::CFileOPer(const char *cha_FullFileName)
 
     m_bol_ModFlag = false;
     m_int_LineNum = 0;
-    m_vec_Line.push_back("LINE 0 BY SUMMER");
     
     FileReader();
 }
@@ -124,6 +123,9 @@ bool CFileOPer::GetModFlag()
 
 int CFileOPer::FileReader()
 {
+    m_vec_Line.clear();
+    m_vec_Line.push_back("LINE 0 BY SUMMER");
+
     string str_FullFileName = m_str_FilePath + m_str_FileName;
     // tips 番茄@20171127 - c_str()返回常量char字符串，不能赋值给变量指针
     //char *cha_FullFileName = str_FullFileName.c_str();
@@ -158,6 +160,9 @@ int CFileOPer::FileReader()
 
 int CFileOPer::FileReader(const char *cha_FullFileName)
 {
+    m_vec_Line.clear();
+    m_vec_Line.push_back("LINE 0 BY SUMMER");
+
     ifstream ifile(cha_FullFileName);
 
     if(ifile.is_open() == 0)

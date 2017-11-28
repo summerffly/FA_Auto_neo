@@ -187,6 +187,16 @@ unsigned int CLineEPer::GetLineType()
     return m_uni_LineType;
 }
 
+string CLineEPer::GetLineContent()
+{
+    return m_str_LineContent;
+}
+
+string CLineEPer::GetFullLine()
+{
+    return m_str_FullLine;
+}
+
 bool CLineEPer::GetLineValuePM()
 {
     return m_bol_LineValuePM;
@@ -197,14 +207,9 @@ unsigned int CLineEPer::GeLineValueABS()
     return m_uni_LineValueABS;
 }
 
-string CLineEPer::GetLineContent()
+int CLineEPer::GeLineValue()
 {
-    return m_str_LineContent;
-}
-
-string CLineEPer::GetFullLine()
-{
-    return m_str_FullLine;
+    return m_int_LineValue;
 }
 
 bool CLineEPer::GetLineModFlag()
@@ -334,7 +339,7 @@ void CLineEPer::UpdateFullLine()
         default:
             {
                 cout << "----------------------------------------" << endl;
-                cout << "!!!          Line Type Error         !!!" << endl;
+                cout << "!!!      Line Type Un-Supported      !!!" << endl;
                 cout << "----------------------------------------" << endl;
             }
     }
@@ -342,6 +347,22 @@ void CLineEPer::UpdateFullLine()
     m_bol_LineModFlag = false;
 
     delete []cha_Value;
+}
+
+bool CLineEPer::IsContainKey(const char *cha_Key)
+{
+    smatch str_Match;
+    string pattern_key = cha_Key;
+    regex RE_key(pattern_key);
+
+    if( regex_search(m_str_LineContent, str_Match, RE_key) )
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 

@@ -46,7 +46,9 @@ int main(int argc, char **argv, char *env[])
         cout << "CMD >>> ";
         cin.getline(CMD_linebuffer, MAX_COMMAND);
 
-        // 判断是否输入空行
+        /**************************************************/
+        //   判断是否输入空行
+        /**************************************************/
         if( X_CMD.CmdParser(CMD_linebuffer) == -1 )
         {
             cout << "### Blank CMD !!!" << endl;
@@ -55,7 +57,9 @@ int main(int argc, char **argv, char *env[])
             continue;
         }
         
-        // 判断是否输入撤销CMD
+        /**************************************************/
+        //   判断是否输入撤销CMD
+        /**************************************************/
         if( X_CMD.GetCmdBack().compare("cancel") == 0 )
         {
             cout << "### CMD canceled !" << endl;
@@ -64,9 +68,9 @@ int main(int argc, char **argv, char *env[])
             continue;
         }
 
-        /* * * * * * * * * * * * * * * * * * * * * * */
+        /**************************************************/
         //   关闭X工程
-        /* * * * * * * * * * * * * * * * * * * * * * */
+        /**************************************************/
         if( X_CMD.GetCmdFront().compare("sd") == 0 )
         {
             cout << "----------------------------------------" << endl;            
@@ -103,24 +107,6 @@ int main(int argc, char **argv, char *env[])
             continue;
         }
 
-        /**************************************************/
-        //   Verify FileOPer
-        /**************************************************/
-        else if( X_CMD.GetCmdFront().compare("ve-file") == 0 )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            CFileOPer FileVeV = CFileOPer("./FileTest/FileTestTest/FA_TVT_VeX.md");
-
-            cout << FileVeV.GetFilePath() << endl;
-            cout << FileVeV.GetFileName() << endl;
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
         /* * * * * * * * * * * * * * * * * * * * * * */
         //   验证多线程同步机制
         /* * * * * * * * * * * * * * * * * * * * * * */
@@ -142,10 +128,30 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
+        //   Verify FileOPer
+        /**************************************************/
+        else if( X_CMD.GetCmdFront().compare("ve-file") == 0 )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            CFileOPer FileVeV = CFileOPer("./FileTest/FileTestTest/FA_TVT_VeX.md");
+
+            cout << FileVeV.GetFilePath() << endl;
+            cout << FileVeV.GetFileName() << endl;
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
         //   Verify LineEPer
         /**************************************************/
         else if( X_CMD.GetCmdFront().compare("ve-line") == 0 )
         {
+            CCmdTarget::TagTimeBait();
+
             int lineindex = atoi(X_CMD.GetCmd(1).c_str());
 
             CLineEPer LineEPVe = CLineEPer("./FA_TVT_VeX.md", lineindex, FileVe.GetLine(lineindex).c_str());
@@ -158,6 +164,9 @@ int main(int argc, char **argv, char *env[])
             FileVe.ModifyLine(lineindex, LineEPVe.GetFullLine());
             FileVe.FileWriter();
 
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
             continue;
         }
 
@@ -166,10 +175,17 @@ int main(int argc, char **argv, char *env[])
         /**************************************************/
         else if( X_CMD.GetCmdFront().compare("ve-fm") == 0 )
         {
-            int lineindex = atoi(X_CMD.GetCmd(1).c_str());
-            FileManagerVe.SetLineValue(lineindex, +666);
+            CCmdTarget::TagTimeBait();
 
-            FileManagerVe.FileWriter();
+            //int lineindex = atoi(X_CMD.GetCmd(1).c_str());
+            //FileManagerVe.SetLineValue(lineindex, +666);
+            //FileManagerVe.FileWriter();
+
+            cout << FileManagerVe.SearchLineKey(X_CMD.GetCmd(1).c_str()) << endl;
+            cout << FileManagerVe.GetSearchLine(atoi(X_CMD.GetCmd(2).c_str())) << endl;
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
 
             continue;
         }
@@ -192,9 +208,13 @@ int main(int argc, char **argv, char *env[])
             continue;
         }
 
+        /**************************************************/
+        //   CMD输入错误
+        /**************************************************/
         else
         {
-            cout << "### Error CMD !!!" << endl;
+            cout << "----------------------------------------" << endl;
+            cout << "!!!            Error CMD             !!!" << endl;
             cout << "----------------------------------------" << endl;
 
             continue;
