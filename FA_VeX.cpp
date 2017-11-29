@@ -154,7 +154,7 @@ int main(int argc, char **argv, char *env[])
 
             int lineindex = atoi(X_CMD.GetCmd(1).c_str());
 
-            CLineEPer LineEPVe = CLineEPer("./FA_TVT_VeX.md", lineindex, FileVe.GetLine(lineindex).c_str());
+            CLineEPer LineEPVe = CLineEPer(FileVe.GetLine(lineindex).c_str());
 
             cout << LineEPVe.GetFullLine() << endl;
 
@@ -177,17 +177,22 @@ int main(int argc, char **argv, char *env[])
         {
             CCmdTarget::TagTimeBait();
 
-            //int lineindex = atoi(X_CMD.GetCmd(1).c_str());
-            //FileManagerVe.SetLineValue(lineindex, +666);
-            //FileManagerVe.FileWriter();
-
             //cout << FileManagerVe.SearchLineKey(X_CMD.GetCmd(1).c_str()) << endl;
             //cout << FileManagerVe.GetSearchLine(atoi(X_CMD.GetCmd(2).c_str())) << endl;
 
-            FileManagerVe.InsertLine(1, 11, -1129, "fm-test");
-            FileManagerVe.InsertLine(1, 12, -1129, "fm-test");
-            FileManagerVe.InsertLine(1, 13, -1129, "fm-test");
-            FileManagerVe.InsertLine(1, 14, -1129, "fm-test");
+            if(1 == atoi(X_CMD.GetCmd(1).c_str()))
+            {
+                FileManagerVe.InsertLine(4, 14, -1129, "fm-test");
+            }
+            else if(2 == atoi(X_CMD.GetCmd(1).c_str()))
+            {
+                FileManagerVe.ModifyLineValue(4, 998);
+            }
+            else if(3 == atoi(X_CMD.GetCmd(1).c_str()))
+            {
+                FileManagerVe.DeleteLine(4);
+            }
+
             FileManagerVe.FileWriter();
 
             CCmdTarget::ShowTimeGap();

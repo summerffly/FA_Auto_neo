@@ -33,17 +33,19 @@ public:
     /****************************************/
     string GetFullLine(const int int_LineIndex);
 
-    void SetLineValue(const int int_LineIndex, const int int_LineValue);
-
     /****************************************/
     //   综合操作区
     /****************************************/
     int SearchLineKey(const char *cha_Key);
-    string GetSearchLine(const int int_VecIndex);
-    void InsertLine(const int int_LineIndex, const unsigned int uni_LineType,\
+    string GetSearchLine(const unsigned int uni_VecIndex);
+    void InsertLine(const unsigned int uni_VecIndex, const unsigned int uni_LineType,\
                     const int int_LineValue, const string str_LineContent);
+    void ModifyLineValue(const unsigned int uni_VecIndex, const int int_LineValue);
+    void ModifyLineContent(const unsigned int uni_VecIndex, const char *cha_LineContent);
+    void DeleteLine(const unsigned int uni_VecIndex);
 
 private:
+    string m_str_FilePath;                      // .md文件路径
     string m_str_FileName;                      // .md文件名称
     CFileOPer m_cls_FileOPer;                   // .md文件
     int m_int_LineNum;                          // 行数

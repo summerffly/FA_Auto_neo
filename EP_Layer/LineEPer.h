@@ -17,16 +17,16 @@ class CLineEPer
 {
 public:
     CLineEPer();
-    CLineEPer(const char *cha_FileName, const int int_LineIndex, const char *cha_LineBuffer);
-    CLineEPer(const char *cha_FileName, const int int_LineIndex, const unsigned int uni_LineType,\
-              const int int_LineValue, const string str_LineContent);
+    CLineEPer(const char *cha_LineBuffer);
+    CLineEPer(const unsigned int uni_LineType, const int int_LineValue, const string str_LineContent);
     ~CLineEPer();
 
     int LineParser();
     void ValuePMParser(string str_ValuePM);
 
-    string GetParentFileName();
-    unsigned int GetLineIndex();
+    /****************************************/
+    //   属性获取
+    /****************************************/
     unsigned int GetLineType();
     string GetLineContent();
     string GetFullLine();
@@ -35,20 +35,27 @@ public:
     int GeLineValue();
     bool GetLineModFlag();
 
+    /****************************************/
+    //   设置方法
+    /****************************************/
     void SetLineValuePM(const bool bol_LineValuePM);
     void SetLineValueABS(const unsigned int uni_LineValueABS);
     void SetLineValue(const int int_LineValue);
-
+    void SetLineContent(const char *cha_LineContent);
     void SetLineModFlag(const bool bol_LineModFlag);
 
+    /****************************************/
+    //   同步功能
+    /****************************************/
     void UpdateValue(bool bol_UpdateDirection);
     void UpdateFullLine();
 
+    /****************************************/
+    //   综合功能
+    /****************************************/
     bool IsContainKey(const char *cha_Key);
 
 private:
-    string m_str_ParentFileName;        // 所属.md文件名称
-    unsigned int m_uni_LineIndex;       // 行号
     unsigned int m_uni_LineType;        // 行类型
     string m_str_LineContent;           // 行内容
     string m_str_FullLine;              // 整行内容

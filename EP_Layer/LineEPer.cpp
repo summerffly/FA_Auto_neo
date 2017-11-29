@@ -12,8 +12,6 @@ using namespace std;
 
 CLineEPer::CLineEPer()
 {
-    m_str_ParentFileName = "";
-    m_uni_LineIndex = 0;
     m_uni_LineType = 0;
     m_bol_LineValuePM = true;
     m_uni_LineValueABS = 0;
@@ -23,10 +21,8 @@ CLineEPer::CLineEPer()
     m_bol_LineModFlag = false;
 }
 
-CLineEPer::CLineEPer(const char *cha_FileName, const int int_LineIndex, const char *cha_LineBuffer)
+CLineEPer::CLineEPer(const char *cha_LineBuffer)
 {
-    m_str_ParentFileName = cha_FileName;
-    m_uni_LineIndex = int_LineIndex;
     m_str_FullLine = cha_LineBuffer;
     m_bol_LineModFlag = false;
 
@@ -34,11 +30,8 @@ CLineEPer::CLineEPer(const char *cha_FileName, const int int_LineIndex, const ch
     UpdateValue(true);
 }
 
-CLineEPer::CLineEPer(const char *cha_FileName, const int int_LineIndex, const unsigned int uni_LineType,\
-                     const int int_LineValue, const string str_LineContent)
+CLineEPer::CLineEPer(const unsigned int uni_LineType, const int int_LineValue, const string str_LineContent)
 {
-    m_str_ParentFileName = cha_FileName;
-    m_uni_LineIndex = int_LineIndex;
     m_uni_LineType = uni_LineType;
     m_int_LineValue = int_LineValue;
     m_str_LineContent = str_LineContent;
@@ -186,16 +179,6 @@ void CLineEPer::ValuePMParser(string str_ValuePM)
     }
 }
 
-string CLineEPer::GetParentFileName()
-{
-    return m_str_ParentFileName;
-}
-
-unsigned int CLineEPer::GetLineIndex()
-{
-    return m_uni_LineIndex;
-}
-
 unsigned int CLineEPer::GetLineType()
 {
     return m_uni_LineType;
@@ -251,6 +234,13 @@ void CLineEPer::SetLineValue(const int int_LineValue)
 {
     m_int_LineValue = int_LineValue;
     UpdateValue(false);
+    m_bol_LineModFlag = true;
+    UpdateFullLine();
+}
+
+void CLineEPer::SetLineContent(const char *cha_LineContent)
+{
+    m_str_LineContent = cha_LineContent;
     m_bol_LineModFlag = true;
     UpdateFullLine();
 }

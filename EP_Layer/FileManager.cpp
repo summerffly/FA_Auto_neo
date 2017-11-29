@@ -27,11 +27,12 @@ CFileManager::CFileManager()
     // Do Nothing
 }
 
-CFileManager::CFileManager(const char *cha_FileName)
+CFileManager::CFileManager(const char *cha_FullFileName)
 {
-    m_str_FileName = cha_FileName;
-    m_cls_FileOPer = CFileOPer(cha_FileName);
+    m_cls_FileOPer = CFileOPer(cha_FullFileName);
     m_int_LineNum = m_cls_FileOPer.GetLineNum();
+    m_str_FilePath = m_cls_FileOPer.GetFilePath();
+    m_str_FileName = m_cls_FileOPer.GetFileName();
 
     VecLineInit();
 }
@@ -51,7 +52,7 @@ void CFileManager::VecLineInit()
 
     for(int i=1; i<=m_int_LineNum; i++)
     {
-        CLineEPer cls_LineEPer_temp = CLineEPer(m_str_FileName.c_str(), i, m_cls_FileOPer.GetLine(i).c_str());
+        CLineEPer cls_LineEPer_temp = CLineEPer(m_cls_FileOPer.GetLine(i).c_str());
         m_vec_cls_Line.push_back(cls_LineEPer_temp);
     }
 }
@@ -76,12 +77,6 @@ string CFileManager::GetFullLine(const int int_LineIndex)
     return m_vec_cls_Line.at(int_LineIndex).GetFullLine();
 }
 
-void CFileManager::SetLineValue(const int int_LineIndex, const int int_LineValue)
-{
-    m_vec_cls_Line.at(int_LineIndex).SetLineValue(int_LineValue);
-    m_cls_FileOPer.ModifyLine(int_LineIndex, m_vec_cls_Line.at(int_LineIndex).GetFullLine());
-}
-
 int CFileManager::SearchLineKey(const char *cha_Key)
 {
     m_vec_uni_LineIndex.clear();
@@ -97,9 +92,9 @@ int CFileManager::SearchLineKey(const char *cha_Key)
     return m_vec_uni_LineIndex.size();
 }
 
-string CFileManager::GetSearchLine(const int int_VecIndex)
+string CFileManager::GetSearchLine(const unsigned int uni_VecIndex)
 {
-    if( int_VecIndex > m_vec_uni_LineIndex.size())
+    if( uni_VecIndex > m_vec_uni_LineIndex.size())
     {
         cout << "----------------------------------------" << endl;
         cout << "!!!      Over Search Vector Size     !!!" << endl;
@@ -109,18 +104,44 @@ string CFileManager::GetSearchLine(const int int_VecIndex)
     }
     else
     {
-        return m_vec_cls_Line.at(m_vec_uni_LineIndex.at(int_VecIndex - 1)).GetFullLine();
+        return m_vec_cls_Line.at(m_vec_uni_LineIndex.at(uni_VecIndex - 1)).GetFullLine();
     }
 }
 
-void CFileManager::InsertLine(const int int_LineIndex, const unsigned int uni_LineType,\
+void CFileManager::InsertLine(const unsigned int uni_VecIndex, const unsigned int uni_LineType,\
                               const int int_LineValue, const string str_LineContent)
 {
-    CLineEPer cls_LineEPer_temp = CLineEPer(m_str_FileName.c_str(), int_LineIndex, uni_LineType,\
-                                            int_LineValue, str_LineContent);
+    CLineEPer cls_LineEPer_temp = CLineEPer(uni_LineType, int_LineValue, str_LineContent);
     vector<CLineEPer>::iterator vec_cls_Iter = m_vec_cls_Line.begin();
+    vec_cls_Iter += uni_VecIndex;
     m_vec_cls_Line.insert(vec_cls_Iter, cls_LineEPer_temp);
-    m_cls_FileOPer.InsertLine(int_LineIndex, cls_LineEPer_temp.GetFullLine());
+    m_int_LineNum++;
+
+    m_cls_FileOPer.InsertLine(uni_VecIndex, cls_LineEPer_temp.GetFullLine());
+}
+
+void CFileManager::ModifyLineValue(const unsigned int uni_VecIndex, const int int_LineValue)
+{
+    m_vec_cls_Line.at(uni_VecIndex).SetLineValue(int_LineValue);
+
+    m_cls_FileOPer.ModifyLine(uni_VecIndex, m_vec_cls_Line.at(uni_VecIndex).GetFullLine());
+}
+
+void CFileManager::ModifyLineContent(const unsigned int uni_VecIndex, const char *cha_LineContent)
+{
+    m_vec_cls_Line.at(uni_VecIndex).SetLineContent(cha_LineContent);
+
+    m_cls_FileOPer.ModifyLine(uni_VecIndex, m_vec_cls_Line.at(uni_VecIndex).GetFullLine());
+}
+
+void CFileManager::DeleteLine(const unsigned int uni_VecIndex)
+{
+    vector<CLineEPer>::iterator vec_cls_Iter = m_vec_cls_Line.begin();
+    vec_cls_Iter += uni_VecIndex;
+    m_vec_cls_Line.erase(vec_cls_Iter);
+    m_int_LineNum--;
+
+    m_cls_FileOPer.DeleteLine(uni_VecIndex);
 }
 
 
