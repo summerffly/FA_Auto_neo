@@ -6,6 +6,19 @@
 
 #include "FileManager.h"
 
+#define LTYPE_HEADTITLE     1   // 总标题
+#define LTYPE_SUBTITLE      2   // 单项标题
+#define LTYPE_MONTHTITLE    3   // 月度标题
+
+#define LTYPE_BLANK         7   // 空行
+#define LTYPE_DELIMITER     8   // 分隔线
+#define LTYPE_EOF           9   // 结束线
+
+#define LTYPE_FBIRC_AGGR        11   // 总金额
+#define LTYPE_FBIRC_TITLESUM    12   // 单项金额
+#define LTYPE_FBIRC_MONTHSUM    13   // 月度金额
+#define LTYPE_FBIRC_LINEUINT    14   // 单行金额
+
 using namespace std;
 
 
@@ -31,6 +44,8 @@ CFileManager::~CFileManager()
 void CFileManager::VecLineInit()
 {
     m_vec_cls_Line.clear();
+    // tips 番茄@20171129 - 指针才需要new空间
+    //CLineEPer cls_LineEPer_zero = new CLineEPer();
     CLineEPer cls_LineEPer_zero = CLineEPer();
     m_vec_cls_Line.push_back(cls_LineEPer_zero);
 
@@ -97,6 +112,17 @@ string CFileManager::GetSearchLine(const int int_VecIndex)
         return m_vec_cls_Line.at(m_vec_uni_LineIndex.at(int_VecIndex - 1)).GetFullLine();
     }
 }
+
+void CFileManager::InsertLine(const int int_LineIndex, const unsigned int uni_LineType,\
+                              const int int_LineValue, const string str_LineContent)
+{
+    CLineEPer cls_LineEPer_temp = CLineEPer(m_str_FileName.c_str(), int_LineIndex, uni_LineType,\
+                                            int_LineValue, str_LineContent);
+    vector<CLineEPer>::iterator vec_cls_Iter = m_vec_cls_Line.begin();
+    m_vec_cls_Line.insert(vec_cls_Iter, cls_LineEPer_temp);
+    m_cls_FileOPer.InsertLine(int_LineIndex, cls_LineEPer_temp.GetFullLine());
+}
+
 
 //------------------------------//
 //   river flows in summer

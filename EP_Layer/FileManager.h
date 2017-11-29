@@ -40,6 +40,8 @@ public:
     /****************************************/
     int SearchLineKey(const char *cha_Key);
     string GetSearchLine(const int int_VecIndex);
+    void InsertLine(const int int_LineIndex, const unsigned int uni_LineType,\
+                    const int int_LineValue, const string str_LineContent);
 
 private:
     string m_str_FileName;                      // .md文件名称

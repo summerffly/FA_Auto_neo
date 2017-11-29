@@ -18,6 +18,8 @@ class CLineEPer
 public:
     CLineEPer();
     CLineEPer(const char *cha_FileName, const int int_LineIndex, const char *cha_LineBuffer);
+    CLineEPer(const char *cha_FileName, const int int_LineIndex, const unsigned int uni_LineType,\
+              const int int_LineValue, const string str_LineContent);
     ~CLineEPer();
 
     int LineParser();

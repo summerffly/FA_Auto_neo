@@ -34,6 +34,20 @@ CLineEPer::CLineEPer(const char *cha_FileName, const int int_LineIndex, const ch
     UpdateValue(true);
 }
 
+CLineEPer::CLineEPer(const char *cha_FileName, const int int_LineIndex, const unsigned int uni_LineType,\
+                     const int int_LineValue, const string str_LineContent)
+{
+    m_str_ParentFileName = cha_FileName;
+    m_uni_LineIndex = int_LineIndex;
+    m_uni_LineType = uni_LineType;
+    m_int_LineValue = int_LineValue;
+    m_str_LineContent = str_LineContent;
+    m_bol_LineModFlag = true;
+
+    UpdateValue(false);
+    UpdateFullLine();
+}
+
 CLineEPer::~CLineEPer()
 {
     // Do Nothing
@@ -278,7 +292,7 @@ void CLineEPer::UpdateFullLine()
     if(m_bol_LineModFlag == false)
         return;
 
-    char *cha_Value = new char[8];     // tips 番茄@20171121 - 支持到十万级
+    char *cha_ValueABS = new char[8];     // tips 番茄@20171121 - 支持到十万级
     
     switch(m_uni_LineType)
     {
@@ -291,8 +305,8 @@ void CLineEPer::UpdateFullLine()
                     m_str_FullLine += "+";
                 else
                     m_str_FullLine += "-";
-                sprintf(cha_Value, "%d", m_uni_LineValueABS);
-                m_str_FullLine += cha_Value;
+                sprintf(cha_ValueABS, "%d", m_uni_LineValueABS);
+                m_str_FullLine += cha_ValueABS;
             }
             break;
         case(LTYPE_FBIRC_TITLESUM):
@@ -303,8 +317,8 @@ void CLineEPer::UpdateFullLine()
                     m_str_FullLine += "+";
                 else
                     m_str_FullLine += "-";
-                sprintf(cha_Value, "%d", m_uni_LineValueABS);
-                m_str_FullLine += cha_Value;
+                sprintf(cha_ValueABS, "%d", m_uni_LineValueABS);
+                m_str_FullLine += cha_ValueABS;
             }
             break;
         case(LTYPE_FBIRC_MONTHSUM):
@@ -317,8 +331,8 @@ void CLineEPer::UpdateFullLine()
                     m_str_FullLine += "+";
                 else
                     m_str_FullLine += "-";
-                sprintf(cha_Value, "%d", m_uni_LineValueABS);
-                m_str_FullLine += cha_Value;
+                sprintf(cha_ValueABS, "%d", m_uni_LineValueABS);
+                m_str_FullLine += cha_ValueABS;
             }
             break;
         case(LTYPE_FBIRC_LINEUINT):
@@ -330,8 +344,8 @@ void CLineEPer::UpdateFullLine()
                 else
                     m_str_FullLine += "-";
                 m_str_FullLine += " ";
-                sprintf(cha_Value, "%d", m_uni_LineValueABS);
-                m_str_FullLine += cha_Value;
+                sprintf(cha_ValueABS, "%d", m_uni_LineValueABS);
+                m_str_FullLine += cha_ValueABS;
                 m_str_FullLine += "` ";
                 m_str_FullLine += m_str_LineContent;
             }
@@ -346,7 +360,7 @@ void CLineEPer::UpdateFullLine()
 
     m_bol_LineModFlag = false;
 
-    delete []cha_Value;
+    delete []cha_ValueABS;
 }
 
 bool CLineEPer::IsContainKey(const char *cha_Key)

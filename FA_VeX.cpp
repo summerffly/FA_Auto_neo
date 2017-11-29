@@ -181,8 +181,14 @@ int main(int argc, char **argv, char *env[])
             //FileManagerVe.SetLineValue(lineindex, +666);
             //FileManagerVe.FileWriter();
 
-            cout << FileManagerVe.SearchLineKey(X_CMD.GetCmd(1).c_str()) << endl;
-            cout << FileManagerVe.GetSearchLine(atoi(X_CMD.GetCmd(2).c_str())) << endl;
+            //cout << FileManagerVe.SearchLineKey(X_CMD.GetCmd(1).c_str()) << endl;
+            //cout << FileManagerVe.GetSearchLine(atoi(X_CMD.GetCmd(2).c_str())) << endl;
+
+            FileManagerVe.InsertLine(1, 11, -1129, "fm-test");
+            FileManagerVe.InsertLine(1, 12, -1129, "fm-test");
+            FileManagerVe.InsertLine(1, 13, -1129, "fm-test");
+            FileManagerVe.InsertLine(1, 14, -1129, "fm-test");
+            FileManagerVe.FileWriter();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
