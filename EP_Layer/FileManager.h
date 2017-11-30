@@ -31,18 +31,29 @@ public:
     /****************************************/
     //   行直接操作区
     /****************************************/
+    int GetLineValue(const int int_LineIndex);
     string GetFullLine(const int int_LineIndex);
 
     /****************************************/
-    //   综合操作区
+    //   搜索操作区
     /****************************************/
     int SearchLineKey(const char *cha_Key);
-    string GetSearchLine(const unsigned int uni_VecIndex);
+    unsigned int GetSearchLineIndex(const unsigned int uni_VecIndex);
+    string GetSearchFullLine(const unsigned int uni_VecIndex);
+
+    /****************************************/
+    //   同步修改操作区
+    /****************************************/
     void InsertLine(const unsigned int uni_VecIndex, const unsigned int uni_LineType,\
                     const int int_LineValue, const string str_LineContent);
     void ModifyLineValue(const unsigned int uni_VecIndex, const int int_LineValue);
     void ModifyLineContent(const unsigned int uni_VecIndex, const char *cha_LineContent);
     void DeleteLine(const unsigned int uni_VecIndex);
+
+    /****************************************/
+    //   计算操作区
+    /****************************************/
+    int CountRange(const unsigned int uni_RangeBeginIndex, const unsigned int uni_RangeEndIndex);
 
 private:
     string m_str_FilePath;                      // .md文件路径

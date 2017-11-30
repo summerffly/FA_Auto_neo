@@ -9,9 +9,10 @@ obj_X = $(px)RegExLib.o $(px)X_CmdTarget.o $(px)X_XMLParser.o $(px)tinyxml2.o
 obj_thread = $(pt)Thread.o $(pt)MultiThread.o $(pt)FileThread.o
 obj_OP = $(lop)FileOPer.o
 obj_EP = $(lep)LineEPer.o $(lep)FileManager.o
+obj_FA = $(lfa)FAitfX.o
 
-FA_VeX: FA_VeX.o $(obj_X) $(obj_thread) $(obj_OP) $(obj_EP)
-	g++ -o FA_VeX FA_VeX.o $(obj_X) $(obj_thread) $(obj_OP) $(obj_EP)
+FA_VeX: FA_VeX.o $(obj_X) $(obj_thread) $(obj_OP) $(obj_EP) $(obj_FA)
+	g++ -o FA_VeX FA_VeX.o $(obj_X) $(obj_thread) $(obj_OP) $(obj_EP) $(obj_FA)
 
 FA_VeX.o: FA_VeX.cpp
 	g++ -c FA_VeX.cpp
@@ -46,6 +47,9 @@ LineEPer.o: $(lep)EP_Layer_DEF.h $(lep)LineEPer.h $(lep)LineEPer.cpp
 FileManager.o: $(lep)FileManager.h $(lep)FileManager.cpp
 	g++ -c $(lep)FileManager.cpp
 
+FAitfX.o: $(lfa)FAitfX.h $(lfa)FAitfX.cpp
+	g++ -c $(lfa)FAitfX.cpp
+
 .PHONY:clean
 clean:
-	rm $(px)*.o $(pt)*.o $(lop)*.o $(lep)*.o *.o FA_VeX
+	rm $(px)*.o $(pt)*.o $(lop)*.o $(lep)*.o $(lfa)*.o *.o FA_VeX

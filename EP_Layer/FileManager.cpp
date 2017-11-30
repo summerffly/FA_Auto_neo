@@ -6,19 +6,6 @@
 
 #include "FileManager.h"
 
-#define LTYPE_HEADTITLE     1   // 总标题
-#define LTYPE_SUBTITLE      2   // 单项标题
-#define LTYPE_MONTHTITLE    3   // 月度标题
-
-#define LTYPE_BLANK         7   // 空行
-#define LTYPE_DELIMITER     8   // 分隔线
-#define LTYPE_EOF           9   // 结束线
-
-#define LTYPE_FBIRC_AGGR        11   // 总金额
-#define LTYPE_FBIRC_TITLESUM    12   // 单项金额
-#define LTYPE_FBIRC_MONTHSUM    13   // 月度金额
-#define LTYPE_FBIRC_LINEUINT    14   // 单行金额
-
 using namespace std;
 
 
@@ -72,6 +59,11 @@ int CFileManager::FileWriter(const char *cha_FullFileName)
     return m_cls_FileOPer.FileWriter(cha_FullFileName);
 }
 
+int CFileManager::GetLineValue(const int int_LineIndex)
+{
+    return m_vec_cls_Line.at(int_LineIndex).GetLineValue();
+}
+
 string CFileManager::GetFullLine(const int int_LineIndex)
 {
     return m_vec_cls_Line.at(int_LineIndex).GetFullLine();
@@ -92,7 +84,23 @@ int CFileManager::SearchLineKey(const char *cha_Key)
     return m_vec_uni_LineIndex.size();
 }
 
-string CFileManager::GetSearchLine(const unsigned int uni_VecIndex)
+unsigned int CFileManager::GetSearchLineIndex(const unsigned int uni_VecIndex)
+{
+    if( uni_VecIndex > m_vec_uni_LineIndex.size())
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!      Over Search Vector Size     !!!" << endl;
+        cout << "----------------------------------------" << endl;
+
+        return 0;
+    }
+    else
+    {
+        return m_vec_uni_LineIndex.at(uni_VecIndex - 1);
+    }
+}
+
+string CFileManager::GetSearchFullLine(const unsigned int uni_VecIndex)
 {
     if( uni_VecIndex > m_vec_uni_LineIndex.size())
     {
@@ -142,6 +150,18 @@ void CFileManager::DeleteLine(const unsigned int uni_VecIndex)
     m_int_LineNum--;
 
     m_cls_FileOPer.DeleteLine(uni_VecIndex);
+}
+
+int CFileManager::CountRange(const unsigned int uni_RangeBeginIndex, const unsigned int uni_RangeEndIndex)
+{
+    int int_Counter = 0;
+
+    for(int i = uni_RangeBeginIndex; i <= uni_RangeEndIndex; i++)
+    {
+        int_Counter += m_vec_cls_Line.at(i).GetLineValue();
+    }
+
+    return int_Counter;
 }
 
 

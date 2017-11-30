@@ -17,6 +17,7 @@
 #include "./OP_Layer/FileOPer.h"
 #include "./EP_Layer/LineEPer.h"
 #include "./EP_Layer/FileManager.h"
+#include "./FA_Layer/FAitfX.h"
 
 #include "./Thread/MultiThread.h"
 #include "./Thread/FileThread.h"
@@ -35,6 +36,8 @@ int main(int argc, char **argv, char *env[])
 
     CFileOPer FileVe = CFileOPer("./FA_TVT_VeX.md");
     CFileManager FileManagerVe = CFileManager("./FA_TVT_VeX.md");
+    CFAitfX FAitfX = CFAitfX();
+
     CFileThread FileVeT = CFileThread("./FA_TVT_VeXT.md");
 
     // Advanced_CMD循环模式
@@ -80,51 +83,6 @@ int main(int argc, char **argv, char *env[])
             cout << "----------------------------------------" << endl;            
 
             break;
-        }
-
-        /* * * * * * * * * * * * * * * * * * * * * * */
-        //   Verify FileThread线程
-        /* * * * * * * * * * * * * * * * * * * * * * */
-        else if( !X_CMD.GetCmdFront().compare("ve-filet") )
-        {
-            FileVeT.Start();
-
-            sleep(10);
-
-            FileVeT.InsertLine(8, "THREAD TEST");
-            FileVeT.Control();
-
-            sleep(10);
-
-            FileVeT.DeleteLine(8);
-            FileVeT.Control();
-
-            sleep(5);
-
-            FileVeT.Join();
-
-            //cin.ignore();
-            continue;
-        }
-
-        /* * * * * * * * * * * * * * * * * * * * * * */
-        //   验证多线程同步机制
-        /* * * * * * * * * * * * * * * * * * * * * * */
-        else if( X_CMD.GetCmdFront().compare("ve-mutex") == 0 )
-        {   
-            CMultiThread mttest_a;
-            CMultiThread mttest_b;
-            CMultiThread mttest_c;
-
-            mttest_a.Start();
-            mttest_b.Start();
-            mttest_c.Start();
-            
-            mttest_a.Join();
-            mttest_b.Join();
-            mttest_c.Join();
-
-            continue;
         }
 
         /**************************************************/
@@ -177,9 +135,11 @@ int main(int argc, char **argv, char *env[])
         {
             CCmdTarget::TagTimeBait();
 
+            // 验证搜索操作
             //cout << FileManagerVe.SearchLineKey(X_CMD.GetCmd(1).c_str()) << endl;
             //cout << FileManagerVe.GetSearchLine(atoi(X_CMD.GetCmd(2).c_str())) << endl;
 
+            #if 0   // 验证同步修改操作
             if(1 == atoi(X_CMD.GetCmd(1).c_str()))
             {
                 FileManagerVe.InsertLine(4, 14, -1129, "fm-test");
@@ -194,6 +154,35 @@ int main(int argc, char **argv, char *env[])
             }
 
             FileManagerVe.FileWriter();
+            #endif
+
+            // 验证计算操作
+            CFileManager FMve = CFileManager("./life.M.md");
+
+            FMve.SearchLineKey("## life.M11");
+            int begin_index = FMve.GetSearchLineIndex(1) + 4;
+
+            FMve.SearchLineKey("## life.M12");
+            int end_index = FMve.GetSearchLineIndex(1) - 1;
+
+            cout << FMve.CountRange(begin_index, end_index) << endl;
+
+            //FileManagerVe.FileWriter();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   Verify FAitfX
+        /**************************************************/
+        else if( X_CMD.GetCmdFront().compare("ve-itfx") == 0 )
+        {
+            CCmdTarget::TagTimeBait();
+
+            // 
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -215,6 +204,51 @@ int main(int argc, char **argv, char *env[])
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /* * * * * * * * * * * * * * * * * * * * * * */
+        //   Verify FileThread线程
+        /* * * * * * * * * * * * * * * * * * * * * * */
+        else if( !X_CMD.GetCmdFront().compare("ve-filet") )
+        {
+            FileVeT.Start();
+
+            sleep(10);
+
+            FileVeT.InsertLine(8, "THREAD TEST");
+            FileVeT.Control();
+
+            sleep(10);
+
+            FileVeT.DeleteLine(8);
+            FileVeT.Control();
+
+            sleep(5);
+
+            FileVeT.Join();
+
+            //cin.ignore();
+            continue;
+        }
+
+        /* * * * * * * * * * * * * * * * * * * * * * */
+        //   验证多线程同步机制
+        /* * * * * * * * * * * * * * * * * * * * * * */
+        else if( X_CMD.GetCmdFront().compare("ve-mutex") == 0 )
+        {   
+            CMultiThread mttest_a;
+            CMultiThread mttest_b;
+            CMultiThread mttest_c;
+
+            mttest_a.Start();
+            mttest_b.Start();
+            mttest_c.Start();
+            
+            mttest_a.Join();
+            mttest_b.Join();
+            mttest_c.Join();
 
             continue;
         }

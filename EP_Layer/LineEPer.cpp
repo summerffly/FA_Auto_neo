@@ -204,7 +204,7 @@ unsigned int CLineEPer::GeLineValueABS()
     return m_uni_LineValueABS;
 }
 
-int CLineEPer::GeLineValue()
+int CLineEPer::GetLineValue()
 {
     return m_int_LineValue;
 }

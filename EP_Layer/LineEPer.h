@@ -32,7 +32,7 @@ public:
     string GetFullLine();
     bool GetLineValuePM();
     unsigned int GeLineValueABS();
-    int GeLineValue();
+    int GetLineValue();
     bool GetLineModFlag();
 
     /****************************************/
