@@ -24,6 +24,11 @@ public:
 
     int InsertElement();
     void QueryElement();
+    string QueryElementL1Index(const string str_ChildElementL1, const unsigned int uni_ChildIndex);
+    string QueryElementL1Attribute(const string str_ChildElementL1, const string str_ChildAttribute,\
+                                   const string str_ChildAttributeContent);
+    string QueryElementL2(const string str_ChildElementL1, const string str_ChildElementL2,\
+                          const unsigned int uni_ChildIndex);
     int ModifyElement();
     void PrintXML();
 

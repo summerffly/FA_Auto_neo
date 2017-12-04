@@ -197,10 +197,13 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            CXMLParser xml_ve("./summertest.xml");
+            CXMLParser xml_ve("./FA_script_Ve.xml");
             //xml_ve.InsertElement();
             //xml_ve.ModifyElement();
-            xml_ve.PrintXML();
+            //cout << xml_ve.QueryElementL1Index(X_CMD.GetCmd(1), atoi(X_CMD.GetCmd(2).c_str())) << endl;
+            cout << xml_ve.QueryElementL1Attribute(X_CMD.GetCmd(1), X_CMD.GetCmd(2), X_CMD.GetCmd(3)) << endl;
+            //cout << xml_ve.QueryElementL2(X_CMD.GetCmd(1), X_CMD.GetCmd(2), atoi(X_CMD.GetCmd(3).c_str())) << endl;
+            //xml_ve.PrintXML();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
