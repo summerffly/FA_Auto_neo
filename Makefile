@@ -5,7 +5,7 @@ lop = ./OP_Layer/
 lep = ./EP_Layer/
 lfa = ./FA_Layer/
 
-obj_X = $(px)RegExLib.o $(px)X_CmdTarget.o $(px)X_XMLParser.o $(px)tinyxml2.o
+obj_X = $(px)RegExLib.o $(px)X_Tool.o $(px)X_CmdTarget.o $(px)X_XMLParser.o $(px)tinyxml2.o
 obj_thread = $(pt)Thread.o $(pt)MultiThread.o $(pt)FileThread.o
 obj_OP = $(lop)FileOPer.o
 obj_EP = $(lep)LineEPer.o $(lep)FileManager.o
@@ -19,6 +19,9 @@ FA_VeX.o: FA_VeX.cpp
 
 RegExLib.o: $(px)RegExLib.h $(px)RegExLib.cpp
 	g++ -c $(px)RegExLib.cpp
+
+X_Tool.o: $(px)X_Tool.h $(px)X_Tool.cpp
+	g++ -c $(px)X_Tool.cpp
 
 X_CmdTarget.o: $(px)X_CmdTarget.h $(px)X_CmdTarget.cpp
 	g++ -c $(px)X_CmdTarget.cpp

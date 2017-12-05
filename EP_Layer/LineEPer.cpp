@@ -282,7 +282,7 @@ void CLineEPer::UpdateFullLine()
     if(m_bol_LineModFlag == false)
         return;
 
-    char *cha_ValueABS = new char[8];     // tips 番茄@20171121 - 支持到十万级
+    char *cha_ValueABS = new char[9];     // tips 番茄@20171121 - 支持到百万级
     
     switch(m_uni_LineType)
     {

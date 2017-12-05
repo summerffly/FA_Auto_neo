@@ -11,6 +11,7 @@
 #include <sys/time.h>
 
 #include "./X_Frame/DefLib.h"
+#include "./X_Frame/X_Tool.h"
 #include "./X_Frame/X_CmdTarget.h"
 #include "./X_Frame/X_XMLParser.h"
 
@@ -182,7 +183,7 @@ int main(int argc, char **argv, char *env[])
         {
             CCmdTarget::TagTimeBait();
 
-            // 
+            FAitfX.CheckMonthExpense(X_CMD.GetCmd(1).c_str());
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -204,6 +205,24 @@ int main(int argc, char **argv, char *env[])
             cout << xml_ve.QueryElementL1Attribute(X_CMD.GetCmd(1), X_CMD.GetCmd(2), X_CMD.GetCmd(3)) << endl;
             //cout << xml_ve.QueryElementL2(X_CMD.GetCmd(1), X_CMD.GetCmd(2), atoi(X_CMD.GetCmd(3).c_str())) << endl;
             //xml_ve.PrintXML();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   Verify XTool
+        /**************************************************/
+        else if( X_CMD.GetCmdFront().compare("ve-tool") == 0 )
+        {
+            CCmdTarget::TagTimeBait();
+
+            //ENUM_MOMTH enm_Month = Jan;
+            int int_Value = atoi(X_CMD.GetCmd(1).c_str());
+            cout << int_Value << endl;
+            cout << CTool::TransOutFormat(int_Value) << endl;
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

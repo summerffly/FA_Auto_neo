@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include "./../X_Frame/X_Tool.h"
 #include "./../EP_Layer/FileManager.h"
 
 using namespace std;
@@ -16,6 +17,8 @@ class CFAitfX
 public:
     CFAitfX();
     ~CFAitfX();
+
+    void CheckMonthExpense(const string str_CurMonth);
 
 private:
     CFileManager m_cls_FM_TVT;
