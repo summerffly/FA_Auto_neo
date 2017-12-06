@@ -31,6 +31,7 @@ public:
     /****************************************/
     //   行直接操作区
     /****************************************/
+    unsigned int GetLineType(const int int_LineIndex);
     int GetLineValue(const int int_LineIndex);
     string GetFullLine(const int int_LineIndex);
 
@@ -54,6 +55,8 @@ public:
     //   计算操作区
     /****************************************/
     int CountRange(const unsigned int uni_RangeBeginIndex, const unsigned int uni_RangeEndIndex);
+    int CountRangeType(const unsigned int uni_RangeBeginIndex, const unsigned int uni_RangeEndIndex,\
+                       unsigned int uni_LineType);
 
 private:
     string m_str_FilePath;                      // .md文件路径

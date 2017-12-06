@@ -44,7 +44,7 @@ FileThread.o: $(pt)FileThread.h $(pt)FileThread.cpp
 FileOPer.o: $(lop)FileOPer.h $(lop)FileOPer.cpp
 	g++ -c $(lop)FileOPer.cpp
 
-LineEPer.o: $(lep)EP_Layer_DEF.h $(lep)LineEPer.h $(lep)LineEPer.cpp
+LineEPer.o: $(lep)LineEPer.h $(lep)LineEPer.cpp
 	g++ -c $(lep)LineEPer.cpp
 
 FileManager.o: $(lep)FileManager.h $(lep)FileManager.cpp

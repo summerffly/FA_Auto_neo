@@ -5,10 +5,25 @@
 //------------------------------//
 
 #include "LineEPer.h"
-#include "EP_Layer_DEF.h"
+
+#include "./../X_Frame/DefLib.h"
+#include "./../X_Frame/RegExLib.h"
 
 using namespace std;
 
+
+extern regex REP_HeadTitle;
+extern regex REP_SubTitle;
+extern regex REP_MonthTitle;
+
+extern regex REP_Blank;
+extern regex REP_Delimiter;
+extern regex REP_EOF;
+
+extern regex REP_FBric_Aggr;
+extern regex REP_FBric_TitleSum;
+extern regex REP_FBric_MonthSum;
+extern regex REP_FBric_LineUnit;
 
 CLineEPer::CLineEPer()
 {

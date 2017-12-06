@@ -6,6 +6,8 @@
 
 #include "FAitfX.h"
 
+#include "./../X_Frame/DefLib.h"
+
 using namespace std;
 
 
@@ -40,7 +42,7 @@ void CFAitfX::CheckMonthExpense(const string str_CurMonth)
     m_cls_FM_life.SearchLineKey(str_RangeBottom.c_str());
     unsigned int uni_RangeBottom = m_cls_FM_life.GetSearchLineIndex(1);
 
-    int int_MonthExpense = m_cls_FM_life.CountRange(uni_RangeTop+4, uni_RangeBottom-1);
+    int int_MonthExpense = m_cls_FM_life.CountRangeType(uni_RangeTop+4, uni_RangeBottom-1, LTYPE_FBIRC_LINEUINT);
 
     cout << "----------------------------------------" << endl;
     cout << "### " << str_CurMonth << "月支出校验 ###" << endl;

@@ -6,8 +6,8 @@
 
 #include "FileOPer.h"
 
-#include "./../X_Frame/RegExLib.h"
 #include "./../X_Frame/DefLib.h"
+#include "./../X_Frame/RegExLib.h"
 
 using namespace std;
 

@@ -59,6 +59,11 @@ int CFileManager::FileWriter(const char *cha_FullFileName)
     return m_cls_FileOPer.FileWriter(cha_FullFileName);
 }
 
+unsigned int CFileManager::GetLineType(const int int_LineIndex)
+{
+    return m_vec_cls_Line.at(int_LineIndex).GetLineType();
+}
+
 int CFileManager::GetLineValue(const int int_LineIndex)
 {
     return m_vec_cls_Line.at(int_LineIndex).GetLineValue();
@@ -164,6 +169,21 @@ int CFileManager::CountRange(const unsigned int uni_RangeBeginIndex, const unsig
     return int_Counter;
 }
 
+int CFileManager::CountRangeType(const unsigned int uni_RangeBeginIndex, const unsigned int uni_RangeEndIndex,\
+                                 unsigned int uni_LineType)
+{
+    int int_Counter = 0;
+
+    for(int i = uni_RangeBeginIndex; i <= uni_RangeEndIndex; i++)
+    {
+        if( m_vec_cls_Line.at(i).GetLineType() == uni_LineType )
+        {
+            int_Counter += m_vec_cls_Line.at(i).GetLineValue();
+        }
+    }
+
+    return int_Counter;
+}
 
 //------------------------------//
 //   river flows in summer
