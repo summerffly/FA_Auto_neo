@@ -19,6 +19,9 @@ public:
     ~CFAitfX();
 
     void CheckMonthExpense(const string str_CurMonth);
+    void CheckMonthSurplus(const string str_CurMonth);
+
+    void CheckSubMonthExpense(const string str_SubMonthKey, const string str_CurMonth);
 
 private:
     CFileManager m_cls_FM_TVT;

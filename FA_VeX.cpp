@@ -183,7 +183,7 @@ int main(int argc, char **argv, char *env[])
         {
             CCmdTarget::TagTimeBait();
 
-            FAitfX.CheckMonthExpense(X_CMD.GetCmd(1).c_str());
+            FAitfX.CheckSubMonthExpense(X_CMD.GetCmd(1).c_str(), X_CMD.GetCmd(2).c_str());
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
