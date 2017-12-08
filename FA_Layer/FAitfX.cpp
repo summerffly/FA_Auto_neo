@@ -131,6 +131,40 @@ void CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string st
     cout << "----------------------------------------" << endl;
 }
 
+/**************************************************/
+//   校验 Tt分项 月度支出
+/**************************************************/
+void CFAitfX::CheckTitleExpense(const string str_TitleKey)
+{
+    if(FM_TITLE(str_TitleKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!        Title KeyWord Error       !!!" << endl;
+        cout << "----------------------------------------" << endl;
+        return;
+    }
+
+    string str_RangeTop = "## " + str_TitleKey;
+    string str_RangeBottom("## Total");
+
+    m_cls_FM_TVT.SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_TVTLine = m_cls_FM_TVT.GetSearchLineIndex(1);
+
+    unsigned int uni_RangeTop = 2;
+    FM_TITLE(str_TitleKey).SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = FM_TITLE(str_TitleKey).GetSearchLineIndex(1);
+
+    int int_TitleExpense = FM_TITLE(str_TitleKey).CountRangeType(uni_RangeTop, uni_RangeBottom-1,\
+                                       LTYPE_FBIRC_LINEUINT);
+
+    cout << "----------------------------------------" << endl;
+    cout << "### " << str_TitleKey << "/支出 ###" << endl;
+    cout << "TVT读取值: " << CTool::TransOutFormat(m_cls_FM_TVT.GetLineValue(uni_TVTLine+1)) << endl;
+    cout << "Tt读取值: " << CTool::TransOutFormat(FM_TITLE(str_TitleKey).GetLineValue(uni_RangeBottom+2)) << endl;
+    cout << "Tt校验值: " << CTool::TransOutFormat(int_TitleExpense) << endl;
+    cout << "----------------------------------------" << endl;
+}
+
 //------------------------------//
 //   river flows in summer
 //------------------------------//

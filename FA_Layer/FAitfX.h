@@ -22,6 +22,7 @@ public:
     void CheckMonthSurplus(const string str_CurMonth);
 
     void CheckSubMonthExpense(const string str_SubMonthKey, const string str_CurMonth);
+    void CheckTitleExpense(const string str_TitleKey);
 
 private:
     CFileManager m_cls_FM_TVT;
