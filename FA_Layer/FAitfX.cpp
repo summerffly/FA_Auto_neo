@@ -10,6 +10,18 @@
 
 using namespace std;
 
+// tips 番茄@20170812 - 使用带参宏函数Key填错会有风险，用m_cls_FM_TVT的head进行校验
+#define FM_SUBMONTH(str)  ((!(str).compare("Books"))?(m_cls_FM_sm_Books):\
+                           ((!(str).compare("KEEP"))?(m_cls_FM_sm_KEEP):\
+                           ((!(str).compare("TB"))?(m_cls_FM_sm_TB):\
+                           ((!(str).compare("sa"))?(m_cls_FM_sm_sa):(m_cls_FM_TVT)))) )
+
+// tips 番茄@20170812 - 使用带参宏函数Key填错会有风险，用m_cls_FM_TVT的head进行校验
+#define FM_TITLE(str)  ((!(str).compare("DK"))?(m_cls_FM_tt_DK):\
+                        ((!(str).compare("NS"))?(m_cls_FM_tt_NS):\
+                        ((!(str).compare("travel"))?(m_cls_FM_tt_travel):\
+                        ((!(str).compare("lottery"))?(m_cls_FM_tt_lottery):(m_cls_FM_TVT)))) )
+
 
 CFAitfX::CFAitfX()
 {
@@ -89,22 +101,33 @@ void CFAitfX::CheckMonthSurplus(const string str_CurMonth)
 /**************************************************/
 void CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str_CurMonth)
 {
+    if(FM_SUBMONTH(str_SubMonthKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!      SubMonth KeyWord Error      !!!" << endl;
+        cout << "----------------------------------------" << endl;
+        return;
+    }
+
     string str_RangeTop = str_SubMonthKey + ".M" + str_CurMonth;
     string str_RangeBottom = str_SubMonthKey + ".M" + CTool::GenerateNextMonth(str_CurMonth);
 
     m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
     unsigned int uni_lifeLine = m_cls_FM_life.GetSearchLineIndex(1);
-    //m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
-    //unsigned int uni_RangeTop = m_cls_FM_life.GetSearchLineIndex(1);
-    //m_cls_FM_life.SearchLineKey(str_RangeBottom.c_str());
-    //unsigned int uni_RangeBottom = m_cls_FM_life.GetSearchLineIndex(1);
 
-    //int int_MonthExpense = m_cls_FM_life.CountRangeType(uni_RangeTop+4, uni_RangeBottom-1, LTYPE_FBIRC_LINEUINT);
+    FM_SUBMONTH(str_SubMonthKey).SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = FM_SUBMONTH(str_SubMonthKey).GetSearchLineIndex(1);
+    FM_SUBMONTH(str_SubMonthKey).SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = FM_SUBMONTH(str_SubMonthKey).GetSearchLineIndex(1);
+
+    int int_MonthExpense = FM_SUBMONTH(str_SubMonthKey).CountRangeType(uni_RangeTop+2, uni_RangeBottom-1,\
+                                       LTYPE_FBIRC_LINEUINT);
 
     cout << "----------------------------------------" << endl;
     cout << "### " << str_CurMonth << "月/" << str_SubMonthKey << "支出 ###" << endl;
     cout << "life.M读取值: " << CTool::TransOutFormat(m_cls_FM_life.GetLineValue(uni_lifeLine)) << endl;
-    //cout << "校验值: " << CTool::TransOutFormat(int_MonthExpense) << endl;
+    cout << "sub.M读取值: " << CTool::TransOutFormat(FM_SUBMONTH(str_SubMonthKey).GetLineValue(uni_RangeTop+1)) << endl;
+    cout << "sub.M校验值: " << CTool::TransOutFormat(int_MonthExpense) << endl;
     cout << "----------------------------------------" << endl;
 }
 
