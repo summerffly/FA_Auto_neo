@@ -18,11 +18,16 @@ public:
     CFAitfX();
     ~CFAitfX();
 
-    void CheckMonthExpense(const string str_CurMonth);
-    void CheckMonthSurplus(const string str_CurMonth);
+    void CheckMonthExpense(const string str_SelMonth);
+    void CheckMonthSurplus(const string str_SelMonth);
+    void UpdateMonthSurplus(const string str_SelMonth);
+    void ModifyMonthSurplus(const string str_SelMonth, const string str_MonthKey,\
+                            const unsigned int uni_ModValueABS);
 
-    void CheckSubMonthExpense(const string str_SubMonthKey, const string str_CurMonth);
+    void CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth);
     void CheckTitleExpense(const string str_TitleKey);
+
+    void WriteAllFile();
 
 private:
     CFileManager m_cls_FM_TVT;

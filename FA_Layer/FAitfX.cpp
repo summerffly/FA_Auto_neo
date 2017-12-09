@@ -45,12 +45,12 @@ CFAitfX::~CFAitfX()
 /**************************************************/
 //   校验 life.M 月度支出
 /**************************************************/
-void CFAitfX::CheckMonthExpense(const string str_CurMonth)
+void CFAitfX::CheckMonthExpense(const string str_SelMonth)
 {
     string str_RangeTop("## life.M");
-    str_RangeTop += str_CurMonth;
+    str_RangeTop += str_SelMonth;
     string str_RangeBottom("## life.M");
-    str_RangeBottom += CTool::GenerateNextMonth(str_CurMonth);
+    str_RangeBottom += CTool::GenerateNextMonth(str_SelMonth);
 
     m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
     unsigned int uni_RangeTop = m_cls_FM_life.GetSearchLineIndex(1);
@@ -60,7 +60,7 @@ void CFAitfX::CheckMonthExpense(const string str_CurMonth)
     int int_MonthExpense = m_cls_FM_life.CountRangeType(uni_RangeTop+4, uni_RangeBottom-1, LTYPE_FBIRC_LINEUINT);
 
     cout << "----------------------------------------" << endl;
-    cout << "### " << str_CurMonth << "月/支出 ###" << endl;
+    cout << "### " << str_SelMonth << "月/支出 ###" << endl;
     cout << "读取值: " << CTool::TransOutFormat(m_cls_FM_life.GetLineValue(uni_RangeTop+2)) << endl;
     cout << "校验值: " << CTool::TransOutFormat(int_MonthExpense) << endl;
     cout << "----------------------------------------" << endl;
@@ -69,12 +69,10 @@ void CFAitfX::CheckMonthExpense(const string str_CurMonth)
 /**************************************************/
 //   校验 life.M 月度收支
 /**************************************************/
-void CFAitfX::CheckMonthSurplus(const string str_CurMonth)
+void CFAitfX::CheckMonthSurplus(const string str_SelMonth)
 {
-    string str_RangeTop("## life.M");
-    str_RangeTop += str_CurMonth;
-    string str_RangeBottom("## life.M");
-    str_RangeBottom += CTool::GenerateNextMonth(str_CurMonth);
+    string str_RangeTop = "## life.M" + str_SelMonth;
+    string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
 
     m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
     unsigned int uni_RangeTop = m_cls_FM_life.GetSearchLineIndex(1);
@@ -85,21 +83,110 @@ void CFAitfX::CheckMonthSurplus(const string str_CurMonth)
     int int_MonthExpense = m_cls_FM_life.CountRangeType(uni_RangeTop+4, uni_RangeBottom-1, LTYPE_FBIRC_LINEUINT);
 
     cout << "----------------------------------------" << endl;
-    cout << "### " << str_CurMonth << "月/薪资 ###" << endl;
+    cout << "### " << str_SelMonth << "月/薪资 ###" << endl;
     cout << "读取值: " << CTool::TransOutFormat(uni_MonthSalary) << endl;
-    cout << "### " << str_CurMonth << "月/支出 ###" << endl;
+    cout << "### " << str_SelMonth << "月/支出 ###" << endl;
     cout << "读取值: " << CTool::TransOutFormat(m_cls_FM_life.GetLineValue(uni_RangeTop+2)) << endl;
     cout << "校验值: " << CTool::TransOutFormat(int_MonthExpense) << endl;
-    cout << "### " << str_CurMonth << "月/结余 ###" << endl;
+    cout << "### " << str_SelMonth << "月/结余 ###" << endl;
     cout << "读取值: " << CTool::TransOutFormat(m_cls_FM_life.GetLineValue(uni_RangeTop+3)) << endl;
     cout << "校验值: " << CTool::TransOutFormat(uni_MonthSalary + int_MonthExpense) << endl;
     cout << "----------------------------------------" << endl;
 }
 
 /**************************************************/
+//   更新 life.M 月度收支
+/**************************************************/
+void CFAitfX::UpdateMonthSurplus(const string str_SelMonth)
+{
+    string str_RangeTop = "## life.M" + str_SelMonth;
+    string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
+
+    m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = m_cls_FM_life.GetSearchLineIndex(1);
+    m_cls_FM_life.SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = m_cls_FM_life.GetSearchLineIndex(1);
+
+    unsigned int uni_MonthSalary = m_cls_FM_life.GetLineValue(uni_RangeTop+1);
+    int int_MonthExpense = m_cls_FM_life.GetLineValue(uni_RangeTop+2);
+    int int_MonthSurplus = m_cls_FM_life.GetLineValue(uni_RangeTop+3);
+    int int_MonthExpenseUd = m_cls_FM_life.CountRangeType(uni_RangeTop+4, uni_RangeBottom-1, LTYPE_FBIRC_LINEUINT);
+    int int_MonthSurplusUd = uni_MonthSalary + int_MonthExpenseUd;
+
+    m_cls_FM_life.ModifyLineValue(uni_RangeTop+2, int_MonthExpenseUd);
+    m_cls_FM_life.ModifyLineValue(uni_RangeTop+3, int_MonthSurplusUd);
+
+    cout << "----------------------------------------" << endl;
+    cout << "### 更新" << str_SelMonth << "月/收支 ###" << endl;
+    cout << "初始薪资值: " << CTool::TransOutFormat(uni_MonthSalary) << endl;
+    cout << "初始支出值: " << CTool::TransOutFormat(int_MonthExpense) << endl;
+    cout << "初始结余值: " << CTool::TransOutFormat(int_MonthSurplus) << endl;
+    cout << "----------------------------------------" << endl;
+    cout << "更新支出值: " << CTool::TransOutFormat(int_MonthExpenseUd) << endl;
+    cout << "更新结余值: " << CTool::TransOutFormat(int_MonthSurplusUd) << endl;
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
+//   修改 life.M 月度收支
+//   默认为增加单行支出的操作
+/**************************************************/
+void CFAitfX::ModifyMonthSurplus(const string str_SelMonth, const string str_MonthKey,\
+                                 const unsigned int uni_ModValueABS)
+{
+    string str_RangeTop = "## life.M" + str_SelMonth;
+    string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
+
+    m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = m_cls_FM_life.GetSearchLineIndex(1);
+    m_cls_FM_life.SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = m_cls_FM_life.GetSearchLineIndex(1);
+    m_cls_FM_life.SearchRangeLineKey(str_MonthKey.c_str(), uni_RangeTop, uni_RangeBottom);
+    unsigned int uni_KeyLine = m_cls_FM_life.GetSearchLineIndex(1);
+
+    // tips 番茄@20171209 - 手动可能输错的地方，增加ERROR校验
+    if(m_cls_FM_life.GetSearchFullLine(1).compare("ERROR") == 0)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!     No Line Contain Input Key    !!!" << endl;
+        cout << "----------------------------------------" << endl;
+
+        return;
+    }
+
+    // 修改 单行金额
+    int int_LineValue = m_cls_FM_life.GetLineValue(uni_KeyLine);
+    m_cls_FM_life.ModifyLineValue(uni_KeyLine, int_LineValue-uni_ModValueABS);
+
+    cout << m_cls_FM_life.GetSearchFullLine(1) << endl;
+
+    // 读取 初始收支金额
+    unsigned int uni_MonthSalary = m_cls_FM_life.GetLineValue(uni_RangeTop+1);
+    int int_MonthExpense = m_cls_FM_life.GetLineValue(uni_RangeTop+2);
+    int int_MonthSurplus = m_cls_FM_life.GetLineValue(uni_RangeTop+3);
+
+    // 统计&修改 收支金额
+    int int_MonthExpenseUd = m_cls_FM_life.CountRangeType(uni_RangeTop+4, uni_RangeBottom-1, LTYPE_FBIRC_LINEUINT);
+    int int_MonthSurplusUd = uni_MonthSalary + int_MonthExpenseUd;
+
+    m_cls_FM_life.ModifyLineValue(uni_RangeTop+2, int_MonthExpenseUd);
+    m_cls_FM_life.ModifyLineValue(uni_RangeTop+3, int_MonthSurplusUd);
+
+    cout << "----------------------------------------" << endl;
+    cout << "### 更新" << str_SelMonth << "月/收支 ###" << endl;
+    cout << "初始薪资值: " << CTool::TransOutFormat(uni_MonthSalary) << endl;
+    cout << "初始支出值: " << CTool::TransOutFormat(int_MonthExpense) << endl;
+    cout << "初始结余值: " << CTool::TransOutFormat(int_MonthSurplus) << endl;
+    cout << "----------------------------------------" << endl;
+    cout << "修改支出值: " << CTool::TransOutFormat(int_MonthExpenseUd) << endl;
+    cout << "修改结余值: " << CTool::TransOutFormat(int_MonthSurplusUd) << endl;
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
 //   校验 子项.M 月度支出
 /**************************************************/
-void CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str_CurMonth)
+void CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth)
 {
     if(FM_SUBMONTH(str_SubMonthKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
     {
@@ -109,8 +196,8 @@ void CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string st
         return;
     }
 
-    string str_RangeTop = str_SubMonthKey + ".M" + str_CurMonth;
-    string str_RangeBottom = str_SubMonthKey + ".M" + CTool::GenerateNextMonth(str_CurMonth);
+    string str_RangeTop = str_SubMonthKey + ".M" + str_SelMonth;
+    string str_RangeBottom = str_SubMonthKey + ".M" + CTool::GenerateNextMonth(str_SelMonth);
 
     m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
     unsigned int uni_lifeLine = m_cls_FM_life.GetSearchLineIndex(1);
@@ -124,7 +211,7 @@ void CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string st
                                        LTYPE_FBIRC_LINEUINT);
 
     cout << "----------------------------------------" << endl;
-    cout << "### " << str_CurMonth << "月/" << str_SubMonthKey << "支出 ###" << endl;
+    cout << "### " << str_SelMonth << "月/" << str_SubMonthKey << "支出 ###" << endl;
     cout << "life.M读取值: " << CTool::TransOutFormat(m_cls_FM_life.GetLineValue(uni_lifeLine)) << endl;
     cout << "sub.M读取值: " << CTool::TransOutFormat(FM_SUBMONTH(str_SubMonthKey).GetLineValue(uni_RangeTop+1)) << endl;
     cout << "sub.M校验值: " << CTool::TransOutFormat(int_MonthExpense) << endl;
@@ -164,6 +251,21 @@ void CFAitfX::CheckTitleExpense(const string str_TitleKey)
     cout << "Tt校验值: " << CTool::TransOutFormat(int_TitleExpense) << endl;
     cout << "----------------------------------------" << endl;
 }
+
+void CFAitfX::WriteAllFile()
+{
+    m_cls_FM_TVT.FileWriter();
+    m_cls_FM_life.FileWriter();
+    m_cls_FM_sm_Books.FileWriter();
+    m_cls_FM_sm_KEEP.FileWriter();
+    m_cls_FM_sm_TB.FileWriter();
+    m_cls_FM_sm_sa.FileWriter();
+    m_cls_FM_tt_DK.FileWriter();
+    m_cls_FM_tt_NS.FileWriter();
+    m_cls_FM_tt_travel.FileWriter();
+    m_cls_FM_tt_lottery.FileWriter();
+}
+
 
 //------------------------------//
 //   river flows in summer

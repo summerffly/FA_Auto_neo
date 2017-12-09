@@ -39,8 +39,6 @@ int main(int argc, char **argv, char *env[])
     CFileManager FileManagerVe = CFileManager("./FA_TVT_VeX.md");
     CFAitfX FAitfX = CFAitfX();
 
-    CFileThread FileVeT = CFileThread("./FA_TVT_VeXT.md");
-
     // Advanced_CMD循环模式
     CCmdTarget X_CMD = CCmdTarget();
     char CMD_linebuffer[MAX_COMMAND];
@@ -93,10 +91,8 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            CFileOPer FileVeV = CFileOPer("./FileTest/FileTestTest/FA_TVT_VeX.md");
-
-            cout << FileVeV.GetFilePath() << endl;
-            cout << FileVeV.GetFileName() << endl;
+            cout << FileVe.GetFilePath() << endl;
+            cout << FileVe.GetFileName() << endl;
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -183,7 +179,8 @@ int main(int argc, char **argv, char *env[])
         {
             CCmdTarget::TagTimeBait();
 
-            FAitfX.CheckTitleExpense(X_CMD.GetCmd(1).c_str());
+            FAitfX.ModifyMonthSurplus(X_CMD.GetCmd(1).c_str(), X_CMD.GetCmd(2).c_str(), atoi(X_CMD.GetCmd(3).c_str()));
+            FAitfX.WriteAllFile();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -235,6 +232,8 @@ int main(int argc, char **argv, char *env[])
         /* * * * * * * * * * * * * * * * * * * * * * */
         else if( !X_CMD.GetCmdFront().compare("ve-filet") )
         {
+            CFileThread FileVeT = CFileThread("./FA_TVT_VeX.md");
+
             FileVeT.Start();
 
             sleep(10);
