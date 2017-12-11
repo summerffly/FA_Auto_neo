@@ -25,7 +25,9 @@ public:
                             const unsigned int uni_ModValueABS);
 
     void CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth);
+
     void CheckTitleExpense(const string str_TitleKey);
+    void UpdateTitleExpense(const string str_TitleKey);
 
     void WriteAllFile();
 

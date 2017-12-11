@@ -179,8 +179,29 @@ int main(int argc, char **argv, char *env[])
         {
             CCmdTarget::TagTimeBait();
 
-            FAitfX.ModifyMonthSurplus(X_CMD.GetCmd(1).c_str(), X_CMD.GetCmd(2).c_str(), atoi(X_CMD.GetCmd(3).c_str()));
-            FAitfX.WriteAllFile();
+            //FAitfX.ModifyMonthSurplus(X_CMD.GetCmd(1).c_str(), X_CMD.GetCmd(2).c_str(), atoi(X_CMD.GetCmd(3).c_str()));
+            //FAitfX.WriteAllFile();
+            if( X_CMD.GetCmd(1).compare("check-submonth")==0 )
+            {
+                FAitfX.CheckSubMonthExpense(X_CMD.GetCmd(2), X_CMD.GetCmd(3));
+            }
+            else if( X_CMD.GetCmd(1).compare("check-title")==0 )
+            {
+                FAitfX.CheckTitleExpense(X_CMD.GetCmd(2));
+            }
+            else if( X_CMD.GetCmd(1).compare("update-title")==0 )
+            {
+                FAitfX.UpdateTitleExpense(X_CMD.GetCmd(2));
+                FAitfX.WriteAllFile();
+            }
+            else
+            {
+                cout << "----------------------------------------" << endl;
+                cout << "!!!             Error CMD            !!!" << endl;
+                cout << "----------------------------------------" << endl;
+
+                continue;
+            }
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
