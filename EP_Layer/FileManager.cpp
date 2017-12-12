@@ -21,7 +21,7 @@ CFileManager::CFileManager(const char *cha_FullFileName)
     m_str_FilePath = m_cls_FileOPer.GetFilePath();
     m_str_FileName = m_cls_FileOPer.GetFileName();
 
-    VecLineInit();
+    VecLineSync();
 }
 
 CFileManager::~CFileManager()
@@ -29,7 +29,7 @@ CFileManager::~CFileManager()
     // Do Nothing
 }
 
-void CFileManager::VecLineInit()
+void CFileManager::VecLineSync()
 {
     m_vec_cls_Line.clear();
     // tips 番茄@20171129 - 指针才需要new空间
@@ -202,5 +202,5 @@ int CFileManager::CountRangeType(const unsigned int uni_RangeBeginIndex, const u
 }
 
 //------------------------------//
-//   river flows in summer
+//   River flows in summer
 //------------------------------//

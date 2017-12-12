@@ -7,6 +7,9 @@
 #ifndef _DEFLIB_H_
 #define _DEFLIB_H_
 
+/****************************************/
+//   Global Scope DEF
+/****************************************/
 
 #define MAX_COMMAND         128     // CMD最大字符数
 #define MAX_FULLFILENAME    128     // .md文件_最大文件全名长度
@@ -16,6 +19,7 @@
 /****************************************/
 //   EP_Layer DEF
 /****************************************/
+
 #define LTYPE_HEADTITLE     1   // 总标题
 #define LTYPE_SUBTITLE      2   // 单项标题
 #define LTYPE_MONTHTITLE    3   // 月度标题

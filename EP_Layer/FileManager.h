@@ -19,7 +19,7 @@ public:
     CFileManager(const char *cha_FileName);
     ~CFileManager();
 
-    void VecLineInit();
+    void VecLineSync();
     int GetLineNum();
 
     /****************************************/
@@ -70,5 +70,5 @@ private:
 };
 
 //------------------------------//
-//   river flows in summer
+//   River flows in summer
 //------------------------------//

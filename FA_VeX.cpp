@@ -185,6 +185,17 @@ int main(int argc, char **argv, char *env[])
             {
                 FAitfX.CheckSubMonthExpense(X_CMD.GetCmd(2), X_CMD.GetCmd(3));
             }
+            else if( X_CMD.GetCmd(1).compare("update-submonth")==0 )
+            {
+                FAitfX.UpdateSubMonthExpense(X_CMD.GetCmd(2), X_CMD.GetCmd(3));
+                FAitfX.WriteAllFile();
+            }
+            else if( X_CMD.GetCmd(1).compare("append-submonth")==0 )
+            {
+                FAitfX.AppendSubMonthExpense(X_CMD.GetCmd(2), X_CMD.GetCmd(3),\
+                                             (-1)*atoi(X_CMD.GetCmd(4).c_str()), X_CMD.GetCmd(5));
+                FAitfX.WriteAllFile();
+            }
             else if( X_CMD.GetCmd(1).compare("check-title")==0 )
             {
                 FAitfX.CheckTitleExpense(X_CMD.GetCmd(2));
@@ -192,6 +203,12 @@ int main(int argc, char **argv, char *env[])
             else if( X_CMD.GetCmd(1).compare("update-title")==0 )
             {
                 FAitfX.UpdateTitleExpense(X_CMD.GetCmd(2));
+                FAitfX.WriteAllFile();
+            }
+            else if( X_CMD.GetCmd(1).compare("append-title")==0 )
+            {
+                FAitfX.AppendTitleExpense(X_CMD.GetCmd(2),\
+                                          (-1)*atoi(X_CMD.GetCmd(3).c_str()), X_CMD.GetCmd(4));
                 FAitfX.WriteAllFile();
             }
             else
@@ -312,5 +329,5 @@ int main(int argc, char **argv, char *env[])
 }
 
 //------------------------------//
-//   river flows in summer
+//   River flows in summer
 //------------------------------//

@@ -386,5 +386,5 @@ bool CLineEPer::IsContainKey(const char *cha_Key)
 
 
 //------------------------------//
-//   river flows in summer
+//   River flows in summer
 //------------------------------//
