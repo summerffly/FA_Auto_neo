@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FA_script>
+    <Month Atr="origin">09</Month>
+    <Month Atr="current">12</Month>
+    <FA_Struct Atr="TVT">
+        <FAItem Atr="Title">lottery</FAItem>
+        <FAItem Atr="Title">DK</FAItem>
+        <FAItem Atr="Title">NS</FAItem>
+        <FAItem Atr="Title">travel</FAItem>
+        <FAItem Atr="F">当前财富</FAItem>
+        <FAItem Atr="FTail">押金_壹公寓</FAItem>
+        <FAItem Atr="FTail">押金_mobike</FAItem>
+        <FAItem Atr="FTail">押金_ofo</FAItem>
+        <FAItem Atr="FTail">蚂蚁借呗</FAItem>
+        <FAItem Atr="FF">广发银行</FAItem>
+        <FAItem Atr="FFF">余额宝</FAItem>
+    </FA_Struct>
+</FA_script>

@@ -5,7 +5,7 @@ lop = ./OP_Layer/
 lep = ./EP_Layer/
 lfa = ./FA_Layer/
 
-obj_X = $(px)RegExLib.o $(px)X_Tool.o $(px)X_CmdTarget.o $(px)X_XMLParser.o $(px)tinyxml2.o
+obj_X = $(px)RegExLib.o $(px)X_Tool.o $(px)X_CmdTarget.o $(px)X_CFGLoader.o $(px)X_XMLParser.o $(px)tinyxml2.o
 obj_thread = $(pt)Thread.o $(pt)MultiThread.o $(pt)FileThread.o
 obj_OP = $(lop)FileOPer.o
 obj_EP = $(lep)LineEPer.o $(lep)FileManager.o
@@ -25,6 +25,9 @@ X_Tool.o: $(px)X_Tool.h $(px)X_Tool.cpp
 
 X_CmdTarget.o: $(px)X_CmdTarget.h $(px)X_CmdTarget.cpp
 	g++ -c $(px)X_CmdTarget.cpp
+
+X_CFGLoader.o: $(px)X_CFGLoader.h $(px)X_CFGLoader.cpp
+	g++ -c $(px)X_CFGLoader.cpp
 
 X_XMLParser.o: $(px)X_XMLParser.h $(px)X_XMLParser.cpp
 	g++ -c $(px)X_XMLParser.cpp

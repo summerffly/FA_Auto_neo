@@ -14,6 +14,7 @@
 #include "./X_Frame/X_Tool.h"
 #include "./X_Frame/X_CmdTarget.h"
 #include "./X_Frame/X_XMLParser.h"
+#include "./X_Frame/X_CFGLoader.h"
 
 #include "./OP_Layer/FileOPer.h"
 #include "./EP_Layer/LineEPer.h"
@@ -240,6 +241,32 @@ int main(int argc, char **argv, char *env[])
             cout << xml_ve.QueryElementL1Attribute(X_CMD.GetCmd(1), X_CMD.GetCmd(2), X_CMD.GetCmd(3)) << endl;
             //cout << xml_ve.QueryElementL2(X_CMD.GetCmd(1), X_CMD.GetCmd(2), atoi(X_CMD.GetCmd(3).c_str())) << endl;
             //xml_ve.PrintXML();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   Verify CFGLoader
+        /**************************************************/
+        else if( X_CMD.GetCmdFront().compare("ve-cfg") == 0 )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            CCFGLoader::LoadCFG("./FA_script_Ve.xml");
+            CCFGLoader::LoadMonth();
+            CCFGLoader::LoadFA();
+            //cout << CCFGLoader::m_str_CFGPathName << endl;
+            //cout << CCFGLoader::m_str_OriginMonth << endl;
+            //cout << CCFGLoader::m_str_CurrentMonth << endl;
+            for( int i=0; i< CCFGLoader::m_vec_stc_FAItem.size(); i++ )
+            {
+                cout << "FAItem计数值: " << i+1 << endl;
+                cout << CCFGLoader::m_vec_stc_FAItem.at(i).str_ItemContent << endl;
+                cout << CCFGLoader::m_vec_stc_FAItem.at(i).str_ItemAttrbute << endl;
+            }
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

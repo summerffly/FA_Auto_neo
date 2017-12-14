@@ -32,48 +32,6 @@ void CXMLParser::PrintXML()
 }
 
 
-int CXMLParser::InsertElement()
-{
-    XMLElement *xml_root = m_xml_dom.RootElement();
-
-    XMLElement *xml_element = m_xml_dom.NewElement("Test");
-    xml_element->SetAttribute("Name", "summer");
-    xml_root->InsertEndChild(xml_element);
-
-    XMLElement *xml_subelement_A = m_xml_dom.NewElement("Phone");
-    xml_subelement_A->InsertEndChild(m_xml_dom.NewText("iPhone"));
-    xml_element->InsertEndChild(xml_subelement_A);
-
-    XMLElement *xml_subelement_B = m_xml_dom.NewElement("Phone");
-    xml_subelement_B->InsertEndChild(m_xml_dom.NewText("smartisan"));
-    xml_element->InsertEndChild(xml_subelement_B);
-
-    return m_xml_dom.SaveFile(m_str_FilePath.c_str());
-}
-
-
-void CXMLParser::QueryElement()
-{
-    XMLElement *xml_root = m_xml_dom.RootElement();
-
-    XMLElement *xml_element = xml_root->FirstChildElement("Test");
-    while(xml_element != NULL)
-    {
-        string name("summer");
-        if(xml_element->Attribute("Name") == name)   // name.c_str()就会无效，为什么？
-        {
-            XMLElement *xml_subelement = xml_element->FirstChildElement("Phone");
-            cout << "SubElement: " << xml_subelement->GetText() << endl;
-
-            xml_subelement = xml_subelement->NextSiblingElement();
-            cout << "SubElement: " << xml_subelement->GetText() << endl;
-            break;
-        }
-        
-        xml_element = xml_element -> NextSiblingElement();   //下一个兄弟节点
-    }
-}
-
 string CXMLParser::QueryElementL1Index(const string str_ChildElementL1, const unsigned int uni_ChildIndex)
 {
     XMLElement *xml_root = m_xml_dom.RootElement();
@@ -165,8 +123,9 @@ string CXMLParser::QueryElementL1Attribute(const string str_ChildElementL1, cons
 
 }
 
-string CXMLParser::QueryElementL2(const string str_ChildElementL1, const string str_ChildElementL2,\
-                                  const unsigned int uni_ChildIndex)
+// tips 番茄@20171214 - 暂时取消错误cout，用空字符串来判断
+string CXMLParser::QueryElementL2Index(const string str_ChildElementL1, const string str_ChildElementL2,\
+                                       const unsigned int uni_ChildIndex)
 {
     XMLElement *xml_root = m_xml_dom.RootElement();
     string str_RetChildElement = string("");
@@ -181,9 +140,9 @@ string CXMLParser::QueryElementL2(const string str_ChildElementL1, const string 
     }
     else
     {
-        cout << "----------------------------------------" << endl;
-        cout << "!!!       Empty Element in XML       !!!" << endl;
-        cout << "----------------------------------------" << endl;
+        //cout << "----------------------------------------" << endl;
+        //cout << "!!!       Empty Element in XML       !!!" << endl;
+        //cout << "----------------------------------------" << endl;
         return str_RetChildElement;
     }
 
@@ -204,9 +163,9 @@ string CXMLParser::QueryElementL2(const string str_ChildElementL1, const string 
         }
         else
         {
-            cout << "----------------------------------------" << endl;
-            cout << "!!!       Empty Element in XML       !!!" << endl;
-            cout << "----------------------------------------" << endl;
+            //cout << "----------------------------------------" << endl;
+            //cout << "!!!       Empty Element in XML       !!!" << endl;
+            //cout << "----------------------------------------" << endl;
             return str_RetChildElement;
         }
     }
@@ -225,12 +184,100 @@ string CXMLParser::QueryElementL2(const string str_ChildElementL1, const string 
         }
         else
         {
-            cout << "----------------------------------------" << endl;
-            cout << "!!!       Empty Element in XML       !!!" << endl;
-            cout << "----------------------------------------" << endl;
+            //cout << "----------------------------------------" << endl;
+            //cout << "!!!       Empty Element in XML       !!!" << endl;
+            //cout << "----------------------------------------" << endl;
             return str_RetChildElement;
         }
     }
+}
+
+string CXMLParser::QueryAttrbuteL2Index(const string str_ChildElementL1, const string str_ChildElementL2,\
+                                        const string str_ChildAttribute, const unsigned int uni_ChildIndex)
+{
+    XMLElement *xml_root = m_xml_dom.RootElement();
+    string str_RetChildAttrbute = string("");
+    unsigned int uni_ClildCounter = 1;
+
+    XMLElement *xml_elementL1 = xml_root->FirstChildElement(str_ChildElementL1.c_str());
+    XMLElement *xml_elementL2;
+
+    if( xml_elementL1 != NULL )
+    {
+        xml_elementL2 = xml_elementL1->FirstChildElement(str_ChildElementL2.c_str());
+    }
+    else
+    {
+        //cout << "----------------------------------------" << endl;
+        //cout << "!!!       Empty Element in XML       !!!" << endl;
+        //cout << "----------------------------------------" << endl;
+        return str_RetChildAttrbute;
+    }
+
+    if(uni_ChildIndex == 0)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!         Error Child Index        !!!" << endl;
+        cout << "----------------------------------------" << endl;
+        return str_RetChildAttrbute;
+    }
+    
+    if( uni_ChildIndex == 1 )
+    {
+        if( xml_elementL2 != NULL )
+        {
+            str_RetChildAttrbute += xml_elementL2->Attribute(str_ChildAttribute.c_str());
+            return str_RetChildAttrbute;
+        }
+        else
+        {
+            //cout << "----------------------------------------" << endl;
+            //cout << "!!!       Empty Element in XML       !!!" << endl;
+            //cout << "----------------------------------------" << endl;
+            return str_RetChildAttrbute;
+        }
+    }
+    else
+    {
+        while( uni_ClildCounter < uni_ChildIndex )
+        {
+            xml_elementL2 = xml_elementL2->NextSiblingElement();
+            uni_ClildCounter++;
+        }
+        
+        if( xml_elementL2 != NULL )
+        {
+            str_RetChildAttrbute += xml_elementL2->Attribute(str_ChildAttribute.c_str());
+            return str_RetChildAttrbute;
+        }
+        else
+        {
+            //cout << "----------------------------------------" << endl;
+            //cout << "!!!       Empty Element in XML       !!!" << endl;
+            //cout << "----------------------------------------" << endl;
+            return str_RetChildAttrbute;
+        }
+    }
+}
+
+
+int CXMLParser::InsertElement()
+{
+    XMLElement *xml_root = m_xml_dom.RootElement();
+
+    XMLElement *xml_element = m_xml_dom.NewElement("Test");
+    xml_element->SetAttribute("Name", "summer");
+    xml_root->InsertEndChild(xml_element);
+
+    XMLElement *xml_subelement_A = m_xml_dom.NewElement("Phone");
+    xml_subelement_A->InsertEndChild(m_xml_dom.NewText("iPhone"));
+    xml_element->InsertEndChild(xml_subelement_A);
+
+    XMLElement *xml_subelement_B = m_xml_dom.NewElement("Phone");
+    xml_subelement_B->InsertEndChild(m_xml_dom.NewText("smartisan"));
+    xml_element->InsertEndChild(xml_subelement_B);
+
+    return m_xml_dom.SaveFile(m_str_FilePath.c_str());
 }
 
 int CXMLParser::ModifyElement()

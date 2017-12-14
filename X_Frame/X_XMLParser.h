@@ -22,13 +22,18 @@ public:
     CXMLParser(const char *cha_xmlPath);
     ~CXMLParser();
 
-    int InsertElement();
-    void QueryElement();
     string QueryElementL1Index(const string str_ChildElementL1, const unsigned int uni_ChildIndex);
     string QueryElementL1Attribute(const string str_ChildElementL1, const string str_ChildAttribute,\
                                    const string str_ChildAttributeContent);
-    string QueryElementL2(const string str_ChildElementL1, const string str_ChildElementL2,\
-                          const unsigned int uni_ChildIndex);
+    string QueryElementL2Index(const string str_ChildElementL1, const string str_ChildElementL2,\
+                               const unsigned int uni_ChildIndex);
+    string QueryAttrbuteL2Index(const string str_ChildElementL1, const string str_ChildElementL2,\
+                                const string str_ChildAttribute, const unsigned int uni_ChildIndex);
+
+    /****************************************/
+    //   测试 API
+    /****************************************/
+    int InsertElement();
     int ModifyElement();
     void PrintXML();
 
