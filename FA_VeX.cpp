@@ -212,6 +212,15 @@ int main(int argc, char **argv, char *env[])
                                           (-1)*atoi(X_CMD.GetCmd(3).c_str()), X_CMD.GetCmd(4));
                 FAitfX.WriteAllFile();
             }
+            else if( X_CMD.GetCmd(1).compare("check-tvt")==0 )
+            {
+                FAitfX.CheckAggrSurplus();
+            }
+            else if( X_CMD.GetCmd(1).compare("update-tvt")==0 )
+            {
+                FAitfX.UpdateAggrSurplus();
+                FAitfX.WriteAllFile();
+            }
             else
             {
                 cout << "----------------------------------------" << endl;
@@ -238,7 +247,7 @@ int main(int argc, char **argv, char *env[])
             //xml_ve.InsertElement();
             //xml_ve.ModifyElement();
             //cout << xml_ve.QueryElementL1Index(X_CMD.GetCmd(1), atoi(X_CMD.GetCmd(2).c_str())) << endl;
-            cout << xml_ve.QueryElementL1Attribute(X_CMD.GetCmd(1), X_CMD.GetCmd(2), X_CMD.GetCmd(3)) << endl;
+            cout << xml_ve.QueryAttrbuteL2Index(X_CMD.GetCmd(1), X_CMD.GetCmd(2), X_CMD.GetCmd(3), atoi(X_CMD.GetCmd(4).c_str())) << endl;
             //cout << xml_ve.QueryElementL2(X_CMD.GetCmd(1), X_CMD.GetCmd(2), atoi(X_CMD.GetCmd(3).c_str())) << endl;
             //xml_ve.PrintXML();
 

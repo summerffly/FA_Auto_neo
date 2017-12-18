@@ -7,6 +7,7 @@
 #pragma once
 
 #include "./../X_Frame/X_Tool.h"
+#include "./../X_Frame/X_CFGLoader.h"
 #include "./../EP_Layer/FileManager.h"
 
 using namespace std;
@@ -19,9 +20,14 @@ public:
     ~CFAitfX();
 
     /****************************************/
+    //   总收支 操作区
+    /****************************************/
+    void CheckAggrSurplus();
+    void UpdateAggrSurplus();
+
+    /****************************************/
     //   月度 操作区
     /****************************************/
-
     void CheckMonthExpense(const string str_SelMonth);
     void CheckMonthSurplus(const string str_SelMonth);
     void UpdateMonthSurplus(const string str_SelMonth);
@@ -31,7 +37,6 @@ public:
     /****************************************/
     //   子项.M 操作区
     /****************************************/
-
     void CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth);
     void UpdateSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth);
     void AppendSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth,\
@@ -40,7 +45,6 @@ public:
     /****************************************/
     //   TVT_分项 操作区
     /****************************************/
-
     void CheckTitleExpense(const string str_TitleKey);
     void UpdateTitleExpense(const string str_TitleKey);
     void AppendTitleExpense(const string str_TitleKey,\
@@ -49,7 +53,6 @@ public:
     /****************************************/
     //   文件读写 操作区
     /****************************************/
-
     void WriteAllFile();
 
 private:

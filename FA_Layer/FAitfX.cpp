@@ -10,13 +10,13 @@
 
 using namespace std;
 
-// tips 番茄@20170812 - 使用带参宏函数Key填错会有风险，用m_cls_FM_TVT的head进行校验
+// tips 番茄@20171211 - 使用带参宏函数Key填错会有风险，用m_cls_FM_TVT的head进行校验
 #define FM_SUBMONTH(str)  ((!(str).compare("Books"))?(m_cls_FM_sm_Books):\
                            ((!(str).compare("KEEP"))?(m_cls_FM_sm_KEEP):\
                            ((!(str).compare("TB"))?(m_cls_FM_sm_TB):\
                            ((!(str).compare("sa"))?(m_cls_FM_sm_sa):(m_cls_FM_TVT)))) )
 
-// tips 番茄@20170812 - 使用带参宏函数Key填错会有风险，用m_cls_FM_TVT的head进行校验
+// tips 番茄@20171211 - 使用带参宏函数Key填错会有风险，用m_cls_FM_TVT的head进行校验
 #define FM_TITLE(str)  ((!(str).compare("DK"))?(m_cls_FM_tt_DK):\
                         ((!(str).compare("NS"))?(m_cls_FM_tt_NS):\
                         ((!(str).compare("travel"))?(m_cls_FM_tt_travel):\
@@ -40,6 +40,158 @@ CFAitfX::CFAitfX()
 CFAitfX::~CFAitfX()
 {
     // Do Nothing
+}
+
+/**************************************************/
+//   校验 总收支
+/**************************************************/
+void CFAitfX::CheckAggrSurplus()
+{
+    unsigned int uni_ItemSize = CCFGLoader::m_vec_stc_FAItem.size();
+    unsigned int uni_ItemCounter = 0;
+
+    int int_AggrSurplus = 0;
+    int int_AggrSurplusCK = 0;
+    int int_AggrSurplusPlus = 0;
+    int int_AggrSurplusPlusCK = 0;
+
+    string str_ItemFlagContent("");
+    string str_ItemFlagAttrbute("");
+    unsigned int uni_ItemFlag = 0;
+
+    while( uni_ItemCounter < uni_ItemSize )
+    {
+        str_ItemFlagContent.clear();
+        str_ItemFlagAttrbute.clear();
+        str_ItemFlagContent += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemContent;
+        str_ItemFlagAttrbute += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemAttrbute;
+
+        m_cls_FM_TVT.SearchLineKey(str_ItemFlagContent.c_str());
+        uni_ItemFlag = m_cls_FM_TVT.GetSearchLineIndex(1);
+
+        if( str_ItemFlagAttrbute.compare("FO")==0 )
+        {
+            int_AggrSurplusCK += m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+            int_AggrSurplusPlusCK += m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+        }
+        else if( str_ItemFlagAttrbute.compare("Title")==0 )
+        {
+            int_AggrSurplusCK += m_cls_FM_TVT.GetLineValue(uni_ItemFlag+1);
+            int_AggrSurplusPlusCK += m_cls_FM_TVT.GetLineValue(uni_ItemFlag+1);
+        }
+        else if( str_ItemFlagAttrbute.compare("Month")==0 )
+        {
+            int_AggrSurplusCK += m_cls_FM_TVT.GetLineValue(uni_ItemFlag+3);
+            int_AggrSurplusPlusCK += m_cls_FM_TVT.GetLineValue(uni_ItemFlag+3);
+        }
+        else if( str_ItemFlagAttrbute.compare("FC")==0 )
+        {
+            int_AggrSurplus = m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+
+            cout << "----------------------------------------" << endl;
+            cout << "### 当前财富 ###" << endl;
+            cout << "读取值: " << CTool::TransOutFormat(int_AggrSurplus) << endl;
+            cout << "校验值: " << CTool::TransOutFormat(int_AggrSurplusCK) << endl;
+        }
+        else if( str_ItemFlagAttrbute.compare("FTail")==0 )
+        {
+            int_AggrSurplusPlusCK += m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+        }
+        else if( str_ItemFlagAttrbute.compare("FB")==0 )
+        {
+            // tips 番茄@20171218 - balance项，需要执行减法
+            int_AggrSurplusPlusCK -= m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+        }
+        else if( str_ItemFlagAttrbute.compare("FF")==0 )
+        {
+            int_AggrSurplusPlus = m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+
+            cout << "----------------------------------------" << endl;
+            cout << "### 余额宝 ###" << endl;
+            cout << "读取值: " << CTool::TransOutFormat(int_AggrSurplusPlus) << endl;
+            cout << "校验值: " << CTool::TransOutFormat(int_AggrSurplusPlusCK) << endl;
+            cout << "----------------------------------------" << endl;
+        }
+
+        uni_ItemCounter++;
+    }
+}
+
+/**************************************************/
+//   更新 总收支
+/**************************************************/
+void CFAitfX::UpdateAggrSurplus()
+{
+    unsigned int uni_ItemSize = CCFGLoader::m_vec_stc_FAItem.size();
+    unsigned int uni_ItemCounter = 0;
+
+    int int_AggrSurplus = 0;
+    int int_AggrSurplusUD = 0;
+    int int_AggrSurplusPlus = 0;
+    int int_AggrSurplusPlusUD = 0;
+
+    string str_ItemFlagContent("");
+    string str_ItemFlagAttrbute("");
+    unsigned int uni_ItemFlag = 0;
+
+    while( uni_ItemCounter < uni_ItemSize )
+    {
+        str_ItemFlagContent.clear();
+        str_ItemFlagAttrbute.clear();
+        str_ItemFlagContent += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemContent;
+        str_ItemFlagAttrbute += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemAttrbute;
+
+        m_cls_FM_TVT.SearchLineKey(str_ItemFlagContent.c_str());
+        uni_ItemFlag = m_cls_FM_TVT.GetSearchLineIndex(1);
+
+        if( str_ItemFlagAttrbute.compare("FO")==0 )
+        {
+            int_AggrSurplusUD += m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+            int_AggrSurplusPlusUD += m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+        }
+        else if( str_ItemFlagAttrbute.compare("Title")==0 )
+        {
+            int_AggrSurplusUD += m_cls_FM_TVT.GetLineValue(uni_ItemFlag+1);
+            int_AggrSurplusPlusUD += m_cls_FM_TVT.GetLineValue(uni_ItemFlag+1);
+        }
+        else if( str_ItemFlagAttrbute.compare("Month")==0 )
+        {
+            int_AggrSurplusUD += m_cls_FM_TVT.GetLineValue(uni_ItemFlag+3);
+            int_AggrSurplusPlusUD += m_cls_FM_TVT.GetLineValue(uni_ItemFlag+3);
+        }
+        else if( str_ItemFlagAttrbute.compare("FC")==0 )
+        {
+            int_AggrSurplus = m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+            m_cls_FM_TVT.ModifyLineValue(uni_ItemFlag, int_AggrSurplusUD);
+
+            cout << "----------------------------------------" << endl;
+            cout << "### 当前财富 ###" << endl;
+            cout << "初始值: " << CTool::TransOutFormat(int_AggrSurplus) << endl;
+            cout << "更新值: " << CTool::TransOutFormat(int_AggrSurplusUD) << endl;
+        }
+        else if( str_ItemFlagAttrbute.compare("FTail")==0 )
+        {
+            int_AggrSurplusPlusUD += m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+        }
+        else if( str_ItemFlagAttrbute.compare("FB")==0 )
+        {
+            // tips 番茄@20171218 - balance项，需要执行减法
+            int_AggrSurplusPlusUD -= m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+        }
+        else if( str_ItemFlagAttrbute.compare("FF")==0 )
+        {
+            int_AggrSurplusPlus = m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+            m_cls_FM_TVT.ModifyLineValue(uni_ItemFlag, int_AggrSurplusPlusUD);
+
+            cout << "----------------------------------------" << endl;
+            cout << "### 余额宝 ###" << endl;
+            cout << "初始值: " << CTool::TransOutFormat(int_AggrSurplusPlus) << endl;
+            cout << "更新值: " << CTool::TransOutFormat(int_AggrSurplusPlusUD) << endl;
+            cout << "----------------------------------------" << endl;
+        }
+
+        uni_ItemCounter++;
+    }
 }
 
 /**************************************************/

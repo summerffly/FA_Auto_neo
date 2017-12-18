@@ -69,6 +69,13 @@ string CXMLParser::QueryElementL1Index(const string str_ChildElementL1, const un
         {
             xml_elementL1 = xml_elementL1->NextSiblingElement();
             uni_ClildCounter++;
+            if( xml_elementL1 == NULL )
+            {
+                cout << "----------------------------------------" << endl;
+                cout << "!!!       Empty Element in XML       !!!" << endl;
+                cout << "----------------------------------------" << endl;
+                return str_RetChildElement;
+            }
         }
         
         if( xml_elementL1 != NULL )
@@ -175,6 +182,13 @@ string CXMLParser::QueryElementL2Index(const string str_ChildElementL1, const st
         {
             xml_elementL2 = xml_elementL2->NextSiblingElement();
             uni_ClildCounter++;
+            if( xml_elementL2 == NULL )
+            {
+                //cout << "----------------------------------------" << endl;
+                //cout << "!!!       Empty Element in XML       !!!" << endl;
+                //cout << "----------------------------------------" << endl;
+                return str_RetChildElement;
+            }
         }
         
         if( xml_elementL2 != NULL )
@@ -192,6 +206,7 @@ string CXMLParser::QueryElementL2Index(const string str_ChildElementL1, const st
     }
 }
 
+// tips 番茄@20171214 - 暂时取消错误cout，用空字符串来判断
 string CXMLParser::QueryAttrbuteL2Index(const string str_ChildElementL1, const string str_ChildElementL2,\
                                         const string str_ChildAttribute, const unsigned int uni_ChildIndex)
 {
@@ -243,6 +258,13 @@ string CXMLParser::QueryAttrbuteL2Index(const string str_ChildElementL1, const s
         {
             xml_elementL2 = xml_elementL2->NextSiblingElement();
             uni_ClildCounter++;
+            if( xml_elementL2 == NULL )
+            {
+                //cout << "----------------------------------------" << endl;
+                //cout << "!!!       Empty Element in XML       !!!" << endl;
+                //cout << "----------------------------------------" << endl;
+                return str_RetChildAttrbute;
+            }
         }
         
         if( xml_elementL2 != NULL )
