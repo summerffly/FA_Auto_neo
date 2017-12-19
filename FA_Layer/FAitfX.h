@@ -52,6 +52,12 @@ public:
                             const int int_LineValue, const string str_LineContent);
 
     /****************************************/
+    //   综合 操作区
+    /****************************************/
+    void TransferBalance(const string str_FirstKey, const string str_SecondKey,
+                         const bool bol_TransferFlag, const unsigned int uni_BalanceValueABS);
+
+    /****************************************/
     //   文件读写 操作区
     /****************************************/
     void SyncAllFile();

@@ -230,6 +230,16 @@ int main(int argc, char **argv, char *env[])
             {
                 FAitfX.SyncAllFile();
             }
+            else if( X_CMD.GetCmd(1).compare("b++")==0 )
+            {
+                FAitfX.TransferBalance("广发银行", "余额宝", true, atoi(X_CMD.GetCmd(2).c_str()));
+                FAitfX.WriteAllFile();
+            }
+            else if( X_CMD.GetCmd(1).compare("b--")==0 )
+            {
+                FAitfX.TransferBalance("广发银行", "余额宝", false, atoi(X_CMD.GetCmd(2).c_str()));
+                FAitfX.WriteAllFile();
+            }
             else
             {
                 cout << "----------------------------------------" << endl;

@@ -591,6 +591,31 @@ void CFAitfX::AppendTitleExpense(const string str_TitleKey,\
     cout << "----------------------------------------" << endl;
 }
 
+void CFAitfX::TransferBalance(const string str_FirstKey, const string str_SecondKey,
+                              const bool bol_TransferFlag, const unsigned int uni_BalanceValueABS)
+{
+    m_cls_FM_TVT.SearchLineKey(str_FirstKey.c_str());
+    unsigned int uni_FirstLine = m_cls_FM_TVT.GetSearchLineIndex(1);
+    int int_FirstValue = m_cls_FM_TVT.GetLineValue(uni_FirstLine);
+
+    m_cls_FM_TVT.SearchLineKey(str_SecondKey.c_str());
+    unsigned int uni_SecondLine = m_cls_FM_TVT.GetSearchLineIndex(1);
+    int int_SecondValue = m_cls_FM_TVT.GetLineValue(uni_SecondLine);
+
+    // bol_TransferFlag为true >>> First++ Second--
+    if( bol_TransferFlag == true )
+    {
+        m_cls_FM_TVT.ModifyLineValue(uni_FirstLine, int_FirstValue + uni_BalanceValueABS);
+        m_cls_FM_TVT.ModifyLineValue(uni_SecondLine, int_SecondValue - uni_BalanceValueABS);
+    }
+    // bol_TransferFlag为false >>> First-- Second++
+    else
+    {
+        m_cls_FM_TVT.ModifyLineValue(uni_FirstLine, int_FirstValue - uni_BalanceValueABS);
+        m_cls_FM_TVT.ModifyLineValue(uni_SecondLine, int_SecondValue + uni_BalanceValueABS);
+    }
+}
+
 void CFAitfX::SyncAllFile()
 {
     m_cls_FM_TVT.SyncFile();

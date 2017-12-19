@@ -28,7 +28,7 @@ regex REP_EOF("^(---)$");
 
 regex REP_FBric_Aggr("^(.{1,})( : )(\\+|-)(\\d{1,})$");
 regex REP_FBric_TitleSum("^(> )(\\+|-)(\\d{1,})$");
-regex REP_FBric_MonthSum("^(> )(\\d{1,})(.{1,})( : )(\\+|-)(\\d{1,})$");
+regex REP_FBric_MonthSum("^(> )(\\d{2})(.{1,})( : )(\\+|-)(\\d{1,})$");
 regex REP_FBric_LineUnit("^(`)(\\+|-)( )(\\d{1,})(` )(.{1,})$");
 
 
