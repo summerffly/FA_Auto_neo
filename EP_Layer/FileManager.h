@@ -19,7 +19,8 @@ public:
     CFileManager(const char *cha_FileName);
     ~CFileManager();
 
-    void VecLineSync();
+    void SyncVecLine();
+    void SyncFile();
     int GetLineNum();
 
     /****************************************/

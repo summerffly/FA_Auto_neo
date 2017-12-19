@@ -10,6 +10,7 @@
 
 using namespace std;
 
+
 // tips 番茄@20171211 - 使用带参宏函数Key填错会有风险，用m_cls_FM_TVT的head进行校验
 #define FM_SUBMONTH(str)  ((!(str).compare("Books"))?(m_cls_FM_sm_Books):\
                            ((!(str).compare("KEEP"))?(m_cls_FM_sm_KEEP):\
@@ -337,6 +338,30 @@ void CFAitfX::ModifyMonthSurplus(const string str_SelMonth, const string str_Mon
 }
 
 /**************************************************/
+//   同步 life.M 月度收支 >>> 总收支
+/**************************************************/
+void CFAitfX::SyncMonthSurplus(const string str_SelMonth)
+{
+    string str_SelMonthFL = "## life.M" + str_SelMonth;   // tips 番茄@20171219 - FullLine
+
+    m_cls_FM_life.SearchLineKey(str_SelMonthFL.c_str());
+    unsigned int uni_SelMonth = m_cls_FM_life.GetSearchLineIndex(1);
+
+    m_cls_FM_TVT.SearchLineKey(str_SelMonthFL.c_str());
+    unsigned int uni_SelMonthTVT = m_cls_FM_TVT.GetSearchLineIndex(1);
+
+    // 读取 life.M 月度收支
+    unsigned int uni_MonthSalary = m_cls_FM_life.GetLineValue(uni_SelMonth+1);
+    int int_MonthExpense = m_cls_FM_life.GetLineValue(uni_SelMonth+2);
+    int int_MonthSurplus = m_cls_FM_life.GetLineValue(uni_SelMonth+3);
+
+    // 同步 总收支
+    m_cls_FM_TVT.ModifyLineValue(uni_SelMonthTVT+1, uni_MonthSalary);
+    m_cls_FM_TVT.ModifyLineValue(uni_SelMonthTVT+2, int_MonthExpense);
+    m_cls_FM_TVT.ModifyLineValue(uni_SelMonthTVT+3, int_MonthSurplus);
+}
+
+/**************************************************/
 //   校验 子项.M 月度支出
 /**************************************************/
 void CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth)
@@ -564,6 +589,20 @@ void CFAitfX::AppendTitleExpense(const string str_TitleKey,\
     cout << "Tt_初始值: " << CTool::TransOutFormat(int_TitleExpense) << endl;
     cout << "Tt_更新值: " << CTool::TransOutFormat(int_TitleExpenseAp) << endl;
     cout << "----------------------------------------" << endl;
+}
+
+void CFAitfX::SyncAllFile()
+{
+    m_cls_FM_TVT.SyncFile();
+    m_cls_FM_life.SyncFile();
+    m_cls_FM_sm_Books.SyncFile();
+    m_cls_FM_sm_KEEP.SyncFile();
+    m_cls_FM_sm_TB.SyncFile();
+    m_cls_FM_sm_sa.SyncFile();
+    m_cls_FM_tt_DK.SyncFile();
+    m_cls_FM_tt_NS.SyncFile();
+    m_cls_FM_tt_travel.SyncFile();
+    m_cls_FM_tt_lottery.SyncFile();
 }
 
 void CFAitfX::WriteAllFile()

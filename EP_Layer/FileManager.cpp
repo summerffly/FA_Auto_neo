@@ -21,7 +21,7 @@ CFileManager::CFileManager(const char *cha_FullFileName)
     m_str_FilePath = m_cls_FileOPer.GetFilePath();
     m_str_FileName = m_cls_FileOPer.GetFileName();
 
-    VecLineSync();
+    SyncVecLine();
 }
 
 CFileManager::~CFileManager()
@@ -29,7 +29,7 @@ CFileManager::~CFileManager()
     // Do Nothing
 }
 
-void CFileManager::VecLineSync()
+void CFileManager::SyncVecLine()
 {
     m_vec_cls_Line.clear();
     // tips 番茄@20171129 - 指针才需要new空间
@@ -42,6 +42,12 @@ void CFileManager::VecLineSync()
         CLineEPer cls_LineEPer_temp = CLineEPer(m_cls_FileOPer.GetLine(i).c_str());
         m_vec_cls_Line.push_back(cls_LineEPer_temp);
     }
+}
+
+void CFileManager::SyncFile()
+{
+    m_cls_FileOPer.FileReader();
+    SyncVecLine();
 }
 
 int CFileManager::GetLineNum()

@@ -48,5 +48,5 @@ private:
 };
 
 //------------------------------//
-//   river flows in summer
+//   River flows in summer
 //------------------------------//

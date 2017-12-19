@@ -221,6 +221,15 @@ int main(int argc, char **argv, char *env[])
                 FAitfX.UpdateAggrSurplus();
                 FAitfX.WriteAllFile();
             }
+            else if( X_CMD.GetCmd(1).compare("sync-month")==0 )
+            {
+                FAitfX.SyncMonthSurplus(X_CMD.GetCmd(2));
+                FAitfX.WriteAllFile();
+            }
+            else if( X_CMD.GetCmd(1).compare("sync-file")==0 )
+            {
+                FAitfX.SyncAllFile();
+            }
             else
             {
                 cout << "----------------------------------------" << endl;

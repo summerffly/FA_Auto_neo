@@ -248,5 +248,5 @@ int CFileOPer::FileWriter(const char *cha_FullFileName)
 }
 
 //------------------------------//
-//   river flows in summer
+//   River flows in summer
 //------------------------------//

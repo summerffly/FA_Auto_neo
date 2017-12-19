@@ -33,6 +33,7 @@ public:
     void UpdateMonthSurplus(const string str_SelMonth);
     void ModifyMonthSurplus(const string str_SelMonth, const string str_MonthKey,\
                             const unsigned int uni_ModValueABS);
+    void SyncMonthSurplus(const string str_SelMonth);
 
     /****************************************/
     //   子项.M 操作区
@@ -53,6 +54,7 @@ public:
     /****************************************/
     //   文件读写 操作区
     /****************************************/
+    void SyncAllFile();
     void WriteAllFile();
 
 private:
