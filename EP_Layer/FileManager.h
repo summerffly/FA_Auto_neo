@@ -28,6 +28,7 @@ public:
     /****************************************/
     int FileWriter();
     int FileWriter(const char *cha_FullFileName);
+    int BackUpFile(const string str_BackUpPath);
 
     /****************************************/
     //   行直接操作区

@@ -29,6 +29,10 @@ using namespace std;
 
 int main(int argc, char **argv, char *env[])
 {
+    CCFGLoader::LoadCFG("./FA_script_Ve.xml");
+    CCFGLoader::LoadMonth();
+    CCFGLoader::LoadFA();
+    
     cout << "----------------------------------------" << endl;
     cout << "----------------------------------------" << endl;
     cout << "| |         Verify X Project         | |" << endl;
@@ -240,6 +244,10 @@ int main(int argc, char **argv, char *env[])
                 FAitfX.TransferBalance("广发银行", "余额宝", false, atoi(X_CMD.GetCmd(2).c_str()));
                 FAitfX.WriteAllFile();
             }
+            else if( X_CMD.GetCmd(1).compare("bakup")==0 )
+            {
+                FAitfX.BackUpAllFile("./bakup/");
+            }
             else
             {
                 cout << "----------------------------------------" << endl;
@@ -283,9 +291,6 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            CCFGLoader::LoadCFG("./FA_script_Ve.xml");
-            CCFGLoader::LoadMonth();
-            CCFGLoader::LoadFA();
             //cout << CCFGLoader::m_str_CFGPathName << endl;
             //cout << CCFGLoader::m_str_OriginMonth << endl;
             //cout << CCFGLoader::m_str_CurrentMonth << endl;

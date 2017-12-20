@@ -644,6 +644,20 @@ void CFAitfX::WriteAllFile()
     m_cls_FM_tt_lottery.FileWriter();
 }
 
+void CFAitfX::BackUpAllFile(const string str_BackUpPath)
+{
+    m_cls_FM_TVT.BackUpFile(str_BackUpPath);
+    m_cls_FM_life.BackUpFile(str_BackUpPath);
+    m_cls_FM_sm_Books.BackUpFile(str_BackUpPath);
+    m_cls_FM_sm_KEEP.BackUpFile(str_BackUpPath);
+    m_cls_FM_sm_TB.BackUpFile(str_BackUpPath);
+    m_cls_FM_sm_sa.BackUpFile(str_BackUpPath);
+    m_cls_FM_tt_DK.BackUpFile(str_BackUpPath);
+    m_cls_FM_tt_NS.BackUpFile(str_BackUpPath);
+    m_cls_FM_tt_travel.BackUpFile(str_BackUpPath);
+    m_cls_FM_tt_lottery.BackUpFile(str_BackUpPath);
+}
+
 
 //------------------------------//
 //   River flows in summer

@@ -65,6 +65,13 @@ int CFileManager::FileWriter(const char *cha_FullFileName)
     return m_cls_FileOPer.FileWriter(cha_FullFileName);
 }
 
+int CFileManager::BackUpFile(const string str_BackUpPath)
+{
+    string str_FullFileName = str_BackUpPath;
+    str_FullFileName += m_str_FileName;
+    return m_cls_FileOPer.FileWriter(str_FullFileName.c_str());
+}
+
 unsigned int CFileManager::GetLineType(const int int_LineIndex)
 {
     return m_vec_cls_Line.at(int_LineIndex).GetLineType();

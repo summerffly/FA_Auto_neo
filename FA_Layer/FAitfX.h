@@ -62,6 +62,7 @@ public:
     /****************************************/
     void SyncAllFile();
     void WriteAllFile();
+    void BackUpAllFile(const string str_BackUpPath);
 
 private:
     CFileManager m_cls_FM_TVT;
