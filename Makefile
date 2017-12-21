@@ -11,11 +11,11 @@ obj_OP = $(lop)FileOPer.o
 obj_EP = $(lep)LineEPer.o $(lep)FileManager.o
 obj_FA = $(lfa)FAitfX.o
 
-FA_VeX: FA_VeX.o $(obj_X) $(obj_thread) $(obj_OP) $(obj_EP) $(obj_FA)
-	g++ -o FA_VeX FA_VeX.o $(obj_X) $(obj_thread) $(obj_OP) $(obj_EP) $(obj_FA)
+FA_Auto_X: FA_Auto_X.o $(obj_X) $(obj_thread) $(obj_OP) $(obj_EP) $(obj_FA)
+	g++ -o FA_Auto_X FA_Auto_X.o $(obj_X) $(obj_thread) $(obj_OP) $(obj_EP) $(obj_FA)
 
-FA_VeX.o: FA_VeX.cpp
-	g++ -c FA_VeX.cpp
+FA_Auto_X.o: FA_Auto_X.cpp
+	g++ -c FA_Auto_X.cpp
 
 RegExLib.o: $(px)RegExLib.h $(px)RegExLib.cpp
 	g++ -c $(px)RegExLib.cpp
@@ -58,4 +58,4 @@ FAitfX.o: $(lfa)FAitfX.h $(lfa)FAitfX.cpp
 
 .PHONY:clean
 clean:
-	rm $(px)*.o $(pt)*.o $(lop)*.o $(lep)*.o $(lfa)*.o *.o FA_VeX
+	rm $(px)*.o $(pt)*.o $(lop)*.o $(lep)*.o $(lfa)*.o *.o FA_Auto_X

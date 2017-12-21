@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FA_script>
+<FA_Script>
+    <Version Atr="version">0.9.0 [Beta]</Version>
     <Month Atr="origin">09</Month>
     <Month Atr="current">12</Month>
     <FA_Struct Atr="TVT">
@@ -20,4 +21,4 @@
         <FAItem Atr="FB">广发银行</FAItem>
         <FAItem Atr="FF">余额宝</FAItem>
     </FA_Struct>
-</FA_script>
+</FA_Script>

@@ -29,16 +29,32 @@ using namespace std;
 
 int main(int argc, char **argv, char *env[])
 {
-    CCFGLoader::LoadCFG("./FA_script_Ve.xml");
+    CCFGLoader::LoadCFG("./FA_Script.xml");
+    CCFGLoader::LoadVersion();
     CCFGLoader::LoadMonth();
     CCFGLoader::LoadFA();
     
-    cout << "----------------------------------------" << endl;
-    cout << "----------------------------------------" << endl;
-    cout << "| |         Verify X Project         | |" << endl;
-    cout << "| |      >>>  番茄_summer  <<<       | |" << endl;
-    cout << "----------------------------------------" << endl;
-    cout << "----------------------------------------" << endl;
+    //cout << "----------------------------------------" << endl;
+    cout << "****************************************" << endl;
+    cout << "****************************************" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "***          FA_Auto X Pro           ***" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "***  ------------------------------  ***" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "***      Version: " << CCFGLoader::m_str_Version << "       ***" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "***  ------------------------------  ***" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "***          初始月度: " << CCFGLoader::m_str_OriginMonth << "            ***" << endl;
+    cout << "***          当前月度: " << CCFGLoader::m_str_CurrentMonth << "            ***" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "***  ------------------------------  ***" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "***      >>>  番茄_summer  <<<       ***" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "****************************************" << endl;
+    cout << "****************************************" << endl;
 
     CFileOPer FileVe = CFileOPer("./FA_TVT_VeX.md");
     CFileManager FileManagerVe = CFileManager("./FA_TVT_VeX.md");
@@ -80,11 +96,10 @@ int main(int argc, char **argv, char *env[])
         /**************************************************/
         if( X_CMD.GetCmdFront().compare("sd") == 0 )
         {
-            cout << "----------------------------------------" << endl;            
-            cout << "----------------------------------------" << endl;
-            cout << "|-----      Verify X SHUTDOWN     -----|" << endl;
-            cout << "----------------------------------------" << endl;
-            cout << "----------------------------------------" << endl;            
+            cout << "****************************************" << endl;
+            cout << "***          FA_Auto X Pro           ***" << endl;
+            cout << "***              EXIT                ***" << endl;
+            cout << "****************************************" << endl;
 
             break;
         }

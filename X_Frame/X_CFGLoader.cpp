@@ -11,6 +11,7 @@ using namespace std;
 
 
 string CCFGLoader::m_str_CFGPathName = "";
+string CCFGLoader::m_str_Version = "";
 string CCFGLoader::m_str_OriginMonth = "00";
 string CCFGLoader::m_str_CurrentMonth = "00";
 vector<FA_ITEM> CCFGLoader::m_vec_stc_FAItem;
@@ -28,6 +29,13 @@ CCFGLoader::~CCFGLoader()
 void CCFGLoader::LoadCFG(const char *cha_FileName)
 {
     m_str_CFGPathName = cha_FileName;
+}
+
+void CCFGLoader::LoadVersion()
+{
+    CXMLParser xml_CFG(m_str_CFGPathName.c_str());
+
+    m_str_Version = xml_CFG.QueryElementL1Attribute("Version", "Atr", "version");
 }
 
 void CCFGLoader::LoadMonth()

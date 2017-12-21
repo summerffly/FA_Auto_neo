@@ -32,6 +32,7 @@ public:
     //   方法
     /****************************************/
     static void LoadCFG(const char *cha_FileName);
+    static void LoadVersion();
     static void LoadMonth();
     static void LoadFA();
 
@@ -39,6 +40,7 @@ public:
     //   属性
     /****************************************/
     static string m_str_CFGPathName;
+    static string m_str_Version;
     static string m_str_OriginMonth;
     static string m_str_CurrentMonth;
     static vector<FA_ITEM> m_vec_stc_FAItem;
