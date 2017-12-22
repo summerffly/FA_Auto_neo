@@ -60,7 +60,7 @@ string CCmdTarget::GetCmdBack()
 
 string CCmdTarget::GetCmd(const int int_CmdIndex)
 {
-    return m_vec_Cmd.at(int_CmdIndex);
+    return m_vec_Cmd.at(int_CmdIndex-1);
 }
 
 int CCmdTarget::CmpCmdFront(const string str_CMD)

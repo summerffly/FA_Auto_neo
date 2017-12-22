@@ -50,6 +50,8 @@ public:
     void UpdateTitleExpense(const string str_TitleKey);
     void AppendTitleExpense(const string str_TitleKey,\
                             const int int_LineValue, const string str_LineContent);
+    void AppendLottery(const bool bol_LineFlag, const unsigned int int_LineValueABS,\
+                       const string str_LineDate);
 
     /****************************************/
     //   综合 操作区

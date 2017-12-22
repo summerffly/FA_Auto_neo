@@ -237,63 +237,57 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   Verify FAitfX
+        //   增加 lottery 收支
+        //   CMD >>> lottery ++/-- 200 20171222
         /**************************************************/
-        else if( X_CMD.GetCmdFront().compare("ve-itfx") == 0 )
+        else if( X_CMD.CmpCmdFront(LOTTERY) && (X_CMD.GetCmdNum() == 4) )
         {
             CCmdTarget::TagTimeBait();
 
-            if( X_CMD.GetCmd(1).compare("check-submonth")==0 )
+            if( X_CMD.CmpCmd(2, "++") )
             {
-                FAitfX.CheckSubMonthExpense(X_CMD.GetCmd(2), X_CMD.GetCmd(3));
+                FAitfX.AppendLottery(true, atoi(X_CMD.GetCmd(3).c_str()), X_CMD.GetCmd(4));
             }
-            else if( X_CMD.GetCmd(1).compare("update-submonth")==0 )
+            else if( X_CMD.CmpCmd(2, "--") )
             {
-                FAitfX.UpdateSubMonthExpense(X_CMD.GetCmd(2), X_CMD.GetCmd(3));
-                FAitfX.WriteAllFile();
-            }
-            else if( X_CMD.GetCmd(1).compare("append-submonth")==0 )
-            {
-                FAitfX.AppendSubMonthExpense(X_CMD.GetCmd(2), X_CMD.GetCmd(3),\
-                                             (-1)*atoi(X_CMD.GetCmd(4).c_str()), X_CMD.GetCmd(5));
-                FAitfX.WriteAllFile();
-            }
-            else if( X_CMD.GetCmd(1).compare("check-title")==0 )
-            {
-                FAitfX.CheckTitleExpense(X_CMD.GetCmd(2));
-            }
-            else if( X_CMD.GetCmd(1).compare("update-title")==0 )
-            {
-                FAitfX.UpdateTitleExpense(X_CMD.GetCmd(2));
-                FAitfX.WriteAllFile();
-            }
-            else if( X_CMD.GetCmd(1).compare("append-title")==0 )
-            {
-                FAitfX.AppendTitleExpense(X_CMD.GetCmd(2),\
-                                          (-1)*atoi(X_CMD.GetCmd(3).c_str()), X_CMD.GetCmd(4));
-                FAitfX.WriteAllFile();
-            }
-            else if( X_CMD.GetCmd(1).compare("b++")==0 )
-            {
-                FAitfX.TransferBalance("广发银行", "余额宝", true, atoi(X_CMD.GetCmd(2).c_str()));
-                FAitfX.WriteAllFile();
-            }
-            else if( X_CMD.GetCmd(1).compare("b--")==0 )
-            {
-                FAitfX.TransferBalance("广发银行", "余额宝", false, atoi(X_CMD.GetCmd(2).c_str()));
-                FAitfX.WriteAllFile();
-            }
-            else if( X_CMD.GetCmd(1).compare("bakup")==0 )
-            {
-                FAitfX.BackUpAllFile("./bakup/");
+                FAitfX.AppendLottery(false, atoi(X_CMD.GetCmd(3).c_str()), X_CMD.GetCmd(4));
             }
             else
             {
                 cout << "----------------------------------------" << endl;
-                cout << "!!!             Error CMD            !!!" << endl;
+                cout << "!!!            Error Param           !!!" << endl;
                 cout << "----------------------------------------" << endl;
+            }
 
-                continue;
+            FAitfX.UpdateAggrSurplus();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   transfer 操作
+        //   CMD >>> transfer ++/-- 300
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(TRANSFER) && (X_CMD.GetCmdNum() == 3) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            if( X_CMD.CmpCmd(2, "++") )
+            {
+                FAitfX.TransferBalance("广发银行", "余额宝", true, atoi(X_CMD.GetCmd(3).c_str()));
+            }
+            else if( X_CMD.CmpCmd(2, "--") )
+            {
+                FAitfX.TransferBalance("广发银行", "余额宝", false, atoi(X_CMD.GetCmd(3).c_str()));
+            }
+            else
+            {
+                cout << "----------------------------------------" << endl;
+                cout << "!!!            Error Param           !!!" << endl;
+                cout << "----------------------------------------" << endl;
             }
 
             CCmdTarget::ShowTimeGap();

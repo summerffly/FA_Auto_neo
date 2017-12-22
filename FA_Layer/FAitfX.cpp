@@ -591,6 +591,52 @@ void CFAitfX::AppendTitleExpense(const string str_TitleKey,\
     cout << "----------------------------------------" << endl;
 }
 
+void CFAitfX::AppendLottery(const bool bol_LineFlag, const unsigned int uni_LineValueABS,\
+                            const string str_LineDate)
+{
+    string str_LotteryTop("## lottery");
+    string str_LotteryBottom("## Total");
+
+    m_cls_FM_TVT.SearchLineKey(str_LotteryTop.c_str());
+    unsigned int uni_TVTLine = m_cls_FM_TVT.GetSearchLineIndex(1);
+
+    unsigned int uni_LotteryTop = 2;
+    m_cls_FM_tt_lottery.SearchLineKey(str_LotteryBottom.c_str());
+    unsigned int uni_LotteryBottom = m_cls_FM_tt_lottery.GetSearchLineIndex(1);
+
+    int int_LotterySurplus = m_cls_FM_tt_lottery.GetLineValue(uni_LotteryBottom+2);
+
+    string str_LineContent("足彩");
+    int int_LineValue = 0;
+    if( bol_LineFlag )
+    {
+        int_LineValue = uni_LineValueABS;
+        str_LineContent += "收入_";
+    }
+    else
+    {
+        int_LineValue = (-1) * uni_LineValueABS;
+        str_LineContent += "支出_";
+    }
+    str_LineContent += str_LineDate;
+
+    m_cls_FM_tt_lottery.InsertLine(uni_LotteryBottom-1, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
+
+    // tips 番茄@20171212 - 注意计算总支出的时候要增加一行
+    int int_LotterySurplusAP = m_cls_FM_tt_lottery.CountRangeType(uni_LotteryTop, uni_LotteryBottom,\
+                                                                  LTYPE_FBIRC_LINEUINT);
+
+    // tips 番茄@20171212 - 注意计算总支出的时候要增加一行
+    m_cls_FM_tt_lottery.ModifyLineValue(uni_LotteryBottom+3, int_LotterySurplusAP);
+    m_cls_FM_TVT.ModifyLineValue(uni_TVTLine+1, int_LotterySurplusAP);
+
+    cout << "----------------------------------------" << endl;
+    cout << "### lottery ###" << endl;
+    cout << "lottery_初始值: " << CTool::TransOutFormat(int_LotterySurplus) << endl;
+    cout << "lottery_更新值: " << CTool::TransOutFormat(int_LotterySurplusAP) << endl;
+    cout << "----------------------------------------" << endl;
+}
+
 void CFAitfX::TransferBalance(const string str_FirstKey, const string str_SecondKey,
                               const bool bol_TransferFlag, const unsigned int uni_BalanceValueABS)
 {
