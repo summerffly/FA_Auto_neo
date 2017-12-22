@@ -22,9 +22,12 @@ public:
 
     int CmdParser(char *CMD_buffer);
     int GetCmdNum();
-    string GetCmd(const int int_CmdIndex);
     string GetCmdFront();
     string GetCmdBack();
+    string GetCmd(const int int_CmdIndex);
+    int CmpCmdFront(const string str_CMD);
+    int CmpCmdBack(const string str_CMD);
+    int CmpCmd(const unsigned int int_CmdIndex, const string str_CMD);
 
 private:
     int m_int_CmdNum;   // CMD数量

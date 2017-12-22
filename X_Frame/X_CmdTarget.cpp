@@ -48,11 +48,6 @@ int CCmdTarget::GetCmdNum()
     return m_int_CmdNum;
 }
 
-string CCmdTarget::GetCmd(const int int_CmdIndex)
-{
-    return m_vec_Cmd.at(int_CmdIndex);
-}
-
 string CCmdTarget::GetCmdFront()
 {
     return m_vec_Cmd.front();
@@ -61,6 +56,47 @@ string CCmdTarget::GetCmdFront()
 string CCmdTarget::GetCmdBack()
 {
     return m_vec_Cmd.back();
+}
+
+string CCmdTarget::GetCmd(const int int_CmdIndex)
+{
+    return m_vec_Cmd.at(int_CmdIndex);
+}
+
+int CCmdTarget::CmpCmdFront(const string str_CMD)
+{
+    if( m_vec_Cmd.front().compare(str_CMD) == 0 )
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int CCmdTarget::CmpCmdBack(const string str_CMD)
+{
+    if( m_vec_Cmd.back().compare(str_CMD) == 0 )
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int CCmdTarget::CmpCmd(const unsigned int int_CmdIndex, const string str_CMD)
+{
+    if( m_vec_Cmd.at(int_CmdIndex-1).compare(str_CMD) == 0 )
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 void CCmdTarget::TagTimeBait()

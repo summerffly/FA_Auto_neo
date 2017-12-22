@@ -11,6 +11,7 @@
 #include <sys/time.h>
 
 #include "./X_Frame/DefLib.h"
+#include "./X_Frame/CmdLib.h"
 #include "./X_Frame/X_Tool.h"
 #include "./X_Frame/X_CmdTarget.h"
 #include "./X_Frame/X_XMLParser.h"
@@ -33,8 +34,10 @@ int main(int argc, char **argv, char *env[])
     CCFGLoader::LoadVersion();
     CCFGLoader::LoadMonth();
     CCFGLoader::LoadFA();
+
+    //CFileOPer FileVe = CFileOPer("./FA_TVT_VeX.md");
+    CFAitfX FAitfX = CFAitfX();
     
-    //cout << "----------------------------------------" << endl;
     cout << "****************************************" << endl;
     cout << "****************************************" << endl;
     cout << "***                                  ***" << endl;
@@ -56,10 +59,6 @@ int main(int argc, char **argv, char *env[])
     cout << "****************************************" << endl;
     cout << "****************************************" << endl;
 
-    CFileOPer FileVe = CFileOPer("./FA_TVT_VeX.md");
-    CFileManager FileManagerVe = CFileManager("./FA_TVT_VeX.md");
-    CFAitfX FAitfX = CFAitfX();
-
     // Advanced_CMD循环模式
     CCmdTarget X_CMD = CCmdTarget();
     char CMD_linebuffer[MAX_COMMAND];
@@ -70,49 +69,54 @@ int main(int argc, char **argv, char *env[])
         cin.getline(CMD_linebuffer, MAX_COMMAND);
 
         /**************************************************/
-        //   判断是否输入空行
+        //   判断 空行
         /**************************************************/
         if( X_CMD.CmdParser(CMD_linebuffer) == -1 )
         {
-            cout << "### Blank CMD !!!" << endl;
+            cout << "----------------------------------------" << endl;
+            cout << "!!!            Blank CMD             !!!" << endl;
             cout << "----------------------------------------" << endl;
             
             continue;
         }
         
         /**************************************************/
-        //   判断是否输入撤销CMD
+        //   撤销 输入
         /**************************************************/
-        if( X_CMD.GetCmdBack().compare("cancel") == 0 )
+        if( X_CMD.CmpCmdBack(CANCEL) )
         {
-            cout << "### CMD canceled !" << endl;
             cout << "----------------------------------------" << endl;
+            cout << "###           CMD canceled           ###" << endl;
+            cout << "----------------------------------------" << endl;
+            
             
             continue;
         }
 
         /**************************************************/
-        //   关闭X工程
+        //   退出 FA_Auto_X
         /**************************************************/
-        if( X_CMD.GetCmdFront().compare("sd") == 0 )
+        if( X_CMD.CmpCmdBack(EXIT) )
         {
+            cout << endl;
             cout << "****************************************" << endl;
             cout << "***          FA_Auto X Pro           ***" << endl;
             cout << "***              EXIT                ***" << endl;
             cout << "****************************************" << endl;
+            cout << endl;
 
             break;
         }
 
         /**************************************************/
-        //   Verify FileOPer
+        //   同步 所有.md
+        //   CMD >>> sync file
         /**************************************************/
-        else if( X_CMD.GetCmdFront().compare("ve-file") == 0 )
+        else if( X_CMD.CmpCmdFront(SYNC) && X_CMD.CmpCmdBack(MDFILE) )
         {   
             CCmdTarget::TagTimeBait();
 
-            cout << FileVe.GetFilePath() << endl;
-            cout << FileVe.GetFileName() << endl;
+            FAitfX.SyncAllFile();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -121,23 +125,14 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   Verify LineEPer
+        //   写回 所有.md
+        //   CMD >>> write file
         /**************************************************/
-        else if( X_CMD.GetCmdFront().compare("ve-line") == 0 )
-        {
+        else if( X_CMD.CmpCmdFront(WRITE) && X_CMD.CmpCmdBack(MDFILE) )
+        {   
             CCmdTarget::TagTimeBait();
 
-            int lineindex = atoi(X_CMD.GetCmd(1).c_str());
-
-            CLineEPer LineEPVe = CLineEPer(FileVe.GetLine(lineindex).c_str());
-
-            cout << LineEPVe.GetFullLine() << endl;
-
-            LineEPVe.SetLineValue(-888);
-            LineEPVe.UpdateFullLine();
-
-            FileVe.ModifyLine(lineindex, LineEPVe.GetFullLine());
-            FileVe.FileWriter();
+            FAitfX.WriteAllFile();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -146,45 +141,94 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   Verify FileManager
+        //   备份 所有.md
+        //   CMD >>> write file
         /**************************************************/
-        else if( X_CMD.GetCmdFront().compare("ve-fm") == 0 )
-        {
+        else if( X_CMD.CmpCmdFront(BACKUP) && X_CMD.CmpCmdBack(MDFILE) )
+        {   
             CCmdTarget::TagTimeBait();
 
-            // 验证搜索操作
-            //cout << FileManagerVe.SearchLineKey(X_CMD.GetCmd(1).c_str()) << endl;
-            //cout << FileManagerVe.GetSearchLine(atoi(X_CMD.GetCmd(2).c_str())) << endl;
+            FAitfX.BackUpAllFile("./bakup/");
 
-            #if 0   // 验证同步修改操作
-            if(1 == atoi(X_CMD.GetCmd(1).c_str()))
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   校验 TVT总收支
+        //   CMD >>> check tvt
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmdBack(TVT) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.CheckAggrSurplus();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   更新 TVT总收支
+        //   CMD >>> update tvt
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(UPDATE) && X_CMD.CmpCmdBack(TVT) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.UpdateAggrSurplus();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   校验 当月/上月 支出
+        //   CMD >>> check expense month/exmonth
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, EXPENSE) &&\
+                 ( X_CMD.CmpCmd(3, MONTH) || X_CMD.CmpCmd(3, EX_MONTH) ) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            if( X_CMD.CmpCmd(3, MONTH) )
             {
-                FileManagerVe.InsertLine(4, 14, -1129, "fm-test");
+                FAitfX.CheckMonthExpense(CCFGLoader::m_str_CurrentMonth);
             }
-            else if(2 == atoi(X_CMD.GetCmd(1).c_str()))
+            else if( X_CMD.CmpCmd(3, EX_MONTH) )
             {
-                FileManagerVe.ModifyLineValue(4, 998);
+                FAitfX.CheckMonthExpense(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
             }
-            else if(3 == atoi(X_CMD.GetCmd(1).c_str()))
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   校验 当月/上月 收支
+        //   CMD >>> check surplus month/exmonth
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, SURPLUS) &&\
+                 ( X_CMD.CmpCmd(3, MONTH) || X_CMD.CmpCmd(3, EX_MONTH) ) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            if( X_CMD.CmpCmd(3, MONTH) )
             {
-                FileManagerVe.DeleteLine(4);
+                FAitfX.CheckMonthSurplus(CCFGLoader::m_str_CurrentMonth);
             }
-
-            FileManagerVe.FileWriter();
-            #endif
-
-            // 验证计算操作
-            CFileManager FMve = CFileManager("./life.M.md");
-
-            FMve.SearchLineKey("## life.M11");
-            int begin_index = FMve.GetSearchLineIndex(1) + 4;
-
-            FMve.SearchLineKey("## life.M12");
-            int end_index = FMve.GetSearchLineIndex(1) - 1;
-
-            cout << FMve.CountRange(begin_index, end_index) << endl;
-
-            //FileManagerVe.FileWriter();
+            else if( X_CMD.CmpCmd(3, EX_MONTH) )
+            {
+                FAitfX.CheckMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
+            }
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -199,8 +243,6 @@ int main(int argc, char **argv, char *env[])
         {
             CCmdTarget::TagTimeBait();
 
-            //FAitfX.ModifyMonthSurplus(X_CMD.GetCmd(1).c_str(), X_CMD.GetCmd(2).c_str(), atoi(X_CMD.GetCmd(3).c_str()));
-            //FAitfX.WriteAllFile();
             if( X_CMD.GetCmd(1).compare("check-submonth")==0 )
             {
                 FAitfX.CheckSubMonthExpense(X_CMD.GetCmd(2), X_CMD.GetCmd(3));
@@ -231,24 +273,6 @@ int main(int argc, char **argv, char *env[])
                                           (-1)*atoi(X_CMD.GetCmd(3).c_str()), X_CMD.GetCmd(4));
                 FAitfX.WriteAllFile();
             }
-            else if( X_CMD.GetCmd(1).compare("check-tvt")==0 )
-            {
-                FAitfX.CheckAggrSurplus();
-            }
-            else if( X_CMD.GetCmd(1).compare("update-tvt")==0 )
-            {
-                FAitfX.UpdateAggrSurplus();
-                FAitfX.WriteAllFile();
-            }
-            else if( X_CMD.GetCmd(1).compare("sync-month")==0 )
-            {
-                FAitfX.SyncMonthSurplus(X_CMD.GetCmd(2));
-                FAitfX.WriteAllFile();
-            }
-            else if( X_CMD.GetCmd(1).compare("sync-file")==0 )
-            {
-                FAitfX.SyncAllFile();
-            }
             else if( X_CMD.GetCmd(1).compare("b++")==0 )
             {
                 FAitfX.TransferBalance("广发银行", "余额宝", true, atoi(X_CMD.GetCmd(2).c_str()));
@@ -271,68 +295,6 @@ int main(int argc, char **argv, char *env[])
 
                 continue;
             }
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   Verify tinyxml2
-        /**************************************************/
-        else if( X_CMD.GetCmdFront().compare("ve-xml") == 0 )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            CXMLParser xml_ve("./FA_script_Ve.xml");
-            //xml_ve.InsertElement();
-            //xml_ve.ModifyElement();
-            //cout << xml_ve.QueryElementL1Index(X_CMD.GetCmd(1), atoi(X_CMD.GetCmd(2).c_str())) << endl;
-            cout << xml_ve.QueryAttrbuteL2Index(X_CMD.GetCmd(1), X_CMD.GetCmd(2), X_CMD.GetCmd(3), atoi(X_CMD.GetCmd(4).c_str())) << endl;
-            //cout << xml_ve.QueryElementL2(X_CMD.GetCmd(1), X_CMD.GetCmd(2), atoi(X_CMD.GetCmd(3).c_str())) << endl;
-            //xml_ve.PrintXML();
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   Verify CFGLoader
-        /**************************************************/
-        else if( X_CMD.GetCmdFront().compare("ve-cfg") == 0 )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            //cout << CCFGLoader::m_str_CFGPathName << endl;
-            //cout << CCFGLoader::m_str_OriginMonth << endl;
-            //cout << CCFGLoader::m_str_CurrentMonth << endl;
-            for( int i=0; i< CCFGLoader::m_vec_stc_FAItem.size(); i++ )
-            {
-                cout << "FAItem计数值: " << i+1 << endl;
-                cout << CCFGLoader::m_vec_stc_FAItem.at(i).str_ItemContent << endl;
-                cout << CCFGLoader::m_vec_stc_FAItem.at(i).str_ItemAttrbute << endl;
-            }
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   Verify XTool
-        /**************************************************/
-        else if( X_CMD.GetCmdFront().compare("ve-tool") == 0 )
-        {
-            CCmdTarget::TagTimeBait();
-
-            //ENUM_MOMTH enm_Month = Jan;
-            int int_Value = atoi(X_CMD.GetCmd(1).c_str());
-            cout << int_Value << endl;
-            cout << CTool::TransOutFormat(int_Value) << endl;
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
