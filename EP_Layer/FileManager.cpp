@@ -82,6 +82,11 @@ int CFileManager::GetLineValue(const int int_LineIndex)
     return m_vec_cls_Line.at(int_LineIndex).GetLineValue();
 }
 
+unsigned int CFileManager::GetLineValueABS(const int int_LineIndex)
+{
+    return m_vec_cls_Line.at(int_LineIndex).GeLineValueABS();
+}
+
 string CFileManager::GetFullLine(const int int_LineIndex)
 {
     return m_vec_cls_Line.at(int_LineIndex).GetFullLine();

@@ -30,13 +30,16 @@ string MONTH = "month";
 string EX_MONTH = "exmonth";
 string TVT = "tvt";
 
-string SUNMONTH = "submonth";
+string ANALYSIS = "analysis";
+string TREND = "trend";
+
+string SUBMONTH = "sm";
 string BOOKS = "books";
 string TB = "tb";
 string KEEP = "keep";
 string SA = "sa";
 
-string TITLE = "title";
+string TITLE = "tt";
 string DK = "dk";
 string NS = "ns";
 string TRAVEL = "travel";

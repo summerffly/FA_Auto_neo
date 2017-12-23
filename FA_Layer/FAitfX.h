@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <map>
 #include "./../X_Frame/X_Tool.h"
 #include "./../X_Frame/X_CFGLoader.h"
 #include "./../EP_Layer/FileManager.h"
@@ -36,6 +37,11 @@ public:
     void SyncMonthSurplus(const string str_SelMonth);
 
     /****************************************/
+    //   月度 操作区 Plus
+    /****************************************/
+    void AnalysisMonthTrend(const string str_MonthKey);
+
+    /****************************************/
     //   子项.M 操作区
     /****************************************/
     void CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth);
@@ -44,7 +50,7 @@ public:
                                const int int_LineValue, const string str_LineContent);
 
     /****************************************/
-    //   TVT_分项 操作区
+    //   Tt分项 操作区
     /****************************************/
     void CheckTitleExpense(const string str_TitleKey);
     void UpdateTitleExpense(const string str_TitleKey);

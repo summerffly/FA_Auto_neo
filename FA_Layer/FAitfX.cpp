@@ -362,6 +362,111 @@ void CFAitfX::SyncMonthSurplus(const string str_SelMonth)
 }
 
 /**************************************************/
+//   分析 月度变化趋势
+//   目前仅支持每月常规项
+/**************************************************/
+void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
+{
+    map<string, unsigned int> map_MonthTrend;
+    unsigned int uni_TrendSize = 0;
+    unsigned int uni_TrendIndex = 0;
+    string str_TrendMonth = CCFGLoader::m_str_OriginMonth;
+    unsigned int uni_TrendValueABS = 0;
+
+    uni_TrendSize = m_cls_FM_life.SearchLineKey(str_MonthKey.c_str());
+
+    if(uni_TrendSize == 0)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!      Analysis KeyWord Error      !!!" << endl;
+        cout << "----------------------------------------" << endl;
+        return;
+    }
+
+    // 建构 map
+    for(int i=1; i<=uni_TrendSize; i++)
+    {
+        uni_TrendIndex = m_cls_FM_life.GetSearchLineIndex(i);
+        uni_TrendValueABS = m_cls_FM_life.GetLineValueABS(uni_TrendIndex);
+        map_MonthTrend.insert(pair<string, unsigned int>(str_TrendMonth, uni_TrendValueABS));
+        str_TrendMonth = CTool::GenerateNextMonth(str_TrendMonth);
+    }
+
+    // 获取 map最大值
+    unsigned int uni_MaxTrendValue = 0;
+    map<string, unsigned int>::iterator map_Iter = map_MonthTrend.begin();
+
+    while(map_Iter != map_MonthTrend.end())
+    {
+        if(map_Iter->second > uni_MaxTrendValue)
+        {
+            uni_MaxTrendValue = map_Iter->second;
+        }
+        map_Iter++;
+    }
+    double dob_ScaleRate = (double)50 / uni_MaxTrendValue;
+
+    // 绘制 map
+    map_Iter = map_MonthTrend.begin();
+    cout << "----------------------------------------" << endl;
+    cout << "### 月度趋势分析 ###" << endl;
+    cout << endl;
+
+    while(map_Iter != map_MonthTrend.end())
+    {
+        // tips 番茄@20171223 - 避免把下个月的收支算入
+        if( map_Iter->first == CTool::GenerateNextMonth(CCFGLoader::m_str_CurrentMonth))
+        {
+            map_Iter++;
+            continue;
+        }
+
+        cout << map_Iter->first << "月/" << str_MonthKey << ": ";
+
+        unsigned int uni_Scalde = dob_ScaleRate * map_Iter->second;
+        for(int i=1; i<=uni_Scalde; i++)
+        {
+            cout << "|";
+        }
+        cout << " " << map_Iter->second;
+
+        if(map_Iter->first == CCFGLoader::m_str_OriginMonth)
+        {
+            cout << " (-%)" << endl;
+        }
+        else
+        {
+            double dob_GrowRate = 0.0;
+            unsigned int uni_preValue = (--map_Iter)->second;
+            unsigned int uni_nextValue = (++map_Iter)->second;
+
+            if(uni_preValue == 0)
+            {
+                dob_GrowRate = 0.0;
+            }
+            else
+            {
+                dob_GrowRate = ((double)uni_nextValue - (double)uni_preValue)/(double)uni_preValue;
+            }
+            
+            if( dob_GrowRate == 0)
+            {
+                cout << " (==)" << endl;
+            }
+            else
+            {
+                cout << " (" << CTool::TransOutFormat((int)(dob_GrowRate*100)) << "%)" << endl;
+            }
+        }
+
+        map_Iter++;
+    }
+
+    cout << endl;
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
 //   校验 子项.M 月度支出
 /**************************************************/
 void CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth)

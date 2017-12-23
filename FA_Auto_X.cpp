@@ -35,7 +35,6 @@ int main(int argc, char **argv, char *env[])
     CCFGLoader::LoadMonth();
     CCFGLoader::LoadFA();
 
-    //CFileOPer FileVe = CFileOPer("./FA_TVT_VeX.md");
     CFAitfX FAitfX = CFAitfX();
     
     cout << "****************************************" << endl;
@@ -228,6 +227,96 @@ int main(int argc, char **argv, char *env[])
             else if( X_CMD.CmpCmd(3, EX_MONTH) )
             {
                 FAitfX.CheckMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
+            }
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   分析 月度趋势
+        //   CMD >>> analysis trend Books
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, TREND) && (X_CMD.GetCmdNum() == 3) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.AnalysisMonthTrend(X_CMD.GetCmd(3));
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   校验 子项.M 支出
+        //   CMD >>> check sm books/keep/tb/sa
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 3) )
+        {
+            CCmdTarget::TagTimeBait();
+
+            if( X_CMD.CmpCmd(3, BOOKS) )
+            {
+                FAitfX.CheckSubMonthExpense("Books", CCFGLoader::m_str_CurrentMonth);
+            }
+            else if( X_CMD.CmpCmd(3, KEEP) )
+            {
+                FAitfX.CheckSubMonthExpense("KEEP", CCFGLoader::m_str_CurrentMonth);
+            }
+            else if( X_CMD.CmpCmd(3, TB) )
+            {
+                FAitfX.CheckSubMonthExpense("TB", CCFGLoader::m_str_CurrentMonth);
+            }
+            else if( X_CMD.CmpCmd(3, SA) )
+            {
+                FAitfX.CheckSubMonthExpense("sa", CCFGLoader::m_str_CurrentMonth);
+            }
+            else
+            {
+                cout << "----------------------------------------" << endl;
+                cout << "!!!            Error Param           !!!" << endl;
+                cout << "----------------------------------------" << endl;
+            }
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   校验 Tt分项 支出
+        //   CMD >>> check tt dk/ns/travel/lottery
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, TITLE) && (X_CMD.GetCmdNum() == 3) )
+        {
+            CCmdTarget::TagTimeBait();
+
+            if( X_CMD.CmpCmd(3, DK) )
+            {
+                FAitfX.CheckTitleExpense("DK");
+            }
+            else if( X_CMD.CmpCmd(3, NS) )
+            {
+                FAitfX.CheckTitleExpense("NS");
+            }
+            else if( X_CMD.CmpCmd(3, TRAVEL) )
+            {
+                FAitfX.CheckTitleExpense("travel");
+            }
+            else if( X_CMD.CmpCmd(3, LOTTERY) )
+            {
+                FAitfX.CheckTitleExpense("lottery");
+            }
+            else
+            {
+                cout << "----------------------------------------" << endl;
+                cout << "!!!            Error Param           !!!" << endl;
+                cout << "----------------------------------------" << endl;
             }
 
             CCmdTarget::ShowTimeGap();
