@@ -236,6 +236,52 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
+        //   更新 当月/上月 收支
+        //   CMD >>> update surplus month/exmonth
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(UPDATE) && X_CMD.CmpCmd(2, SURPLUS) &&\
+                 ( X_CMD.CmpCmd(3, MONTH) || X_CMD.CmpCmd(3, EX_MONTH) ) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            if( X_CMD.CmpCmd(3, MONTH) )
+            {
+                FAitfX.UpdateMonthSurplus(CCFGLoader::m_str_CurrentMonth);
+                FAitfX.SyncMonthSurplus(CCFGLoader::m_str_CurrentMonth);
+            }
+            else if( X_CMD.CmpCmd(3, EX_MONTH) )
+            {
+                FAitfX.UpdateMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
+                FAitfX.SyncMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
+            }
+
+            FAitfX.UpdateAggrSurplus();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   修改 当月 生活费
+        //   CMD >>> ml 50
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(MODIFY_LIFE) && (X_CMD.GetCmdNum() == 2) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.ModifyMonthSurplus(CCFGLoader::m_str_CurrentMonth, "生活费", atoi(X_CMD.GetCmd(2).c_str()));
+            FAitfX.SyncMonthSurplus(CCFGLoader::m_str_CurrentMonth);
+            FAitfX.UpdateAggrSurplus();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
         //   分析 月度趋势
         //   CMD >>> analysis trend Books
         /**************************************************/
@@ -289,6 +335,47 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
+        //   更新 子项.M 支出
+        //   CMD >>> update sm books/keep/tb/sa
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(UPDATE) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 3) )
+        {
+            CCmdTarget::TagTimeBait();
+
+            if( X_CMD.CmpCmd(3, BOOKS) )
+            {
+                FAitfX.UpdateSubMonthExpense("Books", CCFGLoader::m_str_CurrentMonth);
+            }
+            else if( X_CMD.CmpCmd(3, KEEP) )
+            {
+                FAitfX.UpdateSubMonthExpense("KEEP", CCFGLoader::m_str_CurrentMonth);
+            }
+            else if( X_CMD.CmpCmd(3, TB) )
+            {
+                FAitfX.UpdateSubMonthExpense("TB", CCFGLoader::m_str_CurrentMonth);
+            }
+            else if( X_CMD.CmpCmd(3, SA) )
+            {
+                FAitfX.UpdateSubMonthExpense("sa", CCFGLoader::m_str_CurrentMonth);
+            }
+            else
+            {
+                cout << "----------------------------------------" << endl;
+                cout << "!!!            Error Param           !!!" << endl;
+                cout << "----------------------------------------" << endl;
+            }
+
+            FAitfX.UpdateMonthSurplus(CCFGLoader::m_str_CurrentMonth);
+            FAitfX.SyncMonthSurplus(CCFGLoader::m_str_CurrentMonth);
+            FAitfX.UpdateAggrSurplus();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
         //   校验 Tt分项 支出
         //   CMD >>> check tt dk/ns/travel/lottery
         /**************************************************/
@@ -318,6 +405,45 @@ int main(int argc, char **argv, char *env[])
                 cout << "!!!            Error Param           !!!" << endl;
                 cout << "----------------------------------------" << endl;
             }
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   更新 Tt分项 支出
+        //   CMD >>> update tt dk/ns/travel/lottery
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(UPDATE) && X_CMD.CmpCmd(2, TITLE) && (X_CMD.GetCmdNum() == 3) )
+        {
+            CCmdTarget::TagTimeBait();
+
+            if( X_CMD.CmpCmd(3, DK) )
+            {
+                FAitfX.UpdateTitleExpense("DK");
+            }
+            else if( X_CMD.CmpCmd(3, NS) )
+            {
+                FAitfX.UpdateTitleExpense("NS");
+            }
+            else if( X_CMD.CmpCmd(3, TRAVEL) )
+            {
+                FAitfX.UpdateTitleExpense("travel");
+            }
+            else if( X_CMD.CmpCmd(3, LOTTERY) )
+            {
+                FAitfX.UpdateTitleExpense("lottery");
+            }
+            else
+            {
+                cout << "----------------------------------------" << endl;
+                cout << "!!!            Error Param           !!!" << endl;
+                cout << "----------------------------------------" << endl;
+            }
+
+            FAitfX.UpdateAggrSurplus();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

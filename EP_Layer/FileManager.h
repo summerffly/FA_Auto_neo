@@ -52,6 +52,7 @@ public:
     /****************************************/
     void InsertLine(const unsigned int uni_VecIndex, const unsigned int uni_LineType,\
                     const int int_LineValue, const string str_LineContent);
+    void InsertBlankLine(const unsigned int uni_VecIndex);
     void ModifyLineValue(const unsigned int uni_VecIndex, const int int_LineValue);
     void ModifyLineContent(const unsigned int uni_VecIndex, const char *cha_LineContent);
     void DeleteLine(const unsigned int uni_VecIndex);

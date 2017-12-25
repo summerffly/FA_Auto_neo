@@ -735,6 +735,12 @@ void CFAitfX::AppendLottery(const bool bol_LineFlag, const unsigned int uni_Line
     m_cls_FM_tt_lottery.ModifyLineValue(uni_LotteryBottom+3, int_LotterySurplusAP);
     m_cls_FM_TVT.ModifyLineValue(uni_TVTLine+1, int_LotterySurplusAP);
 
+    // tips 番茄@20171225 - 在支出前，增加一行空行
+    if(!bol_LineFlag)
+    {
+        m_cls_FM_tt_lottery.InsertBlankLine(uni_LotteryBottom-1);
+    }
+
     cout << "----------------------------------------" << endl;
     cout << "### lottery ###" << endl;
     cout << "lottery_初始值: " << CTool::TransOutFormat(int_LotterySurplus) << endl;

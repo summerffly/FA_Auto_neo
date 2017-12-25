@@ -355,6 +355,13 @@ void CLineEPer::UpdateFullLine()
                 m_str_FullLine += m_str_LineContent;
             }
             break;
+        case(LTYPE_BLANK):
+            {
+                m_str_FullLine.clear();
+                m_str_FullLine += m_str_LineContent;
+                m_bol_LineValuePM = true;   // tips 番茄@20171225 - 保持BLANK一致性
+            }
+            break;
         default:
             {
                 cout << "----------------------------------------" << endl;

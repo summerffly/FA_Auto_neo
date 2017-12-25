@@ -6,6 +6,8 @@
 
 #include "FileManager.h"
 
+#include "./../X_Frame/DefLib.h"
+
 using namespace std;
 
 
@@ -159,6 +161,17 @@ void CFileManager::InsertLine(const unsigned int uni_VecIndex, const unsigned in
                               const int int_LineValue, const string str_LineContent)
 {
     CLineEPer cls_LineEPer_temp = CLineEPer(uni_LineType, int_LineValue, str_LineContent);
+    vector<CLineEPer>::iterator vec_cls_Iter = m_vec_cls_Line.begin();
+    vec_cls_Iter += uni_VecIndex;
+    m_vec_cls_Line.insert(vec_cls_Iter, cls_LineEPer_temp);
+    m_int_LineNum++;
+
+    m_cls_FileOPer.InsertLine(uni_VecIndex, cls_LineEPer_temp.GetFullLine());
+}
+
+void CFileManager::InsertBlankLine(const unsigned int uni_VecIndex)
+{
+    CLineEPer cls_LineEPer_temp = CLineEPer(LTYPE_BLANK, 0, "");
     vector<CLineEPer>::iterator vec_cls_Iter = m_vec_cls_Line.begin();
     vec_cls_Iter += uni_VecIndex;
     m_vec_cls_Line.insert(vec_cls_Iter, cls_LineEPer_temp);
