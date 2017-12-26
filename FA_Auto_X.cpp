@@ -109,7 +109,7 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   同步 所有.md
-        //   CMD >>> sync file
+        //   CMD >>> sync md
         /**************************************************/
         else if( X_CMD.CmpCmdFront(SYNC) && X_CMD.CmpCmdBack(MDFILE) )
         {   
@@ -125,7 +125,7 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   写回 所有.md
-        //   CMD >>> write file
+        //   CMD >>> write md
         /**************************************************/
         else if( X_CMD.CmpCmdFront(WRITE) && X_CMD.CmpCmdBack(MDFILE) )
         {   
@@ -141,13 +141,29 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   备份 所有.md
-        //   CMD >>> write file
+        //   CMD >>> backup md
         /**************************************************/
         else if( X_CMD.CmpCmdFront(BACKUP) && X_CMD.CmpCmdBack(MDFILE) )
         {   
             CCmdTarget::TagTimeBait();
 
-            FAitfX.BackUpAllFile("./bakup/");
+            FAitfX.BackUpAllFile("./FA_TVT.bak/");
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   备份 所有.md >>> X工程
+        //   CMD >>> backup-X md
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(BACKUP_X) && X_CMD.CmpCmdBack(MDFILE) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.BackUpAllFile("./../Desktop/FA_Auto_X/");
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -511,6 +527,7 @@ int main(int argc, char **argv, char *env[])
             continue;
         }
 
+#if 0
         /* * * * * * * * * * * * * * * * * * * * * * */
         //   Verify FileThread线程
         /* * * * * * * * * * * * * * * * * * * * * * */
@@ -557,6 +574,7 @@ int main(int argc, char **argv, char *env[])
 
             continue;
         }
+#endif
 
         /**************************************************/
         //   CMD输入错误

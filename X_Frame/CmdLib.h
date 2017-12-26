@@ -15,6 +15,7 @@ using namespace std;
 string SYNC = "sync";
 string WRITE = "write";
 string BACKUP = "backup";
+string BACKUP_X = "backup-X";
 string MDFILE = "md";
 
 string CHECK = "check";
