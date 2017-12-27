@@ -407,18 +407,21 @@ void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
     double dob_ScaleRate = (double)50 / uni_MaxTrendValue;
 
     // 绘制 map
-    map_Iter = map_MonthTrend.begin();
+    str_TrendMonth = CCFGLoader::m_str_OriginMonth;
     cout << "----------------------------------------" << endl;
     cout << "### 月度趋势分析 ###" << endl;
     cout << endl;
 
-    while(map_Iter != map_MonthTrend.end())
+    while( str_TrendMonth != CTool::GenerateNextMonth(CCFGLoader::m_str_CurrentMonth) )
     {
-        // tips 番茄@20171223 - 避免把下个月的收支算入
-        if( map_Iter->first == CTool::GenerateNextMonth(CCFGLoader::m_str_CurrentMonth))
+        map_Iter = map_MonthTrend.begin();
+        while( map_Iter != map_MonthTrend.end() )
         {
+            if( map_Iter->first == str_TrendMonth )
+            {
+                break;
+            }
             map_Iter++;
-            continue;
         }
 
         cout << map_Iter->first << "月/" << str_MonthKey << ": ";
@@ -437,8 +440,20 @@ void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
         else
         {
             double dob_GrowRate = 0.0;
-            unsigned int uni_preValue = (--map_Iter)->second;
-            unsigned int uni_nextValue = (++map_Iter)->second;
+            unsigned int uni_preValue = 0;
+            unsigned int uni_nextValue = 0;
+
+            // tips 番茄@20171227 - 根据map排序特性，防止越界崩溃
+            if( map_Iter == map_MonthTrend.begin() )
+            {
+                uni_preValue = map_MonthTrend.end()->second;
+                uni_nextValue = map_Iter->second;
+            }
+            else
+            {
+                uni_preValue = (--map_Iter)->second;
+                uni_nextValue = (++map_Iter)->second;
+            }
 
             if(uni_preValue == 0)
             {
@@ -459,7 +474,7 @@ void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
             }
         }
 
-        map_Iter++;
+        str_TrendMonth = CTool::GenerateNextMonth(str_TrendMonth);
     }
 
     cout << endl;

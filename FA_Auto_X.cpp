@@ -109,9 +109,9 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   同步 所有.md
-        //   CMD >>> sync md
+        //   CMD >>> sync
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(SYNC) && X_CMD.CmpCmdBack(MDFILE) )
+        else if( X_CMD.CmpCmdFront(SYNC) && (X_CMD.GetCmdNum() == 1) )
         {   
             CCmdTarget::TagTimeBait();
 
@@ -125,9 +125,9 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   写回 所有.md
-        //   CMD >>> write md
+        //   CMD >>> write
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(WRITE) && X_CMD.CmpCmdBack(MDFILE) )
+        else if( X_CMD.CmpCmdFront(WRITE) && (X_CMD.GetCmdNum() == 1) )
         {   
             CCmdTarget::TagTimeBait();
 
@@ -141,9 +141,9 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   备份 所有.md
-        //   CMD >>> backup md
+        //   CMD >>> backup
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(BACKUP) && X_CMD.CmpCmdBack(MDFILE) )
+        else if( X_CMD.CmpCmdFront(BACKUP) && (X_CMD.GetCmdNum() == 1) )
         {   
             CCmdTarget::TagTimeBait();
 
@@ -157,9 +157,9 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   备份 所有.md >>> X工程
-        //   CMD >>> backup-X md
+        //   CMD >>> backup-X
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(BACKUP_X) && X_CMD.CmpCmdBack(MDFILE) )
+        else if( X_CMD.CmpCmdFront(BACKUP_X) && (X_CMD.GetCmdNum() == 1) )
         {   
             CCmdTarget::TagTimeBait();
 
@@ -229,18 +229,18 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   校验 当月/上月 收支
-        //   CMD >>> check surplus month/exmonth
+        //   CMD >>> check month/exmonth
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, SURPLUS) &&\
-                 ( X_CMD.CmpCmd(3, MONTH) || X_CMD.CmpCmd(3, EX_MONTH) ) )
+        else if( X_CMD.CmpCmdFront(CHECK) &&\
+                 ( X_CMD.CmpCmd(2, MONTH) || X_CMD.CmpCmd(2, EX_MONTH) ) )
         {   
             CCmdTarget::TagTimeBait();
 
-            if( X_CMD.CmpCmd(3, MONTH) )
+            if( X_CMD.CmpCmd(2, MONTH) )
             {
                 FAitfX.CheckMonthSurplus(CCFGLoader::m_str_CurrentMonth);
             }
-            else if( X_CMD.CmpCmd(3, EX_MONTH) )
+            else if( X_CMD.CmpCmd(2, EX_MONTH) )
             {
                 FAitfX.CheckMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
             }
@@ -253,19 +253,19 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   更新 当月/上月 收支
-        //   CMD >>> update surplus month/exmonth
+        //   CMD >>> update month/exmonth
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(UPDATE) && X_CMD.CmpCmd(2, SURPLUS) &&\
-                 ( X_CMD.CmpCmd(3, MONTH) || X_CMD.CmpCmd(3, EX_MONTH) ) )
+        else if( X_CMD.CmpCmdFront(UPDATE) &&\
+                 ( X_CMD.CmpCmd(2, MONTH) || X_CMD.CmpCmd(2, EX_MONTH) ) )
         {   
             CCmdTarget::TagTimeBait();
 
-            if( X_CMD.CmpCmd(3, MONTH) )
+            if( X_CMD.CmpCmd(2, MONTH) )
             {
                 FAitfX.UpdateMonthSurplus(CCFGLoader::m_str_CurrentMonth);
                 FAitfX.SyncMonthSurplus(CCFGLoader::m_str_CurrentMonth);
             }
-            else if( X_CMD.CmpCmd(3, EX_MONTH) )
+            else if( X_CMD.CmpCmd(2, EX_MONTH) )
             {
                 FAitfX.UpdateMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
                 FAitfX.SyncMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
