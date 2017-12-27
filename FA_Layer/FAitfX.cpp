@@ -36,6 +36,8 @@ CFAitfX::CFAitfX()
     m_cls_FM_tt_NS = CFileManager("./NS.md");
     m_cls_FM_tt_travel = CFileManager("./travel.md");
     m_cls_FM_tt_lottery = CFileManager("./lottery.md");
+    m_cls_FM_temp_BOX = CFileManager("./temp.BOX.md");
+    m_cls_FM_temp_travelXM = CFileManager("./temp.travelXM.md");
 }
 
 CFAitfX::~CFAitfX()
@@ -788,6 +790,46 @@ void CFAitfX::TransferBalance(const string str_FirstKey, const string str_Second
     }
 }
 
+/**************************************************/
+//   校验 Temp 支出
+/**************************************************/
+void CFAitfX::CheckTempExpense(const string str_TempKey)
+{
+    string str_RangeTop = "## " + str_TempKey;
+    string str_RangeBottom("---");
+
+    unsigned int uni_RangeTop = 2;
+    unsigned int uni_RangeBottom = 0;
+    int int_TempExpense = 0;
+
+    if( str_TempKey == "box" )
+    {
+        m_cls_FM_temp_BOX.SearchLineKey(str_RangeBottom.c_str());
+        uni_RangeBottom = m_cls_FM_temp_BOX.GetSearchLineIndex(1);
+        int_TempExpense = m_cls_FM_temp_BOX.CountRangeType(uni_RangeTop, uni_RangeBottom-1,\
+                                                            LTYPE_FBIRC_LINEUINT);
+    }
+    else if( str_TempKey == "xm" )
+    {
+        m_cls_FM_temp_travelXM.SearchLineKey(str_RangeBottom.c_str());
+        uni_RangeBottom = m_cls_FM_temp_travelXM.GetSearchLineIndex(1);
+        int_TempExpense = m_cls_FM_temp_travelXM.CountRangeType(uni_RangeTop, uni_RangeBottom-1,\
+                                                                 LTYPE_FBIRC_LINEUINT);
+    }
+    else
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!        Temp KeyWord Error        !!!" << endl;
+        cout << "----------------------------------------" << endl;
+        return;
+    }
+
+    cout << "----------------------------------------" << endl;
+    cout << "### " << str_TempKey << "/支出 ###" << endl;
+    cout << "Temp_校验值: " << CTool::TransOutFormat(int_TempExpense) << endl;
+    cout << "----------------------------------------" << endl;
+}
+
 void CFAitfX::SyncAllFile()
 {
     m_cls_FM_TVT.SyncFile();
@@ -800,6 +842,8 @@ void CFAitfX::SyncAllFile()
     m_cls_FM_tt_NS.SyncFile();
     m_cls_FM_tt_travel.SyncFile();
     m_cls_FM_tt_lottery.SyncFile();
+    m_cls_FM_temp_BOX.SyncFile();
+    m_cls_FM_temp_travelXM.SyncFile();
 }
 
 void CFAitfX::WriteAllFile()
@@ -814,6 +858,8 @@ void CFAitfX::WriteAllFile()
     m_cls_FM_tt_NS.FileWriter();
     m_cls_FM_tt_travel.FileWriter();
     m_cls_FM_tt_lottery.FileWriter();
+    m_cls_FM_temp_BOX.FileWriter();
+    m_cls_FM_temp_travelXM.FileWriter();
 }
 
 void CFAitfX::BackUpAllFile(const string str_BackUpPath)
@@ -828,6 +874,8 @@ void CFAitfX::BackUpAllFile(const string str_BackUpPath)
     m_cls_FM_tt_NS.BackUpFile(str_BackUpPath);
     m_cls_FM_tt_travel.BackUpFile(str_BackUpPath);
     m_cls_FM_tt_lottery.BackUpFile(str_BackUpPath);
+    m_cls_FM_temp_BOX.BackUpFile(str_BackUpPath);
+    m_cls_FM_temp_travelXM.BackUpFile(str_BackUpPath);
 }
 
 

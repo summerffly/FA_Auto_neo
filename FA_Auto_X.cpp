@@ -208,15 +208,15 @@ int main(int argc, char **argv, char *env[])
         //   CMD >>> check expense month/exmonth
         /**************************************************/
         else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, EXPENSE) &&\
-                 ( X_CMD.CmpCmd(3, MONTH) || X_CMD.CmpCmd(3, EX_MONTH) ) )
+                 ( X_CMD.CmpCmdBack(MONTH) || X_CMD.CmpCmdBack(EX_MONTH) ) )
         {   
             CCmdTarget::TagTimeBait();
 
-            if( X_CMD.CmpCmd(3, MONTH) )
+            if( X_CMD.CmpCmdBack(MONTH) )
             {
                 FAitfX.CheckMonthExpense(CCFGLoader::m_str_CurrentMonth);
             }
-            else if( X_CMD.CmpCmd(3, EX_MONTH) )
+            else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
                 FAitfX.CheckMonthExpense(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
             }
@@ -232,15 +232,15 @@ int main(int argc, char **argv, char *env[])
         //   CMD >>> check month/exmonth
         /**************************************************/
         else if( X_CMD.CmpCmdFront(CHECK) &&\
-                 ( X_CMD.CmpCmd(2, MONTH) || X_CMD.CmpCmd(2, EX_MONTH) ) )
+                 ( X_CMD.CmpCmdBack(MONTH) || X_CMD.CmpCmdBack(EX_MONTH) ) )
         {   
             CCmdTarget::TagTimeBait();
 
-            if( X_CMD.CmpCmd(2, MONTH) )
+            if( X_CMD.CmpCmdBack(MONTH) )
             {
                 FAitfX.CheckMonthSurplus(CCFGLoader::m_str_CurrentMonth);
             }
-            else if( X_CMD.CmpCmd(2, EX_MONTH) )
+            else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
                 FAitfX.CheckMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
             }
@@ -256,16 +256,16 @@ int main(int argc, char **argv, char *env[])
         //   CMD >>> update month/exmonth
         /**************************************************/
         else if( X_CMD.CmpCmdFront(UPDATE) &&\
-                 ( X_CMD.CmpCmd(2, MONTH) || X_CMD.CmpCmd(2, EX_MONTH) ) )
+                 ( X_CMD.CmpCmdBack(MONTH) || X_CMD.CmpCmdBack(EX_MONTH) ) )
         {   
             CCmdTarget::TagTimeBait();
 
-            if( X_CMD.CmpCmd(2, MONTH) )
+            if( X_CMD.CmpCmdBack(MONTH) )
             {
                 FAitfX.UpdateMonthSurplus(CCFGLoader::m_str_CurrentMonth);
                 FAitfX.SyncMonthSurplus(CCFGLoader::m_str_CurrentMonth);
             }
-            else if( X_CMD.CmpCmd(2, EX_MONTH) )
+            else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
                 FAitfX.UpdateMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
                 FAitfX.SyncMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
@@ -321,19 +321,19 @@ int main(int argc, char **argv, char *env[])
         {
             CCmdTarget::TagTimeBait();
 
-            if( X_CMD.CmpCmd(3, BOOKS) )
+            if( X_CMD.CmpCmdBack(BOOKS) )
             {
                 FAitfX.CheckSubMonthExpense("Books", CCFGLoader::m_str_CurrentMonth);
             }
-            else if( X_CMD.CmpCmd(3, KEEP) )
+            else if( X_CMD.CmpCmdBack(KEEP) )
             {
                 FAitfX.CheckSubMonthExpense("KEEP", CCFGLoader::m_str_CurrentMonth);
             }
-            else if( X_CMD.CmpCmd(3, TB) )
+            else if( X_CMD.CmpCmdBack(TB) )
             {
                 FAitfX.CheckSubMonthExpense("TB", CCFGLoader::m_str_CurrentMonth);
             }
-            else if( X_CMD.CmpCmd(3, SA) )
+            else if( X_CMD.CmpCmdBack(SA) )
             {
                 FAitfX.CheckSubMonthExpense("sa", CCFGLoader::m_str_CurrentMonth);
             }
@@ -358,19 +358,19 @@ int main(int argc, char **argv, char *env[])
         {
             CCmdTarget::TagTimeBait();
 
-            if( X_CMD.CmpCmd(3, BOOKS) )
+            if( X_CMD.CmpCmdBack(BOOKS) )
             {
                 FAitfX.UpdateSubMonthExpense("Books", CCFGLoader::m_str_CurrentMonth);
             }
-            else if( X_CMD.CmpCmd(3, KEEP) )
+            else if( X_CMD.CmpCmdBack(KEEP) )
             {
                 FAitfX.UpdateSubMonthExpense("KEEP", CCFGLoader::m_str_CurrentMonth);
             }
-            else if( X_CMD.CmpCmd(3, TB) )
+            else if( X_CMD.CmpCmdBack(TB) )
             {
                 FAitfX.UpdateSubMonthExpense("TB", CCFGLoader::m_str_CurrentMonth);
             }
-            else if( X_CMD.CmpCmd(3, SA) )
+            else if( X_CMD.CmpCmdBack(SA) )
             {
                 FAitfX.UpdateSubMonthExpense("sa", CCFGLoader::m_str_CurrentMonth);
             }
@@ -399,19 +399,19 @@ int main(int argc, char **argv, char *env[])
         {
             CCmdTarget::TagTimeBait();
 
-            if( X_CMD.CmpCmd(3, DK) )
+            if( X_CMD.CmpCmdBack(DK) )
             {
                 FAitfX.CheckTitleExpense("DK");
             }
-            else if( X_CMD.CmpCmd(3, NS) )
+            else if( X_CMD.CmpCmdBack(NS) )
             {
                 FAitfX.CheckTitleExpense("NS");
             }
-            else if( X_CMD.CmpCmd(3, TRAVEL) )
+            else if( X_CMD.CmpCmdBack(TRAVEL) )
             {
                 FAitfX.CheckTitleExpense("travel");
             }
-            else if( X_CMD.CmpCmd(3, LOTTERY) )
+            else if( X_CMD.CmpCmdBack(LOTTERY) )
             {
                 FAitfX.CheckTitleExpense("lottery");
             }
@@ -436,19 +436,19 @@ int main(int argc, char **argv, char *env[])
         {
             CCmdTarget::TagTimeBait();
 
-            if( X_CMD.CmpCmd(3, DK) )
+            if( X_CMD.CmpCmdBack(DK) )
             {
                 FAitfX.UpdateTitleExpense("DK");
             }
-            else if( X_CMD.CmpCmd(3, NS) )
+            else if( X_CMD.CmpCmdBack(NS) )
             {
                 FAitfX.UpdateTitleExpense("NS");
             }
-            else if( X_CMD.CmpCmd(3, TRAVEL) )
+            else if( X_CMD.CmpCmdBack(TRAVEL) )
             {
                 FAitfX.UpdateTitleExpense("travel");
             }
-            else if( X_CMD.CmpCmd(3, LOTTERY) )
+            else if( X_CMD.CmpCmdBack(LOTTERY) )
             {
                 FAitfX.UpdateTitleExpense("lottery");
             }
@@ -519,6 +519,30 @@ int main(int argc, char **argv, char *env[])
                 cout << "----------------------------------------" << endl;
                 cout << "!!!            Error Param           !!!" << endl;
                 cout << "----------------------------------------" << endl;
+            }
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   校验 temp 支出
+        //   CMD >>> check box/xm
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, TEMP) &&\
+                 ( X_CMD.CmpCmdBack(BOX) || X_CMD.CmpCmdBack(XM) ) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            if( X_CMD.CmpCmdBack(BOX) )
+            {
+                FAitfX.CheckTempExpense(BOX);
+            }
+            else if( X_CMD.CmpCmdBack(XM) )
+            {
+                FAitfX.CheckTempExpense(XM);
             }
 
             CCmdTarget::ShowTimeGap();

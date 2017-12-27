@@ -46,6 +46,10 @@ string NS = "ns";
 string TRAVEL = "travel";
 string LOTTERY = "lottery";
 
+string TEMP = "temp";
+string BOX = "box";
+string XM = "xm";
+
 string CANCEL = "cancel";
 string EXIT = "exit";
 

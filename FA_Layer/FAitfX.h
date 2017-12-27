@@ -64,6 +64,7 @@ public:
     /****************************************/
     void TransferBalance(const string str_FirstKey, const string str_SecondKey,
                          const bool bol_TransferFlag, const unsigned int uni_BalanceValueABS);
+    void CheckTempExpense(const string str_TempKey);
 
     /****************************************/
     //   文件读写 操作区
@@ -83,6 +84,8 @@ private:
     CFileManager m_cls_FM_tt_NS;
     CFileManager m_cls_FM_tt_travel;
     CFileManager m_cls_FM_tt_lottery;
+    CFileManager m_cls_FM_temp_BOX;
+    CFileManager m_cls_FM_temp_travelXM;   // 暂时使用
 };
 
 //------------------------------//
