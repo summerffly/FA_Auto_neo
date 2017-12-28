@@ -379,6 +379,8 @@ int main(int argc, char **argv, char *env[])
                 cout << "----------------------------------------" << endl;
                 cout << "!!!            Error Param           !!!" << endl;
                 cout << "----------------------------------------" << endl;
+
+                continue;
             }
 
             FAitfX.UpdateMonthSurplus(CCFGLoader::m_str_CurrentMonth);
@@ -457,6 +459,8 @@ int main(int argc, char **argv, char *env[])
                 cout << "----------------------------------------" << endl;
                 cout << "!!!            Error Param           !!!" << endl;
                 cout << "----------------------------------------" << endl;
+
+                continue;
             }
 
             FAitfX.UpdateAggrSurplus();
@@ -488,6 +492,8 @@ int main(int argc, char **argv, char *env[])
                 cout << "----------------------------------------" << endl;
                 cout << "!!!            Error Param           !!!" << endl;
                 cout << "----------------------------------------" << endl;
+
+                continue;
             }
 
             FAitfX.UpdateAggrSurplus();

@@ -385,6 +385,20 @@ void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
         return;
     }
 
+    // 验证月份计数
+    int int_MonthCounter = 0;
+    int_MonthCounter = atoi(CCFGLoader::m_str_CurrentMonth.c_str()) - atoi(CCFGLoader::m_str_OriginMonth.c_str());
+    int_MonthCounter += 1;
+    if(int_MonthCounter<0)
+        int_MonthCounter += 12;
+    if(uni_TrendSize < int_MonthCounter)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!     Analysis KeyWord Deletion    !!!" << endl;
+        cout << "----------------------------------------" << endl;
+        return;
+    }
+
     // 建构 map
     for(int i=1; i<=uni_TrendSize; i++)
     {
