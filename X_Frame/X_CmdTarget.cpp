@@ -63,6 +63,23 @@ string CCmdTarget::GetCmd(const int int_CmdIndex)
     return m_vec_Cmd.at(int_CmdIndex-1);
 }
 
+int CCmdTarget::CmpSoloCmd(const string str_CMD)
+{
+    if( m_int_CmdNum != 1)
+    {
+        return 0;
+    }
+
+    if( m_vec_Cmd.front().compare(str_CMD) == 0 )
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 int CCmdTarget::CmpCmdFront(const string str_CMD)
 {
     if( m_vec_Cmd.front().compare(str_CMD) == 0 )

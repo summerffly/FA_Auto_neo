@@ -25,12 +25,13 @@ public:
     string GetCmdFront();
     string GetCmdBack();
     string GetCmd(const int int_CmdIndex);
+    int CmpSoloCmd(const string str_CMD);
     int CmpCmdFront(const string str_CMD);
     int CmpCmdBack(const string str_CMD);
     int CmpCmd(const unsigned int int_CmdIndex, const string str_CMD);
 
 private:
-    int m_int_CmdNum;   // CMD数量
+    int m_int_CmdNum;           // CMD数量
     vector<string> m_vec_Cmd;   // CMD内容
 
 public:

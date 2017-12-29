@@ -95,7 +95,7 @@ int main(int argc, char **argv, char *env[])
         /**************************************************/
         //   退出 FA_Auto_X
         /**************************************************/
-        if( X_CMD.CmpCmdBack(EXIT) )
+        if( X_CMD.CmpSoloCmd(EXIT) )
         {
             cout << endl;
             cout << "****************************************" << endl;
@@ -111,8 +111,8 @@ int main(int argc, char **argv, char *env[])
         //   同步 所有.md
         //   CMD >>> sync
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(SYNC) && (X_CMD.GetCmdNum() == 1) )
-        {   
+        else if( X_CMD.CmpSoloCmd(SYNC) )
+        {
             CCmdTarget::TagTimeBait();
 
             FAitfX.SyncAllFile();
@@ -125,9 +125,9 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   写回 所有.md
-        //   CMD >>> write
+        //   CMD >>> wb
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(WRITE) && (X_CMD.GetCmdNum() == 1) )
+        else if( X_CMD.CmpSoloCmd(WRITEBACK) )
         {   
             CCmdTarget::TagTimeBait();
 
@@ -141,9 +141,9 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   备份 所有.md
-        //   CMD >>> backup
+        //   CMD >>> bakup
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(BACKUP) && (X_CMD.GetCmdNum() == 1) )
+        else if( X_CMD.CmpSoloCmd(BACKUP) )
         {   
             CCmdTarget::TagTimeBait();
 
@@ -157,9 +157,9 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   备份 所有.md >>> X工程
-        //   CMD >>> backup-X
+        //   CMD >>> bakup X
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(BACKUP_X) && (X_CMD.GetCmdNum() == 1) )
+        else if( X_CMD.CmpCmdFront(BACKUP) && X_CMD.CmpCmdBack(X)  )
         {   
             CCmdTarget::TagTimeBait();
 

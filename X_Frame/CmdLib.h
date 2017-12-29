@@ -13,10 +13,9 @@ using namespace std;
 
 
 string SYNC = "sync";
-string WRITE = "write";
-string BACKUP = "backup";
-string BACKUP_X = "backup-X";
-string MDFILE = "md";
+string WRITEBACK = "wb";
+string BACKUP = "bakup";
+string X = "X";
 
 string CHECK = "check";
 string UPDATE = "update";
