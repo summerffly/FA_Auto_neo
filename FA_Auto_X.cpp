@@ -535,21 +535,13 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   校验 temp 支出
-        //   CMD >>> check box/xm
+        //   CMD >>> check temp
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, TEMP) &&\
-                 ( X_CMD.CmpCmdBack(BOX) || X_CMD.CmpCmdBack(XM) ) )
+        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmdBack(TEMP) )
         {   
             CCmdTarget::TagTimeBait();
 
-            if( X_CMD.CmpCmdBack(BOX) )
-            {
-                FAitfX.CheckTempExpense(BOX);
-            }
-            else if( X_CMD.CmpCmdBack(XM) )
-            {
-                FAitfX.CheckTempExpense(XM);
-            }
+            FAitfX.CheckTempExpense();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

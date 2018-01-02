@@ -64,7 +64,7 @@ public:
     /****************************************/
     void TransferBalance(const string str_FirstKey, const string str_SecondKey,
                          const bool bol_TransferFlag, const unsigned int uni_BalanceValueABS);
-    void CheckTempExpense(const string str_TempKey);
+    void CheckTempExpense();
 
     /****************************************/
     //   文件读写 操作区

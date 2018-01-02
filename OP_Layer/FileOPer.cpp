@@ -29,7 +29,6 @@ CFileOPer::CFileOPer(const char *cha_FullFileName)
     FullFileNameParser(cha_FullFileName);
 
     m_bol_ModFlag = false;
-    m_int_LineNum = 0;
     
     FileReader();
 }
@@ -123,6 +122,8 @@ bool CFileOPer::GetModFlag()
 
 int CFileOPer::FileReader()
 {
+    // tips 番茄@20180102 - m_int_LineNum需在Read操作前清零
+    m_int_LineNum = 0;
     m_vec_Line.clear();
     m_vec_Line.push_back("LINE 0 BY SUMMER");
 
@@ -160,6 +161,7 @@ int CFileOPer::FileReader()
 
 int CFileOPer::FileReader(const char *cha_FullFileName)
 {
+    m_int_LineNum = 0;
     m_vec_Line.clear();
     m_vec_Line.push_back("LINE 0 BY SUMMER");
 
@@ -235,7 +237,7 @@ int CFileOPer::FileWriter(const char *cha_FullFileName)
     for(int i = 1; i <= m_int_LineNum; i++)
     {
         ofile << m_vec_Line.at(i).c_str() << endl;
-            
+        
         if( regex_match(m_vec_Line.at(i), RE_eof) )
         {
             break;

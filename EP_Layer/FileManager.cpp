@@ -49,6 +49,8 @@ void CFileManager::SyncVecLine()
 void CFileManager::SyncFile()
 {
     m_cls_FileOPer.FileReader();
+    // tips 番茄@20180102 - m_int_LineNum同样需要同步
+    m_int_LineNum = m_cls_FileOPer.GetLineNum();
     SyncVecLine();
 }
 
