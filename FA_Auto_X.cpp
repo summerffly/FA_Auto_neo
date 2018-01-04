@@ -314,6 +314,22 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
+        //   分析 月度百分占比
+        //   CMD >>> analysis pp 12
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, PP) && (X_CMD.GetCmdNum() == 3) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.AnalysisMonthProportion(X_CMD.GetCmd(3));
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
         //   校验 子项.M 支出
         //   CMD >>> check sm books/keep/tb/sa
         /**************************************************/

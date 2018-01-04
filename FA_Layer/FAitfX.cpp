@@ -22,6 +22,12 @@ using namespace std;
                         ((!(str).compare("NS"))?(m_cls_FM_tt_NS):\
                         ((!(str).compare("travel"))?(m_cls_FM_tt_travel):\
                         ((!(str).compare("lottery"))?(m_cls_FM_tt_lottery):(m_cls_FM_TVT)))) )
+                    
+typedef struct
+{
+    string str_UnitContent;
+    unsigned int uni_UnitValueABS;
+}UNIT_INFO;
 
 
 CFAitfX::CFAitfX()
@@ -459,7 +465,7 @@ void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
             unsigned int uni_nextValue = 0;
 
             // tips 番茄@20171227 - 根据map排序特性，防止越界崩溃
-            if( map_Iter == map_MonthTrend.begin())
+            if( map_Iter == map_MonthTrend.begin() )
             {
                 // tips 番茄@20180104 - end()指向末尾为空，不可使用
                 //uni_preValue = map_MonthTrend.end()->second;
@@ -493,6 +499,73 @@ void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
         }
 
         str_TrendMonth = CTool::GenerateNextMonth(str_TrendMonth);
+    }
+
+    cout << endl;
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
+//   分析 月度支出占比
+/**************************************************/
+void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
+{
+    string str_RangeTop = "## life.M" + str_SelMonth;
+    string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
+
+    m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = m_cls_FM_life.GetSearchLineIndex(1) + 4;
+    m_cls_FM_life.SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = m_cls_FM_life.GetSearchLineIndex(1) - 1;
+
+    unsigned int uni_MonthExpenseABS = m_cls_FM_life.GetLineValueABS(uni_RangeTop-2);
+    vector<UNIT_INFO> vec_stc_UnitInfo;
+    UNIT_INFO stc_UnitInfo;
+
+    // 建构 vector
+    for(int i=uni_RangeTop; i<=uni_RangeBottom; i++)
+    {
+        if( m_cls_FM_life.GetLineType(i)==LTYPE_FBIRC_LINEUINT )
+        {
+            stc_UnitInfo.str_UnitContent = m_cls_FM_life.GetLineContent(i);
+            stc_UnitInfo.uni_UnitValueABS = m_cls_FM_life.GetLineValueABS(i);
+
+            vec_stc_UnitInfo.push_back(stc_UnitInfo);
+        }
+    }
+
+    // 获取 vector最大值
+    unsigned int uni_PPSize = vec_stc_UnitInfo.size();
+    unsigned int uni_MaxPPValue = 0;
+
+    for(int i=0; i<uni_PPSize; i++)
+    {
+        if( vec_stc_UnitInfo.at(i).uni_UnitValueABS > uni_MaxPPValue )
+        {
+            uni_MaxPPValue = vec_stc_UnitInfo.at(i).uni_UnitValueABS;
+        }
+    }
+    double dob_ScaleRate = (double)50 / uni_MaxPPValue;
+
+    // 绘制 vector
+    unsigned int uni_Scalde = 0;
+    double dob_PPRate = 0.0;
+    cout << "----------------------------------------" << endl;
+    cout << "### 月度百分占比分析 ###" << endl;
+    cout << endl;
+
+    for(int i=0; i<uni_PPSize; i++)
+    {
+        uni_Scalde = dob_ScaleRate * vec_stc_UnitInfo.at(i).uni_UnitValueABS;
+        dob_PPRate = (double)vec_stc_UnitInfo.at(i).uni_UnitValueABS / (double)uni_MonthExpenseABS;
+
+        for(int i=0; i<=uni_Scalde; i++)
+        {
+            cout << "|";
+        }
+        cout << "  " << vec_stc_UnitInfo.at(i).str_UnitContent << " (";
+        printf("%.1f", (dob_PPRate*100));
+        cout << "%)" << endl;
     }
 
     cout << endl;

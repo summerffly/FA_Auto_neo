@@ -40,6 +40,7 @@ public:
     //   月度 操作区 Plus
     /****************************************/
     void AnalysisMonthTrend(const string str_MonthKey);
+    void AnalysisMonthProportion(const string str_SelMonth);
 
     /****************************************/
     //   子项.M 操作区

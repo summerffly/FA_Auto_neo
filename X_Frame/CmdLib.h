@@ -32,6 +32,7 @@ string TVT = "tvt";
 
 string ANALYSIS = "analysis";
 string TREND = "trend";
+string PP = "pp";
 
 string SUBMONTH = "sm";
 string BOOKS = "books";

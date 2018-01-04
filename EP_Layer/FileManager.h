@@ -36,6 +36,7 @@ public:
     unsigned int GetLineType(const int int_LineIndex);
     int GetLineValue(const int int_LineIndex);
     unsigned int GetLineValueABS(const int int_LineIndex);
+    string GetLineContent(const int int_LineIndex);
     string GetFullLine(const int int_LineIndex);
 
     /****************************************/
