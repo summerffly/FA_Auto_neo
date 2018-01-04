@@ -459,9 +459,12 @@ void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
             unsigned int uni_nextValue = 0;
 
             // tips 番茄@20171227 - 根据map排序特性，防止越界崩溃
-            if( map_Iter == map_MonthTrend.begin() )
+            if( map_Iter == map_MonthTrend.begin())
             {
-                uni_preValue = map_MonthTrend.end()->second;
+                // tips 番茄@20180104 - end()指向末尾为空，不可使用
+                //uni_preValue = map_MonthTrend.end()->second;
+                uni_preValue = map_MonthTrend.at("12");
+                
                 uni_nextValue = map_Iter->second;
             }
             else
