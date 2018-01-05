@@ -249,6 +249,18 @@ string CTool::GeneratePreMonth(const int int_CurMonth)
     return str_NextMonth;
 }
 
+unsigned int CTool::CountMonth(const string str_OriMonth, const string str_CurMonth)
+{
+    int int_MonthCounter = 0;
+    
+    int_MonthCounter = atoi(str_CurMonth.c_str()) - atoi(str_OriMonth.c_str()) + 1;
+
+    if(int_MonthCounter<0)
+        int_MonthCounter += 12;
+
+    return (unsigned int)int_MonthCounter;
+}
+
 string CTool::TransOutFormat(const int int_Value)
 {
     string str_OutValue = string("");
