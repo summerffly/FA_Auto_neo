@@ -30,6 +30,7 @@ public:
     //   月度 操作区
     /****************************************/
     void CheckMonthExpense(const string str_SelMonth);
+    int RCheckMonthSurplus(const string str_SelMonth);
     void CheckMonthSurplus(const string str_SelMonth);
     void UpdateMonthSurplus(const string str_SelMonth);
     void ModifyMonthSurplus(const string str_SelMonth, const string str_MonthKey,\
@@ -45,6 +46,7 @@ public:
     /****************************************/
     //   子项.M 操作区
     /****************************************/
+    int RCheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth);
     void CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth);
     void UpdateSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth);
     void AppendSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth,\
@@ -53,6 +55,7 @@ public:
     /****************************************/
     //   Tt分项 操作区
     /****************************************/
+    int RCheckTitleExpense(const string str_TitleKey);
     void CheckTitleExpense(const string str_TitleKey);
     void UpdateTitleExpense(const string str_TitleKey);
     void AppendTitleExpense(const string str_TitleKey,\
