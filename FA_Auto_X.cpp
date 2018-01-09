@@ -252,6 +252,23 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
+        //   校验 任意月度 收支
+        //   CMD >>> check month 09
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, MONTH) &&\
+                (X_CMD.GetCmdNum() == 3) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.CheckMonthSurplus(X_CMD.GetCmd(3));
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
         //   更新 当月/上月 收支
         //   CMD >>> update month/exmonth
         /**************************************************/
