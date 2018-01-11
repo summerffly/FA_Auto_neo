@@ -204,6 +204,22 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
+        //   FA全系统校验 TVT总收支
+        //   CMD >>> check
+        /**************************************************/
+        else if( X_CMD.CmpSoloCmd(CHECK) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.CheckFA(CCFGLoader::m_str_CurrentMonth);
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
         //   校验 当月/上月 支出
         //   CMD >>> check expense month/exmonth
         /**************************************************/

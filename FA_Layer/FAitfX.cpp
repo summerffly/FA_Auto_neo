@@ -57,6 +57,86 @@ CFAitfX::~CFAitfX()
 
 /**************************************************/
 //   校验 总收支
+//   校验结果只通过返回值体现
+//   不会打印结果
+/**************************************************/
+int CFAitfX::RCheckAggrSurplus(unsigned int &uni_AliRest)
+{
+    unsigned int uni_ItemSize = CCFGLoader::m_vec_stc_FAItem.size();
+    unsigned int uni_ItemCounter = 0;
+
+    int int_AggrSurplus = 0;
+    int int_AggrSurplusCK = 0;
+    int int_AggrSurplusPlus = 0;
+    int int_AggrSurplusPlusCK = 0;
+
+    string str_ItemFlagContent("");
+    string str_ItemFlagAttrbute("");
+    unsigned int uni_ItemFlag = 0;
+
+    while( uni_ItemCounter < uni_ItemSize )
+    {
+        str_ItemFlagContent.clear();
+        str_ItemFlagAttrbute.clear();
+        str_ItemFlagContent += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemContent;
+        str_ItemFlagAttrbute += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemAttrbute;
+
+        m_cls_FM_TVT.SearchLineKey(str_ItemFlagContent.c_str());
+        uni_ItemFlag = m_cls_FM_TVT.GetSearchLineIndex(1);
+
+        if( str_ItemFlagAttrbute.compare("FO")==0 )
+        {
+            int_AggrSurplusCK += m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+            int_AggrSurplusPlusCK += m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+        }
+        else if( str_ItemFlagAttrbute.compare("Title")==0 )
+        {
+            int_AggrSurplusCK += m_cls_FM_TVT.GetLineValue(uni_ItemFlag+1);
+            int_AggrSurplusPlusCK += m_cls_FM_TVT.GetLineValue(uni_ItemFlag+1);
+        }
+        else if( str_ItemFlagAttrbute.compare("Month")==0 )
+        {
+            int_AggrSurplusCK += m_cls_FM_TVT.GetLineValue(uni_ItemFlag+3);
+            int_AggrSurplusPlusCK += m_cls_FM_TVT.GetLineValue(uni_ItemFlag+3);
+        }
+        else if( str_ItemFlagAttrbute.compare("FC")==0 )
+        {
+            int_AggrSurplus = m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+
+            if( int_AggrSurplus != int_AggrSurplusCK )
+            {
+                return -1;
+            }
+        }
+        else if( str_ItemFlagAttrbute.compare("FTail")==0 )
+        {
+            int_AggrSurplusPlusCK += m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+        }
+        else if( str_ItemFlagAttrbute.compare("FB")==0 )
+        {
+            // tips 番茄@20171218 - balance项，需要执行减法
+            int_AggrSurplusPlusCK -= m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+        }
+        else if( str_ItemFlagAttrbute.compare("FF")==0 )
+        {
+            int_AggrSurplusPlus = m_cls_FM_TVT.GetLineValue(uni_ItemFlag);
+
+            if( int_AggrSurplusPlus != int_AggrSurplusPlusCK )
+            {
+                return -2;
+            }
+        }
+
+        uni_ItemCounter++;
+    }
+
+    uni_AliRest = (unsigned int)int_AggrSurplusPlus;
+
+    return 0;
+}
+
+/**************************************************/
+//   校验 总收支
 /**************************************************/
 void CFAitfX::CheckAggrSurplus()
 {
@@ -208,6 +288,112 @@ void CFAitfX::UpdateAggrSurplus()
 }
 
 /**************************************************/
+//   FA全系统校验 总收支
+/**************************************************/
+void CFAitfX::CheckFA(const string str_CurMonth)
+{
+    int int_RetCheck = 0;
+    unsigned int uni_AliRest = 0;
+
+    if( -1 == RCheckTitleExpense("lottery") )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!      lottery NOT Pass Check      !!!" << endl;
+        cout << "----------------------------------------" << endl;
+
+        return;
+    }
+
+    if( -1 == RCheckTitleExpense("DK") )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!         DK NOT Pass Check        !!!" << endl;
+        cout << "----------------------------------------" << endl;
+
+        return;
+    }
+
+    if( -1 == RCheckTitleExpense("NS") )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!         NS NOT Pass Check        !!!" << endl;
+        cout << "----------------------------------------" << endl;
+
+        return;
+    }
+
+    if( -1 == RCheckTitleExpense("travel") )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!       travel NOT Pass Check      !!!" << endl;
+        cout << "----------------------------------------" << endl;
+
+        return;
+    }
+
+    if( -1 == RCheckSubMonthExpense("Books", str_CurMonth) )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!       Books NOT Pass Check       !!!" << endl;
+        cout << "----------------------------------------" << endl;
+
+        return;
+    }
+
+    if( -1 == RCheckSubMonthExpense("KEEP", str_CurMonth) )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!        KEEP NOT Pass Check       !!!" << endl;
+        cout << "----------------------------------------" << endl;
+
+        return;
+    }
+
+    if( -1 == RCheckSubMonthExpense("TB", str_CurMonth) )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!         TB NOT Pass Check        !!!" << endl;
+        cout << "----------------------------------------" << endl;
+
+        return;
+    }
+
+    if( -1 == RCheckSubMonthExpense("sa", str_CurMonth) )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!         sa NOT Pass Check        !!!" << endl;
+        cout << "----------------------------------------" << endl;
+
+        return;
+    }
+
+    if( -1 == RCheckMonthSurplus(str_CurMonth) )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!       Month NOT Pass Check       !!!" << endl;
+        cout << "----------------------------------------" << endl;
+
+        return;
+    }
+
+    int_RetCheck = RCheckAggrSurplus(uni_AliRest);
+
+    if( 0 != int_RetCheck )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!        TVT NOT Pass Check        !!!" << endl;
+        cout << "----------------------------------------" << endl;
+    }
+    else
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "###   FA全系统校验Pass :)   ###" << endl;
+        cout << "余额宝: " << CTool::TransOutFormat(uni_AliRest) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+}
+
+/**************************************************/
 //   校验 life.M 月度支出
 /**************************************************/
 void CFAitfX::CheckMonthExpense(const string str_SelMonth)
@@ -242,6 +428,9 @@ int CFAitfX::RCheckMonthSurplus(const string str_SelMonth)
     string str_RangeTop = "## life.M" + str_SelMonth;
     string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
 
+    m_cls_FM_TVT.SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_TVTLine = m_cls_FM_TVT.GetSearchLineIndex(1);
+
     m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
     unsigned int uni_RangeTop = m_cls_FM_life.GetSearchLineIndex(1);
     m_cls_FM_life.SearchLineKey(str_RangeBottom.c_str());
@@ -250,8 +439,9 @@ int CFAitfX::RCheckMonthSurplus(const string str_SelMonth)
     unsigned int uni_MonthSalaryCK = m_cls_FM_life.GetLineValue(uni_RangeTop+1);
     int int_MonthExpenseCK = m_cls_FM_life.CountRangeType(uni_RangeTop+4, uni_RangeBottom-1, LTYPE_FBIRC_LINEUINT);
 
-    if( (int_MonthExpenseCK == m_cls_FM_life.GetLineValue(uni_RangeTop+2)) &&\
-        ((uni_MonthSalaryCK + int_MonthExpenseCK) == m_cls_FM_life.GetLineValue(uni_RangeTop+3)) )
+    if( (uni_MonthSalaryCK == m_cls_FM_TVT.GetLineValue(uni_TVTLine+1)) &&\
+        (int_MonthExpenseCK == m_cls_FM_TVT.GetLineValue(uni_TVTLine+2)) &&\
+        ((uni_MonthSalaryCK + int_MonthExpenseCK) == m_cls_FM_TVT.GetLineValue(uni_TVTLine+3)) )
     {
         return 0;
     }

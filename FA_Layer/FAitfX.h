@@ -23,8 +23,10 @@ public:
     /****************************************/
     //   总收支 操作区
     /****************************************/
+    int RCheckAggrSurplus(unsigned int &uni_AliRest);
     void CheckAggrSurplus();
     void UpdateAggrSurplus();
+    void CheckFA(const string str_CurMonth);
 
     /****************************************/
     //   月度 操作区
