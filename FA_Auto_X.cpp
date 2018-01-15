@@ -531,10 +531,12 @@ int main(int argc, char **argv, char *env[])
             if( X_CMD.CmpCmd(2, "++") )
             {
                 FAitfX.AppendLottery(true, atoi(X_CMD.GetCmd(3).c_str()), X_CMD.GetCmd(4));
+                FAitfX.TransferBalance("广发银行", "余额宝", true, atoi(X_CMD.GetCmd(3).c_str()));
             }
             else if( X_CMD.CmpCmd(2, "--") )
             {
                 FAitfX.AppendLottery(false, atoi(X_CMD.GetCmd(3).c_str()), X_CMD.GetCmd(4));
+                FAitfX.TransferBalance("广发银行", "余额宝", false, atoi(X_CMD.GetCmd(3).c_str()));
             }
             else
             {
