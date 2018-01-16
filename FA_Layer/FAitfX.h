@@ -31,9 +31,8 @@ public:
     /****************************************/
     //   月度 操作区
     /****************************************/
-    void CheckMonthExpense(const string str_SelMonth);
-    int RCheckMonthSurplus(const string str_SelMonth);
-    void CheckMonthSurplus(const string str_SelMonth);
+    int CheckMonthExpense(const string str_SelMonth, bool bol_OFlag);
+    int CheckMonthSurplus(const string str_SelMonth, bool bol_OFlag);
     void UpdateMonthSurplus(const string str_SelMonth);
     void ModifyMonthSurplus(const string str_SelMonth, const string str_MonthKey,\
                             const unsigned int uni_ModValueABS);

@@ -230,11 +230,11 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(MONTH) )
             {
-                FAitfX.CheckMonthExpense(CCFGLoader::m_str_CurrentMonth);
+                FAitfX.CheckMonthExpense(CCFGLoader::m_str_CurrentMonth, true);
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                FAitfX.CheckMonthExpense(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
+                FAitfX.CheckMonthExpense(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth), true);
             }
 
             CCmdTarget::ShowTimeGap();
@@ -254,11 +254,11 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(MONTH) )
             {
-                FAitfX.CheckMonthSurplus(CCFGLoader::m_str_CurrentMonth);
+                FAitfX.CheckMonthSurplus(CCFGLoader::m_str_CurrentMonth, true);
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                FAitfX.CheckMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
+                FAitfX.CheckMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth), true);
             }
 
             CCmdTarget::ShowTimeGap();
@@ -276,7 +276,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            FAitfX.CheckMonthSurplus(X_CMD.GetCmd(3));
+            FAitfX.CheckMonthSurplus(X_CMD.GetCmd(3), true);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -530,13 +530,13 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmd(2, "++") )
             {
-                FAitfX.AppendLottery(true, atoi(X_CMD.GetCmd(3).c_str()), X_CMD.GetCmd(4));
                 FAitfX.TransferBalance("广发银行", "余额宝", true, atoi(X_CMD.GetCmd(3).c_str()));
+                FAitfX.AppendLottery(true, atoi(X_CMD.GetCmd(3).c_str()), X_CMD.GetCmd(4));
             }
             else if( X_CMD.CmpCmd(2, "--") )
             {
-                FAitfX.AppendLottery(false, atoi(X_CMD.GetCmd(3).c_str()), X_CMD.GetCmd(4));
                 FAitfX.TransferBalance("广发银行", "余额宝", false, atoi(X_CMD.GetCmd(3).c_str()));
+                FAitfX.AppendLottery(false, atoi(X_CMD.GetCmd(3).c_str()), X_CMD.GetCmd(4));
             }
             else
             {
