@@ -56,8 +56,7 @@ public:
     /****************************************/
     //   Tt分项 操作区
     /****************************************/
-    int RCheckTitleExpense(const string str_TitleKey);
-    void CheckTitleExpense(const string str_TitleKey);
+    int CheckTitleExpense(const string str_TitleKey, bool bol_OFlag);
     void UpdateTitleExpense(const string str_TitleKey);
     void AppendTitleExpense(const string str_TitleKey,\
                             const int int_LineValue, const string str_LineContent);

@@ -30,9 +30,9 @@ string MONTH = "month";
 string EX_MONTH = "exmonth";
 string TVT = "tvt";
 
-string ANALYSIS = "analysis";
-string TREND = "trend";
-string PP = "pp";
+string ANALYSIS = "as";
+string TREND = "tt";
+string PROPORTION = "pp";
 
 string SUBMONTH = "sm";
 string BOOKS = "books";

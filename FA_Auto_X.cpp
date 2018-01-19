@@ -332,7 +332,7 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   分析 月度趋势
-        //   CMD >>> analysis trend Books
+        //   CMD >>> as tt Books
         /**************************************************/
         else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, TREND) && (X_CMD.GetCmdNum() == 3) )
         {   
@@ -348,9 +348,9 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   分析 月度百分占比
-        //   CMD >>> analysis pp 12
+        //   CMD >>> as pp 12
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, PP) && (X_CMD.GetCmdNum() == 3) )
+        else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, PROPORTION) && (X_CMD.GetCmdNum() == 3) )
         {   
             CCmdTarget::TagTimeBait();
 
@@ -452,19 +452,19 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(DK) )
             {
-                FAitfX.CheckTitleExpense("DK");
+                FAitfX.CheckTitleExpense("DK", true);
             }
             else if( X_CMD.CmpCmdBack(NS) )
             {
-                FAitfX.CheckTitleExpense("NS");
+                FAitfX.CheckTitleExpense("NS", true);
             }
             else if( X_CMD.CmpCmdBack(TRAVEL) )
             {
-                FAitfX.CheckTitleExpense("travel");
+                FAitfX.CheckTitleExpense("travel", true);
             }
             else if( X_CMD.CmpCmdBack(LOTTERY) )
             {
-                FAitfX.CheckTitleExpense("lottery");
+                FAitfX.CheckTitleExpense("lottery", true);
             }
             else
             {

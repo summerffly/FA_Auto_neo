@@ -295,7 +295,7 @@ void CFAitfX::CheckFA(const string str_CurMonth)
     int int_RetCheck = 0;
     unsigned int uni_AliRest = 0;
 
-    if( -1 == RCheckTitleExpense("lottery") )
+    if( 0 != CheckTitleExpense("lottery", false) )
     {
         cout << "----------------------------------------" << endl;
         cout << "!!!      lottery NOT Pass Check      !!!" << endl;
@@ -304,7 +304,7 @@ void CFAitfX::CheckFA(const string str_CurMonth)
         return;
     }
 
-    if( -1 == RCheckTitleExpense("DK") )
+    if( 0 != CheckTitleExpense("DK", false) )
     {
         cout << "----------------------------------------" << endl;
         cout << "!!!         DK NOT Pass Check        !!!" << endl;
@@ -313,7 +313,7 @@ void CFAitfX::CheckFA(const string str_CurMonth)
         return;
     }
 
-    if( -1 == RCheckTitleExpense("NS") )
+    if( 0 != CheckTitleExpense("NS", false) )
     {
         cout << "----------------------------------------" << endl;
         cout << "!!!         NS NOT Pass Check        !!!" << endl;
@@ -322,7 +322,7 @@ void CFAitfX::CheckFA(const string str_CurMonth)
         return;
     }
 
-    if( -1 == RCheckTitleExpense("travel") )
+    if( 0 != CheckTitleExpense("travel", false) )
     {
         cout << "----------------------------------------" << endl;
         cout << "!!!       travel NOT Pass Check      !!!" << endl;
@@ -949,75 +949,55 @@ void CFAitfX::AppendSubMonthExpense(const string str_SubMonthKey, const string s
 
 /**************************************************/
 //   校验 Tt分项 月度支出
-//   校验结果只通过返回值体现
-//   不会打印结果
-//   只与上层校验
 /**************************************************/
-int CFAitfX::RCheckTitleExpense(const string str_TitleKey)
+int CFAitfX::CheckTitleExpense(const string str_TitleKey, bool bol_OFlag)
 {
     if(FM_TITLE(str_TitleKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
     {
         cout << "----------------------------------------" << endl;
         cout << "!!!        Title KeyWord Error       !!!" << endl;
         cout << "----------------------------------------" << endl;
-        return -2;
+        return -9;
     }
 
     string str_RangeTop = "## " + str_TitleKey;
     string str_RangeBottom("## Total");
 
     m_cls_FM_TVT.SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_TVTLine = m_cls_FM_TVT.GetSearchLineIndex(1);
+    unsigned int uni_AFLine = m_cls_FM_TVT.GetSearchLineIndex(1);
 
     unsigned int uni_RangeTop = 2;
     FM_TITLE(str_TitleKey).SearchLineKey(str_RangeBottom.c_str());
     unsigned int uni_RangeBottom = FM_TITLE(str_TitleKey).GetSearchLineIndex(1);
 
-    int int_TitleExpenseCK = FM_TITLE(str_TitleKey).CountRangeType(uni_RangeTop, uni_RangeBottom-1,\
-                                      LTYPE_FBIRC_LINEUINT);
+    int int_AFTitleExpenseEX = m_cls_FM_TVT.GetLineValue(uni_AFLine+1);
 
-    if(int_TitleExpenseCK == m_cls_FM_TVT.GetLineValue(uni_TVTLine+1))
-    {
-        return 0;
-    }
-    else
-    {
-        return -1;
-    }
-}
-
-/**************************************************/
-//   校验 Tt分项 月度支出
-/**************************************************/
-void CFAitfX::CheckTitleExpense(const string str_TitleKey)
-{
-    if(FM_TITLE(str_TitleKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "!!!        Title KeyWord Error       !!!" << endl;
-        cout << "----------------------------------------" << endl;
-        return;
-    }
-
-    string str_RangeTop = "## " + str_TitleKey;
-    string str_RangeBottom("## Total");
-
-    m_cls_FM_TVT.SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_TVTLine = m_cls_FM_TVT.GetSearchLineIndex(1);
-
-    unsigned int uni_RangeTop = 2;
-    FM_TITLE(str_TitleKey).SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = FM_TITLE(str_TitleKey).GetSearchLineIndex(1);
-
+    int int_TitleExpenseEX = FM_TITLE(str_TitleKey).GetLineValue(uni_RangeBottom+2);
     int int_TitleExpenseCK = FM_TITLE(str_TitleKey).CountRangeType(uni_RangeTop, uni_RangeBottom-1,\
                                        LTYPE_FBIRC_LINEUINT);
 
-    cout << "----------------------------------------" << endl;
-    cout << "### " << str_TitleKey << "/支出 ###" << endl;
-    cout << "TVT_读取值: " << CTool::TransOutFormat(m_cls_FM_TVT.GetLineValue(uni_TVTLine+1)) << endl;
-    cout << "Tt_读取值: " << CTool::TransOutFormat(FM_TITLE(str_TitleKey).GetLineValue(uni_RangeBottom+2)) << endl;
-    cout << "Tt_校验值: " << CTool::TransOutFormat(int_TitleExpenseCK) << endl;
-    cout << "----------------------------------------" << endl;
+    if( bol_OFlag )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### " << str_TitleKey << "/支出 ###" << endl;
+        cout << "TVT_读取值: " << CTool::TransOutFormat(int_AFTitleExpenseEX) << endl;
+        cout << "Tt_读取值: " << CTool::TransOutFormat(int_TitleExpenseEX) << endl;
+        cout << "Tt_校验值: " << CTool::TransOutFormat(int_TitleExpenseCK) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+
+    if( int_TitleExpenseEX != int_TitleExpenseCK )
+    {
+        return -1;
+    }
+    else if( int_TitleExpenseEX != int_AFTitleExpenseEX )
+    {
+        return -2;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 /**************************************************/
