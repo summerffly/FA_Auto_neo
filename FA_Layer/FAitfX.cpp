@@ -331,7 +331,7 @@ void CFAitfX::CheckFA(const string str_CurMonth)
         return;
     }
 
-    if( -1 == RCheckSubMonthExpense("Books", str_CurMonth) )
+    if( 0 != CheckSubMonthExpense("Books", str_CurMonth, false) )
     {
         cout << "----------------------------------------" << endl;
         cout << "!!!       Books NOT Pass Check       !!!" << endl;
@@ -340,7 +340,7 @@ void CFAitfX::CheckFA(const string str_CurMonth)
         return;
     }
 
-    if( -1 == RCheckSubMonthExpense("KEEP", str_CurMonth) )
+    if( 0 != CheckSubMonthExpense("KEEP", str_CurMonth, false) )
     {
         cout << "----------------------------------------" << endl;
         cout << "!!!        KEEP NOT Pass Check       !!!" << endl;
@@ -349,7 +349,7 @@ void CFAitfX::CheckFA(const string str_CurMonth)
         return;
     }
 
-    if( -1 == RCheckSubMonthExpense("TB", str_CurMonth) )
+    if( 0 != CheckSubMonthExpense("TB", str_CurMonth, false) )
     {
         cout << "----------------------------------------" << endl;
         cout << "!!!         TB NOT Pass Check        !!!" << endl;
@@ -358,7 +358,7 @@ void CFAitfX::CheckFA(const string str_CurMonth)
         return;
     }
 
-    if( -1 == RCheckSubMonthExpense("sa", str_CurMonth) )
+    if( 0 != CheckSubMonthExpense("sa", str_CurMonth, false) )
     {
         cout << "----------------------------------------" << endl;
         cout << "!!!         sa NOT Pass Check        !!!" << endl;
@@ -793,18 +793,15 @@ void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
 
 /**************************************************/
 //   校验 子项.M 月度支出
-//   校验结果只通过返回值体现
-//   不会打印结果
-//   只与上层校验
 /**************************************************/
-int CFAitfX::RCheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth)
+int CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag)
 {
     if(FM_SUBMONTH(str_SubMonthKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
     {
         cout << "----------------------------------------" << endl;
         cout << "!!!      SubMonth KeyWord Error      !!!" << endl;
         cout << "----------------------------------------" << endl;
-        return -2;
+        return -9;
     }
 
     string str_RangeTop = str_SubMonthKey + ".M" + str_SelMonth;
@@ -818,52 +815,33 @@ int CFAitfX::RCheckSubMonthExpense(const string str_SubMonthKey, const string st
     FM_SUBMONTH(str_SubMonthKey).SearchLineKey(str_RangeBottom.c_str());
     unsigned int uni_RangeBottom = FM_SUBMONTH(str_SubMonthKey).GetSearchLineIndex(1);
 
-    int int_SubMonthExpenseCK = FM_SUBMONTH(str_SubMonthKey).CountRangeType(uni_RangeTop+2, uni_RangeBottom-1,\
-                                            LTYPE_FBIRC_LINEUINT);
-    
-    if(int_SubMonthExpenseCK == m_cls_FM_life.GetLineValue(uni_lifeLine))
-    {
-        return 0;
-    }
-    else
-    {
-        return -1;
-    }
-}
-
-/**************************************************/
-//   校验 子项.M 月度支出
-/**************************************************/
-void CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth)
-{
-    if(FM_SUBMONTH(str_SubMonthKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "!!!      SubMonth KeyWord Error      !!!" << endl;
-        cout << "----------------------------------------" << endl;
-        return;
-    }
-
-    string str_RangeTop = str_SubMonthKey + ".M" + str_SelMonth;
-    string str_RangeBottom = str_SubMonthKey + ".M" + CTool::GenerateNextMonth(str_SelMonth);
-
-    m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_lifeLine = m_cls_FM_life.GetSearchLineIndex(1);
-
-    FM_SUBMONTH(str_SubMonthKey).SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = FM_SUBMONTH(str_SubMonthKey).GetSearchLineIndex(1);
-    FM_SUBMONTH(str_SubMonthKey).SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = FM_SUBMONTH(str_SubMonthKey).GetSearchLineIndex(1);
-
+    int int_LMSubMonthExpenseEX = m_cls_FM_life.GetLineValue(uni_lifeLine);
+    int int_SubMonthExpenseEX = FM_SUBMONTH(str_SubMonthKey).GetLineValue(uni_RangeTop+1);
     int int_SubMonthExpenseCK = FM_SUBMONTH(str_SubMonthKey).CountRangeType(uni_RangeTop+2, uni_RangeBottom-1,\
                                        LTYPE_FBIRC_LINEUINT);
 
-    cout << "----------------------------------------" << endl;
-    cout << "### " << str_SelMonth << "月/" << str_SubMonthKey << "支出 ###" << endl;
-    cout << "life.M_读取值: " << CTool::TransOutFormat(m_cls_FM_life.GetLineValue(uni_lifeLine)) << endl;
-    cout << "sub.M_读取值: " << CTool::TransOutFormat(FM_SUBMONTH(str_SubMonthKey).GetLineValue(uni_RangeTop+1)) << endl;
-    cout << "sub.M_校验值: " << CTool::TransOutFormat(int_SubMonthExpenseCK) << endl;
-    cout << "----------------------------------------" << endl;
+    if( bol_OFlag )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### " << str_SelMonth << "月/" << str_SubMonthKey << "支出 ###" << endl;
+        cout << "life.M_读取值: " << CTool::TransOutFormat(int_LMSubMonthExpenseEX) << endl;
+        cout << "sub.M_读取值: " << CTool::TransOutFormat(int_SubMonthExpenseEX) << endl;
+        cout << "sub.M_校验值: " << CTool::TransOutFormat(int_SubMonthExpenseCK) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+
+    if( int_SubMonthExpenseCK != int_SubMonthExpenseEX )
+    {
+        return -1;
+    }
+    else if( int_SubMonthExpenseCK != int_LMSubMonthExpenseEX )
+    {
+        return -2;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 /**************************************************/
@@ -986,11 +964,11 @@ int CFAitfX::CheckTitleExpense(const string str_TitleKey, bool bol_OFlag)
         cout << "----------------------------------------" << endl;
     }
 
-    if( int_TitleExpenseEX != int_TitleExpenseCK )
+    if( int_TitleExpenseCK != int_TitleExpenseEX )
     {
         return -1;
     }
-    else if( int_TitleExpenseEX != int_AFTitleExpenseEX )
+    else if( int_TitleExpenseCK != int_AFTitleExpenseEX )
     {
         return -2;
     }

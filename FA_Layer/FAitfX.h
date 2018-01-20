@@ -47,8 +47,7 @@ public:
     /****************************************/
     //   子项.M 操作区
     /****************************************/
-    int RCheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth);
-    void CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth);
+    int CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag);
     void UpdateSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth);
     void AppendSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth,\
                                const int int_LineValue, const string str_LineContent);
@@ -89,7 +88,6 @@ private:
     CFileManager m_cls_FM_tt_travel;
     CFileManager m_cls_FM_tt_lottery;
     CFileManager m_cls_FM_temp_BOX;
-    CFileManager m_cls_FM_temp_travelXM;   // 暂时使用
 };
 
 //------------------------------//

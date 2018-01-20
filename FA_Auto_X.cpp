@@ -372,19 +372,19 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(BOOKS) )
             {
-                FAitfX.CheckSubMonthExpense("Books", CCFGLoader::m_str_CurrentMonth);
+                FAitfX.CheckSubMonthExpense("Books", CCFGLoader::m_str_CurrentMonth, true);
             }
             else if( X_CMD.CmpCmdBack(KEEP) )
             {
-                FAitfX.CheckSubMonthExpense("KEEP", CCFGLoader::m_str_CurrentMonth);
+                FAitfX.CheckSubMonthExpense("KEEP", CCFGLoader::m_str_CurrentMonth, true);
             }
             else if( X_CMD.CmpCmdBack(TB) )
             {
-                FAitfX.CheckSubMonthExpense("TB", CCFGLoader::m_str_CurrentMonth);
+                FAitfX.CheckSubMonthExpense("TB", CCFGLoader::m_str_CurrentMonth, true);
             }
             else if( X_CMD.CmpCmdBack(SA) )
             {
-                FAitfX.CheckSubMonthExpense("sa", CCFGLoader::m_str_CurrentMonth);
+                FAitfX.CheckSubMonthExpense("sa", CCFGLoader::m_str_CurrentMonth, true);
             }
             else
             {
