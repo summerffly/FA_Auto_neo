@@ -585,6 +585,23 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
+        //   插入 月度 脚本
+        //   CMD >>> append month 02
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(APPEND) && X_CMD.CmpCmd(2, MONTH) &&\
+                 (X_CMD.GetCmdNum() == 3) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.AppendMonth(X_CMD.GetCmd(3));
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
         //   校验 temp 支出
         //   CMD >>> check temp
         /**************************************************/

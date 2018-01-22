@@ -301,6 +301,12 @@ void CLineEPer::UpdateFullLine()
     
     switch(m_uni_LineType)
     {
+        case(LTYPE_MONTHTITLE):
+            {
+                m_str_FullLine.clear();
+                m_str_FullLine += m_str_LineContent;
+            }
+            break;
         case(LTYPE_FBIRC_AGGR):
             {
                 m_str_FullLine.clear();
