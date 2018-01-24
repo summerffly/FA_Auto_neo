@@ -179,7 +179,8 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            FAitfX.CheckAggrSurplus();
+            unsigned int uni_AliRest = 0;
+            FAitfX.CheckAggrSurplus(uni_AliRest, true);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

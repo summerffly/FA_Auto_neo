@@ -23,8 +23,7 @@ public:
     /****************************************/
     //   总收支 操作区
     /****************************************/
-    int RCheckAggrSurplus(unsigned int &uni_AliRest);
-    void CheckAggrSurplus();
+    int CheckAggrSurplus(unsigned int &uni_AliRest, bool bol_OFlag);
     void UpdateAggrSurplus();
     void CheckFA(const string str_CurMonth);
 
@@ -79,7 +78,7 @@ public:
     void BackUpAllFile(const string str_BackUpPath);
 
 private:
-    CFileManager m_cls_FM_TVT;
+    CFileManager m_cls_FM_AF;
     CFileManager m_cls_FM_life;
     CFileManager m_cls_FM_sm_Books;
     CFileManager m_cls_FM_sm_KEEP;
