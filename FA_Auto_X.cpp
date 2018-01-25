@@ -196,7 +196,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            FAitfX.UpdateAggrSurplus();
+            FAitfX.UpdateAggrSurplus(true);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -296,16 +296,16 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(MONTH) )
             {
-                FAitfX.UpdateMonthSurplus(CCFGLoader::m_str_CurrentMonth);
+                FAitfX.UpdateMonthSurplus(CCFGLoader::m_str_CurrentMonth, true);
                 FAitfX.SyncMonthSurplus(CCFGLoader::m_str_CurrentMonth);
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                FAitfX.UpdateMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
+                FAitfX.UpdateMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth), true);
                 FAitfX.SyncMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth));
             }
 
-            FAitfX.UpdateAggrSurplus();
+            FAitfX.UpdateAggrSurplus(false);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -323,7 +323,7 @@ int main(int argc, char **argv, char *env[])
 
             FAitfX.ModifyMonthSurplus(CCFGLoader::m_str_CurrentMonth, "生活费", atoi(X_CMD.GetCmd(2).c_str()));
             FAitfX.SyncMonthSurplus(CCFGLoader::m_str_CurrentMonth);
-            FAitfX.UpdateAggrSurplus();
+            FAitfX.UpdateAggrSurplus(false);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -410,19 +410,19 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(BOOKS) )
             {
-                FAitfX.UpdateSubMonthExpense("Books", CCFGLoader::m_str_CurrentMonth);
+                FAitfX.UpdateSubMonthExpense("Books", CCFGLoader::m_str_CurrentMonth, true);
             }
             else if( X_CMD.CmpCmdBack(KEEP) )
             {
-                FAitfX.UpdateSubMonthExpense("KEEP", CCFGLoader::m_str_CurrentMonth);
+                FAitfX.UpdateSubMonthExpense("KEEP", CCFGLoader::m_str_CurrentMonth, true);
             }
             else if( X_CMD.CmpCmdBack(TB) )
             {
-                FAitfX.UpdateSubMonthExpense("TB", CCFGLoader::m_str_CurrentMonth);
+                FAitfX.UpdateSubMonthExpense("TB", CCFGLoader::m_str_CurrentMonth, true);
             }
             else if( X_CMD.CmpCmdBack(SA) )
             {
-                FAitfX.UpdateSubMonthExpense("sa", CCFGLoader::m_str_CurrentMonth);
+                FAitfX.UpdateSubMonthExpense("sa", CCFGLoader::m_str_CurrentMonth, true);
             }
             else
             {
@@ -433,9 +433,9 @@ int main(int argc, char **argv, char *env[])
                 continue;
             }
 
-            FAitfX.UpdateMonthSurplus(CCFGLoader::m_str_CurrentMonth);
+            FAitfX.UpdateMonthSurplus(CCFGLoader::m_str_CurrentMonth, false);
             FAitfX.SyncMonthSurplus(CCFGLoader::m_str_CurrentMonth);
-            FAitfX.UpdateAggrSurplus();
+            FAitfX.UpdateAggrSurplus(false);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -490,19 +490,19 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(DK) )
             {
-                FAitfX.UpdateTitleExpense("DK");
+                FAitfX.UpdateTitleExpense("DK", true);
             }
             else if( X_CMD.CmpCmdBack(NS) )
             {
-                FAitfX.UpdateTitleExpense("NS");
+                FAitfX.UpdateTitleExpense("NS", true);
             }
             else if( X_CMD.CmpCmdBack(TRAVEL) )
             {
-                FAitfX.UpdateTitleExpense("travel");
+                FAitfX.UpdateTitleExpense("travel", true);
             }
             else if( X_CMD.CmpCmdBack(LOTTERY) )
             {
-                FAitfX.UpdateTitleExpense("lottery");
+                FAitfX.UpdateTitleExpense("lottery", true);
             }
             else
             {
@@ -513,7 +513,7 @@ int main(int argc, char **argv, char *env[])
                 continue;
             }
 
-            FAitfX.UpdateAggrSurplus();
+            FAitfX.UpdateAggrSurplus(false);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -548,7 +548,7 @@ int main(int argc, char **argv, char *env[])
                 continue;
             }
 
-            FAitfX.UpdateAggrSurplus();
+            FAitfX.UpdateAggrSurplus(false);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

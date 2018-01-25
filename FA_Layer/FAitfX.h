@@ -24,7 +24,7 @@ public:
     //   总收支 操作区
     /****************************************/
     int CheckAggrSurplus(unsigned int &uni_AliRest, bool bol_OFlag);
-    void UpdateAggrSurplus();
+    void UpdateAggrSurplus(bool bol_OFlag);
     void CheckFA(const string str_CurMonth);
 
     /****************************************/
@@ -32,7 +32,7 @@ public:
     /****************************************/
     int CheckMonthExpense(const string str_SelMonth, bool bol_OFlag);
     int CheckMonthSurplus(const string str_SelMonth, bool bol_OFlag);
-    void UpdateMonthSurplus(const string str_SelMonth);
+    void UpdateMonthSurplus(const string str_SelMonth, bool bol_OFlag);
     void ModifyMonthSurplus(const string str_SelMonth, const string str_MonthKey,\
                             const unsigned int uni_ModValueABS);
     void SyncMonthSurplus(const string str_SelMonth);
@@ -47,7 +47,7 @@ public:
     //   子项.M 操作区
     /****************************************/
     int CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag);
-    void UpdateSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth);
+    void UpdateSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag);
     void AppendSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth,\
                                const int int_LineValue, const string str_LineContent);
 
@@ -55,7 +55,7 @@ public:
     //   Tt分项 操作区
     /****************************************/
     int CheckTitleExpense(const string str_TitleKey, bool bol_OFlag);
-    void UpdateTitleExpense(const string str_TitleKey);
+    void UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag);
     void AppendTitleExpense(const string str_TitleKey,\
                             const int int_LineValue, const string str_LineContent);
     void AppendLottery(const bool bol_LineFlag, const unsigned int int_LineValueABS,\
