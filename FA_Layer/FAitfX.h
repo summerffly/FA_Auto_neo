@@ -8,6 +8,7 @@
 
 #include <map>
 #include "./../X_Frame/X_Tool.h"
+#include "./../X_Frame/Singleton.h"
 #include "./../X_Frame/X_CFGLoader.h"
 #include "./../EP_Layer/FileManager.h"
 
@@ -17,6 +18,8 @@ using namespace std;
 class CFAitfX
 {
 public:
+    friend class Singleton<CFAitfX>;
+    
     CFAitfX();
     ~CFAitfX();
 
