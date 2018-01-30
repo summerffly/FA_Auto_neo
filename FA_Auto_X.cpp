@@ -22,9 +22,6 @@
 #include "./EP_Layer/FileManager.h"
 #include "./FA_Layer/FAitfX.h"
 
-#include "./Thread/MultiThread.h"
-#include "./Thread/FileThread.h"
-
 using namespace std;
 
 
@@ -617,55 +614,6 @@ int main(int argc, char **argv, char *env[])
 
             continue;
         }
-
-#if 0
-        /* * * * * * * * * * * * * * * * * * * * * * */
-        //   Verify FileThread线程
-        /* * * * * * * * * * * * * * * * * * * * * * */
-        else if( !X_CMD.GetCmdFront().compare("ve-filet") )
-        {
-            CFileThread FileVeT = CFileThread("./FA_TVT_VeX.md");
-
-            FileVeT.Start();
-
-            sleep(10);
-
-            FileVeT.InsertLine(8, "THREAD TEST");
-            FileVeT.Control();
-
-            sleep(10);
-
-            FileVeT.DeleteLine(8);
-            FileVeT.Control();
-
-            sleep(5);
-
-            FileVeT.Join();
-
-            //cin.ignore();
-            continue;
-        }
-
-        /* * * * * * * * * * * * * * * * * * * * * * */
-        //   验证多线程同步机制
-        /* * * * * * * * * * * * * * * * * * * * * * */
-        else if( X_CMD.GetCmdFront().compare("ve-mutex") == 0 )
-        {   
-            CMultiThread mttest_a;
-            CMultiThread mttest_b;
-            CMultiThread mttest_c;
-
-            mttest_a.Start();
-            mttest_b.Start();
-            mttest_c.Start();
-            
-            mttest_a.Join();
-            mttest_b.Join();
-            mttest_c.Join();
-
-            continue;
-        }
-#endif
 
         /**************************************************/
         //   CMD输入错误

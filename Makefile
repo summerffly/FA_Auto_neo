@@ -1,18 +1,16 @@
 
 px = ./X_Frame/
-pt = ./Thread/
 lop = ./OP_Layer/
 lep = ./EP_Layer/
 lfa = ./FA_Layer/
 
 obj_X = $(px)RegExLib.o $(px)X_Tool.o $(px)X_CmdTarget.o $(px)X_CFGLoader.o $(px)X_XMLParser.o $(px)tinyxml2.o
-obj_thread = $(pt)Thread.o $(pt)MultiThread.o $(pt)FileThread.o
 obj_OP = $(lop)FileOPer.o
 obj_EP = $(lep)LineEPer.o $(lep)FileManager.o
 obj_FA = $(lfa)FAitfX.o
 
-FA_Auto_X: FA_Auto_X.o $(obj_X) $(obj_thread) $(obj_OP) $(obj_EP) $(obj_FA)
-	g++ -o FA_Auto_X FA_Auto_X.o $(obj_X) $(obj_thread) $(obj_OP) $(obj_EP) $(obj_FA)
+FA_Auto_X: FA_Auto_X.o $(obj_X) $(obj_OP) $(obj_EP) $(obj_FA)
+	g++ -o FA_Auto_X FA_Auto_X.o $(obj_X) $(obj_OP) $(obj_EP) $(obj_FA)
 
 FA_Auto_X.o: FA_Auto_X.cpp
 	g++ -c FA_Auto_X.cpp
@@ -35,15 +33,6 @@ X_XMLParser.o: $(px)X_XMLParser.h $(px)X_XMLParser.cpp
 tinyxml2.o: $(px)tinyxml2.h $(px)tinyxml2.cpp
 	g++ -c $(px)tinyxml2.cpp
 
-Thread.o: $(pt)Thread.h $(pt)Thread.cpp
-	g++ -c $(pt)Thread.cpp
-
-MultiThread.o: $(pt)MultiThread.h $(pt)MultiThread.cpp
-	g++ -c $(pt)MultiThread.cpp
-
-FileThread.o: $(pt)FileThread.h $(pt)FileThread.cpp
-	g++ -c $(pt)FileThread.cpp
-
 FileOPer.o: $(lop)FileOPer.h $(lop)FileOPer.cpp
 	g++ -c $(lop)FileOPer.cpp
 
@@ -58,4 +47,4 @@ FAitfX.o: $(lfa)FAitfX.h $(lfa)FAitfX.cpp
 
 .PHONY:clean
 clean:
-	rm $(px)*.o $(pt)*.o $(lop)*.o $(lep)*.o $(lfa)*.o *.o FA_Auto_X
+	rm $(px)*.o $(lop)*.o $(lep)*.o $(lfa)*.o *.o FA_Auto_X
