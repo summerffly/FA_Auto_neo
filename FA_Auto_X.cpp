@@ -162,7 +162,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            FAitfX.GetInstance()->BackUpAllFile("./../Desktop/FA_Auto_X/");
+            FAitfX.GetInstance()->BackUpAllFile("./../Desktop/FA_Auto_X/X_Executable/");
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
