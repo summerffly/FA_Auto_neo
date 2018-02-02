@@ -341,6 +341,27 @@ void CFAitfX::CheckFA(const string str_CurMonth)
 }
 
 /**************************************************/
+//   FA全系统更新 总收支
+/**************************************************/
+void CFAitfX::UpdateFA(const string str_CurMonth)
+{
+    UpdateTitleExpense("lottery", false);
+    UpdateTitleExpense("DK", false);
+    UpdateTitleExpense("NS", false);
+    UpdateTitleExpense("travel", false);
+
+    UpdateSubMonthExpense("Books", str_CurMonth, false);
+    UpdateSubMonthExpense("KEEP", str_CurMonth, false);
+    UpdateSubMonthExpense("TB", str_CurMonth, false);
+    UpdateSubMonthExpense("sa", str_CurMonth, false);
+
+    UpdateMonthSurplus(str_CurMonth, true);
+    SyncMonthSurplus(str_CurMonth);
+
+    UpdateAggrSurplus(true);
+}
+
+/**************************************************/
 //   校验 life.M 月度支出
 /**************************************************/
 int CFAitfX::CheckMonthExpense(const string str_SelMonth, bool bol_OFlag)

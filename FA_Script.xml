@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FA_Script>
-    <Version Atr="version">1.8.1 [Beta]</Version>
+    <Version Atr="version">2.0.0</Version>
     <Month Atr="origin">09</Month>
     <Month Atr="current">02</Month>
     <FA_Struct Atr="TVT">
@@ -9,6 +9,7 @@
         <FAItem Atr="Title">DK</FAItem>
         <FAItem Atr="Title">NS</FAItem>
         <FAItem Atr="Title">travel</FAItem>
+        <FAItem Atr="Title">年终奖</FAItem>
         <FAItem Atr="Month">M09</FAItem>
         <FAItem Atr="Month">M10</FAItem>
         <FAItem Atr="Month">M11</FAItem>

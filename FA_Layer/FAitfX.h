@@ -29,6 +29,7 @@ public:
     int CheckAggrSurplus(unsigned int &uni_AliRest, bool bol_OFlag);
     void UpdateAggrSurplus(bool bol_OFlag);
     void CheckFA(const string str_CurMonth);
+    void UpdateFA(const string str_CurMonth);
 
     /****************************************/
     //   月度 操作区

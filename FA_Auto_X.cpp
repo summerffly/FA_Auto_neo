@@ -43,7 +43,7 @@ int main(int argc, char **argv, char *env[])
     cout << "***                                  ***" << endl;
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
-    cout << "***      Version: " << CCFGLoader::m_str_Version << "       ***" << endl;
+    cout << "***          Version: " << CCFGLoader::m_str_Version << "          ***" << endl;
     cout << "***                                  ***" << endl;
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
@@ -212,6 +212,22 @@ int main(int argc, char **argv, char *env[])
             CCmdTarget::TagTimeBait();
 
             FAitfX.GetInstance()->CheckFA(CCFGLoader::m_str_CurrentMonth);
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   FA全系统更新 TVT总收支
+        //   CMD >>> update
+        /**************************************************/
+        else if( X_CMD.CmpSoloCmd(UPDATE) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.GetInstance()->UpdateFA(CCFGLoader::m_str_CurrentMonth);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
