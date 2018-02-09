@@ -260,6 +260,23 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
+        //   校验 任意月度 收支
+        //   CMD >>> check month 09
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, MONTH) &&\
+                (X_CMD.GetCmdNum() == 3) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.GetInstance()->CheckMonthSurplus(X_CMD.GetCmd(3), true);
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
         //   校验 当月/上月 收支
         //   CMD >>> check month/exmonth
         /**************************************************/
@@ -284,15 +301,17 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   校验 任意月度 收支
-        //   CMD >>> check month 09
+        //   更新 任意月度 收支
+        //   CMD >>> update month 09
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, MONTH) &&\
+        else if( X_CMD.CmpCmdFront(UPDATE) && X_CMD.CmpCmd(2, MONTH) &&\
                 (X_CMD.GetCmdNum() == 3) )
         {   
             CCmdTarget::TagTimeBait();
 
-            FAitfX.GetInstance()->CheckMonthSurplus(X_CMD.GetCmd(3), true);
+            FAitfX.GetInstance()->UpdateMonthSurplus(X_CMD.GetCmd(3), true);
+            FAitfX.GetInstance()->SyncMonthSurplus(X_CMD.GetCmd(3));
+            FAitfX.GetInstance()->UpdateAggrSurplus(false);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
