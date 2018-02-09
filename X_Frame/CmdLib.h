@@ -31,8 +31,10 @@ string EX_MONTH = "exmonth";
 string TVT = "tvt";
 
 string ANALYSIS = "as";
+string SHOW = "show";
 string TREND = "tt";
 string PROPORTION = "pp";
+string AGGREGATION = "aggr";
 
 string SUBMONTH = "sm";
 string BOOKS = "books";

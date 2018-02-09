@@ -398,6 +398,22 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
+        //   统计 累计月度收支
+        //   CMD >>> show month aggr
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(SHOW) && X_CMD.CmpCmd(2, MONTH) && X_CMD.CmpCmdBack(AGGREGATION) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.GetInstance()->ShowAggrMonthSurplus();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
         //   校验 子项.M 支出
         //   CMD >>> check sm books/keep/tb/sa
         /**************************************************/

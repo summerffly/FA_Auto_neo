@@ -42,10 +42,12 @@ public:
     void SyncMonthSurplus(const string str_SelMonth);
 
     /****************************************/
-    //   月度 操作区 Plus
+    //   统计化 操作区
     /****************************************/
     void AnalysisMonthTrend(const string str_MonthKey);
     void AnalysisMonthProportion(const string str_SelMonth);
+
+    void ShowAggrMonthSurplus();
 
     /****************************************/
     //   子项.M 操作区

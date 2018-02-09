@@ -763,6 +763,39 @@ void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
 }
 
 /**************************************************/
+//   统计 累计月度收支
+/**************************************************/
+void CFAitfX::ShowAggrMonthSurplus()
+{
+    string str_MonthKey = "## life.M";
+    unsigned int uni_MonthCount = m_cls_FM_AF.SearchLineKey(str_MonthKey.c_str());
+
+    unsigned int uni_MonthLine = 0;
+    int int_AggrMonthSalary = 0;
+    int int_AggrMonthExpense = 0;
+    int int_AggrMonthSurplus = 0;
+
+    for(int i=1; i<=uni_MonthCount; i++)
+    {
+        uni_MonthLine = m_cls_FM_AF.GetSearchLineIndex(i);
+
+        int_AggrMonthSalary += m_cls_FM_AF.GetLineValue(uni_MonthLine+1);
+        int_AggrMonthExpense += m_cls_FM_AF.GetLineValue(uni_MonthLine+2);
+        int_AggrMonthSurplus += m_cls_FM_AF.GetLineValue(uni_MonthLine+3);
+    }
+
+    cout << "----------------------------------------" << endl;
+    cout << "### 累计月度收支统计 ###" << endl;
+    cout << endl;
+
+    cout << "累计月度收入: " << CTool::TransOutFormat(int_AggrMonthSalary) << endl;
+    cout << "累计月度支出: " << CTool::TransOutFormat(int_AggrMonthExpense) << endl;
+    cout << "累计月度结余: " << CTool::TransOutFormat(int_AggrMonthSurplus) << endl;
+    cout << "----------------------------------------" << endl;
+
+}
+
+/**************************************************/
 //   校验 子项.M 月度支出
 /**************************************************/
 int CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag)
