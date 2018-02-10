@@ -22,18 +22,6 @@ using namespace std;
                         ((!(str).compare("NS"))?(m_cls_FM_tt_NS):\
                         ((!(str).compare("travel"))?(m_cls_FM_tt_travel):\
                         ((!(str).compare("lottery"))?(m_cls_FM_tt_lottery):(m_cls_FM_AF)))) )
-                    
-typedef struct
-{
-    string str_UnitContent;
-    unsigned int uni_UnitValueABS;
-}UNIT_INFO;
-
-typedef struct
-{
-    string str_TrendMonth;
-    unsigned int uni_TrendValueABS;
-}TREND_INFO;
 
 CFAitfX::CFAitfX()
 {
@@ -582,17 +570,15 @@ void CFAitfX::SyncMonthSurplus(const string str_SelMonth)
 }
 
 /**************************************************/
-//   分析 月度变化趋势
+//   生成 月度趋势Vector
 /**************************************************/
-void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
+void CFAitfX::GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey)
 {
     unsigned int uni_TrendIndex = 0;
-    string str_TrendMonth = CCFGLoader::m_str_OriginMonth;
-    unsigned int uni_TrendValueABS = 0;
-    vector<TREND_INFO> vec_stc_TrendInfo;
     TREND_INFO stc_TrendInfo;
 
-    // 建构 vector
+    string str_TrendMonth = CCFGLoader::m_str_OriginMonth;
+
     while( str_TrendMonth != CTool::GenerateNextMonth(CCFGLoader::m_str_CurrentMonth) )
     {
         string str_RangeTop = "## life.M" + str_TrendMonth;
@@ -612,10 +598,55 @@ void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
 
             vec_stc_TrendInfo.push_back(stc_TrendInfo);
         }
+        else
+        {
+            stc_TrendInfo.str_TrendMonth = str_TrendMonth;
+            stc_TrendInfo.uni_TrendValueABS = 0;
+
+            vec_stc_TrendInfo.push_back(stc_TrendInfo);
+        }
+
         str_TrendMonth = CTool::GenerateNextMonth(str_TrendMonth);
     }
+}
 
-    // 获取 vector最大值
+/**************************************************/
+//   附加 月度趋势Vector
+/**************************************************/
+void CFAitfX::AppendMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey)
+{
+    unsigned int uni_TrendIndex = 0;
+    unsigned int uni_VecIndex = 0;
+    TREND_INFO stc_TrendInfo;
+
+    string str_TrendMonth = CCFGLoader::m_str_OriginMonth;
+
+    while( str_TrendMonth != CTool::GenerateNextMonth(CCFGLoader::m_str_CurrentMonth) )
+    {
+        string str_RangeTop = "## life.M" + str_TrendMonth;
+        string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_TrendMonth);
+
+        m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
+        unsigned int uni_RangeTop = m_cls_FM_life.GetSearchLineIndex(1);
+        m_cls_FM_life.SearchLineKey(str_RangeBottom.c_str());
+        unsigned int uni_RangeBottom = m_cls_FM_life.GetSearchLineIndex(1);
+
+        if( m_cls_FM_life.SearchRangeLineKey(str_MonthKey.c_str(), uni_RangeTop, uni_RangeBottom) )
+        {
+            uni_TrendIndex = m_cls_FM_life.GetSearchLineIndex(1);
+            vec_stc_TrendInfo.at(uni_VecIndex).uni_TrendValueABS += m_cls_FM_life.GetLineValueABS(uni_TrendIndex);
+        }
+
+        str_TrendMonth = CTool::GenerateNextMonth(str_TrendMonth);
+        uni_VecIndex++;
+    }
+}
+
+/**************************************************/
+//   获取 月度趋势Vector最大值
+/**************************************************/
+unsigned int CFAitfX::GetMonthTrendVectorMax(const vector<TREND_INFO> vec_stc_TrendInfo)
+{
     unsigned int uni_TrendSize = vec_stc_TrendInfo.size();
     unsigned int uni_MaxTrendValue = 0;
 
@@ -624,7 +655,7 @@ void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
         cout << "----------------------------------------" << endl;
         cout << "!!!      Analysis KeyWord Error      !!!" << endl;
         cout << "----------------------------------------" << endl;
-        return;
+        return -1;
     }
 
     for(int i=0; i<uni_TrendSize; i++)
@@ -634,6 +665,17 @@ void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
             uni_MaxTrendValue = vec_stc_TrendInfo.at(i).uni_TrendValueABS;
         }
     }
+
+    return uni_MaxTrendValue;
+}
+
+/**************************************************/
+//   绘制 月度趋势Vector
+/**************************************************/
+void CFAitfX::DrawMonthTrendVector(const vector<TREND_INFO> vec_stc_TrendInfo, const string str_MonthKey)
+{
+    // 获取 vector最大值
+    unsigned int uni_MaxTrendValue = GetMonthTrendVectorMax(vec_stc_TrendInfo);
     double dob_ScaleRate = (double)50 / uni_MaxTrendValue;
 
     // 绘制 vector
@@ -641,10 +683,8 @@ void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
     double dob_GrowRate = 0.0;
     unsigned int uni_preValue = 0;
     unsigned int uni_nextValue = 0;
-    
-    cout << "----------------------------------------" << endl;
-    cout << "### 月度趋势分析 ###" << endl;
-    cout << endl;
+
+    unsigned int uni_TrendSize = vec_stc_TrendInfo.size();
 
     for(int i=0; i<uni_TrendSize; i++)
     {
@@ -684,6 +724,72 @@ void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
             }
         }
     }
+}
+
+/**************************************************/
+//   分析 月度变化趋势
+/**************************************************/
+void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
+{
+    vector<TREND_INFO> vec_stc_TrendInfo;
+
+    // 建构 趋势Vector
+    GenerateMonthTrendVector(vec_stc_TrendInfo, str_MonthKey);
+
+    // 绘制 趋势Vector
+    cout << "----------------------------------------" << endl;
+    cout << "### 月度趋势分析 ###" << endl;
+    cout << endl;
+
+    DrawMonthTrendVector(vec_stc_TrendInfo, str_MonthKey);
+
+    cout << endl;
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
+//   分析 月度C4消费变化趋势
+/**************************************************/
+void CFAitfX::AnalysisMonthCSMTrend()
+{
+    vector<TREND_INFO> vec_stc_TrendInfo;
+
+    // 建构 趋势Vector
+    GenerateMonthTrendVector(vec_stc_TrendInfo, "Books");
+    AppendMonthTrendVector(vec_stc_TrendInfo, "KEEP");
+    AppendMonthTrendVector(vec_stc_TrendInfo, "TB");
+    AppendMonthTrendVector(vec_stc_TrendInfo, "sa");
+
+    // 绘制 趋势Vector
+    cout << "----------------------------------------" << endl;
+    cout << "### 月度C4消费趋势分析 ###" << endl;
+    cout << endl;
+
+    DrawMonthTrendVector(vec_stc_TrendInfo, "C4消费");
+
+    cout << endl;
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
+//   分析 月度租房支出变化趋势
+/**************************************************/
+void CFAitfX::AnalysisMonthROOMTrend()
+{
+    vector<TREND_INFO> vec_stc_TrendInfo;
+
+    // 建构 趋势Vector
+    GenerateMonthTrendVector(vec_stc_TrendInfo, "ONE房租");
+    AppendMonthTrendVector(vec_stc_TrendInfo, "ONE水电费");
+    AppendMonthTrendVector(vec_stc_TrendInfo, "ONE管理费");
+    AppendMonthTrendVector(vec_stc_TrendInfo, "ONE网络费");
+
+    // 绘制 趋势Vector
+    cout << "----------------------------------------" << endl;
+    cout << "### 月度租房支出趋势分析 ###" << endl;
+    cout << endl;
+
+    DrawMonthTrendVector(vec_stc_TrendInfo, "租房");
 
     cout << endl;
     cout << "----------------------------------------" << endl;

@@ -14,6 +14,17 @@
 
 using namespace std;
 
+typedef struct
+{
+    string str_TrendMonth;
+    unsigned int uni_TrendValueABS;
+}TREND_INFO;
+
+typedef struct
+{
+    string str_UnitContent;
+    unsigned int uni_UnitValueABS;
+}UNIT_INFO;
 
 class CFAitfX
 {
@@ -44,7 +55,14 @@ public:
     /****************************************/
     //   统计化 操作区
     /****************************************/
+    void GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey);
+    void AppendMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey);
+    unsigned int GetMonthTrendVectorMax(const vector<TREND_INFO> vec_stc_TrendInfo);
+    void DrawMonthTrendVector(const vector<TREND_INFO> vec_stc_TrendInfo, const string str_MonthKey);
+
     void AnalysisMonthTrend(const string str_MonthKey);
+    void AnalysisMonthCSMTrend();
+    void AnalysisMonthROOMTrend();
     void AnalysisMonthProportion(const string str_SelMonth);
 
     void ShowAggrMonthSurplus();

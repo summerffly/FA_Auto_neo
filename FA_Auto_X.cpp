@@ -366,6 +366,38 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
+        //   分析 月度C4消费趋势
+        //   CMD >>> as tt c4
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, TREND) && X_CMD.CmpCmdBack(CONSUMPTION) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.GetInstance()->AnalysisMonthCSMTrend();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   分析 月度租房支出趋势
+        //   CMD >>> as tt room
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, TREND) && X_CMD.CmpCmdBack(ROOM) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.GetInstance()->AnalysisMonthROOMTrend();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
         //   分析 月度趋势
         //   CMD >>> as tt Books
         /**************************************************/
