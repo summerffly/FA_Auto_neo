@@ -46,7 +46,7 @@ CFAitfX::~CFAitfX()
 /**************************************************/
 //   校验 总收支
 /**************************************************/
-int CFAitfX::CheckAggrSurplus(unsigned int &uni_AliRest, bool bol_OFlag)
+int CFAitfX::CheckAggrSurplus(int &int_AFRest, unsigned int &uni_AliRest, bool bol_OFlag)
 {
     unsigned int uni_ItemSize = CCFGLoader::m_vec_stc_FAItem.size();
     unsigned int uni_ItemCounter = 0;
@@ -96,6 +96,8 @@ int CFAitfX::CheckAggrSurplus(unsigned int &uni_AliRest, bool bol_OFlag)
                 cout << "读取值: " << CTool::TransOutFormat(int_AggrSurplusEX) << endl;
                 cout << "校验值: " << CTool::TransOutFormat(int_AggrSurplusCK) << endl;
             }
+
+            int_AFRest = int_AggrSurplusEX;
         }
         else if( str_ItemFlagAttrbute.compare("FTail")==0 )
         {
@@ -118,12 +120,12 @@ int CFAitfX::CheckAggrSurplus(unsigned int &uni_AliRest, bool bol_OFlag)
                 cout << "校验值: " << CTool::TransOutFormat(int_AggrSurplusPlusCK) << endl;
                 cout << "----------------------------------------" << endl;
             }
+
+            uni_AliRest = int_AggrSurplusPlusEX;
         }
 
         uni_ItemCounter++;
     }
-
-    uni_AliRest = int_AggrSurplusPlusEX;
 
     if( int_AggrSurplusEX != int_AggrSurplusCK )
     {
@@ -228,6 +230,7 @@ void CFAitfX::UpdateAggrSurplus(bool bol_OFlag)
 void CFAitfX::CheckFA(const string str_CurMonth)
 {
     int int_RetCheck = 0;
+    int int_AFRest = 0;
     unsigned int uni_AliRest = 0;
 
     if( 0 != CheckTitleExpense("lottery", false) )
@@ -311,7 +314,7 @@ void CFAitfX::CheckFA(const string str_CurMonth)
         return;
     }
 
-    int_RetCheck = CheckAggrSurplus(uni_AliRest, false);
+    int_RetCheck = CheckAggrSurplus(int_AFRest, uni_AliRest, false);
 
     if( 0 != int_RetCheck )
     {
@@ -323,6 +326,7 @@ void CFAitfX::CheckFA(const string str_CurMonth)
     {
         cout << "----------------------------------------" << endl;
         cout << "###   FA全系统校验Pass :)   ###" << endl;
+        cout << "当前财富: " << CTool::TransOutFormat(int_AFRest) << endl;
         cout << "余额宝: " << CTool::TransOutFormat(uni_AliRest) << endl;
         cout << "----------------------------------------" << endl;
     }

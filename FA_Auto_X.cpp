@@ -33,7 +33,6 @@ int main(int argc, char **argv, char *env[])
     CCFGLoader::LoadMonth();
     CCFGLoader::LoadFA();
 
-    //CFAitfX FAitfX = CFAitfX();
     Singleton<CFAitfX> FAitfX;
     
     cout << "****************************************" << endl;
@@ -178,8 +177,9 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
+            int int_AFRest = 0;
             unsigned int uni_AliRest = 0;
-            FAitfX.GetInstance()->CheckAggrSurplus(uni_AliRest, true);
+            FAitfX.GetInstance()->CheckAggrSurplus(int_AFRest, uni_AliRest, true);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -613,12 +613,12 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmd(2, "++") )
             {
-                FAitfX.GetInstance()->TransferBalance("广发银行", "余额宝", true, atoi(X_CMD.GetCmd(3).c_str()));
+                FAitfX.GetInstance()->TransferBalance("零钱通", "余额宝", true, atoi(X_CMD.GetCmd(3).c_str()));
                 FAitfX.GetInstance()->AppendLottery(true, atoi(X_CMD.GetCmd(3).c_str()), X_CMD.GetCmd(4));
             }
             else if( X_CMD.CmpCmd(2, "--") )
             {
-                FAitfX.GetInstance()->TransferBalance("广发银行", "余额宝", false, atoi(X_CMD.GetCmd(3).c_str()));
+                FAitfX.GetInstance()->TransferBalance("零钱通", "余额宝", false, atoi(X_CMD.GetCmd(3).c_str()));
                 FAitfX.GetInstance()->AppendLottery(false, atoi(X_CMD.GetCmd(3).c_str()), X_CMD.GetCmd(4));
             }
             else
@@ -648,11 +648,11 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmd(2, "++") )
             {
-                FAitfX.GetInstance()->TransferBalance("广发银行", "余额宝", true, atoi(X_CMD.GetCmd(3).c_str()));
+                FAitfX.GetInstance()->TransferBalance("零钱通", "余额宝", true, atoi(X_CMD.GetCmd(3).c_str()));
             }
             else if( X_CMD.CmpCmd(2, "--") )
             {
-                FAitfX.GetInstance()->TransferBalance("广发银行", "余额宝", false, atoi(X_CMD.GetCmd(3).c_str()));
+                FAitfX.GetInstance()->TransferBalance("零钱通", "余额宝", false, atoi(X_CMD.GetCmd(3).c_str()));
             }
             else
             {
