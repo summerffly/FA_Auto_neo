@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FA_Script>
-    <Version Atr="version">2.2.1</Version>
+    <Version Atr="version">2.2.5</Version>
     <Month Atr="origin">09</Month>
     <Month Atr="current">02</Month>
     <FA_Struct Atr="TVT">
@@ -21,7 +21,7 @@
         <FAItem Atr="FTail">押金_mobike</FAItem>
         <FAItem Atr="FTail">押金_ofo</FAItem>
         <FAItem Atr="FTail">蚂蚁借呗</FAItem>
-        <FAItem Atr="FB">零钱通</FAItem>
+        <FAItem Atr="Fwx">零钱通</FAItem>
         <FAItem Atr="FF">余额宝</FAItem>
     </FA_Struct>
 </FA_Script>

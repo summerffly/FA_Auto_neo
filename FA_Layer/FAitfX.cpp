@@ -46,7 +46,7 @@ CFAitfX::~CFAitfX()
 /**************************************************/
 //   校验 总收支
 /**************************************************/
-int CFAitfX::CheckAggrSurplus(int &int_AFRest, unsigned int &uni_AliRest, bool bol_OFlag)
+int CFAitfX::CheckAggrSurplus(int &int_AFRest, bool bol_OFlag)
 {
     unsigned int uni_ItemSize = CCFGLoader::m_vec_stc_FAItem.size();
     unsigned int uni_ItemCounter = 0;
@@ -55,6 +55,9 @@ int CFAitfX::CheckAggrSurplus(int &int_AFRest, unsigned int &uni_AliRest, bool b
     int int_AggrSurplusCK = 0;
     int int_AggrSurplusPlusEX = 0;
     int int_AggrSurplusPlusCK = 0;
+
+    unsigned int uni_WXRest = 0;
+    unsigned int uni_AliRest = 0;
 
     string str_ItemFlagContent("");
     string str_ItemFlagAttrbute("");
@@ -103,25 +106,27 @@ int CFAitfX::CheckAggrSurplus(int &int_AFRest, unsigned int &uni_AliRest, bool b
         {
             int_AggrSurplusPlusCK += m_cls_FM_AF.GetLineValue(uni_ItemFlag);
         }
-        else if( str_ItemFlagAttrbute.compare("FB")==0 )
+        else if( str_ItemFlagAttrbute.compare("Fwx")==0 )
         {
-            // tips 番茄@20171218 - balance项，需要执行减法
-            int_AggrSurplusPlusCK -= m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            uni_WXRest = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
         }
         else if( str_ItemFlagAttrbute.compare("FF")==0 )
         {
-            int_AggrSurplusPlusEX = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            uni_AliRest = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            int_AggrSurplusPlusEX = uni_WXRest + uni_AliRest;
 
             if( bol_OFlag )
             {
                 cout << "----------------------------------------" << endl;
-                cout << "### 余额宝 ###" << endl;
+                cout << "### 支配财富 ###" << endl;
                 cout << "读取值: " << CTool::TransOutFormat(int_AggrSurplusPlusEX) << endl;
                 cout << "校验值: " << CTool::TransOutFormat(int_AggrSurplusPlusCK) << endl;
                 cout << "----------------------------------------" << endl;
+                cout << "### 理财分配 ###" << endl;
+                cout << "零钱通: " << CTool::TransOutFormat(uni_WXRest) << endl;
+                cout << "余额宝: " << CTool::TransOutFormat(uni_AliRest) << endl;
+                cout << "----------------------------------------" << endl;
             }
-
-            uni_AliRest = int_AggrSurplusPlusEX;
         }
 
         uni_ItemCounter++;
@@ -149,10 +154,13 @@ void CFAitfX::UpdateAggrSurplus(bool bol_OFlag)
     unsigned int uni_ItemSize = CCFGLoader::m_vec_stc_FAItem.size();
     unsigned int uni_ItemCounter = 0;
 
-    int int_AggrSurplus = 0;
+    int int_AggrSurplusEX = 0;
     int int_AggrSurplusUD = 0;
-    int int_AggrSurplusPlus = 0;
+    int int_AggrSurplusPlusEX = 0;
     int int_AggrSurplusPlusUD = 0;
+
+    unsigned int uni_WXRest = 0;
+    unsigned int uni_AliRest = 0;
 
     string str_ItemFlagContent("");
     string str_ItemFlagAttrbute("");
@@ -185,14 +193,14 @@ void CFAitfX::UpdateAggrSurplus(bool bol_OFlag)
         }
         else if( str_ItemFlagAttrbute.compare("FC")==0 )
         {
-            int_AggrSurplus = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            int_AggrSurplusEX = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
             m_cls_FM_AF.ModifyLineValue(uni_ItemFlag, int_AggrSurplusUD);
 
             if( bol_OFlag )
             {
                 cout << "----------------------------------------" << endl;
                 cout << "### 当前财富 ###" << endl;
-                cout << "初始值: " << CTool::TransOutFormat(int_AggrSurplus) << endl;
+                cout << "初始值: " << CTool::TransOutFormat(int_AggrSurplusEX) << endl;
                 cout << "更新值: " << CTool::TransOutFormat(int_AggrSurplusUD) << endl;
             }
         }
@@ -200,22 +208,27 @@ void CFAitfX::UpdateAggrSurplus(bool bol_OFlag)
         {
             int_AggrSurplusPlusUD += m_cls_FM_AF.GetLineValue(uni_ItemFlag);
         }
-        else if( str_ItemFlagAttrbute.compare("FB")==0 )
+        else if( str_ItemFlagAttrbute.compare("Fwx")==0 )
         {
-            // tips 番茄@20171218 - balance项，需要执行减法
-            int_AggrSurplusPlusUD -= m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            uni_WXRest = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
         }
         else if( str_ItemFlagAttrbute.compare("FF")==0 )
         {
-            int_AggrSurplusPlus = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
-            m_cls_FM_AF.ModifyLineValue(uni_ItemFlag, int_AggrSurplusPlusUD);
+            uni_AliRest = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            int_AggrSurplusPlusEX = uni_WXRest + uni_AliRest;
+
+            m_cls_FM_AF.ModifyLineValue(uni_ItemFlag, (int_AggrSurplusPlusUD-uni_WXRest));
 
             if( bol_OFlag )
             {
                 cout << "----------------------------------------" << endl;
-                cout << "### 余额宝 ###" << endl;
-                cout << "初始值: " << CTool::TransOutFormat(int_AggrSurplusPlus) << endl;
+                cout << "### 支配财富 ###" << endl;
+                cout << "读取值: " << CTool::TransOutFormat(int_AggrSurplusPlusEX) << endl;
                 cout << "更新值: " << CTool::TransOutFormat(int_AggrSurplusPlusUD) << endl;
+                cout << "----------------------------------------" << endl;
+                cout << "### 理财分配 ###" << endl;
+                cout << "零钱通: " << CTool::TransOutFormat(uni_WXRest) << endl;
+                cout << "余额宝: " << CTool::TransOutFormat(int_AggrSurplusPlusUD-uni_WXRest) << endl;
                 cout << "----------------------------------------" << endl;
             }
         }
@@ -231,7 +244,6 @@ void CFAitfX::CheckFA(const string str_CurMonth)
 {
     int int_RetCheck = 0;
     int int_AFRest = 0;
-    unsigned int uni_AliRest = 0;
 
     if( 0 != CheckTitleExpense("lottery", false) )
     {
@@ -314,7 +326,7 @@ void CFAitfX::CheckFA(const string str_CurMonth)
         return;
     }
 
-    int_RetCheck = CheckAggrSurplus(int_AFRest, uni_AliRest, false);
+    int_RetCheck = CheckAggrSurplus(int_AFRest, false);
 
     if( 0 != int_RetCheck )
     {
@@ -327,7 +339,6 @@ void CFAitfX::CheckFA(const string str_CurMonth)
         cout << "----------------------------------------" << endl;
         cout << "###   FA全系统校验Pass :)   ###" << endl;
         cout << "当前财富: " << CTool::TransOutFormat(int_AFRest) << endl;
-        cout << "余额宝: " << CTool::TransOutFormat(uni_AliRest) << endl;
         cout << "----------------------------------------" << endl;
     }
 }

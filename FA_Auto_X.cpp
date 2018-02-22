@@ -146,6 +146,7 @@ int main(int argc, char **argv, char *env[])
             CCmdTarget::TagTimeBait();
 
             FAitfX.GetInstance()->BackUpAllFile("./FA_TVT.bak/");
+            FAitfX.GetInstance()->BackUpAllFile("./../Desktop/FA_Auto_X/X_Executable/");
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -161,7 +162,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            FAitfX.GetInstance()->BackUpAllFile("./../Desktop/FA_Auto_X/X_Executable/");
+            //FAitfX.GetInstance()->BackUpAllFile("./../Desktop/FA_Auto_X/X_Executable/");
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -178,8 +179,7 @@ int main(int argc, char **argv, char *env[])
             CCmdTarget::TagTimeBait();
 
             int int_AFRest = 0;
-            unsigned int uni_AliRest = 0;
-            FAitfX.GetInstance()->CheckAggrSurplus(int_AFRest, uni_AliRest, true);
+            FAitfX.GetInstance()->CheckAggrSurplus(int_AFRest, true);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

@@ -37,7 +37,7 @@ public:
     /****************************************/
     //   总收支 操作区
     /****************************************/
-    int CheckAggrSurplus(int &int_AFRest, unsigned int &uni_AliRest, bool bol_OFlag);
+    int CheckAggrSurplus(int &int_AFRest, bool bol_OFlag);
     void UpdateAggrSurplus(bool bol_OFlag);
     void CheckFA(const string str_CurMonth);
     void UpdateFA(const string str_CurMonth);
