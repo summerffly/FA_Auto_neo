@@ -65,6 +65,8 @@ public:
     void AnalysisMonthROOMTrend();
     void AnalysisMonthProportion(const string str_SelMonth);
 
+    void ShowAggrSurplus(int int_ShowFlag);
+    void ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag);
     void ShowAggrMonthSurplus();
 
     /****************************************/

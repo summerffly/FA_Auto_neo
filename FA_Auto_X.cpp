@@ -430,6 +430,64 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
+        //   显示 FA当前状态
+        //   CMD >>> show
+        /**************************************************/
+        else if( X_CMD.CmpSoloCmd(SHOW) )
+        {
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.GetInstance()->ShowMonthSurplus(CCFGLoader::m_str_CurrentMonth, 2);
+            FAitfX.GetInstance()->ShowAggrSurplus(2);
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+
+        }
+
+        /**************************************************/
+        //   显示 TVT总收支
+        //   CMD >>> show tvt
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(SHOW) && X_CMD.CmpCmdBack(TVT) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            FAitfX.GetInstance()->ShowAggrSurplus(1);
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   显示 当月/上月 收支
+        //   CMD >>> show month/exmonth
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(SHOW) &&\
+                 ( X_CMD.CmpCmdBack(MONTH) || X_CMD.CmpCmdBack(EX_MONTH) ) )
+        {
+            CCmdTarget::TagTimeBait();
+
+            if( X_CMD.CmpCmdBack(MONTH) )
+            {
+                FAitfX.GetInstance()->ShowMonthSurplus(CCFGLoader::m_str_CurrentMonth, 1);
+            }
+            else if( X_CMD.CmpCmdBack(EX_MONTH) )
+            {
+                FAitfX.GetInstance()->ShowMonthSurplus(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth), 1);
+            }            
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
         //   统计 累计月度收支
         //   CMD >>> show month aggr
         /**************************************************/

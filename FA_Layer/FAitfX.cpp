@@ -707,7 +707,7 @@ void CFAitfX::DrawMonthTrendVector(const vector<TREND_INFO> vec_stc_TrendInfo, c
         uni_Scalde = dob_ScaleRate * vec_stc_TrendInfo.at(i).uni_TrendValueABS;
         for(int i=1; i<=uni_Scalde; i++)
         {
-            cout << "|";
+            cout << "█";
         }
         cout << " " << vec_stc_TrendInfo.at(i).uni_TrendValueABS;
 
@@ -872,7 +872,7 @@ void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
 
         for(int i=0; i<=uni_Scalde; i++)
         {
-            cout << "|";
+            cout << "█";
         }
         cout << "  " << vec_stc_UnitInfo.at(i).str_UnitContent << " (";
         printf("%.1f", (dob_PPRate*100));
@@ -881,6 +881,142 @@ void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
 
     cout << endl;
     cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
+//   显示 总收支
+//   int_ShowFlag == 1 >>> 完整显示模式
+//   int_ShowFlag == 2 >>> 结余显示模式
+/**************************************************/
+void CFAitfX::ShowAggrSurplus(int int_ShowFlag)
+{
+    unsigned int uni_ItemSize = CCFGLoader::m_vec_stc_FAItem.size();
+    unsigned int uni_ItemCounter = 0;
+
+    int int_AFtemp = 0;
+    int int_AggrSurplus = 0;
+    unsigned int uni_AggrSurplusPlus = 0;
+
+    unsigned int uni_WXRest = 0;
+    unsigned int uni_AliRest = 0;
+
+    string str_ItemFlagContent("");
+    string str_ItemFlagAttrbute("");
+    unsigned int uni_ItemFlag = 0;
+
+    while( uni_ItemCounter < uni_ItemSize )
+    {
+        str_ItemFlagContent.clear();
+        str_ItemFlagAttrbute.clear();
+        str_ItemFlagContent += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemContent;
+        str_ItemFlagAttrbute += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemAttrbute;
+
+        m_cls_FM_AF.SearchLineKey(str_ItemFlagContent.c_str());
+        uni_ItemFlag = m_cls_FM_AF.GetSearchLineIndex(1);
+
+        if( str_ItemFlagAttrbute.compare("FO")==0 )
+        {
+            int_AFtemp = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+
+            if(int_ShowFlag == 1)
+            {
+                cout << "----------------------------------------" << endl;
+                cout << "### 原始财富 ###" << endl;
+                cout << "财富值: " << CTool::TransOutFormat(int_AFtemp) << endl;
+                cout << "----------------------------------------" << endl;
+            }            
+        }
+        else if( str_ItemFlagAttrbute.compare("Title")==0 )
+        {
+            int_AFtemp = m_cls_FM_AF.GetLineValue(uni_ItemFlag+1);
+            
+            if(int_ShowFlag == 1)
+            {
+                cout << str_ItemFlagContent << ": " << CTool::TransOutFormat(int_AFtemp) << endl;
+            }
+        }
+        else if( str_ItemFlagAttrbute.compare("Month")==0 )
+        {
+            int_AFtemp = m_cls_FM_AF.GetLineValue(uni_ItemFlag+3);
+            
+            if(int_ShowFlag == 1)
+            {
+                cout << str_ItemFlagContent << ": " << CTool::TransOutFormat(int_AFtemp) << endl;
+            }
+        }
+        else if( str_ItemFlagAttrbute.compare("FC")==0 )
+        {
+            int_AFtemp = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+
+            if((int_ShowFlag == 1) || (int_ShowFlag == 2))
+            {
+                cout << "----------------------------------------" << endl;
+                cout << "### 当前财富 ###" << endl;
+                cout << "财富值: " << CTool::TransOutFormat(int_AFtemp) << endl;
+            }
+        }
+        else if( str_ItemFlagAttrbute.compare("FTail")==0 )
+        {
+            // Nothing To Do
+        }
+        else if( str_ItemFlagAttrbute.compare("Fwx")==0 )
+        {
+            uni_WXRest = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+        }
+        else if( str_ItemFlagAttrbute.compare("FF")==0 )
+        {
+            uni_AliRest = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            uni_AggrSurplusPlus = uni_WXRest + uni_AliRest;
+
+            if((int_ShowFlag == 1) || (int_ShowFlag == 2))
+            {
+                cout << "----------------------------------------" << endl;
+                cout << "### 支配财富 ###" << endl;
+                cout << "财富值: " << CTool::TransOutFormat(uni_AggrSurplusPlus) << endl;
+                cout << "----------------------------------------" << endl;
+                cout << "### 理财分配 ###" << endl;
+                cout << "零钱通: " << CTool::TransOutFormat(uni_WXRest) << endl;
+                cout << "余额宝: " << CTool::TransOutFormat(uni_AliRest) << endl;
+                cout << "----------------------------------------" << endl;
+            }
+        }
+
+        uni_ItemCounter++;
+    }
+}
+
+/**************************************************/
+//   显示 life.M 月度收支
+//   int_ShowFlag == 1 >>> 完整显示模式
+//   int_ShowFlag == 2 >>> 衔接显示模式
+/**************************************************/
+void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag)
+{
+    string str_RangeTop = "## life.M" + str_SelMonth;
+    string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
+
+    m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = m_cls_FM_life.GetSearchLineIndex(1);
+    m_cls_FM_life.SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = m_cls_FM_life.GetSearchLineIndex(1);
+
+    unsigned int uni_MonthSalary = m_cls_FM_life.GetLineValue(uni_RangeTop+1);
+    int int_MonthExpense = m_cls_FM_life.GetLineValue(uni_RangeTop+2);
+    int int_MonthRest = m_cls_FM_life.GetLineValue(uni_RangeTop+3);
+
+    if(int_ShowFlag == 1)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << str_SelMonth << "月/薪资: " << CTool::TransOutFormat(uni_MonthSalary) << endl;
+        cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
+        cout << str_SelMonth << "月/结余: " << CTool::TransOutFormat(int_MonthRest) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+    else if(int_ShowFlag == 2)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
+    }
 }
 
 /**************************************************/
