@@ -13,15 +13,15 @@ using namespace std;
 
 
 string SYNC = "sync";
-string WRITEBACK = "wb";
+string WRITEBACK = "write";
 string BACKUP = "bakup";
 string X = "X";
 
 string CHECK = "check";
 string UPDATE = "update";
 string APPEND = "append";
-string MODIFY_LIFE = "ml";
-string TRANSFER = "transfer";
+string MODIFY_LIFE = "life";
+string TRANSFER = "tf";
 
 string EXPENSE = "expense";
 string SURPLUS = "surplus";

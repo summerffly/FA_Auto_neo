@@ -53,23 +53,6 @@ public:
     void SyncMonthSurplus(const string str_SelMonth);
 
     /****************************************/
-    //   统计化 操作区
-    /****************************************/
-    void GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey);
-    void AppendMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey);
-    unsigned int GetMonthTrendVectorMax(const vector<TREND_INFO> vec_stc_TrendInfo);
-    void DrawMonthTrendVector(const vector<TREND_INFO> vec_stc_TrendInfo, const string str_MonthKey);
-
-    void AnalysisMonthTrend(const string str_MonthKey);
-    void AnalysisMonthCSMTrend();
-    void AnalysisMonthROOMTrend();
-    void AnalysisMonthProportion(const string str_SelMonth);
-
-    void ShowAggrSurplus(int int_ShowFlag);
-    void ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag);
-    void ShowAggrMonthSurplus();
-
-    /****************************************/
     //   子项.M 操作区
     /****************************************/
     int CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag);
@@ -95,6 +78,23 @@ public:
     void AppendMonth(const string str_SelMonth);
     void AppendsubMonth(const string str_SubMonthKey, const string str_SelMonth);
     void CheckTempExpense();
+
+    /****************************************/
+    //   统计化 操作区
+    /****************************************/
+    void GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey);
+    void AppendMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey);
+    unsigned int GetMonthTrendVectorMax(const vector<TREND_INFO> vec_stc_TrendInfo);
+    void DrawMonthTrendVector(const vector<TREND_INFO> vec_stc_TrendInfo, const string str_MonthKey);
+
+    void AnalysisMonthTrend(const string str_MonthKey);
+    void AnalysisMonthCSMTrend();
+    void AnalysisMonthROOMTrend();
+    void AnalysisMonthProportion(const string str_SelMonth);
+
+    void ShowAggrSurplus(int int_ShowFlag);
+    void ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag);
+    void ShowAggrMonthSurplus();
 
     /****************************************/
     //   文件读写 操作区

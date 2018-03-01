@@ -36,8 +36,11 @@ public:
     static string GenerateNextMonth(const int int_CurMonth);
     static string GeneratePreMonth(const string str_CurMonth);
     static string GeneratePreMonth(const int int_CurMonth);
+
     static unsigned int CountMonth(const string str_OriMonth, const string str_CurMonth);
+    
     static string TransOutFormat(const int int_Value);
+    static void MassageOutFotmat(const string str_Message);
 };
 
 

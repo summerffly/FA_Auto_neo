@@ -281,6 +281,33 @@ string CTool::TransOutFormat(const int int_Value)
     return str_OutValue;
 }
 
+void CTool::MassageOutFotmat(const string str_Message)
+{
+    // X长度40个ASCII字符
+
+    unsigned int uni_MseeageLength = str_Message.size();
+    unsigned int uni_MessageBeLength = (40-6-uni_MseeageLength)/2;
+    unsigned int uni_MessageAfLength = 40-6-uni_MessageBeLength-uni_MseeageLength;
+
+    cout << "----------------------------------------" << endl;
+    cout << "!!!";
+    while( uni_MessageBeLength>0 )
+    {
+        cout << " ";
+        uni_MessageBeLength--;
+    }
+
+    cout << str_Message;
+
+    while( uni_MessageAfLength>0 )
+    {
+        cout << " ";
+        uni_MessageAfLength--;
+    }
+    cout << "!!!" << endl;
+    cout << "----------------------------------------" << endl;
+}
+
 //------------------------------//
 //   river flows in summer
 //------------------------------//

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FA_Script>
-    <Version Atr="version">2.3.0</Version>
+    <Version Atr="version">2.3.1</Version>
     <Month Atr="origin">09</Month>
-    <Month Atr="current">02</Month>
+    <Month Atr="current">03</Month>
     <FA_Struct Atr="TVT">
         <FAItem Atr="FO">原始财富</FAItem>
         <FAItem Atr="Title">lottery</FAItem>
@@ -16,6 +16,7 @@
         <FAItem Atr="Month">M12</FAItem>
         <FAItem Atr="Month">M01</FAItem>
         <FAItem Atr="Month">M02</FAItem>
+        <FAItem Atr="Month">M03</FAItem>
         <FAItem Atr="FC">当前财富</FAItem>
         <FAItem Atr="FTail">押金_壹公寓</FAItem>
         <FAItem Atr="FTail">押金_mobike</FAItem>
