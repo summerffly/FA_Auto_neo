@@ -116,6 +116,22 @@ int CFileManager::SearchLineKey(const char *cha_Key)
     return m_vec_uni_LineIndex.size();
 }
 
+int CFileManager::SearchFirstLineKey(const char *cha_Key)
+{
+    unsigned int uni_VecIndex = 0;
+
+    for(int i=1; i <= m_int_LineNum; i++)
+    {
+        if( m_vec_cls_Line.at(i).IsContainKey(cha_Key) )
+        {
+            uni_VecIndex = i;
+            break;
+        }
+    }
+
+    return uni_VecIndex;
+}
+
 int CFileManager::SearchRangeLineKey(const char *cha_Key, const unsigned int uni_RangeBeginIndex,\
                                      const unsigned int uni_RangeEndIndex)
 {

@@ -43,6 +43,7 @@ public:
     //   搜索操作区
     /****************************************/
     int SearchLineKey(const char *cha_Key);
+    int SearchFirstLineKey(const char *cha_Key);
     int SearchRangeLineKey(const char *cha_Key, const unsigned int uni_RangeBeginIndex,\
                            const unsigned int uni_RangeEndIndex);
     unsigned int GetSearchLineIndex(const unsigned int uni_VecIndex);
