@@ -14,6 +14,7 @@
 
 using namespace std;
 
+
 typedef struct
 {
     string str_TrendMonth;
@@ -88,8 +89,6 @@ public:
     void DrawMonthTrendVector(const vector<TREND_INFO> vec_stc_TrendInfo, const string str_MonthKey);
 
     void AnalysisMonthTrend(const string str_MonthKey);
-    void AnalysisMonthCSMTrend();
-    void AnalysisMonthROOMTrend();
     void AnalysisMonthProportion(const string str_SelMonth);
 
     void ShowAggrSurplus(int int_ShowFlag);

@@ -3,14 +3,16 @@ px = ./X_Frame/
 lop = ./OP_Layer/
 lep = ./EP_Layer/
 lfa = ./FA_Layer/
+las = ./AS_Layer/
 
 obj_X = $(px)RegExLib.o $(px)X_Tool.o $(px)X_CmdTarget.o $(px)X_CFGLoader.o $(px)X_XMLParser.o $(px)tinyxml2.o
 obj_OP = $(lop)FileOPer.o
 obj_EP = $(lep)LineEPer.o $(lep)FileManager.o
 obj_FA = $(lfa)FAitfX.o
+obj_AS = $(las)ASitfX.o
 
-FA_Auto_X: FA_Auto_X.o $(obj_X) $(obj_OP) $(obj_EP) $(obj_FA)
-	g++ -o FA_Auto_X FA_Auto_X.o $(obj_X) $(obj_OP) $(obj_EP) $(obj_FA)
+FA_Auto_X: FA_Auto_X.o $(obj_X) $(obj_OP) $(obj_EP) $(obj_FA) $(obj_AS)
+	g++ -o FA_Auto_X FA_Auto_X.o $(obj_X) $(obj_OP) $(obj_EP) $(obj_FA) $(obj_AS)
 
 FA_Auto_X.o: FA_Auto_X.cpp
 	g++ -c FA_Auto_X.cpp
@@ -45,6 +47,9 @@ FileManager.o: $(lep)FileManager.h $(lep)FileManager.cpp
 FAitfX.o: $(lfa)FAitfX.h $(lfa)FAitfX.cpp
 	g++ -c $(lfa)FAitfX.cpp
 
+ASitfX.o: $(las)ASitfX.h $(las)ASitfX.cpp
+	g++ -c $(las)ASitfX.cpp
+
 .PHONY:clean
 clean:
-	rm $(px)*.o $(lop)*.o $(lep)*.o $(lfa)*.o *.o FA_Auto_X
+	rm $(px)*.o $(lop)*.o $(lep)*.o $(lfa)*.o $(las)*.o *.o FA_Auto_X

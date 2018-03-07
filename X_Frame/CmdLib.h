@@ -35,7 +35,7 @@ string SHOW = "show";
 string TREND = "tt";
 string PROPORTION = "pp";
 string AGGREGATION = "aggr";
-string CONSUMPTION = "c4";
+string CONSUMPTION = "csm";
 string ROOM = "room";
 
 string SUBMONTH = "sm";

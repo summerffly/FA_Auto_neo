@@ -1180,54 +1180,6 @@ void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
 }
 
 /**************************************************/
-//   分析 月度C4消费变化趋势
-/**************************************************/
-void CFAitfX::AnalysisMonthCSMTrend()
-{
-    vector<TREND_INFO> vec_stc_TrendInfo;
-
-    // 建构 趋势Vector
-    GenerateMonthTrendVector(vec_stc_TrendInfo, "Books");
-    AppendMonthTrendVector(vec_stc_TrendInfo, "KEEP");
-    AppendMonthTrendVector(vec_stc_TrendInfo, "TB");
-    AppendMonthTrendVector(vec_stc_TrendInfo, "sa");
-
-    // 绘制 趋势Vector
-    cout << "----------------------------------------" << endl;
-    cout << "### 月度C4消费趋势分析 ###" << endl;
-    cout << endl;
-
-    DrawMonthTrendVector(vec_stc_TrendInfo, "C4消费");
-
-    cout << endl;
-    cout << "----------------------------------------" << endl;
-}
-
-/**************************************************/
-//   分析 月度租房支出变化趋势
-/**************************************************/
-void CFAitfX::AnalysisMonthROOMTrend()
-{
-    vector<TREND_INFO> vec_stc_TrendInfo;
-
-    // 建构 趋势Vector
-    GenerateMonthTrendVector(vec_stc_TrendInfo, "ONE房租");
-    AppendMonthTrendVector(vec_stc_TrendInfo, "ONE水电费");
-    AppendMonthTrendVector(vec_stc_TrendInfo, "ONE管理费");
-    AppendMonthTrendVector(vec_stc_TrendInfo, "ONE网络费");
-
-    // 绘制 趋势Vector
-    cout << "----------------------------------------" << endl;
-    cout << "### 月度租房支出趋势分析 ###" << endl;
-    cout << endl;
-
-    DrawMonthTrendVector(vec_stc_TrendInfo, "租房");
-
-    cout << endl;
-    cout << "----------------------------------------" << endl;
-}
-
-/**************************************************/
 //   分析 月度支出占比
 /**************************************************/
 void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
