@@ -281,7 +281,7 @@ string CTool::TransOutFormat(const int int_Value)
     return str_OutValue;
 }
 
-void CTool::MassageOutFotmat(const string str_Message)
+void CTool::MassageOutFotmat(const string str_Message, const char cha_Flag)
 {
     // X长度40个ASCII字符
 
@@ -290,7 +290,7 @@ void CTool::MassageOutFotmat(const string str_Message)
     unsigned int uni_MessageAfLength = 40-6-uni_MessageBeLength-uni_MseeageLength;
 
     cout << "----------------------------------------" << endl;
-    cout << "!!!";
+    cout << cha_Flag << cha_Flag << cha_Flag;
     while( uni_MessageBeLength>0 )
     {
         cout << " ";
@@ -304,7 +304,7 @@ void CTool::MassageOutFotmat(const string str_Message)
         cout << " ";
         uni_MessageAfLength--;
     }
-    cout << "!!!" << endl;
+    cout << cha_Flag << cha_Flag << cha_Flag << endl;
     cout << "----------------------------------------" << endl;
 }
 

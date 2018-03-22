@@ -13,9 +13,8 @@ using namespace std;
 
 
 string SYNC = "sync";
-string WRITEBACK = "write";
+string WRITE = "write";
 string BACKUP = "bakup";
-string X = "X";
 
 string CHECK = "check";
 string UPDATE = "update";
@@ -54,6 +53,7 @@ string TEMP = "temp";
 string BOX = "box";
 string XM = "xm";
 
+string HELP = "help";
 string CANCEL = "cancel";
 string EXIT = "exit";
 

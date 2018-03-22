@@ -25,7 +25,7 @@ using namespace std;
 
 CFAitfX::CFAitfX()
 {
-    m_cls_FM_AF = CFileManager("./FA_TVT.md");
+    m_cls_FM_AF = CFileManager("./FA_SZ.md");
     m_cls_FM_life = CFileManager("./life.M.md");
     m_cls_FM_sm_Books = CFileManager("./Books.M.md");
     m_cls_FM_sm_KEEP = CFileManager("./KEEP.M.md");
@@ -247,55 +247,55 @@ void CFAitfX::CheckFA(const string str_CurMonth)
 
     if( 0 != CheckTitleExpense("lottery", false) )
     {
-        CTool::MassageOutFotmat("lottery NOT Pass Check");
+        CTool::MassageOutFotmat("lottery NOT Pass Check", '!');
         return;
     }
 
     if( 0 != CheckTitleExpense("DK", false) )
     {
-        CTool::MassageOutFotmat("DK NOT Pass Check");
+        CTool::MassageOutFotmat("DK NOT Pass Check", '!');
         return;
     }
 
     if( 0 != CheckTitleExpense("NS", false) )
     {
-        CTool::MassageOutFotmat("NS NOT Pass Check");
+        CTool::MassageOutFotmat("NS NOT Pass Check", '!');
         return;
     }
 
     if( 0 != CheckTitleExpense("travel", false) )
     {
-        CTool::MassageOutFotmat("travel NOT Pass Check");
+        CTool::MassageOutFotmat("travel NOT Pass Check", '!');
         return;
     }
 
     if( 0 != CheckSubMonthExpense("Books", str_CurMonth, false) )
     {
-        CTool::MassageOutFotmat("Books NOT Pass Check");
+        CTool::MassageOutFotmat("Books NOT Pass Check", '!');
         return;
     }
 
     if( 0 != CheckSubMonthExpense("KEEP", str_CurMonth, false) )
     {
-        CTool::MassageOutFotmat("KEEP NOT Pass Check");
+        CTool::MassageOutFotmat("KEEP NOT Pass Check", '!');
         return;
     }
 
     if( 0 != CheckSubMonthExpense("TB", str_CurMonth, false) )
     {
-        CTool::MassageOutFotmat("TB NOT Pass Check");
+        CTool::MassageOutFotmat("TB NOT Pass Check", '!');
         return;
     }
 
     if( 0 != CheckSubMonthExpense("sa", str_CurMonth, false) )
     {
-        CTool::MassageOutFotmat("sa NOT Pass Check");
+        CTool::MassageOutFotmat("sa NOT Pass Check", '!');
         return;
     }
 
     if( 0 != CheckMonthSurplus(str_CurMonth, false) )
     {
-        CTool::MassageOutFotmat("Month NOT Pass Check");
+        CTool::MassageOutFotmat("Month NOT Pass Check", '!');
         return;
     }
 
@@ -303,7 +303,7 @@ void CFAitfX::CheckFA(const string str_CurMonth)
 
     if( 0 != int_RetCheck )
     {
-        CTool::MassageOutFotmat("TVT NOT Pass Check");
+        CTool::MassageOutFotmat("TVT NOT Pass Check", '!');
     }
     else
     {
@@ -494,7 +494,7 @@ void CFAitfX::ModifyMonthSurplus(const string str_SelMonth, const string str_Mon
     // tips 番茄@20171209 - 手动可能输错的地方，增加ERROR校验
     if(m_cls_FM_life.GetSearchFullLine(1).compare("ERROR") == 0)
     {
-        CTool::MassageOutFotmat("No Line Contain Input Key");
+        CTool::MassageOutFotmat("No Line Contain Input Key", '!');
         return;
     }
 
@@ -559,7 +559,7 @@ int CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str
 {
     if(FM_SUBMONTH(str_SubMonthKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
     {
-        CTool::MassageOutFotmat("SubMonth KeyWord Error");
+        CTool::MassageOutFotmat("SubMonth KeyWord Error", '!');
         return -9;
     }
 
@@ -610,7 +610,7 @@ void CFAitfX::UpdateSubMonthExpense(const string str_SubMonthKey, const string s
 {
     if(FM_SUBMONTH(str_SubMonthKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
     {
-        CTool::MassageOutFotmat("SubMonth KeyWord Error");
+        CTool::MassageOutFotmat("SubMonth KeyWord Error", '!');
         return;
     }
 
@@ -650,7 +650,7 @@ void CFAitfX::AppendSubMonthExpense(const string str_SubMonthKey, const string s
 {
     if(FM_SUBMONTH(str_SubMonthKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
     {
-        CTool::MassageOutFotmat("SubMonth KeyWord Error");
+        CTool::MassageOutFotmat("SubMonth KeyWord Error", '!');
         return;
     }
 
@@ -690,7 +690,7 @@ int CFAitfX::CheckTitleExpense(const string str_TitleKey, bool bol_OFlag)
 {
     if(FM_TITLE(str_TitleKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
     {
-        CTool::MassageOutFotmat("Title KeyWord Error");
+        CTool::MassageOutFotmat("Title KeyWord Error", '!');
         return -9;
     }
 
@@ -741,7 +741,7 @@ void CFAitfX::UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag)
 {
     if(FM_TITLE(str_TitleKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
     {
-        CTool::MassageOutFotmat("Title KeyWord Error");
+        CTool::MassageOutFotmat("Title KeyWord Error", '!');
         return;
     }
 
@@ -780,7 +780,7 @@ void CFAitfX::AppendTitleExpense(const string str_TitleKey,\
 {
     if(FM_TITLE(str_TitleKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
     {
-        CTool::MassageOutFotmat("Title KeyWord Error");
+        CTool::MassageOutFotmat("Title KeyWord Error", '!');
         return;
     }
 
@@ -1086,7 +1086,7 @@ unsigned int CFAitfX::GetMonthTrendVectorMax(const vector<TREND_INFO> vec_stc_Tr
 
     if(uni_TrendSize == 0)
     {
-        CTool::MassageOutFotmat("Analysis KeyWord Error");
+        CTool::MassageOutFotmat("Analysis KeyWord Error", '!');
         return -1;
     }
 
@@ -1189,7 +1189,7 @@ void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
 
     if( 0 == m_cls_FM_life.SearchLineKey(str_RangeTop.c_str()) )
     {
-        CTool::MassageOutFotmat("Error Month Input");
+        CTool::MassageOutFotmat("Error Month Input", '!');
         return;
     }
     unsigned int uni_RangeTop = m_cls_FM_life.GetSearchLineIndex(1) + 4;

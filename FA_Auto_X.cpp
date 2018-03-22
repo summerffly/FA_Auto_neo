@@ -73,7 +73,7 @@ int main(int argc, char **argv, char *env[])
         /**************************************************/
         if( X_CMD.CmdParser(CMD_linebuffer) == -1 )
         {
-            CTool::MassageOutFotmat("Blank CMD");
+            CTool::MassageOutFotmat("Blank CMD", '!');
             
             continue;
         }
@@ -125,7 +125,7 @@ int main(int argc, char **argv, char *env[])
         //   写回 所有.md
         //   CMD >>> write
         /**************************************************/
-        else if( X_CMD.CmpSoloCmd(WRITEBACK) )
+        else if( X_CMD.CmpSoloCmd(WRITE) )
         {   
             CCmdTarget::TagTimeBait();
 
@@ -145,7 +145,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->BackUpAllFile("./FA_TVT.bak/");
+            ptr_FAitfX->BackUpAllFile("./FA_SZ.bak/");
             ptr_FAitfX->BackUpAllFile("./../Hacker/FA_Auto_X/X_Executable/");
 
             CCmdTarget::ShowTimeGap();
@@ -375,7 +375,7 @@ int main(int argc, char **argv, char *env[])
             }
             else
             {
-                CTool::MassageOutFotmat("Error Param");
+                CTool::MassageOutFotmat("Error Param", '!');
 
                 continue;
             }
@@ -412,7 +412,7 @@ int main(int argc, char **argv, char *env[])
             }
             else
             {
-                CTool::MassageOutFotmat("Error Param");
+                CTool::MassageOutFotmat("Error Param", '!');
 
                 continue;
             }
@@ -453,7 +453,7 @@ int main(int argc, char **argv, char *env[])
             }
             else
             {
-                CTool::MassageOutFotmat("Error Param");
+                CTool::MassageOutFotmat("Error Param", '!');
 
                 continue;
             }
@@ -490,7 +490,7 @@ int main(int argc, char **argv, char *env[])
             }
             else
             {
-                CTool::MassageOutFotmat("Error Param");
+                CTool::MassageOutFotmat("Error Param", '!');
 
                 continue;
             }
@@ -523,7 +523,7 @@ int main(int argc, char **argv, char *env[])
             }
             else
             {
-                CTool::MassageOutFotmat("Error Param");
+                CTool::MassageOutFotmat("Error Param", '!');
 
                 continue;
             }
@@ -538,7 +538,7 @@ int main(int argc, char **argv, char *env[])
 
         /**************************************************/
         //   transfer 操作
-        //   CMD >>> transfer ++/-- 300
+        //   CMD >>> tf ++/-- 300
         /**************************************************/
         else if( X_CMD.CmpCmdFront(TRANSFER) && (X_CMD.GetCmdNum() == 3) )
         {   
@@ -554,7 +554,7 @@ int main(int argc, char **argv, char *env[])
             }
             else
             {
-                CTool::MassageOutFotmat("Error Param");
+                CTool::MassageOutFotmat("Error Param", '!');
 
                 continue;
             }
@@ -739,11 +739,38 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
+        //   FA_Auto_X 帮助提示
+        /**************************************************/
+        else if( X_CMD.CmpSoloCmd(HELP) )
+        {
+            cout << "****************************************" << endl;
+            cout << endl;
+            cout << "退出 FA_Auto_X" << endl;
+            cout << ">>> " << EXIT << endl;
+            cout << endl;
+            cout << "同步 所有.md" << endl;
+            cout << ">>> " << SYNC << endl;
+            cout << endl;
+            cout << "写回 所有.md" << endl;
+            cout << ">>> " << WRITE << endl;
+            cout << endl;
+            cout << "备份 所有.md" << endl;
+            cout << ">>> " << BACKUP << endl;
+            cout << endl;
+            cout << "校验 TVT总收支" << endl;
+            cout << ">>> " << CHECK << " " << TVT << endl;
+            cout << endl;
+            cout << "****************************************" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
         //   CMD输入错误
         /**************************************************/
         else
         {
-            CTool::MassageOutFotmat("Error CMD");
+            CTool::MassageOutFotmat("Error CMD", '!');
 
             continue;
         }
