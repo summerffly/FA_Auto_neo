@@ -103,7 +103,7 @@ public:
     void BackUpAllFile(const string str_BackUpPath);
 
 private:
-    CFileManager m_cls_FM_AF;
+    CFileManager m_cls_FM_SUM;
     CFileManager m_cls_FM_life;
     CFileManager m_cls_FM_sm_Books;
     CFileManager m_cls_FM_sm_KEEP;

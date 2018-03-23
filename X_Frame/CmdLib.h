@@ -27,7 +27,7 @@ string SURPLUS = "surplus";
 
 string MONTH = "month";
 string EX_MONTH = "exmonth";
-string TVT = "tvt";
+string SUM = "sum";
 
 string ANALYSIS = "as";
 string SHOW = "show";

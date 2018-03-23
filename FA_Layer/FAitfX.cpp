@@ -11,21 +11,21 @@
 using namespace std;
 
 
-// tips 番茄@20171211 - 使用带参宏函数Key填错会有风险，用m_cls_FM_AF的head进行校验
+// tips 番茄@20171211 - 使用带参宏函数Key填错会有风险，用m_cls_FM_SUM的head进行校验
 #define FM_SUBMONTH(str)  ((!(str).compare("Books"))?(m_cls_FM_sm_Books):\
                            ((!(str).compare("KEEP"))?(m_cls_FM_sm_KEEP):\
                            ((!(str).compare("TB"))?(m_cls_FM_sm_TB):\
-                           ((!(str).compare("sa"))?(m_cls_FM_sm_sa):(m_cls_FM_AF)))) )
+                           ((!(str).compare("sa"))?(m_cls_FM_sm_sa):(m_cls_FM_SUM)))) )
 
-// tips 番茄@20171211 - 使用带参宏函数Key填错会有风险，用m_cls_FM_AF的head进行校验
+// tips 番茄@20171211 - 使用带参宏函数Key填错会有风险，用m_cls_FM_SUM的head进行校验
 #define FM_TITLE(str)  ((!(str).compare("DK"))?(m_cls_FM_tt_DK):\
                         ((!(str).compare("NS"))?(m_cls_FM_tt_NS):\
                         ((!(str).compare("travel"))?(m_cls_FM_tt_travel):\
-                        ((!(str).compare("lottery"))?(m_cls_FM_tt_lottery):(m_cls_FM_AF)))) )
+                        ((!(str).compare("lottery"))?(m_cls_FM_tt_lottery):(m_cls_FM_SUM)))) )
 
 CFAitfX::CFAitfX()
 {
-    m_cls_FM_AF = CFileManager("./FA_SZ.md");
+    m_cls_FM_SUM = CFileManager("./FA_SUM.md");
     m_cls_FM_life = CFileManager("./life.M.md");
     m_cls_FM_sm_Books = CFileManager("./Books.M.md");
     m_cls_FM_sm_KEEP = CFileManager("./KEEP.M.md");
@@ -70,27 +70,27 @@ int CFAitfX::CheckAggrSurplus(int &int_AFRest, bool bol_OFlag)
         str_ItemFlagContent += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemContent;
         str_ItemFlagAttrbute += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemAttrbute;
 
-        m_cls_FM_AF.SearchLineKey(str_ItemFlagContent.c_str());
-        uni_ItemFlag = m_cls_FM_AF.GetSearchLineIndex(1);
+        m_cls_FM_SUM.SearchLineKey(str_ItemFlagContent.c_str());
+        uni_ItemFlag = m_cls_FM_SUM.GetSearchLineIndex(1);
 
         if( str_ItemFlagAttrbute.compare("FO")==0 )
         {
-            int_AggrSurplusCK += m_cls_FM_AF.GetLineValue(uni_ItemFlag);
-            int_AggrSurplusPlusCK += m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            int_AggrSurplusCK += m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
+            int_AggrSurplusPlusCK += m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
         }
         else if( str_ItemFlagAttrbute.compare("Title")==0 )
         {
-            int_AggrSurplusCK += m_cls_FM_AF.GetLineValue(uni_ItemFlag+1);
-            int_AggrSurplusPlusCK += m_cls_FM_AF.GetLineValue(uni_ItemFlag+1);
+            int_AggrSurplusCK += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+1);
+            int_AggrSurplusPlusCK += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+1);
         }
         else if( str_ItemFlagAttrbute.compare("Month")==0 )
         {
-            int_AggrSurplusCK += m_cls_FM_AF.GetLineValue(uni_ItemFlag+3);
-            int_AggrSurplusPlusCK += m_cls_FM_AF.GetLineValue(uni_ItemFlag+3);
+            int_AggrSurplusCK += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+3);
+            int_AggrSurplusPlusCK += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+3);
         }
         else if( str_ItemFlagAttrbute.compare("FC")==0 )
         {
-            int_AggrSurplusEX = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            int_AggrSurplusEX = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
 
             if( bol_OFlag )
             {
@@ -104,15 +104,15 @@ int CFAitfX::CheckAggrSurplus(int &int_AFRest, bool bol_OFlag)
         }
         else if( str_ItemFlagAttrbute.compare("FTail")==0 )
         {
-            int_AggrSurplusPlusCK += m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            int_AggrSurplusPlusCK += m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
         }
         else if( str_ItemFlagAttrbute.compare("Fwx")==0 )
         {
-            uni_WXRest = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            uni_WXRest = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
         }
         else if( str_ItemFlagAttrbute.compare("FF")==0 )
         {
-            uni_AliRest = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            uni_AliRest = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
             int_AggrSurplusPlusEX = uni_WXRest + uni_AliRest;
 
             if( bol_OFlag )
@@ -173,28 +173,28 @@ void CFAitfX::UpdateAggrSurplus(bool bol_OFlag)
         str_ItemFlagContent += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemContent;
         str_ItemFlagAttrbute += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemAttrbute;
 
-        m_cls_FM_AF.SearchLineKey(str_ItemFlagContent.c_str());
-        uni_ItemFlag = m_cls_FM_AF.GetSearchLineIndex(1);
+        m_cls_FM_SUM.SearchLineKey(str_ItemFlagContent.c_str());
+        uni_ItemFlag = m_cls_FM_SUM.GetSearchLineIndex(1);
 
         if( str_ItemFlagAttrbute.compare("FO")==0 )
         {
-            int_AggrSurplusUD += m_cls_FM_AF.GetLineValue(uni_ItemFlag);
-            int_AggrSurplusPlusUD += m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            int_AggrSurplusUD += m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
+            int_AggrSurplusPlusUD += m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
         }
         else if( str_ItemFlagAttrbute.compare("Title")==0 )
         {
-            int_AggrSurplusUD += m_cls_FM_AF.GetLineValue(uni_ItemFlag+1);
-            int_AggrSurplusPlusUD += m_cls_FM_AF.GetLineValue(uni_ItemFlag+1);
+            int_AggrSurplusUD += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+1);
+            int_AggrSurplusPlusUD += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+1);
         }
         else if( str_ItemFlagAttrbute.compare("Month")==0 )
         {
-            int_AggrSurplusUD += m_cls_FM_AF.GetLineValue(uni_ItemFlag+3);
-            int_AggrSurplusPlusUD += m_cls_FM_AF.GetLineValue(uni_ItemFlag+3);
+            int_AggrSurplusUD += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+3);
+            int_AggrSurplusPlusUD += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+3);
         }
         else if( str_ItemFlagAttrbute.compare("FC")==0 )
         {
-            int_AggrSurplusEX = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
-            m_cls_FM_AF.ModifyLineValue(uni_ItemFlag, int_AggrSurplusUD);
+            int_AggrSurplusEX = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
+            m_cls_FM_SUM.ModifyLineValue(uni_ItemFlag, int_AggrSurplusUD);
 
             if( bol_OFlag )
             {
@@ -206,18 +206,18 @@ void CFAitfX::UpdateAggrSurplus(bool bol_OFlag)
         }
         else if( str_ItemFlagAttrbute.compare("FTail")==0 )
         {
-            int_AggrSurplusPlusUD += m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            int_AggrSurplusPlusUD += m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
         }
         else if( str_ItemFlagAttrbute.compare("Fwx")==0 )
         {
-            uni_WXRest = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            uni_WXRest = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
         }
         else if( str_ItemFlagAttrbute.compare("FF")==0 )
         {
-            uni_AliRest = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            uni_AliRest = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
             int_AggrSurplusPlusEX = uni_WXRest + uni_AliRest;
 
-            m_cls_FM_AF.ModifyLineValue(uni_ItemFlag, (int_AggrSurplusPlusUD-uni_WXRest));
+            m_cls_FM_SUM.ModifyLineValue(uni_ItemFlag, (int_AggrSurplusPlusUD-uni_WXRest));
 
             if( bol_OFlag )
             {
@@ -303,7 +303,7 @@ void CFAitfX::CheckFA(const string str_CurMonth)
 
     if( 0 != int_RetCheck )
     {
-        CTool::MassageOutFotmat("TVT NOT Pass Check", '!');
+        CTool::MassageOutFotmat("FA_SUM NOT Pass Check", '!');
     }
     else
     {
@@ -380,17 +380,17 @@ int CFAitfX::CheckMonthSurplus(const string str_SelMonth, bool bol_OFlag)
     string str_RangeTop = "## life.M" + str_SelMonth;
     string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
 
-    m_cls_FM_AF.SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_AFLine = m_cls_FM_AF.GetSearchLineIndex(1);
+    m_cls_FM_SUM.SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_AFLine = m_cls_FM_SUM.GetSearchLineIndex(1);
 
     m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
     unsigned int uni_RangeTop = m_cls_FM_life.GetSearchLineIndex(1);
     m_cls_FM_life.SearchLineKey(str_RangeBottom.c_str());
     unsigned int uni_RangeBottom = m_cls_FM_life.GetSearchLineIndex(1);
 
-    unsigned int uni_AFMonthSalaryEX = m_cls_FM_AF.GetLineValue(uni_AFLine+1);
-    int int_AFMonthExpenseEX = m_cls_FM_AF.GetLineValue(uni_AFLine+2);
-    int int_AFMonthRestEX = m_cls_FM_AF.GetLineValue(uni_AFLine+3);
+    unsigned int uni_AFMonthSalaryEX = m_cls_FM_SUM.GetLineValue(uni_AFLine+1);
+    int int_AFMonthExpenseEX = m_cls_FM_SUM.GetLineValue(uni_AFLine+2);
+    int int_AFMonthRestEX = m_cls_FM_SUM.GetLineValue(uni_AFLine+3);
 
     unsigned int uni_MonthSalaryEX = m_cls_FM_life.GetLineValue(uni_RangeTop+1);
     int int_MonthExpenseEX = m_cls_FM_life.GetLineValue(uni_RangeTop+2);
@@ -538,8 +538,8 @@ void CFAitfX::SyncMonthSurplus(const string str_SelMonth)
     m_cls_FM_life.SearchLineKey(str_SelMonthFL.c_str());
     unsigned int uni_SelMonth = m_cls_FM_life.GetSearchLineIndex(1);
 
-    m_cls_FM_AF.SearchLineKey(str_SelMonthFL.c_str());
-    unsigned int uni_AFSelMonth = m_cls_FM_AF.GetSearchLineIndex(1);
+    m_cls_FM_SUM.SearchLineKey(str_SelMonthFL.c_str());
+    unsigned int uni_AFSelMonth = m_cls_FM_SUM.GetSearchLineIndex(1);
 
     // 读取 life.M 月度收支
     unsigned int uni_MonthSalary = m_cls_FM_life.GetLineValue(uni_SelMonth+1);
@@ -547,9 +547,9 @@ void CFAitfX::SyncMonthSurplus(const string str_SelMonth)
     int int_MonthSurplus = m_cls_FM_life.GetLineValue(uni_SelMonth+3);
 
     // 同步 总收支
-    m_cls_FM_AF.ModifyLineValue(uni_AFSelMonth+1, uni_MonthSalary);
-    m_cls_FM_AF.ModifyLineValue(uni_AFSelMonth+2, int_MonthExpense);
-    m_cls_FM_AF.ModifyLineValue(uni_AFSelMonth+3, int_MonthSurplus);
+    m_cls_FM_SUM.ModifyLineValue(uni_AFSelMonth+1, uni_MonthSalary);
+    m_cls_FM_SUM.ModifyLineValue(uni_AFSelMonth+2, int_MonthExpense);
+    m_cls_FM_SUM.ModifyLineValue(uni_AFSelMonth+3, int_MonthSurplus);
 }
 
 /**************************************************/
@@ -557,7 +557,7 @@ void CFAitfX::SyncMonthSurplus(const string str_SelMonth)
 /**************************************************/
 int CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag)
 {
-    if(FM_SUBMONTH(str_SubMonthKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
+    if(FM_SUBMONTH(str_SubMonthKey).GetFullLine(1).compare("# Financial Allocation of SUMMARY") == 0)
     {
         CTool::MassageOutFotmat("SubMonth KeyWord Error", '!');
         return -9;
@@ -608,7 +608,7 @@ int CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str
 /**************************************************/
 void CFAitfX::UpdateSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag)
 {
-    if(FM_SUBMONTH(str_SubMonthKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
+    if(FM_SUBMONTH(str_SubMonthKey).GetFullLine(1).compare("# Financial Allocation of SUMMARY") == 0)
     {
         CTool::MassageOutFotmat("SubMonth KeyWord Error", '!');
         return;
@@ -648,7 +648,7 @@ void CFAitfX::UpdateSubMonthExpense(const string str_SubMonthKey, const string s
 void CFAitfX::AppendSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth,\
                                     const int int_LineValue, const string str_LineContent)
 {
-    if(FM_SUBMONTH(str_SubMonthKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
+    if(FM_SUBMONTH(str_SubMonthKey).GetFullLine(1).compare("# Financial Allocation of SUMMARY") == 0)
     {
         CTool::MassageOutFotmat("SubMonth KeyWord Error", '!');
         return;
@@ -688,7 +688,7 @@ void CFAitfX::AppendSubMonthExpense(const string str_SubMonthKey, const string s
 /**************************************************/
 int CFAitfX::CheckTitleExpense(const string str_TitleKey, bool bol_OFlag)
 {
-    if(FM_TITLE(str_TitleKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
+    if(FM_TITLE(str_TitleKey).GetFullLine(1).compare("# Financial Allocation of SUMMARY") == 0)
     {
         CTool::MassageOutFotmat("Title KeyWord Error", '!');
         return -9;
@@ -697,14 +697,14 @@ int CFAitfX::CheckTitleExpense(const string str_TitleKey, bool bol_OFlag)
     string str_RangeTop = "## " + str_TitleKey;
     string str_RangeBottom("## Total");
 
-    m_cls_FM_AF.SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_AFLine = m_cls_FM_AF.GetSearchLineIndex(1);
+    m_cls_FM_SUM.SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_AFLine = m_cls_FM_SUM.GetSearchLineIndex(1);
 
     unsigned int uni_RangeTop = 2;
     FM_TITLE(str_TitleKey).SearchLineKey(str_RangeBottom.c_str());
     unsigned int uni_RangeBottom = FM_TITLE(str_TitleKey).GetSearchLineIndex(1);
 
-    int int_AFTitleExpenseEX = m_cls_FM_AF.GetLineValue(uni_AFLine+1);
+    int int_AFTitleExpenseEX = m_cls_FM_SUM.GetLineValue(uni_AFLine+1);
 
     int int_TitleExpenseEX = FM_TITLE(str_TitleKey).GetLineValue(uni_RangeBottom+2);
     int int_TitleExpenseCK = FM_TITLE(str_TitleKey).CountRangeType(uni_RangeTop, uni_RangeBottom-1,\
@@ -739,7 +739,7 @@ int CFAitfX::CheckTitleExpense(const string str_TitleKey, bool bol_OFlag)
 /**************************************************/
 void CFAitfX::UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag)
 {
-    if(FM_TITLE(str_TitleKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
+    if(FM_TITLE(str_TitleKey).GetFullLine(1).compare("# Financial Allocation of SUMMARY") == 0)
     {
         CTool::MassageOutFotmat("Title KeyWord Error", '!');
         return;
@@ -748,8 +748,8 @@ void CFAitfX::UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag)
     string str_RangeTop = "## " + str_TitleKey;
     string str_RangeBottom("## Total");
 
-    m_cls_FM_AF.SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_AFLine = m_cls_FM_AF.GetSearchLineIndex(1);
+    m_cls_FM_SUM.SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_AFLine = m_cls_FM_SUM.GetSearchLineIndex(1);
 
     unsigned int uni_RangeTop = 2;
     FM_TITLE(str_TitleKey).SearchLineKey(str_RangeBottom.c_str());
@@ -760,7 +760,7 @@ void CFAitfX::UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag)
                                       LTYPE_FBIRC_LINEUINT);
 
     FM_TITLE(str_TitleKey).ModifyLineValue(uni_RangeBottom+2, int_TitleExpenseUD);
-    m_cls_FM_AF.ModifyLineValue(uni_AFLine+1, int_TitleExpenseUD);
+    m_cls_FM_SUM.ModifyLineValue(uni_AFLine+1, int_TitleExpenseUD);
 
     if( bol_OFlag )
     {
@@ -778,7 +778,7 @@ void CFAitfX::UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag)
 void CFAitfX::AppendTitleExpense(const string str_TitleKey,\
                                  const int int_LineValue, const string str_LineContent)
 {
-    if(FM_TITLE(str_TitleKey).GetFullLine(1).compare("# Financial Allocation of TVT") == 0)
+    if(FM_TITLE(str_TitleKey).GetFullLine(1).compare("# Financial Allocation of SUMMARY") == 0)
     {
         CTool::MassageOutFotmat("Title KeyWord Error", '!');
         return;
@@ -787,8 +787,8 @@ void CFAitfX::AppendTitleExpense(const string str_TitleKey,\
     string str_RangeTop = "## " + str_TitleKey;
     string str_RangeBottom("## Total");
 
-    m_cls_FM_AF.SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_AFLine = m_cls_FM_AF.GetSearchLineIndex(1);
+    m_cls_FM_SUM.SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_AFLine = m_cls_FM_SUM.GetSearchLineIndex(1);
 
     unsigned int uni_RangeTop = 2;
     FM_TITLE(str_TitleKey).SearchLineKey(str_RangeBottom.c_str());
@@ -804,7 +804,7 @@ void CFAitfX::AppendTitleExpense(const string str_TitleKey,\
 
     // tips 番茄@20171212 - 注意计算总支出的时候要增加一行
     FM_TITLE(str_TitleKey).ModifyLineValue(uni_RangeBottom+3, int_TitleExpenseAP);
-    m_cls_FM_AF.ModifyLineValue(uni_AFLine+1, int_TitleExpenseAP);
+    m_cls_FM_SUM.ModifyLineValue(uni_AFLine+1, int_TitleExpenseAP);
 
     cout << "----------------------------------------" << endl;
     cout << "### " << str_TitleKey << "/支出 ###" << endl;
@@ -819,8 +819,8 @@ void CFAitfX::AppendLottery(const bool bol_LineFlag, const unsigned int uni_Line
     string str_LotteryTop("## lottery");
     string str_LotteryBottom("## Total");
 
-    m_cls_FM_AF.SearchLineKey(str_LotteryTop.c_str());
-    unsigned int uni_AFLine = m_cls_FM_AF.GetSearchLineIndex(1);
+    m_cls_FM_SUM.SearchLineKey(str_LotteryTop.c_str());
+    unsigned int uni_AFLine = m_cls_FM_SUM.GetSearchLineIndex(1);
 
     unsigned int uni_LotteryTop = 2;
     m_cls_FM_tt_lottery.SearchLineKey(str_LotteryBottom.c_str());
@@ -850,7 +850,7 @@ void CFAitfX::AppendLottery(const bool bol_LineFlag, const unsigned int uni_Line
 
     // tips 番茄@20171212 - 注意计算总支出的时候要增加一行
     m_cls_FM_tt_lottery.ModifyLineValue(uni_LotteryBottom+3, int_LotterySurplusAP);
-    m_cls_FM_AF.ModifyLineValue(uni_AFLine+1, int_LotterySurplusAP);
+    m_cls_FM_SUM.ModifyLineValue(uni_AFLine+1, int_LotterySurplusAP);
 
     // tips 番茄@20171225 - 在支出前，增加一行空行
     if(!bol_LineFlag)
@@ -868,25 +868,25 @@ void CFAitfX::AppendLottery(const bool bol_LineFlag, const unsigned int uni_Line
 void CFAitfX::TransferBalance(const string str_FirstKey, const string str_SecondKey,
                               const bool bol_TransferFlag, const unsigned int uni_BalanceValueABS)
 {
-    m_cls_FM_AF.SearchLineKey(str_FirstKey.c_str());
-    unsigned int uni_FirstLine = m_cls_FM_AF.GetSearchLineIndex(1);
-    int int_FirstValue = m_cls_FM_AF.GetLineValue(uni_FirstLine);
+    m_cls_FM_SUM.SearchLineKey(str_FirstKey.c_str());
+    unsigned int uni_FirstLine = m_cls_FM_SUM.GetSearchLineIndex(1);
+    int int_FirstValue = m_cls_FM_SUM.GetLineValue(uni_FirstLine);
 
-    m_cls_FM_AF.SearchLineKey(str_SecondKey.c_str());
-    unsigned int uni_SecondLine = m_cls_FM_AF.GetSearchLineIndex(1);
-    int int_SecondValue = m_cls_FM_AF.GetLineValue(uni_SecondLine);
+    m_cls_FM_SUM.SearchLineKey(str_SecondKey.c_str());
+    unsigned int uni_SecondLine = m_cls_FM_SUM.GetSearchLineIndex(1);
+    int int_SecondValue = m_cls_FM_SUM.GetLineValue(uni_SecondLine);
 
     // bol_TransferFlag为true >>> First++ Second--
     if( bol_TransferFlag == true )
     {
-        m_cls_FM_AF.ModifyLineValue(uni_FirstLine, int_FirstValue + uni_BalanceValueABS);
-        m_cls_FM_AF.ModifyLineValue(uni_SecondLine, int_SecondValue - uni_BalanceValueABS);
+        m_cls_FM_SUM.ModifyLineValue(uni_FirstLine, int_FirstValue + uni_BalanceValueABS);
+        m_cls_FM_SUM.ModifyLineValue(uni_SecondLine, int_SecondValue - uni_BalanceValueABS);
     }
     // bol_TransferFlag为false >>> First-- Second++
     else
     {
-        m_cls_FM_AF.ModifyLineValue(uni_FirstLine, int_FirstValue - uni_BalanceValueABS);
-        m_cls_FM_AF.ModifyLineValue(uni_SecondLine, int_SecondValue + uni_BalanceValueABS);
+        m_cls_FM_SUM.ModifyLineValue(uni_FirstLine, int_FirstValue - uni_BalanceValueABS);
+        m_cls_FM_SUM.ModifyLineValue(uni_SecondLine, int_SecondValue + uni_BalanceValueABS);
     }
 }
 
@@ -905,14 +905,14 @@ void CFAitfX::AppendMonth(const string str_SelMonth)
     str_AFMonthExpense += "月支出";
     str_AFMonthRest += "月结余";
 
-    m_cls_FM_AF.SearchLineKey("## Summary");
-    unsigned int uni_AFLine = m_cls_FM_AF.GetSearchLineIndex(1);
+    m_cls_FM_SUM.SearchLineKey("## Summary");
+    unsigned int uni_AFLine = m_cls_FM_SUM.GetSearchLineIndex(1);
 
-    m_cls_FM_AF.InsertBlankLine(uni_AFLine-1);
-    m_cls_FM_AF.InsertLine(uni_AFLine, LTYPE_MONTHTITLE, 0, str_AFMonthTitle);
-    m_cls_FM_AF.InsertLine(uni_AFLine+1, LTYPE_FBIRC_MONTHSUM, 0, str_AFMonthSalary);
-    m_cls_FM_AF.InsertLine(uni_AFLine+2, LTYPE_FBIRC_MONTHSUM, 0, str_AFMonthExpense);
-    m_cls_FM_AF.InsertLine(uni_AFLine+3, LTYPE_FBIRC_MONTHSUM, 0, str_AFMonthRest);
+    m_cls_FM_SUM.InsertBlankLine(uni_AFLine-1);
+    m_cls_FM_SUM.InsertLine(uni_AFLine, LTYPE_MONTHTITLE, 0, str_AFMonthTitle);
+    m_cls_FM_SUM.InsertLine(uni_AFLine+1, LTYPE_FBIRC_MONTHSUM, 0, str_AFMonthSalary);
+    m_cls_FM_SUM.InsertLine(uni_AFLine+2, LTYPE_FBIRC_MONTHSUM, 0, str_AFMonthExpense);
+    m_cls_FM_SUM.InsertLine(uni_AFLine+3, LTYPE_FBIRC_MONTHSUM, 0, str_AFMonthRest);
 
     // 插入 life.md文件 脚本
     string str_lifeMonthTitle = string("## life.M");
@@ -1278,12 +1278,12 @@ void CFAitfX::ShowAggrSurplus(int int_ShowFlag)
         str_ItemFlagContent += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemContent;
         str_ItemFlagAttrbute += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemAttrbute;
 
-        m_cls_FM_AF.SearchLineKey(str_ItemFlagContent.c_str());
-        uni_ItemFlag = m_cls_FM_AF.GetSearchLineIndex(1);
+        m_cls_FM_SUM.SearchLineKey(str_ItemFlagContent.c_str());
+        uni_ItemFlag = m_cls_FM_SUM.GetSearchLineIndex(1);
 
         if( str_ItemFlagAttrbute.compare("FO")==0 )
         {
-            int_AFtemp = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            int_AFtemp = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
 
             if(int_ShowFlag == 1)
             {
@@ -1295,7 +1295,7 @@ void CFAitfX::ShowAggrSurplus(int int_ShowFlag)
         }
         else if( str_ItemFlagAttrbute.compare("Title")==0 )
         {
-            int_AFtemp = m_cls_FM_AF.GetLineValue(uni_ItemFlag+1);
+            int_AFtemp = m_cls_FM_SUM.GetLineValue(uni_ItemFlag+1);
             
             if(int_ShowFlag == 1)
             {
@@ -1304,7 +1304,7 @@ void CFAitfX::ShowAggrSurplus(int int_ShowFlag)
         }
         else if( str_ItemFlagAttrbute.compare("Month")==0 )
         {
-            int_AFtemp = m_cls_FM_AF.GetLineValue(uni_ItemFlag+3);
+            int_AFtemp = m_cls_FM_SUM.GetLineValue(uni_ItemFlag+3);
             
             if(int_ShowFlag == 1)
             {
@@ -1313,7 +1313,7 @@ void CFAitfX::ShowAggrSurplus(int int_ShowFlag)
         }
         else if( str_ItemFlagAttrbute.compare("FC")==0 )
         {
-            int_AFtemp = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            int_AFtemp = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
 
             if((int_ShowFlag == 1) || (int_ShowFlag == 2))
             {
@@ -1328,11 +1328,11 @@ void CFAitfX::ShowAggrSurplus(int int_ShowFlag)
         }
         else if( str_ItemFlagAttrbute.compare("Fwx")==0 )
         {
-            uni_WXRest = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            uni_WXRest = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
         }
         else if( str_ItemFlagAttrbute.compare("FF")==0 )
         {
-            uni_AliRest = m_cls_FM_AF.GetLineValue(uni_ItemFlag);
+            uni_AliRest = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
             uni_AggrSurplusPlus = uni_WXRest + uni_AliRest;
 
             if((int_ShowFlag == 1) || (int_ShowFlag == 2))
@@ -1392,7 +1392,7 @@ void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag)
 void CFAitfX::ShowAggrMonthSurplus()
 {
     string str_MonthKey = "## life.M";
-    unsigned int uni_MonthCount = m_cls_FM_AF.SearchLineKey(str_MonthKey.c_str());
+    unsigned int uni_MonthCount = m_cls_FM_SUM.SearchLineKey(str_MonthKey.c_str());
 
     unsigned int uni_MonthLine = 0;
     int int_AggrMonthSalary = 0;
@@ -1401,11 +1401,11 @@ void CFAitfX::ShowAggrMonthSurplus()
 
     for(int i=1; i<=uni_MonthCount; i++)
     {
-        uni_MonthLine = m_cls_FM_AF.GetSearchLineIndex(i);
+        uni_MonthLine = m_cls_FM_SUM.GetSearchLineIndex(i);
 
-        int_AggrMonthSalary += m_cls_FM_AF.GetLineValue(uni_MonthLine+1);
-        int_AggrMonthExpense += m_cls_FM_AF.GetLineValue(uni_MonthLine+2);
-        int_AggrMonthSurplus += m_cls_FM_AF.GetLineValue(uni_MonthLine+3);
+        int_AggrMonthSalary += m_cls_FM_SUM.GetLineValue(uni_MonthLine+1);
+        int_AggrMonthExpense += m_cls_FM_SUM.GetLineValue(uni_MonthLine+2);
+        int_AggrMonthSurplus += m_cls_FM_SUM.GetLineValue(uni_MonthLine+3);
     }
 
     cout << "----------------------------------------" << endl;
@@ -1421,7 +1421,7 @@ void CFAitfX::ShowAggrMonthSurplus()
 
 void CFAitfX::SyncAllFile()
 {
-    m_cls_FM_AF.SyncFile();
+    m_cls_FM_SUM.SyncFile();
     m_cls_FM_life.SyncFile();
     m_cls_FM_sm_Books.SyncFile();
     m_cls_FM_sm_KEEP.SyncFile();
@@ -1436,7 +1436,7 @@ void CFAitfX::SyncAllFile()
 
 void CFAitfX::WriteAllFile()
 {
-    m_cls_FM_AF.FileWriter();
+    m_cls_FM_SUM.FileWriter();
     m_cls_FM_life.FileWriter();
     m_cls_FM_sm_Books.FileWriter();
     m_cls_FM_sm_KEEP.FileWriter();
@@ -1451,7 +1451,7 @@ void CFAitfX::WriteAllFile()
 
 void CFAitfX::BackUpAllFile(const string str_BackUpPath)
 {
-    m_cls_FM_AF.BackUpFile(str_BackUpPath);
+    m_cls_FM_SUM.BackUpFile(str_BackUpPath);
     m_cls_FM_life.BackUpFile(str_BackUpPath);
     m_cls_FM_sm_Books.BackUpFile(str_BackUpPath);
     m_cls_FM_sm_KEEP.BackUpFile(str_BackUpPath);

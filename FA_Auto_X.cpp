@@ -34,7 +34,6 @@ int main(int argc, char **argv, char *env[])
     CCFGLoader::LoadMonth();
     CCFGLoader::LoadFA();
 
-    //Singleton<CFAitfX> FAitfX;
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
     CASitfX *ptr_ASitfX = Singleton<CASitfX>::GetInstance();
 
@@ -155,10 +154,10 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   校验 TVT总收支
-        //   CMD >>> check tvt
+        //   校验 SUM总收支
+        //   CMD >>> check sum
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmdBack(TVT) )
+        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmdBack(SUM) )
         {   
             CCmdTarget::TagTimeBait();
 
@@ -172,10 +171,10 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   更新 TVT总收支
-        //   CMD >>> update tvt
+        //   更新 SUM总收支
+        //   CMD >>> update sum
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(UPDATE) && X_CMD.CmpCmdBack(TVT) )
+        else if( X_CMD.CmpCmdFront(UPDATE) && X_CMD.CmpCmdBack(SUM) )
         {   
             CCmdTarget::TagTimeBait();
 
@@ -188,7 +187,7 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   FA全系统校验 TVT总收支
+        //   校验 FA全系统总收支
         //   CMD >>> check
         /**************************************************/
         else if( X_CMD.CmpSoloCmd(CHECK) )
@@ -204,7 +203,7 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   FA全系统更新 TVT总收支
+        //   更新 FA全系统总收支
         //   CMD >>> update
         /**************************************************/
         else if( X_CMD.CmpSoloCmd(UPDATE) )
@@ -268,17 +267,15 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   更新 任意月度 收支
-        //   CMD >>> update month 09
+        //   校验 任意月度 收支
+        //   CMD >>> check month 09
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(UPDATE) && X_CMD.CmpCmd(2, MONTH) &&\
+        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, MONTH) &&\
                 (X_CMD.GetCmdNum() == 3) )
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->UpdateMonthSurplus(X_CMD.GetCmd(3), true);
-            ptr_FAitfX->SyncMonthSurplus(X_CMD.GetCmd(3));
-            ptr_FAitfX->UpdateAggrSurplus(false);
+            ptr_FAitfX->CheckMonthSurplus(X_CMD.GetCmd(3), true);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -315,15 +312,17 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   校验 任意月度 收支
-        //   CMD >>> check month 09
+        //   更新 任意月度 收支
+        //   CMD >>> update month 09
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, MONTH) &&\
+        else if( X_CMD.CmpCmdFront(UPDATE) && X_CMD.CmpCmd(2, MONTH) &&\
                 (X_CMD.GetCmdNum() == 3) )
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->CheckMonthSurplus(X_CMD.GetCmd(3), true);
+            ptr_FAitfX->UpdateMonthSurplus(X_CMD.GetCmd(3), true);
+            ptr_FAitfX->SyncMonthSurplus(X_CMD.GetCmd(3));
+            ptr_FAitfX->UpdateAggrSurplus(false);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -332,7 +331,7 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   修改 当月 生活费
+        //   增加 当月 生活费
         //   CMD >>> life 50
         /**************************************************/
         else if( X_CMD.CmpCmdFront(MODIFY_LIFE) && (X_CMD.GetCmdNum() == 2) )
@@ -683,10 +682,10 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   显示 TVT总收支
-        //   CMD >>> show tvt
+        //   显示 SUM总收支
+        //   CMD >>> show sum
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(SHOW) && X_CMD.CmpCmdBack(TVT) )
+        else if( X_CMD.CmpCmdFront(SHOW) && X_CMD.CmpCmdBack(SUM) )
         {   
             CCmdTarget::TagTimeBait();
 
@@ -743,24 +742,130 @@ int main(int argc, char **argv, char *env[])
         /**************************************************/
         else if( X_CMD.CmpSoloCmd(HELP) )
         {
-            cout << "****************************************" << endl;
+            cout << "******************************" << endl;
             cout << endl;
+            
             cout << "退出 FA_Auto_X" << endl;
             cout << ">>> " << EXIT << endl;
             cout << endl;
+
             cout << "同步 所有.md" << endl;
             cout << ">>> " << SYNC << endl;
             cout << endl;
+
             cout << "写回 所有.md" << endl;
             cout << ">>> " << WRITE << endl;
             cout << endl;
+
             cout << "备份 所有.md" << endl;
             cout << ">>> " << BACKUP << endl;
             cout << endl;
-            cout << "校验 TVT总收支" << endl;
-            cout << ">>> " << CHECK << " " << TVT << endl;
+
+            cout << "校验 SUM总收支" << endl;
+            cout << ">>> " << CHECK << ' ' << SUM << endl;
             cout << endl;
-            cout << "****************************************" << endl;
+
+            cout << "更新 SUM总收支" << endl;
+            cout << ">>> " << UPDATE << ' ' << SUM << endl;
+            cout << endl;
+            
+            cout << "校验 FA全系统总收支" << endl;
+            cout << ">>> " << CHECK << endl;
+            cout << endl;            
+
+            cout << "更新 FA全系统总收支" << endl;
+            cout << ">>> " << UPDATE << endl;
+            cout << endl;
+
+            cout << "校验 当月/上月 支出" << endl;
+            cout << ">>> " << CHECK << ' ' << EXPENSE << ' ' << MONTH << '/' << EX_MONTH << endl;
+            cout << endl;
+
+            cout << "校验 当月/上月 收支" << endl;
+            cout << ">>> " << CHECK << ' ' << MONTH << '/' << EX_MONTH << endl;
+            cout << endl;
+
+            cout << "校验 任意月度 收支" << endl;
+            cout << ">>> " << CHECK << ' ' << MONTH << ' ' << CCFGLoader::m_str_OriginMonth << endl;
+            cout << endl;
+
+            cout << "更新 当月/上月 收支" << endl;
+            cout << ">>> " << UPDATE << ' ' << MONTH << '/' << EX_MONTH << endl;
+            cout << endl;
+
+            cout << "更新 任意月度 收支" << endl;
+            cout << ">>> " << UPDATE << ' ' << MONTH << ' ' << CCFGLoader::m_str_OriginMonth << endl;
+            cout << endl;
+
+            cout << "增加 当月 生活费" << endl;
+            cout << ">>> " << MODIFY_LIFE << " 100" << endl;
+            cout << endl;
+
+            cout << "校验 子项.M 支出" << endl;
+            cout << ">>> " << CHECK << ' ' << SUBMONTH << " books/keep/tb/sa" << endl;
+            cout << endl;
+
+            cout << "更新 子项.M 支出" << endl;
+            cout << ">>> " << UPDATE << ' ' << SUBMONTH << " books/keep/tb/sa" << endl;
+            cout << endl;
+
+            cout << "校验 Tt分项 支出" << endl;
+            cout << ">>> " << CHECK << ' ' << TITLE << " dk/ns/travel/lottery" << endl;
+            cout << endl;
+
+            cout << "更新 Tt分项 支出" << endl;
+            cout << ">>> " << UPDATE << ' ' << TITLE << " dk/ns/travel/lottery" << endl;
+            cout << endl;
+
+            cout << "增加 lottery 收支" << endl;
+            cout << ">>> " << LOTTERY << " ++/-- " << "200 20170906" << endl;
+            cout << endl;
+
+            cout << "transfer 操作" << endl;
+            cout << ">>> " << TRANSFER << " ++/-- " << "300" << endl;
+            cout << endl;
+
+            cout << "插入 月度 脚本" << endl;
+            cout << ">>> " << APPEND << ' ' << MONTH << ' ' << CCFGLoader::m_str_CurrentMonth << endl;
+            cout << endl;
+
+            cout << "校验 temp 支出" << endl;
+            cout << ">>> " << CHECK << ' ' << TEMP << endl;
+            cout << endl;
+
+            cout << "分析 月度趋势" << endl;
+            cout << ">>> " << ANALYSIS << ' ' << TREND << " 生活费" << endl;
+            cout << endl;
+
+            cout << "分析月度趋势 CSM消费支出" << endl;
+            cout << ">>> " << ANALYSIS << ' ' << TREND << ' ' << CONSUMPTION << endl;
+            cout << endl;
+
+            cout << "分析月度趋势 租房支出" << endl;
+            cout << ">>> " << ANALYSIS << ' ' << TREND << ' ' << ROOM << endl;
+            cout << endl;
+
+            cout << "分析 月度百分占比" << endl;
+            cout << ">>> " << ANALYSIS << ' ' << PROPORTION << ' ' << CCFGLoader::m_str_CurrentMonth << endl;
+            cout << endl;
+
+            cout << "显示 FA当前状态" << endl;
+            cout << ">>> " << SHOW << endl;
+            cout << endl;
+
+            cout << "显示 SUM总收支" << endl;
+            cout << ">>> " << SHOW << ' ' << SUM << endl;
+            cout << endl;
+
+            cout << "显示 当月/上月 收支" << endl;
+            cout << ">>> " << SHOW << ' ' << MONTH << '/' << EX_MONTH << endl;
+            cout << endl;
+
+            cout << "统计 累计月度收支" << endl;
+            cout << ">>> " << SHOW << ' ' << MONTH << ' ' << AGGREGATION << endl;
+            cout << endl;
+
+            cout << "******************************" << endl;
 
             continue;
         }
