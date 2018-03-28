@@ -275,6 +275,12 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
+            if( !CCFGLoader::CompareMonthRange(X_CMD.GetCmd(3)) )
+            {
+                CTool::MassageOutFotmat("Invalid Month Input", '!');
+                continue;
+            }
+
             ptr_FAitfX->CheckMonthSurplus(X_CMD.GetCmd(3), true);
 
             CCmdTarget::ShowTimeGap();
@@ -319,6 +325,12 @@ int main(int argc, char **argv, char *env[])
                 (X_CMD.GetCmdNum() == 3) )
         {   
             CCmdTarget::TagTimeBait();
+
+            if( !CCFGLoader::CompareMonthRange(X_CMD.GetCmd(3)) )
+            {
+                CTool::MassageOutFotmat("Invalid Month Input", '!');
+                continue;
+            }
 
             ptr_FAitfX->UpdateMonthSurplus(X_CMD.GetCmd(3), true);
             ptr_FAitfX->SyncMonthSurplus(X_CMD.GetCmd(3));

@@ -35,6 +35,7 @@ public:
     static void LoadVersion();
     static void LoadMonth();
     static void LoadFA();
+    static bool CompareMonthRange(const string str_SelMonth);
 
     /****************************************/
     //   属性
@@ -43,6 +44,8 @@ public:
     static string m_str_Version;
     static string m_str_OriginMonth;
     static string m_str_CurrentMonth;
+    static unsigned int m_uni_OriginMonth;
+    static unsigned int m_uni_CurrentMonth;
     static vector<FA_ITEM> m_vec_stc_FAItem;
 };
 
