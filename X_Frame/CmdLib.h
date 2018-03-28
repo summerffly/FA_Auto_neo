@@ -12,50 +12,50 @@
 using namespace std;
 
 
-string SYNC = "sync";
-string WRITE = "write";
-string BACKUP = "bakup";
+extern string SYNC;
+extern string WRITE;
+extern string BACKUP;
 
-string CHECK = "check";
-string UPDATE = "update";
-string APPEND = "append";
-string MODIFY_LIFE = "life";
-string TRANSFER = "tf";
+extern string CHECK;
+extern string UPDATE;
+extern string APPEND;
+extern string MODIFY_LIFE;
+extern string TRANSFER;
 
-string EXPENSE = "expense";
-string SURPLUS = "surplus";
+extern string EXPENSE;
+extern string SURPLUS;
 
-string MONTH = "month";
-string EX_MONTH = "exmonth";
-string SUM = "sum";
+extern string MONTH;
+extern string EX_MONTH;
+extern string SUM;
 
-string ANALYSIS = "as";
-string SHOW = "show";
-string TREND = "tt";
-string PROPORTION = "pp";
-string AGGREGATION = "aggr";
-string CONSUMPTION = "csm";
-string ROOM = "room";
+extern string ANALYSIS;
+extern string SHOW;
+extern string TREND;
+extern string PROPORTION;
+extern string AGGREGATION;
+extern string CONSUMPTION;
+extern string ROOM;
 
-string SUBMONTH = "sm";
-string BOOKS = "books";
-string TB = "tb";
-string KEEP = "keep";
-string SA = "sa";
+extern string SUBMONTH;
+extern string BOOKS;
+extern string TB;
+extern string KEEP;
+extern string SA;
 
-string TITLE = "tt";
-string DK = "dk";
-string NS = "ns";
-string TRAVEL = "travel";
-string LOTTERY = "lottery";
+extern string TITLE;
+extern string DK;
+extern string NS;
+extern string TRAVEL;
+extern string LOTTERY;
 
-string TEMP = "temp";
-string BOX = "box";
-string XM = "xm";
+extern string TEMP;
+extern string BOX;
+extern string XM;
 
-string HELP = "help";
-string CANCEL = "cancel";
-string EXIT = "exit";
+extern string HELP;
+extern string CANCEL;
+extern string EXIT;
 
 
 #endif

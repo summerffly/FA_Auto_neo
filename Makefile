@@ -5,7 +5,7 @@ lep = ./EP_Layer/
 lfa = ./FA_Layer/
 las = ./AS_Layer/
 
-obj_X = $(px)RegExLib.o $(px)X_Tool.o $(px)X_CmdTarget.o $(px)X_CFGLoader.o $(px)X_XMLParser.o $(px)tinyxml2.o
+obj_X = $(px)CmdLib.o $(px)RegExLib.o $(px)X_Tool.o $(px)X_CmdTarget.o $(px)X_CFGLoader.o $(px)X_XMLParser.o $(px)tinyxml2.o
 obj_OP = $(lop)FileOPer.o
 obj_EP = $(lep)LineEPer.o $(lep)FileManager.o
 obj_FA = $(lfa)FAitfX.o
@@ -16,6 +16,9 @@ FA_Auto_X: FA_Auto_X.o $(obj_X) $(obj_OP) $(obj_EP) $(obj_FA) $(obj_AS)
 
 FA_Auto_X.o: FA_Auto_X.cpp
 	g++ -c FA_Auto_X.cpp
+
+CmdLib.o: $(px)CmdLib.h $(px)CmdLib.cpp
+	g++ -c $(px)CmdLib.cpp
 
 RegExLib.o: $(px)RegExLib.h $(px)RegExLib.cpp
 	g++ -c $(px)RegExLib.cpp

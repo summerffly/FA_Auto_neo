@@ -7,6 +7,7 @@
 #pragma once
 
 #include <map>
+#include "./../X_Frame/CmdLib.h"
 #include "./../X_Frame/X_Tool.h"
 #include "./../X_Frame/Singleton.h"
 #include "./../X_Frame/X_CFGLoader.h"
@@ -28,6 +29,11 @@ public:
     /****************************************/
     void AnalysisMonthTrend_CSM();
     void AnalysisMonthTrend_ROOM();
+
+    /****************************************/
+    //   帮助提示
+    /****************************************/
+    void HelpAll();
 
 private:
     //~;
