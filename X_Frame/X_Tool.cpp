@@ -308,6 +308,17 @@ void CTool::MassageOutFotmat(const string str_Message, const char cha_Flag)
     cout << "----------------------------------------" << endl;
 }
 
+void CTool::TimeOut()
+{
+    time_t tmt_TimeFlag;
+    struct tm *ptr_TimeFlag;
+
+    time(&tmt_TimeFlag);
+    ptr_TimeFlag = gmtime(&tmt_TimeFlag);
+    printf("%d/%d/%d - ", 1900 + ptr_TimeFlag->tm_year, 1 + ptr_TimeFlag->tm_mon, ptr_TimeFlag->tm_mday);
+    printf("%d:%d:%d\n", ptr_TimeFlag->tm_hour, ptr_TimeFlag->tm_min, ptr_TimeFlag->tm_sec);
+}
+
 //------------------------------//
 //   river flows in summer
 //------------------------------//
