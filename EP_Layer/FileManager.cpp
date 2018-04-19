@@ -227,6 +227,26 @@ void CFileManager::DeleteLine(const unsigned int uni_VecIndex)
     m_cls_FileOPer.DeleteLine(uni_VecIndex);
 }
 
+void CFileManager::UpdateTimeStamp()
+{
+    if(m_vec_cls_Line.at(m_int_LineNum-1).GetLineType() != LTYPE_TIMESTAMP)
+    {
+        return;   // tips 番茄@20180419
+    }  
+    else
+    {
+        time_t  tmt_CurrentTime;
+        struct tm *ptr_stc_CurrentTime;
+        
+        time(&tmt_CurrentTime);
+        ptr_stc_CurrentTime = localtime(&tmt_CurrentTime);
+
+        // tips 番茄@20180419 - 更新时间戳
+
+        m_cls_FileOPer.ModifyLine((m_int_LineNum-1), m_vec_cls_Line.at(m_int_LineNum-1).GetFullLine());
+    }
+}
+
 int CFileManager::CountRange(const unsigned int uni_RangeBeginIndex, const unsigned int uni_RangeEndIndex)
 {
     int int_Counter = 0;

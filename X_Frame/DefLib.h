@@ -24,8 +24,9 @@
 #define LTYPE_SUBTITLE      2   // 单项标题
 #define LTYPE_MONTHTITLE    3   // 月度标题
 
-#define LTYPE_BLANK         7   // 空行
-#define LTYPE_DELIMITER     8   // 分隔线
+#define LTYPE_BLANK         6   // 空行
+#define LTYPE_DELIMITER     7   // 分隔线
+#define LTYPE_TIMESTAMP     8   // 更新时间戳
 #define LTYPE_EOF           9   // 结束线
 
 #define LTYPE_FBIRC_AGGR        11   // 总金额

@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <time.h>
+
 #include "./../OP_Layer/FileOPer.h"
 #include "./LineEPer.h"
 
@@ -58,6 +60,7 @@ public:
     void ModifyLineValue(const unsigned int uni_VecIndex, const int int_LineValue);
     void ModifyLineContent(const unsigned int uni_VecIndex, const char *cha_LineContent);
     void DeleteLine(const unsigned int uni_VecIndex);
+    void UpdateTimeStamp();
 
     /****************************************/
     //   计算操作区

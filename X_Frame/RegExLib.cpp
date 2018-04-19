@@ -18,12 +18,14 @@ regex RE_eof("^---$");
 /****************************************/
 //   EP_Layer RE
 /****************************************/
+
 regex REP_HeadTitle("^(# )(.{1,})$");
 regex REP_SubTitle("^(## )(.{1,})$");
 regex REP_MonthTitle("^(## )(.{1,})(\\.M\\d{2})$");
 
 regex REP_Blank("^$");
 regex REP_Delimiter("^(```)$");
+regex REP_TimeStamp("^(*)(Update Time)( : )(.{1,})(*)$");
 regex REP_EOF("^(---)$");
 
 regex REP_FBric_Aggr("^(.{1,})( : )(\\+|-)(\\d{1,})$");

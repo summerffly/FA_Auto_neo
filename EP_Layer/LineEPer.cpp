@@ -12,19 +12,6 @@
 using namespace std;
 
 
-extern regex REP_HeadTitle;
-extern regex REP_SubTitle;
-extern regex REP_MonthTitle;
-
-extern regex REP_Blank;
-extern regex REP_Delimiter;
-extern regex REP_EOF;
-
-extern regex REP_FBric_Aggr;
-extern regex REP_FBric_TitleSum;
-extern regex REP_FBric_MonthSum;
-extern regex REP_FBric_LineUnit;
-
 CLineEPer::CLineEPer()
 {
     m_uni_LineType = 0;
@@ -111,6 +98,16 @@ int CLineEPer::LineParser()
         else if( regex_match(m_str_FullLine, str_Match, REP_Delimiter) )
         {
             m_uni_LineType = LTYPE_DELIMITER;
+            m_bol_LineValuePM = true;
+            m_uni_LineValueABS = 0;
+            m_int_LineValue = 0;
+            m_str_LineContent = m_str_FullLine;
+
+            break;
+        }
+        else if( regex_match(m_str_FullLine, str_Match, REP_TimeStamp) )
+        {
+            m_uni_LineType = LTYPE_TIMESTAMP;
             m_bol_LineValuePM = true;
             m_uni_LineValueABS = 0;
             m_int_LineValue = 0;
@@ -366,6 +363,13 @@ void CLineEPer::UpdateFullLine()
                 m_str_FullLine.clear();
                 m_str_FullLine += m_str_LineContent;
                 m_bol_LineValuePM = true;   // tips 番茄@20171225 - 保持BLANK一致性
+            }
+            break;
+        case(LTYPE_TIMESTAMP):
+            {
+                m_str_FullLine.clear();
+                m_str_FullLine += m_str_LineContent;
+                m_bol_LineValuePM = true;
             }
             break;
         default:
