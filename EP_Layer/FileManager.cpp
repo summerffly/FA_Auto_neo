@@ -229,21 +229,22 @@ void CFileManager::DeleteLine(const unsigned int uni_VecIndex)
 
 void CFileManager::UpdateTimeStamp()
 {
-    if(m_vec_cls_Line.at(m_int_LineNum-1).GetLineType() != LTYPE_TIMESTAMP)
+    for(int i = 0 ;i < m_int_LineNum ;i++)
     {
-        return;   // tips 番茄@20180419
-    }  
-    else
-    {
-        time_t  tmt_CurrentTime;
-        struct tm *ptr_stc_CurrentTime;
-        
-        time(&tmt_CurrentTime);
-        ptr_stc_CurrentTime = localtime(&tmt_CurrentTime);
+        if( m_vec_cls_Line.at(m_int_LineNum - i).GetLineType() != LTYPE_TIMESTAMP )
+        {
+            continue;
+        }
 
-        // tips 番茄@20180419 - 更新时间戳
+        char *cha_TimeStamp = new char[40];
 
-        m_cls_FileOPer.ModifyLine((m_int_LineNum-1), m_vec_cls_Line.at(m_int_LineNum-1).GetFullLine());
+        sprintf(cha_TimeStamp, "*Update Time : %s*", CTool::TimeOut().c_str());
+        m_vec_cls_Line.at(m_int_LineNum-i).SetLineContent(cha_TimeStamp);
+        m_cls_FileOPer.ModifyLine((m_int_LineNum-i), m_vec_cls_Line.at(m_int_LineNum-i).GetFullLine());
+
+        delete []cha_TimeStamp;
+
+        break;
     }
 }
 

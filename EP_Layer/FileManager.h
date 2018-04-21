@@ -6,8 +6,7 @@
 
 #pragma once
 
-#include <time.h>
-
+#include "./../X_Frame/X_Tool.h"
 #include "./../OP_Layer/FileOPer.h"
 #include "./LineEPer.h"
 

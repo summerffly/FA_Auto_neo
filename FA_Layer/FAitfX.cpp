@@ -1436,6 +1436,18 @@ void CFAitfX::SyncAllFile()
 
 void CFAitfX::WriteAllFile()
 {
+    m_cls_FM_SUM.UpdateTimeStamp();
+    m_cls_FM_life.UpdateTimeStamp();
+    m_cls_FM_sm_Books.UpdateTimeStamp();
+    m_cls_FM_sm_KEEP.UpdateTimeStamp();
+    m_cls_FM_sm_TB.UpdateTimeStamp();
+    m_cls_FM_sm_sa.UpdateTimeStamp();
+    m_cls_FM_tt_DK.UpdateTimeStamp();
+    m_cls_FM_tt_NS.UpdateTimeStamp();
+    m_cls_FM_tt_travel.UpdateTimeStamp();
+    m_cls_FM_tt_lottery.UpdateTimeStamp();
+    m_cls_FM_temp_BOX.UpdateTimeStamp();
+
     m_cls_FM_SUM.FileWriter();
     m_cls_FM_life.FileWriter();
     m_cls_FM_sm_Books.FileWriter();

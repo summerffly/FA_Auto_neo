@@ -42,7 +42,7 @@ public:
     
     static string TransOutFormat(const int int_Value);
     static void MassageOutFotmat(const string str_Message, const char cha_Flag);
-    static void TimeOut();
+    static string TimeOut();
 };
 
 

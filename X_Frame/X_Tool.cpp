@@ -308,15 +308,31 @@ void CTool::MassageOutFotmat(const string str_Message, const char cha_Flag)
     cout << "----------------------------------------" << endl;
 }
 
-void CTool::TimeOut()
+string CTool::TimeOut()
 {
-    time_t tmt_TimeFlag;
-    struct tm *ptr_TimeFlag;
+    time_t tmt_CurrentTime;
+    struct tm *ptr_stc_CurrentTime;
+    
+    time(&tmt_CurrentTime);
+    ptr_stc_CurrentTime = localtime(&tmt_CurrentTime);
 
-    time(&tmt_TimeFlag);
-    ptr_TimeFlag = gmtime(&tmt_TimeFlag);
-    printf("%d/%d/%d - ", 1900 + ptr_TimeFlag->tm_year, 1 + ptr_TimeFlag->tm_mon, ptr_TimeFlag->tm_mday);
-    printf("%d:%d:%d\n", ptr_TimeFlag->tm_hour, ptr_TimeFlag->tm_min, ptr_TimeFlag->tm_sec);
+    char *cha_TimeStampFF = new char[40];
+    char *cha_TimeStampDay = new char[20];
+    char *cha_TimeStampSec = new char[20];
+
+    sprintf(cha_TimeStampDay, "%d-%02d-%d", 1900 + ptr_stc_CurrentTime->tm_year,\
+                                            1 + ptr_stc_CurrentTime->tm_mon, ptr_stc_CurrentTime->tm_mday);
+    sprintf(cha_TimeStampSec, "%d:%d:%d", ptr_stc_CurrentTime->tm_hour,\
+                                          ptr_stc_CurrentTime->tm_min, ptr_stc_CurrentTime->tm_sec);
+    sprintf(cha_TimeStampFF, "%s %s", cha_TimeStampDay, cha_TimeStampSec);
+
+    string str_TimeOut(cha_TimeStampFF);
+
+    delete []cha_TimeStampFF;
+    delete []cha_TimeStampDay;
+    delete []cha_TimeStampSec;
+    
+    return str_TimeOut;
 }
 
 //------------------------------//
