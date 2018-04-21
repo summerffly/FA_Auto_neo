@@ -320,9 +320,9 @@ string CTool::TimeOut()
     char *cha_TimeStampDay = new char[20];
     char *cha_TimeStampSec = new char[20];
 
-    sprintf(cha_TimeStampDay, "%d-%02d-%d", 1900 + ptr_stc_CurrentTime->tm_year,\
+    sprintf(cha_TimeStampDay, "%d-%02d-%02d", 1900 + ptr_stc_CurrentTime->tm_year,\
                                             1 + ptr_stc_CurrentTime->tm_mon, ptr_stc_CurrentTime->tm_mday);
-    sprintf(cha_TimeStampSec, "%d:%d:%d", ptr_stc_CurrentTime->tm_hour,\
+    sprintf(cha_TimeStampSec, "%02d:%02d:%02d", ptr_stc_CurrentTime->tm_hour,\
                                           ptr_stc_CurrentTime->tm_min, ptr_stc_CurrentTime->tm_sec);
     sprintf(cha_TimeStampFF, "%s %s", cha_TimeStampDay, cha_TimeStampSec);
 
