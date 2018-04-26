@@ -84,130 +84,130 @@ void CASitfX::AnalysisMonthTrend_ROOM()
 /**************************************************/
 void CASitfX::HelpAll()
 {
-            cout << "******************************" << endl;
-            cout << endl;
+    cout << "******************************" << endl;
+    cout << endl;
             
-            cout << "退出 FA_Auto_X" << endl;
-            cout << ">>> " << EXIT << endl;
-            cout << endl;
+    cout << "退出 FA_Auto_X" << endl;
+    cout << ">>> " << EXIT << endl;
+    cout << endl;
 
-            cout << "同步 所有.md" << endl;
-            cout << ">>> " << SYNC << endl;
-            cout << endl;
+    cout << "同步 所有.md" << endl;
+    cout << ">>> " << SYNC << endl;
+    cout << endl;
 
-            cout << "写回 所有.md" << endl;
-            cout << ">>> " << WRITE << endl;
-            cout << endl;
+    cout << "写回 所有.md" << endl;
+    cout << ">>> " << WRITE << endl;
+    cout << endl;
 
-            cout << "备份 所有.md" << endl;
-            cout << ">>> " << BACKUP << endl;
-            cout << endl;
+    cout << "备份 所有.md" << endl;
+    cout << ">>> " << BACKUP << endl;
+    cout << endl;
 
-            cout << "校验 SUM总收支" << endl;
-            cout << ">>> " << CHECK << ' ' << SUM << endl;
-            cout << endl;
+    cout << "校验 SUM总收支" << endl;
+    cout << ">>> " << CHECK << ' ' << SUM << endl;
+    cout << endl;
 
-            cout << "更新 SUM总收支" << endl;
-            cout << ">>> " << UPDATE << ' ' << SUM << endl;
-            cout << endl;
+    cout << "更新 SUM总收支" << endl;
+    cout << ">>> " << UPDATE << ' ' << SUM << endl;
+    cout << endl;
             
-            cout << "校验 FA全系统总收支" << endl;
-            cout << ">>> " << CHECK << endl;
-            cout << endl;            
+    cout << "校验 FA全系统总收支" << endl;
+    cout << ">>> " << CHECK << endl;
+    cout << endl;            
 
-            cout << "更新 FA全系统总收支" << endl;
-            cout << ">>> " << UPDATE << endl;
-            cout << endl;
+    cout << "更新 FA全系统总收支" << endl;
+    cout << ">>> " << UPDATE << endl;
+    cout << endl;
 
-            cout << "校验 当月/上月 支出" << endl;
-            cout << ">>> " << CHECK << ' ' << EXPENSE << ' ' << MONTH << '/' << EX_MONTH << endl;
-            cout << endl;
+    cout << "校验 当月/上月 支出" << endl;
+    cout << ">>> " << CHECK << ' ' << EXPENSE << ' ' << MONTH << '/' << EX_MONTH << endl;
+    cout << endl;
 
-            cout << "校验 当月/上月 收支" << endl;
-            cout << ">>> " << CHECK << ' ' << MONTH << '/' << EX_MONTH << endl;
-            cout << endl;
+    cout << "校验 当月/上月 收支" << endl;
+    cout << ">>> " << CHECK << ' ' << MONTH << '/' << EX_MONTH << endl;
+    cout << endl;
 
-            cout << "校验 任意月度 收支" << endl;
-            cout << ">>> " << CHECK << ' ' << MONTH << ' ' << CCFGLoader::m_str_OriginMonth << endl;
-            cout << endl;
+    cout << "校验 任意月度 收支" << endl;
+    cout << ">>> " << CHECK << ' ' << MONTH << ' ' << CCFGLoader::m_str_OriginMonth << endl;
+    cout << endl;
 
-            cout << "更新 当月/上月 收支" << endl;
-            cout << ">>> " << UPDATE << ' ' << MONTH << '/' << EX_MONTH << endl;
-            cout << endl;
+    cout << "更新 当月/上月 收支" << endl;
+    cout << ">>> " << UPDATE << ' ' << MONTH << '/' << EX_MONTH << endl;
+    cout << endl;
 
-            cout << "更新 任意月度 收支" << endl;
-            cout << ">>> " << UPDATE << ' ' << MONTH << ' ' << CCFGLoader::m_str_OriginMonth << endl;
-            cout << endl;
+    cout << "更新 任意月度 收支" << endl;
+    cout << ">>> " << UPDATE << ' ' << MONTH << ' ' << CCFGLoader::m_str_OriginMonth << endl;
+    cout << endl;
 
-            cout << "增加 当月 生活费" << endl;
-            cout << ">>> " << MODIFY_LIFE << " 100" << endl;
-            cout << endl;
+    cout << "增加 当月 生活费" << endl;
+    cout << ">>> " << MODIFY_LIFE << " 100" << endl;
+    cout << endl;
 
-            cout << "校验 子项.M 支出" << endl;
-            cout << ">>> " << CHECK << ' ' << SUBMONTH << " books/keep/tb/sa" << endl;
-            cout << endl;
+    cout << "校验 子项.M 支出" << endl;
+    cout << ">>> " << CHECK << ' ' << SUBMONTH << " books/keep/tb/sa" << endl;
+    cout << endl;
 
-            cout << "更新 子项.M 支出" << endl;
-            cout << ">>> " << UPDATE << ' ' << SUBMONTH << " books/keep/tb/sa" << endl;
-            cout << endl;
+    cout << "更新 子项.M 支出" << endl;
+    cout << ">>> " << UPDATE << ' ' << SUBMONTH << " books/keep/tb/sa" << endl;
+    cout << endl;
 
-            cout << "校验 Tt分项 支出" << endl;
-            cout << ">>> " << CHECK << ' ' << TITLE << " dk/ns/travel/lottery" << endl;
-            cout << endl;
+    cout << "校验 Tt分项 支出" << endl;
+    cout << ">>> " << CHECK << ' ' << TITLE << " dk/ns/travel/lottery" << endl;
+    cout << endl;
 
-            cout << "更新 Tt分项 支出" << endl;
-            cout << ">>> " << UPDATE << ' ' << TITLE << " dk/ns/travel/lottery" << endl;
-            cout << endl;
+    cout << "更新 Tt分项 支出" << endl;
+    cout << ">>> " << UPDATE << ' ' << TITLE << " dk/ns/travel/lottery" << endl;
+    cout << endl;
 
-            cout << "增加 lottery 收支" << endl;
-            cout << ">>> " << LOTTERY << " ++/-- " << "200 20170906" << endl;
-            cout << endl;
+    cout << "增加 lottery 收支" << endl;
+    cout << ">>> " << LOTTERY << " ++/-- " << "200 20170906" << endl;
+    cout << endl;
 
-            cout << "transfer 操作" << endl;
-            cout << ">>> " << TRANSFER << " ++/-- " << "300" << endl;
-            cout << endl;
+    cout << "transfer 操作" << endl;
+    cout << ">>> " << TRANSFER << " ++/-- " << "300" << endl;
+    cout << endl;
 
-            cout << "插入 月度 脚本" << endl;
-            cout << ">>> " << APPEND << ' ' << MONTH << ' ' << CCFGLoader::m_str_CurrentMonth << endl;
-            cout << endl;
+    cout << "插入 月度 脚本" << endl;
+    cout << ">>> " << APPEND << ' ' << MONTH << ' ' << CCFGLoader::m_str_CurrentMonth << endl;
+    cout << endl;
 
-            cout << "校验 temp 支出" << endl;
-            cout << ">>> " << CHECK << ' ' << TEMP << endl;
-            cout << endl;
+    cout << "校验 temp 支出" << endl;
+    cout << ">>> " << CHECK << ' ' << TEMP << endl;
+    cout << endl;
 
-            cout << "分析 月度趋势" << endl;
-            cout << ">>> " << ANALYSIS << ' ' << TREND << " 生活费" << endl;
-            cout << endl;
+    cout << "分析 月度趋势" << endl;
+    cout << ">>> " << ANALYSIS << ' ' << TREND << " 生活费" << endl;
+    cout << endl;
 
-            cout << "分析月度趋势 CSM消费支出" << endl;
-            cout << ">>> " << ANALYSIS << ' ' << TREND << ' ' << CONSUMPTION << endl;
-            cout << endl;
+    cout << "分析月度趋势 CSM消费支出" << endl;
+    cout << ">>> " << ANALYSIS << ' ' << TREND << ' ' << CONSUMPTION << endl;
+    cout << endl;
 
-            cout << "分析月度趋势 租房支出" << endl;
-            cout << ">>> " << ANALYSIS << ' ' << TREND << ' ' << ROOM << endl;
-            cout << endl;
+    cout << "分析月度趋势 租房支出" << endl;
+    cout << ">>> " << ANALYSIS << ' ' << TREND << ' ' << ROOM << endl;
+    cout << endl;
 
-            cout << "分析 月度百分占比" << endl;
-            cout << ">>> " << ANALYSIS << ' ' << PROPORTION << ' ' << CCFGLoader::m_str_CurrentMonth << endl;
-            cout << endl;
+    cout << "分析 月度百分占比" << endl;
+    cout << ">>> " << ANALYSIS << ' ' << PROPORTION << ' ' << CCFGLoader::m_str_CurrentMonth << endl;
+    cout << endl;
 
-            cout << "显示 FA当前状态" << endl;
-            cout << ">>> " << SHOW << endl;
-            cout << endl;
+    cout << "显示 FA当前状态" << endl;
+    cout << ">>> " << SHOW << endl;
+    cout << endl;
 
-            cout << "显示 SUM总收支" << endl;
-            cout << ">>> " << SHOW << ' ' << SUM << endl;
-            cout << endl;
+    cout << "显示 SUM总收支" << endl;
+    cout << ">>> " << SHOW << ' ' << SUM << endl;
+    cout << endl;
 
-            cout << "显示 当月/上月 收支" << endl;
-            cout << ">>> " << SHOW << ' ' << MONTH << '/' << EX_MONTH << endl;
-            cout << endl;
+    cout << "显示 当月/上月 收支" << endl;
+    cout << ">>> " << SHOW << ' ' << MONTH << '/' << EX_MONTH << endl;
+    cout << endl;
 
-            cout << "统计 累计月度收支" << endl;
-            cout << ">>> " << SHOW << ' ' << MONTH << ' ' << AGGREGATION << endl;
-            cout << endl;
+    cout << "统计 累计月度收支" << endl;
+    cout << ">>> " << SHOW << ' ' << MONTH << ' ' << AGGREGATION << endl;
+    cout << endl;
 
-            cout << "******************************" << endl;
+    cout << "******************************" << endl;
 
 }
 
