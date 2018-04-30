@@ -324,6 +324,14 @@ void CFAitfX::UpdateFA(const string str_CurMonth)
     UpdateTitleExpense("NS", false);
     UpdateTitleExpense("travel", false);
 
+    UpdateSubMonthExpense("Books", CTool::GeneratePreMonth(str_CurMonth), false);
+    UpdateSubMonthExpense("KEEP", CTool::GeneratePreMonth(str_CurMonth), false);
+    UpdateSubMonthExpense("TB", CTool::GeneratePreMonth(str_CurMonth), false);
+    UpdateSubMonthExpense("sa", CTool::GeneratePreMonth(str_CurMonth), false);
+
+    UpdateMonthSurplus(CTool::GeneratePreMonth(str_CurMonth), true);
+    SyncMonthSurplus(CTool::GeneratePreMonth(str_CurMonth));
+
     UpdateSubMonthExpense("Books", str_CurMonth, false);
     UpdateSubMonthExpense("KEEP", str_CurMonth, false);
     UpdateSubMonthExpense("TB", str_CurMonth, false);
