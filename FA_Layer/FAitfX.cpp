@@ -935,17 +935,17 @@ void CFAitfX::AppendMonth(const string str_SelMonth)
     m_cls_FM_life.SearchLineKey("---");
     unsigned int uni_lifeLine = m_cls_FM_life.GetSearchLineIndex(1);
 
-    m_cls_FM_life.InsertBlankLine(uni_lifeLine-2);
-    m_cls_FM_life.InsertLine(uni_lifeLine-1, LTYPE_MONTHTITLE, 0, str_lifeMonthTitle);
-    m_cls_FM_life.InsertLine(uni_lifeLine, LTYPE_FBIRC_MONTHSUM, 0, str_lifeMonthSalary);
-    m_cls_FM_life.InsertLine(uni_lifeLine+1, LTYPE_FBIRC_MONTHSUM, 0, str_lifeMonthExpense);
-    m_cls_FM_life.InsertLine(uni_lifeLine+2, LTYPE_FBIRC_MONTHSUM, 0, str_lifeMonthRest);
+    m_cls_FM_life.InsertBlankLine(uni_lifeLine-4);
+    m_cls_FM_life.InsertLine(uni_lifeLine-3, LTYPE_MONTHTITLE, 0, str_lifeMonthTitle);
+    m_cls_FM_life.InsertLine(uni_lifeLine-2, LTYPE_FBIRC_MONTHSUM, 0, str_lifeMonthSalary);
+    m_cls_FM_life.InsertLine(uni_lifeLine-1, LTYPE_FBIRC_MONTHSUM, 0, str_lifeMonthExpense);
+    m_cls_FM_life.InsertLine(uni_lifeLine, LTYPE_FBIRC_MONTHSUM, 0, str_lifeMonthRest);
 
     string str_lifeMonthLife = str_SelMonth;
-    str_lifeMonthLife += "月_生活费{&霞}";
+    str_lifeMonthLife += "月_生活费";
 
-    m_cls_FM_life.InsertBlankLine(uni_lifeLine-2);
-    m_cls_FM_life.InsertLine(uni_lifeLine-1, LTYPE_FBIRC_LINEUINT, 0, str_lifeMonthLife);
+    m_cls_FM_life.InsertBlankLine(uni_lifeLine-4);
+    m_cls_FM_life.InsertLine(uni_lifeLine-3, LTYPE_FBIRC_LINEUINT, 0, str_lifeMonthLife);
 
     string str_lifeSMbooks("Books.M");
     string str_lifeSMkeep("KEEP.M");
@@ -956,11 +956,11 @@ void CFAitfX::AppendMonth(const string str_SelMonth)
     str_lifeSMtb += str_SelMonth;
     str_lifeSMsa += str_SelMonth;
 
-    m_cls_FM_life.InsertBlankLine(uni_lifeLine);
-    m_cls_FM_life.InsertLine(uni_lifeLine+1, LTYPE_FBIRC_LINEUINT, 0, str_lifeSMbooks);
-    m_cls_FM_life.InsertLine(uni_lifeLine+2, LTYPE_FBIRC_LINEUINT, 0, str_lifeSMkeep);
-    m_cls_FM_life.InsertLine(uni_lifeLine+3, LTYPE_FBIRC_LINEUINT, 0, str_lifeSMtb);
-    m_cls_FM_life.InsertLine(uni_lifeLine+4, LTYPE_FBIRC_LINEUINT, 0, str_lifeSMsa);
+    m_cls_FM_life.InsertBlankLine(uni_lifeLine-2);
+    m_cls_FM_life.InsertLine(uni_lifeLine-1, LTYPE_FBIRC_LINEUINT, 0, str_lifeSMbooks);
+    m_cls_FM_life.InsertLine(uni_lifeLine, LTYPE_FBIRC_LINEUINT, 0, str_lifeSMkeep);
+    m_cls_FM_life.InsertLine(uni_lifeLine+1, LTYPE_FBIRC_LINEUINT, 0, str_lifeSMtb);
+    m_cls_FM_life.InsertLine(uni_lifeLine+2, LTYPE_FBIRC_LINEUINT, 0, str_lifeSMsa);
 
     // 插入 子项.M.md文件 脚本
     AppendsubMonth("Books", CTool::GenerateNextMonth(str_SelMonth));
@@ -982,11 +982,11 @@ void CFAitfX::AppendsubMonth(const string str_SubMonthKey, const string str_SelM
     FM_SUBMONTH(str_SubMonthKey).SearchLineKey("---");
     unsigned int uni_SMLine = FM_SUBMONTH(str_SubMonthKey).GetSearchLineIndex(1);
 
-    FM_SUBMONTH(str_SubMonthKey).InsertBlankLine(uni_SMLine-2);
-    FM_SUBMONTH(str_SubMonthKey).InsertLine(uni_SMLine-1, LTYPE_MONTHTITLE, 0, str_SMTitle);
-    FM_SUBMONTH(str_SubMonthKey).InsertLine(uni_SMLine, LTYPE_FBIRC_TITLESUM, 0, "");
-    FM_SUBMONTH(str_SubMonthKey).InsertBlankLine(uni_SMLine+1);
-    FM_SUBMONTH(str_SubMonthKey).InsertLine(uni_SMLine+2, LTYPE_FBIRC_LINEUINT, 0, "~");
+    FM_SUBMONTH(str_SubMonthKey).InsertBlankLine(uni_SMLine-4);
+    FM_SUBMONTH(str_SubMonthKey).InsertLine(uni_SMLine-3, LTYPE_MONTHTITLE, 0, str_SMTitle);
+    FM_SUBMONTH(str_SubMonthKey).InsertLine(uni_SMLine-2, LTYPE_FBIRC_TITLESUM, 0, "");
+    FM_SUBMONTH(str_SubMonthKey).InsertBlankLine(uni_SMLine-1);
+    FM_SUBMONTH(str_SubMonthKey).InsertLine(uni_SMLine, LTYPE_FBIRC_LINEUINT, 0, "~");
 }
 
 /**************************************************/
