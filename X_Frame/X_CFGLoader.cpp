@@ -48,7 +48,7 @@ void CCFGLoader::LoadMonth()
     m_str_CurrentMonth = xml_CFG.QueryElementL1Attribute("Month", "Atr", "current");
 
     m_uni_OriginMonth = atoi(m_str_OriginMonth.c_str());
-    m_uni_CurrentMonth = atoi(m_str_OriginMonth.c_str());
+    m_uni_CurrentMonth = atoi(m_str_CurrentMonth.c_str());
 }
 
 void CCFGLoader::LoadFA()
