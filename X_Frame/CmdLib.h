@@ -37,6 +37,8 @@ extern string AGGREGATION;
 extern string CONSUMPTION;
 extern string ROOM;
 
+extern string PRINT;
+
 extern string SUBMONTH;
 extern string BOOKS;
 extern string TB;
@@ -54,6 +56,7 @@ extern string BOX;
 extern string XM;
 
 extern string HELP;
+extern string TEST;
 extern string CANCEL;
 extern string EXIT;
 

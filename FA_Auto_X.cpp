@@ -609,7 +609,6 @@ int main(int argc, char **argv, char *env[])
             continue;
         }
 
-
         /**************************************************/
         //   分析 月度趋势
         //   CMD >>> as tt Books
@@ -620,6 +619,59 @@ int main(int argc, char **argv, char *env[])
             CCmdTarget::TagTimeBait();
 
             ptr_FAitfX->AnalysisMonthTrend(X_CMD.GetCmd(3));
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   展示 月度 .md
+        //   CMD >>> print month 04
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, MONTH) && (X_CMD.GetCmdNum() == 3) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            ptr_FAitfX->ShowMDRawMonth(X_CMD.GetCmd(3), true);
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   展示 月度.M .md
+        //   CMD >>> print sm tb 04
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 4) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            if( X_CMD.CmpCmd(3, BOOKS) )
+            {
+                ptr_FAitfX->ShowMDRawSubMonth("Books", X_CMD.GetCmd(4), true);
+            }
+            else if( X_CMD.CmpCmd(3, KEEP) )
+            {
+                ptr_FAitfX->ShowMDRawSubMonth("KEEP", X_CMD.GetCmd(4), true);
+            }
+            else if( X_CMD.CmpCmd(3, TB) )
+            {
+                ptr_FAitfX->ShowMDRawSubMonth("TB", X_CMD.GetCmd(4), true);
+            }
+            else if( X_CMD.CmpCmd(3, SA) )
+            {
+                ptr_FAitfX->ShowMDRawSubMonth("sa", X_CMD.GetCmd(4), true);
+            }
+            else
+            {
+                CTool::MassageOutFotmat("Error Param", '!');
+
+                continue;
+            }
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -758,6 +810,24 @@ int main(int argc, char **argv, char *env[])
             CCmdTarget::TagTimeBait();
 
             ptr_ASitfX->HelpAll();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+            
+            continue;
+        }
+
+        /**************************************************/
+        //   FA_Auto_X 接口测试
+        /**************************************************/
+        else if( X_CMD.CmpSoloCmd(TEST) )
+        {
+
+            CCmdTarget::TagTimeBait();
+
+            //ptr_FAitfX->ShowMDRawSubMonth("TB", "04", false);
+            //ptr_FAitfX->ShowMDRawSubMonth("TB", "04", true);
+            //ptr_ASitfX->HelpAll();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

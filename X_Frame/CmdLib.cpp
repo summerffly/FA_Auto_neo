@@ -34,6 +34,8 @@ string AGGREGATION = "aggr";
 string CONSUMPTION = "csm";
 string ROOM = "room";
 
+string PRINT = "print";
+
 string SUBMONTH = "sm";
 string BOOKS = "books";
 string TB = "tb";
@@ -51,6 +53,7 @@ string BOX = "box";
 string XM = "xm";
 
 string HELP = "help";
+string TEST = "test";
 string CANCEL = "cancel";
 string EXIT = "exit";
 

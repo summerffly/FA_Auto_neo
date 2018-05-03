@@ -175,6 +175,14 @@ void CASitfX::HelpAll()
     cout << ">>> " << CHECK << ' ' << TEMP << endl;
     cout << endl;
 
+    cout << "展示 月度 .md" << endl;
+    cout << ">>> " << PRINT << ' ' << MONTH << " 04" << endl;
+    cout << endl;
+
+    cout << "展示 月度.M .md" << endl;
+    cout << ">>> " << PRINT << ' ' << SUBMONTH << " books 04" << endl;
+    cout << endl;
+
     cout << "分析 月度趋势" << endl;
     cout << ">>> " << ANALYSIS << ' ' << TREND << " 生活费" << endl;
     cout << endl;

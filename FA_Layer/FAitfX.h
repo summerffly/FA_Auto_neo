@@ -81,6 +81,12 @@ public:
     void CheckTempExpense();
 
     /****************************************/
+    //   展示化 操作区
+    /****************************************/
+    void ShowMDRawMonth(const string str_SelMonth, bool bol_NumFlag);
+    void ShowMDRawSubMonth(const string str_SubMonthKey, const string str_SelMonth, bool bol_NumFlag);
+
+    /****************************************/
     //   统计化 操作区
     /****************************************/
     void GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey);
