@@ -12,9 +12,9 @@
 using namespace std;
 
 
-extern string SYNC;
-extern string WRITE;
-extern string BACKUP;
+/**************************************************/
+//   计算工具命令
+/**************************************************/
 
 extern string CHECK;
 extern string UPDATE;
@@ -28,16 +28,6 @@ extern string SURPLUS;
 extern string MONTH;
 extern string EX_MONTH;
 extern string SUM;
-
-extern string ANALYSIS;
-extern string SHOW;
-extern string TREND;
-extern string PROPORTION;
-extern string AGGREGATION;
-extern string CONSUMPTION;
-extern string ROOM;
-
-extern string PRINT;
 
 extern string SUBMONTH;
 extern string BOOKS;
@@ -54,6 +44,33 @@ extern string LOTTERY;
 extern string TEMP;
 extern string BOX;
 extern string XM;
+
+/**************************************************/
+//   统计工具命令
+/**************************************************/
+
+extern string ANALYSIS;
+extern string SUMMARIZE;
+extern string SHOW;
+extern string TREND;
+extern string PROPORTION;
+extern string AGGREGATION;
+extern string CONSUMPTION;
+extern string ROOM;
+
+/**************************************************/
+//   展示工具命令
+/**************************************************/
+
+extern string PRINT;
+
+/**************************************************/
+//   操作命令
+/**************************************************/
+
+extern string SYNC;
+extern string WRITE;
+extern string BACKUP;
 
 extern string HELP;
 extern string TEST;

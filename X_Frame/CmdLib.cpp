@@ -9,9 +9,9 @@
 using namespace std;
 
 
-string SYNC = "sync";
-string WRITE = "write";
-string BACKUP = "bakup";
+/**************************************************/
+//   计算工具命令
+/**************************************************/
 
 string CHECK = "check";
 string UPDATE = "update";
@@ -25,16 +25,6 @@ string SURPLUS = "surplus";
 string MONTH = "month";
 string EX_MONTH = "exmonth";
 string SUM = "sum";
-
-string ANALYSIS = "as";
-string SHOW = "show";
-string TREND = "tt";
-string PROPORTION = "pp";
-string AGGREGATION = "aggr";
-string CONSUMPTION = "csm";
-string ROOM = "room";
-
-string PRINT = "print";
 
 string SUBMONTH = "sm";
 string BOOKS = "books";
@@ -51,6 +41,33 @@ string LOTTERY = "lottery";
 string TEMP = "temp";
 string BOX = "box";
 string XM = "xm";
+
+/**************************************************/
+//   统计工具命令
+/**************************************************/
+
+string ANALYSIS = "as";
+string SUMMARIZE = "sz";
+string SHOW = "show";
+string TREND = "tt";
+string PROPORTION = "pp";
+string AGGREGATION = "aggr";
+string CONSUMPTION = "csm";
+string ROOM = "room";
+
+/**************************************************/
+//   展示工具命令
+/**************************************************/
+
+string PRINT = "print";
+
+/**************************************************/
+//   操作命令
+/**************************************************/
+
+string SYNC = "sync";
+string WRITE = "write";
+string BACKUP = "bakup";
 
 string HELP = "help";
 string TEST = "test";

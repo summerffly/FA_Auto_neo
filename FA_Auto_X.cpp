@@ -736,7 +736,7 @@ int main(int argc, char **argv, char *env[])
             CCmdTarget::TagTimeBait();
 
             ptr_FAitfX->ShowMonthSurplus(CCFGLoader::m_str_CurrentMonth, 2);
-            ptr_FAitfX->ShowAggrSurplus(2);
+            ptr_FAitfX->SummarizeAggrSurplus(2);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -746,14 +746,14 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   显示 SUM总收支
+        //   统计 SUM总收支
         //   CMD >>> show sum
         /**************************************************/
         else if( X_CMD.CmpCmdFront(SHOW) && X_CMD.CmpCmdBack(SUM) )
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->ShowAggrSurplus(1);
+            ptr_FAitfX->SummarizeAggrSurplus(1);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
