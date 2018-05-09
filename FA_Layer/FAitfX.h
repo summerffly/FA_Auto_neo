@@ -91,15 +91,16 @@ public:
     void AnalysisMonthTrend(const string str_MonthKey);
     void AnalysisMonthProportion(const string str_SelMonth);
 
-    void SummarizeAggrSurplus(int int_ShowFlag);
-    void ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag);
-    void ShowAggrMonthSurplus();
+    void SummerizeAggrMonthSurplus();
 
     /****************************************/
     //   展示化 操作区
     /****************************************/
     void ShowMDRawMonth(const string str_SelMonth, bool bol_NumFlag);
-    void ShowMDRawSubMonth(const string str_SubMonthKey, const string str_SelMonth, bool bol_NumFlag);
+    void ShowMDRawSubMonth(const string str_SubMonthKey, const string str_SelMonth, bool bol_NumFlag, bool bol_ShowFlag);
+
+    void ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag);
+    void ShowAggrSurplus(int int_ShowFlag);
 
     /****************************************/
     //   文件读写 操作区

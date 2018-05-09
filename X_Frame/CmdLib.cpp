@@ -48,7 +48,6 @@ string XM = "xm";
 
 string ANALYSIS = "as";
 string SUMMARIZE = "sz";
-string SHOW = "show";
 string TREND = "tt";
 string PROPORTION = "pp";
 string AGGREGATION = "aggr";
@@ -60,6 +59,7 @@ string ROOM = "room";
 /**************************************************/
 
 string PRINT = "print";
+string SHOW = "show";
 
 /**************************************************/
 //   操作命令

@@ -25,10 +25,15 @@ public:
     ~CASitfX();
 
     /****************************************/
-    //   分析月度趋势 操作区
+    //   统计化 操作区
     /****************************************/
     void AnalysisMonthTrend_CSM();
     void AnalysisMonthTrend_ROOM();
+
+    /****************************************/
+    //   展示化 操作区
+    /****************************************/
+    void ShowMDRawSubMonthTraversal(const string str_SelMonth, bool bol_NumFlag);
 
     /****************************************/
     //   帮助提示

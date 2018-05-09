@@ -80,6 +80,25 @@ void CASitfX::AnalysisMonthTrend_ROOM()
 }
 
 /**************************************************/
+//   展示.md 全部月度.M
+/**************************************************/
+void CASitfX::ShowMDRawSubMonthTraversal(const string str_SelMonth, bool bol_NumFlag)
+{
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    cout << "----------------------------------------" << endl;
+    cout << "### 全部月度.M 展示.md ###" << endl;
+    cout << endl;
+
+    ptr_FAitfX->ShowMDRawSubMonth("Books", str_SelMonth, bol_NumFlag, false);
+    ptr_FAitfX->ShowMDRawSubMonth("KEEP", str_SelMonth, bol_NumFlag, false);
+    ptr_FAitfX->ShowMDRawSubMonth("TB", str_SelMonth, bol_NumFlag, false);
+    ptr_FAitfX->ShowMDRawSubMonth("sa", str_SelMonth, bol_NumFlag, false);
+
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
 //   帮助提示
 /**************************************************/
 void CASitfX::HelpAll()
@@ -191,28 +210,36 @@ void CASitfX::HelpAll()
     cout << ">>> " << ANALYSIS << ' ' << PROPORTION << ' ' << CCFGLoader::m_str_CurrentMonth << endl;
     cout << endl;
 
-    cout << "显示 FA当前状态" << endl;
-    cout << ">>> " << SHOW << endl;
-    cout << endl;
-
-    cout << "显示 SUM总收支" << endl;
-    cout << ">>> " << SHOW << ' ' << SUM << endl;
-    cout << endl;
-
-    cout << "显示 当月/上月 收支" << endl;
-    cout << ">>> " << SHOW << ' ' << MONTH << '/' << EX_MONTH << endl;
-    cout << endl;
-
     cout << "统计 累计月度收支" << endl;
-    cout << ">>> " << SHOW << ' ' << MONTH << ' ' << AGGREGATION << endl;
+    cout << ">>> " << SUMMARIZE << ' ' << MONTH << ' ' << AGGREGATION << endl;
     cout << endl;
 
-    cout << "展示 月度 .md" << endl;
+    cout << "展示.md 当月/上月" << endl;
+    cout << ">>> " << PRINT << ' ' << MONTH << '/' << EX_MONTH << endl;
+    cout << endl;
+
+    cout << "展示.md 月度" << endl;
     cout << ">>> " << PRINT << ' ' << MONTH << " 04" << endl;
     cout << endl;
 
-    cout << "展示 月度.M .md" << endl;
+    cout << "展示.md 月度.M" << endl;
     cout << ">>> " << PRINT << ' ' << SUBMONTH << " books 04" << endl;
+    cout << endl;
+
+    cout << "展示.md 全部月度.M" << endl;
+    cout << ">>> " << PRINT << ' ' << SUBMONTH << " 04" << endl;
+    cout << endl;
+
+    cout << "展示 当月/上月 收支" << endl;
+    cout << ">>> " << SHOW << ' ' << MONTH << '/' << EX_MONTH << endl;
+    cout << endl;
+
+    cout << "展示 SUM总收支" << endl;
+    cout << ">>> " << SHOW << ' ' << SUM << endl;
+    cout << endl;
+
+    cout << "展示 FA当前状态" << endl;
+    cout << ">>> " << SHOW << endl;
     cout << endl;
 
     cout << "******************************" << endl;

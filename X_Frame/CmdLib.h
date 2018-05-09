@@ -51,7 +51,6 @@ extern string XM;
 
 extern string ANALYSIS;
 extern string SUMMARIZE;
-extern string SHOW;
 extern string TREND;
 extern string PROPORTION;
 extern string AGGREGATION;
@@ -63,6 +62,7 @@ extern string ROOM;
 /**************************************************/
 
 extern string PRINT;
+extern string SHOW;
 
 /**************************************************/
 //   操作命令

@@ -942,7 +942,7 @@ void CFAitfX::AppendMonth(const string str_SelMonth)
     m_cls_FM_life.InsertLine(uni_lifeLine, LTYPE_FBIRC_MONTHSUM, 0, str_lifeMonthRest);
 
     string str_lifeMonthLife = str_SelMonth;
-    str_lifeMonthLife += "月_生活费";
+    str_lifeMonthLife += "月_生活费{&霞}";
 
     m_cls_FM_life.InsertBlankLine(uni_lifeLine-4);
     m_cls_FM_life.InsertLine(uni_lifeLine-3, LTYPE_FBIRC_LINEUINT, 0, str_lifeMonthLife);
@@ -1259,11 +1259,160 @@ void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
 }
 
 /**************************************************/
-//   显示 总收支
+//   统计 累计月度收支
+/**************************************************/
+void CFAitfX::SummerizeAggrMonthSurplus()
+{
+    string str_MonthKey = "## life.M";
+    unsigned int uni_MonthCount = m_cls_FM_SUM.SearchLineKey(str_MonthKey.c_str());
+
+    unsigned int uni_MonthLine = 0;
+    int int_AggrMonthSalary = 0;
+    int int_AggrMonthExpense = 0;
+    int int_AggrMonthSurplus = 0;
+
+    for(int i=1; i<=uni_MonthCount; i++)
+    {
+        uni_MonthLine = m_cls_FM_SUM.GetSearchLineIndex(i);
+
+        int_AggrMonthSalary += m_cls_FM_SUM.GetLineValue(uni_MonthLine+1);
+        int_AggrMonthExpense += m_cls_FM_SUM.GetLineValue(uni_MonthLine+2);
+        int_AggrMonthSurplus += m_cls_FM_SUM.GetLineValue(uni_MonthLine+3);
+    }
+
+    cout << "----------------------------------------" << endl;
+    cout << "### 累计月度收支统计 ###" << endl;
+    cout << endl;
+
+    cout << "累计月度收入: " << CTool::TransOutFormat(int_AggrMonthSalary) << endl;
+    cout << "累计月度支出: " << CTool::TransOutFormat(int_AggrMonthExpense) << endl;
+    cout << "累计月度结余: " << CTool::TransOutFormat(int_AggrMonthSurplus) << endl;
+    cout << "----------------------------------------" << endl;
+
+}
+
+/**************************************************/
+//   展示.md 月度
+/**************************************************/
+void CFAitfX::ShowMDRawMonth(const string str_SelMonth, bool bol_NumFlag)
+{
+    string str_RangeTop = "## life.M" + str_SelMonth;
+    string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
+
+    m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = m_cls_FM_life.GetSearchLineIndex(1);
+    m_cls_FM_life.SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = m_cls_FM_life.GetSearchLineIndex(1);
+
+    if( bol_NumFlag )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### 月度 展示.md ###" << endl;
+        cout << endl;
+
+        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
+        {
+            cout << "【" << i << "】" << m_cls_FM_life.GetFullLine(i) << endl;
+        }
+
+        cout << "----------------------------------------" << endl;
+    }
+    else
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### 月度 展示.md ###" << endl;
+        cout << endl;
+                
+        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
+        {
+            cout << m_cls_FM_life.GetFullLine(i) << endl;
+        }
+
+        cout << "----------------------------------------" << endl;
+    }
+}
+
+/**************************************************/
+//   展示.md 月度.M
+/**************************************************/
+void CFAitfX::ShowMDRawSubMonth(const string str_SubMonthKey, const string str_SelMonth, bool bol_NumFlag, bool bol_ShowFlag)
+{
+    string str_RangeTop = str_SubMonthKey + ".M" + str_SelMonth;
+    string str_RangeBottom = str_SubMonthKey + ".M" + CTool::GenerateNextMonth(str_SelMonth);
+
+    FM_SUBMONTH(str_SubMonthKey).SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = FM_SUBMONTH(str_SubMonthKey).GetSearchLineIndex(1);
+    FM_SUBMONTH(str_SubMonthKey).SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = FM_SUBMONTH(str_SubMonthKey).GetSearchLineIndex(1);
+
+    if( bol_ShowFlag )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### 月度.M .md展示 ###" << endl;
+        cout << endl;
+    }
+
+    if( bol_NumFlag )
+    {
+        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
+        {
+            cout << "【" << i << "】" << FM_SUBMONTH(str_SubMonthKey).GetFullLine(i) << endl;
+        }
+    }
+    else
+    {           
+        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
+        {
+            cout << FM_SUBMONTH(str_SubMonthKey).GetFullLine(i) << endl;
+        }
+    }
+
+    if( bol_ShowFlag )
+    {
+        cout << "----------------------------------------" << endl;
+    }
+}
+
+/**************************************************/
+//   展示 life.M 月度收支
+//   int_ShowFlag == 1 >>> 完整显示模式
+//   int_ShowFlag == 2 >>> 衔接显示模式
+/**************************************************/
+void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag)
+{
+    string str_RangeTop = "## life.M" + str_SelMonth;
+    string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
+
+    m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = m_cls_FM_life.GetSearchLineIndex(1);
+    m_cls_FM_life.SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = m_cls_FM_life.GetSearchLineIndex(1);
+
+    unsigned int uni_MonthSalary = m_cls_FM_life.GetLineValue(uni_RangeTop+1);
+    int int_MonthExpense = m_cls_FM_life.GetLineValue(uni_RangeTop+2);
+    int int_MonthRest = m_cls_FM_life.GetLineValue(uni_RangeTop+3);
+
+    if(int_ShowFlag == 1)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << str_SelMonth << "月/薪资: " << CTool::TransOutFormat(uni_MonthSalary) << endl;
+        cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
+        cout << str_SelMonth << "月/结余: " << CTool::TransOutFormat(int_MonthRest) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+    else if(int_ShowFlag == 2)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
+    }
+}
+
+/**************************************************/
+//   展示 总收支
 //   int_ShowFlag == 1 >>> 完整显示模式
 //   int_ShowFlag == 2 >>> 结余显示模式
 /**************************************************/
-void CFAitfX::SummarizeAggrSurplus(int int_ShowFlag)
+void CFAitfX::ShowAggrSurplus(int int_ShowFlag)
 {
     unsigned int uni_ItemSize = CCFGLoader::m_vec_stc_FAItem.size();
     unsigned int uni_ItemCounter = 0;
@@ -1357,155 +1506,6 @@ void CFAitfX::SummarizeAggrSurplus(int int_ShowFlag)
         }
 
         uni_ItemCounter++;
-    }
-}
-
-/**************************************************/
-//   显示 life.M 月度收支
-//   int_ShowFlag == 1 >>> 完整显示模式
-//   int_ShowFlag == 2 >>> 衔接显示模式
-/**************************************************/
-void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag)
-{
-    string str_RangeTop = "## life.M" + str_SelMonth;
-    string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
-
-    m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = m_cls_FM_life.GetSearchLineIndex(1);
-    m_cls_FM_life.SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = m_cls_FM_life.GetSearchLineIndex(1);
-
-    unsigned int uni_MonthSalary = m_cls_FM_life.GetLineValue(uni_RangeTop+1);
-    int int_MonthExpense = m_cls_FM_life.GetLineValue(uni_RangeTop+2);
-    int int_MonthRest = m_cls_FM_life.GetLineValue(uni_RangeTop+3);
-
-    if(int_ShowFlag == 1)
-    {
-        cout << "----------------------------------------" << endl;
-        cout << str_SelMonth << "月/薪资: " << CTool::TransOutFormat(uni_MonthSalary) << endl;
-        cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
-        cout << str_SelMonth << "月/结余: " << CTool::TransOutFormat(int_MonthRest) << endl;
-        cout << "----------------------------------------" << endl;
-    }
-    else if(int_ShowFlag == 2)
-    {
-        cout << "----------------------------------------" << endl;
-        cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
-    }
-}
-
-/**************************************************/
-//   统计 累计月度收支
-/**************************************************/
-void CFAitfX::ShowAggrMonthSurplus()
-{
-    string str_MonthKey = "## life.M";
-    unsigned int uni_MonthCount = m_cls_FM_SUM.SearchLineKey(str_MonthKey.c_str());
-
-    unsigned int uni_MonthLine = 0;
-    int int_AggrMonthSalary = 0;
-    int int_AggrMonthExpense = 0;
-    int int_AggrMonthSurplus = 0;
-
-    for(int i=1; i<=uni_MonthCount; i++)
-    {
-        uni_MonthLine = m_cls_FM_SUM.GetSearchLineIndex(i);
-
-        int_AggrMonthSalary += m_cls_FM_SUM.GetLineValue(uni_MonthLine+1);
-        int_AggrMonthExpense += m_cls_FM_SUM.GetLineValue(uni_MonthLine+2);
-        int_AggrMonthSurplus += m_cls_FM_SUM.GetLineValue(uni_MonthLine+3);
-    }
-
-    cout << "----------------------------------------" << endl;
-    cout << "### 累计月度收支统计 ###" << endl;
-    cout << endl;
-
-    cout << "累计月度收入: " << CTool::TransOutFormat(int_AggrMonthSalary) << endl;
-    cout << "累计月度支出: " << CTool::TransOutFormat(int_AggrMonthExpense) << endl;
-    cout << "累计月度结余: " << CTool::TransOutFormat(int_AggrMonthSurplus) << endl;
-    cout << "----------------------------------------" << endl;
-
-}
-
-/**************************************************/
-//   展示 月度 .md
-/**************************************************/
-void CFAitfX::ShowMDRawMonth(const string str_SelMonth, bool bol_NumFlag)
-{
-    string str_RangeTop = "## life.M" + str_SelMonth;
-    string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
-
-    m_cls_FM_life.SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = m_cls_FM_life.GetSearchLineIndex(1);
-    m_cls_FM_life.SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = m_cls_FM_life.GetSearchLineIndex(1);
-
-    if( bol_NumFlag )
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "### 月度 .md展示 ###" << endl;
-        cout << endl;
-
-        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
-        {
-            cout << "【" << i << "】" << m_cls_FM_life.GetFullLine(i) << endl;
-        }
-
-        cout << "----------------------------------------" << endl;
-    }
-    else
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "### 月度 .md展示 ###" << endl;
-        cout << endl;
-                
-        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
-        {
-            cout << m_cls_FM_life.GetFullLine(i) << endl;
-        }
-
-        cout << "----------------------------------------" << endl;
-    }
-}
-
-/**************************************************/
-//   展示 月度.M .md
-/**************************************************/
-void CFAitfX::ShowMDRawSubMonth(const string str_SubMonthKey, const string str_SelMonth, bool bol_NumFlag)
-{
-    string str_RangeTop = str_SubMonthKey + ".M" + str_SelMonth;
-    string str_RangeBottom = str_SubMonthKey + ".M" + CTool::GenerateNextMonth(str_SelMonth);
-
-    FM_SUBMONTH(str_SubMonthKey).SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = FM_SUBMONTH(str_SubMonthKey).GetSearchLineIndex(1);
-    FM_SUBMONTH(str_SubMonthKey).SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = FM_SUBMONTH(str_SubMonthKey).GetSearchLineIndex(1);
-
-    if( bol_NumFlag )
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "### 月度.M .md展示 ###" << endl;
-        cout << endl;
-
-        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
-        {
-            cout << "【" << i << "】" << FM_SUBMONTH(str_SubMonthKey).GetFullLine(i) << endl;
-        }
-
-        cout << "----------------------------------------" << endl;
-    }
-    else
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "### 月度.M .md展示 ###" << endl;
-        cout << endl;
-                
-        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
-        {
-            cout << FM_SUBMONTH(str_SubMonthKey).GetFullLine(i) << endl;
-        }
-
-        cout << "----------------------------------------" << endl;
     }
 }
 

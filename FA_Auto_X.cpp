@@ -627,59 +627,6 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   展示 月度 .md
-        //   CMD >>> print month 04
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, MONTH) && (X_CMD.GetCmdNum() == 3) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_FAitfX->ShowMDRawMonth(X_CMD.GetCmd(3), true);
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   展示 月度.M .md
-        //   CMD >>> print sm tb 04
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 4) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            if( X_CMD.CmpCmd(3, BOOKS) )
-            {
-                ptr_FAitfX->ShowMDRawSubMonth("Books", X_CMD.GetCmd(4), true);
-            }
-            else if( X_CMD.CmpCmd(3, KEEP) )
-            {
-                ptr_FAitfX->ShowMDRawSubMonth("KEEP", X_CMD.GetCmd(4), true);
-            }
-            else if( X_CMD.CmpCmd(3, TB) )
-            {
-                ptr_FAitfX->ShowMDRawSubMonth("TB", X_CMD.GetCmd(4), true);
-            }
-            else if( X_CMD.CmpCmd(3, SA) )
-            {
-                ptr_FAitfX->ShowMDRawSubMonth("sa", X_CMD.GetCmd(4), true);
-            }
-            else
-            {
-                CTool::MassageOutFotmat("Error Param", '!');
-
-                continue;
-            }
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
         //   分析月度趋势 CSM消费支出
         //   CMD >>> as tt csm
         /**************************************************/
@@ -728,32 +675,14 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   显示 FA当前状态
-        //   CMD >>> show
+        //   统计 累计月度收支
+        //   CMD >>> sz month aggr
         /**************************************************/
-        else if( X_CMD.CmpSoloCmd(SHOW) )
-        {
-            CCmdTarget::TagTimeBait();
-
-            ptr_FAitfX->ShowMonthSurplus(CCFGLoader::m_str_CurrentMonth, 2);
-            ptr_FAitfX->SummarizeAggrSurplus(2);
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-
-        }
-
-        /**************************************************/
-        //   统计 SUM总收支
-        //   CMD >>> show sum
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(SHOW) && X_CMD.CmpCmdBack(SUM) )
+        else if( X_CMD.CmpCmdFront(SUMMARIZE) && X_CMD.CmpCmd(2, MONTH) && X_CMD.CmpCmdBack(AGGREGATION) )
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->SummarizeAggrSurplus(1);
+            ptr_FAitfX->SummerizeAggrMonthSurplus();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -762,7 +691,100 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   显示 当月/上月 收支
+        //   展示.md 当月/上月
+        //   CMD >>> print month/exmonth
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(PRINT) &&\
+                 ( X_CMD.CmpCmdBack(MONTH) || X_CMD.CmpCmdBack(EX_MONTH) ) )
+        {
+            CCmdTarget::TagTimeBait();
+
+            if( X_CMD.CmpCmdBack(MONTH) )
+            {
+                ptr_FAitfX->ShowMDRawMonth(CCFGLoader::m_str_CurrentMonth, true);
+            }
+            else if( X_CMD.CmpCmdBack(EX_MONTH) )
+            {
+                ptr_FAitfX->ShowMDRawMonth(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth), true);
+            }
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   展示.md 月度
+        //   CMD >>> print month 04
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, MONTH) && (X_CMD.GetCmdNum() == 3) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            ptr_FAitfX->ShowMDRawMonth(X_CMD.GetCmd(3), true);
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   展示.md 月度.M
+        //   CMD >>> print sm tb 04
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 4) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            if( X_CMD.CmpCmd(3, BOOKS) )
+            {
+                ptr_FAitfX->ShowMDRawSubMonth("Books", X_CMD.GetCmd(4), true, true);
+            }
+            else if( X_CMD.CmpCmd(3, KEEP) )
+            {
+                ptr_FAitfX->ShowMDRawSubMonth("KEEP", X_CMD.GetCmd(4), true, true);
+            }
+            else if( X_CMD.CmpCmd(3, TB) )
+            {
+                ptr_FAitfX->ShowMDRawSubMonth("TB", X_CMD.GetCmd(4), true, true);
+            }
+            else if( X_CMD.CmpCmd(3, SA) )
+            {
+                ptr_FAitfX->ShowMDRawSubMonth("sa", X_CMD.GetCmd(4), true, true);
+            }
+            else
+            {
+                CTool::MassageOutFotmat("Error Param", '!');
+
+                continue;
+            }
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   展示.md 全部月度.M
+        //   CMD >>> print sm 04
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 3) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            ptr_ASitfX->ShowMDRawSubMonthTraversal(X_CMD.GetCmd(3), false);
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   展示 当月/上月 收支
         //   CMD >>> show month/exmonth
         /**************************************************/
         else if( X_CMD.CmpCmdFront(SHOW) &&\
@@ -786,19 +808,37 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   统计 累计月度收支
-        //   CMD >>> show month aggr
+        //   展示 SUM总收支
+        //   CMD >>> show sum
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(SHOW) && X_CMD.CmpCmd(2, MONTH) && X_CMD.CmpCmdBack(AGGREGATION) )
+        else if( X_CMD.CmpCmdFront(SHOW) && X_CMD.CmpCmdBack(SUM) )
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->ShowAggrMonthSurplus();
+            ptr_FAitfX->ShowAggrSurplus(1);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
 
             continue;
+        }
+
+        /**************************************************/
+        //   展示 FA当前状态
+        //   CMD >>> show
+        /**************************************************/
+        else if( X_CMD.CmpSoloCmd(SHOW) )
+        {
+            CCmdTarget::TagTimeBait();
+
+            ptr_FAitfX->ShowMonthSurplus(CCFGLoader::m_str_CurrentMonth, 2);
+            ptr_FAitfX->ShowAggrSurplus(2);
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+
         }
 
         /**************************************************/
@@ -828,6 +868,7 @@ int main(int argc, char **argv, char *env[])
             //ptr_FAitfX->ShowMDRawSubMonth("TB", "04", false);
             //ptr_FAitfX->ShowMDRawSubMonth("TB", "04", true);
             //ptr_ASitfX->HelpAll();
+            //ptr_ASitfX->ShowMDRawSubMonthTraversal("04", false);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
