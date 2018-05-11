@@ -16,6 +16,7 @@ using namespace std;
 string CHECK = "check";
 string UPDATE = "update";
 string APPEND = "append";
+string INSERT = "insert";
 string MODIFY_LIFE = "life";
 string TRANSFER = "tf";
 

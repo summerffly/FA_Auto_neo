@@ -344,6 +344,14 @@ void CFAitfX::UpdateFA(const string str_CurMonth)
 }
 
 /**************************************************/
+//   增加行 life.M
+/**************************************************/
+void CFAitfX::InsertMonth(const unsigned int uni_VecIndex, const int int_LineValue, const string str_LineContent)
+{
+    m_cls_FM_life.InsertLine(uni_VecIndex, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
+}
+
+/**************************************************/
 //   校验 life.M 月度支出
 /**************************************************/
 int CFAitfX::CheckMonthExpense(const string str_SelMonth, bool bol_OFlag)

@@ -19,6 +19,7 @@ using namespace std;
 extern string CHECK;
 extern string UPDATE;
 extern string APPEND;
+extern string INSERT;
 extern string MODIFY_LIFE;
 extern string TRANSFER;
 

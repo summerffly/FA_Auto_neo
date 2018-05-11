@@ -214,19 +214,19 @@ void CASitfX::HelpAll()
     cout << ">>> " << SUMMARIZE << ' ' << MONTH << ' ' << AGGREGATION << endl;
     cout << endl;
 
-    cout << "展示.md 当月/上月" << endl;
+    cout << "展示.md 月度 当月/上月" << endl;
     cout << ">>> " << PRINT << ' ' << MONTH << '/' << EX_MONTH << endl;
     cout << endl;
 
-    cout << "展示.md 月度" << endl;
+    cout << "展示.md 月度 任意月份" << endl;
     cout << ">>> " << PRINT << ' ' << MONTH << " 04" << endl;
     cout << endl;
 
-    cout << "展示.md 月度.M" << endl;
+    cout << "展示.md 月度.M 任意月份" << endl;
     cout << ">>> " << PRINT << ' ' << SUBMONTH << " books 04" << endl;
     cout << endl;
 
-    cout << "展示.md 全部月度.M" << endl;
+    cout << "展示.md 全部月度.M 任意月份" << endl;
     cout << ">>> " << PRINT << ' ' << SUBMONTH << " 04" << endl;
     cout << endl;
 

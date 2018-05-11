@@ -46,6 +46,7 @@ public:
     /****************************************/
     //   月度 操作区
     /****************************************/
+    void InsertMonth(const unsigned int uni_VecIndex, const int int_LineValue, const string str_LineContent);
     int CheckMonthExpense(const string str_SelMonth, bool bol_OFlag);
     int CheckMonthSurplus(const string str_SelMonth, bool bol_OFlag);
     void UpdateMonthSurplus(const string str_SelMonth, bool bol_OFlag);

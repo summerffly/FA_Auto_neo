@@ -691,10 +691,10 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   展示.md 当月/上月
+        //   展示.md 月度 当月/上月
         //   CMD >>> print month/exmonth
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(PRINT) &&\
+        else if( X_CMD.CmpCmdFront(PRINT) && (X_CMD.GetCmdNum() == 2) &&\
                  ( X_CMD.CmpCmdBack(MONTH) || X_CMD.CmpCmdBack(EX_MONTH) ) )
         {
             CCmdTarget::TagTimeBait();
@@ -715,7 +715,7 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   展示.md 月度
+        //   展示.md 月度 任意月份
         //   CMD >>> print month 04
         /**************************************************/
         else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, MONTH) && (X_CMD.GetCmdNum() == 3) )
@@ -731,7 +731,7 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   展示.md 月度.M
+        //   展示.md 月度.M 任意月份
         //   CMD >>> print sm tb 04
         /**************************************************/
         else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 4) )
@@ -768,7 +768,31 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   展示.md 全部月度.M
+        //   展示.md 全部月度.M 当月/上月
+        //   CMD >>> print sm month/exmonth
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 3)  &&\
+                 ( X_CMD.CmpCmdBack(MONTH) || X_CMD.CmpCmdBack(EX_MONTH) ) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            if( X_CMD.CmpCmdBack(MONTH) )
+            {
+                ptr_ASitfX->ShowMDRawSubMonthTraversal(CCFGLoader::m_str_CurrentMonth, false);
+            }
+            else if( X_CMD.CmpCmdBack(EX_MONTH) )
+            {
+                ptr_ASitfX->ShowMDRawSubMonthTraversal(CTool::GeneratePreMonth(CCFGLoader::m_str_CurrentMonth), false);
+            }
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   展示.md 全部月度.M 任意月份
         //   CMD >>> print sm 04
         /**************************************************/
         else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 3) )
@@ -865,7 +889,9 @@ int main(int argc, char **argv, char *env[])
 
             CCmdTarget::TagTimeBait();
 
-            //ptr_FAitfX->ShowMDRawSubMonth("TB", "04", false);
+            //int index = 0;
+            //cin >> index;
+            //ptr_FAitfX->InsertMonth(index, -100, "TEST");
             //ptr_FAitfX->ShowMDRawSubMonth("TB", "04", true);
             //ptr_ASitfX->HelpAll();
             //ptr_ASitfX->ShowMDRawSubMonthTraversal("04", false);
