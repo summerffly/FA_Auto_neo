@@ -18,11 +18,14 @@
 #include "./X_Frame/X_XMLParser.h"
 #include "./X_Frame/X_CFGLoader.h"
 
+#include "./XML_Ripper/XML_Ripper.h"
+
 #include "./OP_Layer/FileOPer.h"
 #include "./EP_Layer/LineEPer.h"
 #include "./EP_Layer/FileManager.h"
 #include "./FA_Layer/FAitfX.h"
 #include "./AS_Layer/ASitfX.h"
+
 
 using namespace std;
 
