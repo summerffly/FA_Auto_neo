@@ -18,13 +18,12 @@ using namespace std;
 class CXMLRipper
 {
 public:
-    CXMLRipper();
     CXMLRipper(const char *cha_xmlPath);
     ~CXMLRipper();
 
 private:
     string  m_str_FilePath;          // XML文件路径名称
-    pugi::xml_document  m_xml_dom;   // XML文件
+    pugi::xml_document  m_xml_dom;   // XML解析文件
 };
 
 //------------------------------//

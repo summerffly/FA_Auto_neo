@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<FA_Auto_Script>
+    <Version>2.8.1</Version>
+    <Month attr="origin">03</Month>
+    <Month attr="current">05</Month>
+    <FA_SUM>
+        <SUMItem attr="FO">原始财富</SUMItem>
+        <SUMItem attr="FC">当前财富</SUMItem>
+        <SUMItem attr="Fwx">零钱通</SUMItem>
+        <SUMItem attr="FF">余额宝</SUMItem>
+    </FA_SUM>
+    <FA_Tail>
+        <TailItem>押金_壹公寓</TailItem>
+        <TailItem>押金_mobike</TailItem>
+        <TailItem>押金_ofo</TailItem>
+        <TailItem>蚂蚁借呗</TailItem>
+    </FA_Tail>
+    <FA_Title>
+        <TitleItem>lottery</TitleItem>
+        <TitleItem>DK</TitleItem>
+        <TitleItem>NS</TitleItem>
+        <TitleItem>travel</TitleItem>
+        <TitleItem>年终奖</TitleItem>
+    </FA_Title>
+    <FA_SubMonth>
+        <SMItem>Books</SMItem>
+        <SMItem>KEEP</SMItem>
+        <SMItem>TB</SMItem>
+        <SMItem>sa</SMItem>
+    </FA_Tail>
+</FA_Auto_Script>

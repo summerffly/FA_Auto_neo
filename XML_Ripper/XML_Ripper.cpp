@@ -7,12 +7,6 @@
 #include "XML_Ripper.h"
 
 
-CXMLRipper::CXMLRipper()
-{
-    m_str_FilePath = "";
-}
-
-
 CXMLRipper::CXMLRipper(const char *cha_xmlPath)
 {
     m_str_FilePath = cha_xmlPath;
