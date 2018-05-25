@@ -1,14 +1,16 @@
 <?xml version="1.0"?>
 <FA_Auto_Script>
-    <Version version="2.8.2" />
+    <Version version="2.8.3" />
     <OriginMonth month="03" />
     <CurrentMonth month="05" />
     <FA_SUM>
-        <SUMItem attr="FO">原始财富</SUMItem>
-        <SUMItem attr="FC">当前财富</SUMItem>
-        <SUMItem attr="Fwx">零钱通</SUMItem>
-        <SUMItem attr="FF">余额宝</SUMItem>
+        <OriginSum content="原始财富" />
+        <CurrentSum content="当前财富" />
     </FA_SUM>
+    <FA_DP>
+        <DPItem content="零钱通" />
+        <DPItem content="余额宝" />
+    </FA_DP>
     <FA_Tail>
         <TailItem>押金_壹公寓</TailItem>
         <TailItem>押金_mobike</TailItem>

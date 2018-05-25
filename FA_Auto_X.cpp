@@ -893,9 +893,14 @@ int main(int argc, char **argv, char *env[])
             CCmdTarget::TagTimeBait();
 
             CXMLRipper XMLtest("./FA_Auto_Script.xml");
-            cout << XMLtest.QueryL1NodeAttr("Version", "version") << endl;
-            cout << XMLtest.QueryL1NodeAttr("OriginMonth", "month") << endl;
-            cout << XMLtest.QueryL1NodeAttr("CurrentMonth", "month") << endl;
+            cout << XMLtest.QueryL1NodeAttr_UNI("Version", "version") << endl;
+            cout << XMLtest.QueryL1NodeAttr_UNI("OriginMonth", "month") << endl;
+            cout << XMLtest.QueryL1NodeAttr_UNI("CurrentMonth", "month") << endl;
+            cout << XMLtest.QueryL2NodeAttr_UNI("FA_SUM", "OriginSum", "content") << endl;
+            cout << XMLtest.QueryL2NodeAttr_IDX("FA_DP", "DPItem", 0, "content") << endl;
+            cout << XMLtest.QueryL2NodeAttr_IDX("FA_DP", "DPItem", 1, "content") << endl;
+            cout << XMLtest.QueryL2NodeAttr_IDX("FA_DP", "DPItem", 2, "content") << endl;
+            cout << XMLtest.QueryL2NodeAttr_IDX("FA_DP", "DPItem", 3, "content") << endl;
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

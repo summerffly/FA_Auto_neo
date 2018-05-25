@@ -22,7 +22,10 @@ public:
     CXMLRipper(const char *cha_xmlPath);
     ~CXMLRipper();
 
-    string QueryL1NodeAttr(const string str_L1Node, const string str_L1NodeAttr);
+    string QueryL1NodeAttr_UNI(const string str_L1Node, const string str_L1NodeAttr);
+    string QueryL2NodeAttr_UNI(const string str_L1Node, const string str_L2Node, const string str_L2NodeAttr);
+    string QueryL2NodeAttr_IDX(const string str_L1Node, const string str_L2Node,\
+                               const unsigned int uni_L2NodeIndex, const string str_L2NodeAttr);
 
 private:
     string  m_str_FilePath;           // XML文件路径名称
