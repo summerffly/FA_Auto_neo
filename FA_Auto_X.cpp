@@ -892,12 +892,10 @@ int main(int argc, char **argv, char *env[])
 
             CCmdTarget::TagTimeBait();
 
-            //int index = 0;
-            //cin >> index;
-            //ptr_FAitfX->InsertMonth(index, -100, "TEST");
-            //ptr_FAitfX->ShowMDRawSubMonth("TB", "04", true);
-            //ptr_ASitfX->HelpAll();
-            //ptr_ASitfX->ShowMDRawSubMonthTraversal("04", false);
+            CXMLRipper XMLtest("./FA_Auto_Script.xml");
+            cout << XMLtest.QueryL1NodeAttr("Version", "version") << endl;
+            cout << XMLtest.QueryL1NodeAttr("OriginMonth", "month") << endl;
+            cout << XMLtest.QueryL1NodeAttr("CurrentMonth", "month") << endl;
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FA_Script>
-    <Version Atr="version">2.8.0</Version>
+    <Version Atr="version">2.8.2</Version>
     <Month Atr="origin">03</Month>
     <Month Atr="current">05</Month>
     <FA_Struct Atr="SUM">

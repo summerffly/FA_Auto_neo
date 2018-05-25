@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <FA_Auto_Script>
-    <Version>2.8.1</Version>
-    <Month attr="origin">03</Month>
-    <Month attr="current">05</Month>
+    <Version version="2.8.2" />
+    <OriginMonth month="03" />
+    <CurrentMonth month="05" />
     <FA_SUM>
         <SUMItem attr="FO">原始财富</SUMItem>
         <SUMItem attr="FC">当前财富</SUMItem>
@@ -27,5 +27,5 @@
         <SMItem>KEEP</SMItem>
         <SMItem>TB</SMItem>
         <SMItem>sa</SMItem>
-    </FA_Tail>
+    </FA_SubMonth>
 </FA_Auto_Script>
