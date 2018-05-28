@@ -16,7 +16,8 @@ CXMLRipper::CXMLRipper(const char *cha_xmlPath)
     pugi::xml_parse_result pxml_result = m_pxml_dom.load_file(cha_xmlPath);
     if( pxml_result.status != pugi::status_ok )
     {
-        // cout << pxml_result.status << endl;   // tips 番茄@20180525 - Error:14 标识XML格式问题
+        // tips 番茄@20180525 - Error:14 标识XML格式问题
+        // cout << pxml_result.status << endl;
         CTool::MassageOutFotmat("Read XML Error", '!');
     }
     else
@@ -31,14 +32,35 @@ CXMLRipper::CXMLRipper(const char *cha_xmlPath)
 /**************************************************/
 CXMLRipper::~CXMLRipper()
 {
-    // Do Nothing
+    // Nothing To Do
 }
 
 
 /**************************************************/
+//   保存XML
+/**************************************************/
+bool CXMLRipper::XMLSaver()
+{
+    return m_pxml_dom.save_file(m_str_FilePath.c_str());
+}
+
+
+/**************************************************/
+//   查询Root节点属性
+/**************************************************/
+string CXMLRipper::GetRootNodeAttr(const string str_RootNodeAttr)
+{
+    string str_RetRootNodeAttr = string("");
+
+    str_RetRootNodeAttr = m_pxml_root.attribute(str_RootNodeAttr.c_str()).value();
+    
+    return str_RetRootNodeAttr;
+}
+
+/**************************************************/
 //   查询L1层节点属性
 /**************************************************/
-string CXMLRipper::QueryL1NodeAttr_UNI(const string str_L1Node, const string str_L1NodeAttr)
+string CXMLRipper::GetL1NodeAttr_UNI(const string str_L1Node, const string str_L1NodeAttr)
 {
     string str_RetL1NodeAttr = string("");
 
@@ -57,8 +79,9 @@ string CXMLRipper::QueryL1NodeAttr_UNI(const string str_L1Node, const string str
 
 /**************************************************/
 //   查询L2层节点属性
+//   唯一型节点
 /**************************************************/
-string CXMLRipper::QueryL2NodeAttr_UNI(const string str_L1Node, const string str_L2Node, const string str_L2NodeAttr)
+string CXMLRipper::GetL2NodeAttr_UNI(const string str_L1Node, const string str_L2Node, const string str_L2NodeAttr)
 {
     string str_RetL2NodeAttr = string("");
 
@@ -84,8 +107,9 @@ string CXMLRipper::QueryL2NodeAttr_UNI(const string str_L1Node, const string str
 
 /**************************************************/
 //   查询L2层节点属性
+//   Index标识并列型节点
 /**************************************************/
-string CXMLRipper::QueryL2NodeAttr_IDX(const string str_L1Node, const string str_L2Node,\
+string CXMLRipper::GetL2NodeAttr_IDX(const string str_L1Node, const string str_L2Node,\
                                        const unsigned int uni_L2NodeIndex, const string str_L2NodeAttr)
 {
     unsigned int uni_L2NodeCounter = 1;
@@ -138,6 +162,25 @@ string CXMLRipper::QueryL2NodeAttr_IDX(const string str_L1Node, const string str
     }
 }
 
+
+/**************************************************/
+//   修改L1层节点属性
+//   唯一型节点
+/**************************************************/
+bool CXMLRipper::SetL1NodeAttr_UNI(const string str_L1Node, const string str_L1NodeAttr, const string str_L1NodeValue)
+{
+    pugi::xml_node pxml_node = m_pxml_root.child(str_L1Node.c_str());
+    if( !pxml_node )
+    {
+        CTool::MassageOutFotmat("None Node Found", '!');
+        return -1;
+    }
+    else
+    {
+        pugi::xml_attribute pxml_attr = pxml_node.attribute(str_L1NodeAttr.c_str());
+        return pxml_attr.set_value(str_L1NodeValue.c_str());
+    }
+}
 
 
 //------------------------------//
