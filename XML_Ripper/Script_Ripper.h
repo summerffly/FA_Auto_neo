@@ -26,6 +26,8 @@ public:
 
     void VersionRipper();
     void MonthRipper();
+    void MonthRangeGenerator();
+    bool IsIncludeMonthRange(const string str_SelMonth);
 
     string GetVersion();
     string GetOriginMonth();
@@ -41,11 +43,12 @@ private:
     unsigned int m_uni_OriginMonth;
     unsigned int m_uni_CurrentMonth;
 
-    vector<string> m_vec_str_Month;   // Month需要计算生成
     vector<string> m_vec_str_Title;
     vector<string> m_vec_str_SubMonth;
     vector<string> m_vec_str_Tail;
     vector<string> m_vec_str_DPS;
+
+    vector<string> m_vec_str_Month;   // Month需要计算生成
 };
 
 

@@ -281,7 +281,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            if( !CCFGLoader::CompareMonthRange(X_CMD.GetCmd(3)) )
+            if( !ptr_ScriptRipper->IsIncludeMonthRange(X_CMD.GetCmd(3)) )
             {
                 CTool::MassageOutFotmat("Invalid Month Input", '!');
                 continue;
@@ -332,7 +332,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            if( !CCFGLoader::CompareMonthRange(X_CMD.GetCmd(3)) )
+            if( !ptr_ScriptRipper->IsIncludeMonthRange(X_CMD.GetCmd(3)) )
             {
                 CTool::MassageOutFotmat("Invalid Month Input", '!');
                 continue;
@@ -895,22 +895,7 @@ int main(int argc, char **argv, char *env[])
 
             CCmdTarget::TagTimeBait();
 
-            CXMLRipper XMLtest("./FA_Auto_Script.xml");
-
-            cout << XMLtest.GetRootNodeAttr("version") << endl;
-
-            cout << XMLtest.GetL1NodeAttr_UNI("OriginMonth", "month") << endl;
-            cout << XMLtest.GetL1NodeAttr_UNI("CurrentMonth", "month") << endl;
-            
-            cout << XMLtest.GetL1NodeAttr_UNI("FA_DPS", "num") << endl;
-            //cout << XMLtest.QueryL2NodeAttr_IDX("FA_DPS", "DPSItem", 0, "item") << endl;
-            cout << XMLtest.GetL2NodeAttr_IDX("FA_DPS", "DPSItem", 1, "item") << endl;
-            cout << XMLtest.GetL2NodeAttr_IDX("FA_DPS", "DPSItem", 2, "item") << endl;
-            //cout << XMLtest.QueryL2NodeAttr_IDX("FA_DPs", "DPSItem", 3, "item") << endl;
-
-            cout << XMLtest.SetL1NodeAttr_UNI("CurrentMonth", "month", "07") << endl;
-
-            XMLtest.XMLSaver();
+            //ptr_ScriptRipper->PrintMonthRange();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

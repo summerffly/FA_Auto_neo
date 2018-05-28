@@ -23,14 +23,16 @@ m_cls_XMLRipper(cha_xmlPath)
     m_uni_OriginMonth = 0;
     m_uni_CurrentMonth = 0;
 
-    m_vec_str_Month.clear();
     m_vec_str_Title.clear();
     m_vec_str_SubMonth.clear();
     m_vec_str_Tail.clear();
     m_vec_str_DPS.clear();
 
+    m_vec_str_Month.clear();
+
     VersionRipper();
     MonthRipper();
+    MonthRangeGenerator();
 }
 
 
@@ -62,6 +64,85 @@ void CScriptRipper::MonthRipper()
 
     m_uni_OriginMonth = atoi(m_str_OriginMonth.c_str());
     m_uni_CurrentMonth = atoi(m_str_CurrentMonth.c_str());
+}
+
+
+/**************************************************/
+//   生成 Month Range
+//   只能用于生成12个月内的情况
+//   2017.03 ~ 2017.03 >>> 可行
+//   2017.03 ~ 2018.03 >>> 不可行
+/**************************************************/
+void CScriptRipper::MonthRangeGenerator()
+{
+    string str_OriginMonth = "M" + m_str_OriginMonth;
+    string str_CurrentMonth = "M" + m_str_CurrentMonth;
+
+    m_vec_str_Month.push_back(str_OriginMonth);
+
+    if( m_uni_OriginMonth == m_uni_CurrentMonth )
+    {
+        return;
+    }
+    else if( m_uni_OriginMonth < m_uni_CurrentMonth )
+    {
+        unsigned int uni_MonthCounter = m_uni_CurrentMonth - m_uni_OriginMonth;
+        string str_InsertMonth = m_str_OriginMonth;
+
+        while( uni_MonthCounter > 0 )
+        {
+            str_InsertMonth = CTool::GenerateNextMonth(str_InsertMonth);
+            m_vec_str_Month.push_back("M" + str_InsertMonth);
+            uni_MonthCounter--;
+        }
+
+        return;
+    }
+    else
+    {
+        unsigned int uni_MonthCounter = 12 - m_uni_OriginMonth;
+        string str_InsertMonth = m_str_OriginMonth;
+
+        while( uni_MonthCounter > 0 )
+        {
+            str_InsertMonth = CTool::GenerateNextMonth(str_InsertMonth);
+            m_vec_str_Month.push_back("M" + str_InsertMonth);
+            uni_MonthCounter--;
+        }
+
+        uni_MonthCounter = m_uni_CurrentMonth;
+        str_InsertMonth = "01";
+        m_vec_str_Month.push_back("M" + str_InsertMonth);
+
+        while( uni_MonthCounter > 1 )
+        {
+            str_InsertMonth = CTool::GenerateNextMonth(str_InsertMonth);
+            m_vec_str_Month.push_back("M" + str_InsertMonth);
+            uni_MonthCounter--;
+        }
+
+        return;
+    }
+}
+
+
+/**************************************************/
+//   判断是否存在 Month Range
+/**************************************************/
+bool CScriptRipper::IsIncludeMonthRange(const string str_SelMonth)
+{
+    string str_JudgeMonth("M" + str_SelMonth);
+
+    vector<string>::iterator itr_Month;
+    for(itr_Month = m_vec_str_Month.begin(); itr_Month != m_vec_str_Month.end(); itr_Month++)
+    {
+        if( *itr_Month == str_JudgeMonth )
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 
