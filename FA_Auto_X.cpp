@@ -18,7 +18,6 @@
 #include "./X_Frame/X_XMLParser.h"
 #include "./X_Frame/X_CFGLoader.h"
 
-#include "./XML_Ripper/XML_Ripper.h"
 #include "./XML_Ripper/Script_Ripper.h"
 
 #include "./OP_Layer/FileOPer.h"
@@ -216,7 +215,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->UpdateFA(ptr_ScriptRipper->GetOriginMonth());
+            ptr_ASitfX->UpdateFA(ptr_ScriptRipper->GetOriginMonth());
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -688,7 +687,11 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->SummerizeAggrMonthSurplus();
+            int int_MonthSalarySum = 0;
+            int int_MonthExpenseSum = 0;
+            int int_MonthSurplusSum = 0;
+            ptr_FAitfX->SummerizeMonth(int_MonthSalarySum, int_MonthExpenseSum,\
+                                       int_MonthSurplusSum, true);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

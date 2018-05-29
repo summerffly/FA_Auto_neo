@@ -23,6 +23,9 @@ using namespace std;
                         ((!(str).compare("travel"))?(m_cls_FM_tt_travel):\
                         ((!(str).compare("lottery"))?(m_cls_FM_tt_lottery):(m_cls_FM_SUM)))) )
 
+/**************************************************/
+//   CFAitfX 构造函数
+/**************************************************/
 CFAitfX::CFAitfX()
 {
     m_cls_FM_SUM = CFileManager("./FA_SUM.md");
@@ -38,9 +41,55 @@ CFAitfX::CFAitfX()
     m_cls_FM_temp_BOX = CFileManager("./temp.BOX.md");
 }
 
+/**************************************************/
+//   CFAitfX 构造函数
+/**************************************************/
 CFAitfX::~CFAitfX()
 {
-    // Do Nothing
+    // Nothing To Do
+}
+
+/**************************************************/
+//   汇总 月度累计收支
+/**************************************************/
+void CFAitfX::SummerizeMonth(int &int_MonthSalarySum, int &int_MonthExpenseSum, int &int_MonthSurplusSum,\
+                             bool bol_OFlag)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
+    vector<string> vec_str_MonthRange;
+    ptr_ScriptRipper->MonthRangeDuplicator(vec_str_MonthRange);
+
+    string str_MonthKey;
+    unsigned int uni_MonthLine = 0;
+
+    int_MonthSalarySum = 0;
+    int_MonthExpenseSum = 0;
+    int_MonthSurplusSum = 0;
+
+    vector<string>::iterator itr_Month;
+    for(itr_Month = vec_str_MonthRange.begin(); itr_Month != vec_str_MonthRange.end(); itr_Month++)
+    {
+        str_MonthKey = "## life." + *itr_Month;
+        unsigned int uni_MonthCount = m_cls_FM_SUM.SearchLineKey(str_MonthKey.c_str());
+        uni_MonthLine = m_cls_FM_SUM.GetSearchLineIndex(1);
+
+        int_MonthSalarySum += m_cls_FM_SUM.GetLineValue(uni_MonthLine+1);
+        int_MonthExpenseSum += m_cls_FM_SUM.GetLineValue(uni_MonthLine+2);
+        int_MonthSurplusSum += m_cls_FM_SUM.GetLineValue(uni_MonthLine+3);
+    }
+
+    if(bol_OFlag)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### 累计月度收支统计 ###" << endl;
+        cout << endl;
+
+        cout << "累计月度收入: " << CTool::TransOutFormat(int_MonthSalarySum) << endl;
+        cout << "累计月度支出: " << CTool::TransOutFormat(int_MonthExpenseSum) << endl;
+        cout << "累计月度结余: " << CTool::TransOutFormat(int_MonthSurplusSum) << endl;
+        cout << "----------------------------------------" << endl;
+    }
 }
 
 /**************************************************/
@@ -312,35 +361,6 @@ void CFAitfX::CheckFA(const string str_CurMonth)
         cout << "当前财富: " << CTool::TransOutFormat(int_AFRest) << endl;
         cout << "----------------------------------------" << endl;
     }
-}
-
-/**************************************************/
-//   FA全系统更新 总收支
-/**************************************************/
-void CFAitfX::UpdateFA(const string str_CurMonth)
-{
-    UpdateTitleExpense("lottery", false);
-    UpdateTitleExpense("DK", false);
-    UpdateTitleExpense("NS", false);
-    UpdateTitleExpense("travel", false);
-
-    UpdateSubMonthExpense("Books", CTool::GeneratePreMonth(str_CurMonth), false);
-    UpdateSubMonthExpense("KEEP", CTool::GeneratePreMonth(str_CurMonth), false);
-    UpdateSubMonthExpense("TB", CTool::GeneratePreMonth(str_CurMonth), false);
-    UpdateSubMonthExpense("sa", CTool::GeneratePreMonth(str_CurMonth), false);
-
-    UpdateMonthSurplus(CTool::GeneratePreMonth(str_CurMonth), true);
-    SyncMonthSurplus(CTool::GeneratePreMonth(str_CurMonth));
-
-    UpdateSubMonthExpense("Books", str_CurMonth, false);
-    UpdateSubMonthExpense("KEEP", str_CurMonth, false);
-    UpdateSubMonthExpense("TB", str_CurMonth, false);
-    UpdateSubMonthExpense("sa", str_CurMonth, false);
-
-    UpdateMonthSurplus(str_CurMonth, true);
-    SyncMonthSurplus(str_CurMonth);
-
-    UpdateAggrSurplus(true);
 }
 
 /**************************************************/
@@ -1264,39 +1284,6 @@ void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
 
     cout << endl;
     cout << "----------------------------------------" << endl;
-}
-
-/**************************************************/
-//   统计 累计月度收支
-/**************************************************/
-void CFAitfX::SummerizeAggrMonthSurplus()
-{
-    string str_MonthKey = "## life.M";
-    unsigned int uni_MonthCount = m_cls_FM_SUM.SearchLineKey(str_MonthKey.c_str());
-
-    unsigned int uni_MonthLine = 0;
-    int int_AggrMonthSalary = 0;
-    int int_AggrMonthExpense = 0;
-    int int_AggrMonthSurplus = 0;
-
-    for(int i=1; i<=uni_MonthCount; i++)
-    {
-        uni_MonthLine = m_cls_FM_SUM.GetSearchLineIndex(i);
-
-        int_AggrMonthSalary += m_cls_FM_SUM.GetLineValue(uni_MonthLine+1);
-        int_AggrMonthExpense += m_cls_FM_SUM.GetLineValue(uni_MonthLine+2);
-        int_AggrMonthSurplus += m_cls_FM_SUM.GetLineValue(uni_MonthLine+3);
-    }
-
-    cout << "----------------------------------------" << endl;
-    cout << "### 累计月度收支统计 ###" << endl;
-    cout << endl;
-
-    cout << "累计月度收入: " << CTool::TransOutFormat(int_AggrMonthSalary) << endl;
-    cout << "累计月度支出: " << CTool::TransOutFormat(int_AggrMonthExpense) << endl;
-    cout << "累计月度结余: " << CTool::TransOutFormat(int_AggrMonthSurplus) << endl;
-    cout << "----------------------------------------" << endl;
-
 }
 
 /**************************************************/

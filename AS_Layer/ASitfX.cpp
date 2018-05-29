@@ -16,7 +16,7 @@ using namespace std;
 /**************************************************/
 CASitfX::CASitfX()
 {
-    // Do Nothing
+    // Nothing To Do
 }
 
 /**************************************************/
@@ -24,7 +24,38 @@ CASitfX::CASitfX()
 /**************************************************/
 CASitfX::~CASitfX()
 {
-    // Do Nothing
+    // Nothing To Do
+}
+
+/**************************************************/
+//   FA全系统更新 总收支
+/**************************************************/
+void CASitfX::UpdateFA(const string str_CurMonth)
+{
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    ptr_FAitfX->UpdateTitleExpense("lottery", false);
+    ptr_FAitfX->UpdateTitleExpense("DK", false);
+    ptr_FAitfX->UpdateTitleExpense("NS", false);
+    ptr_FAitfX->UpdateTitleExpense("travel", false);
+
+    ptr_FAitfX->UpdateSubMonthExpense("Books", CTool::GeneratePreMonth(str_CurMonth), false);
+    ptr_FAitfX->UpdateSubMonthExpense("KEEP", CTool::GeneratePreMonth(str_CurMonth), false);
+    ptr_FAitfX->UpdateSubMonthExpense("TB", CTool::GeneratePreMonth(str_CurMonth), false);
+    ptr_FAitfX->UpdateSubMonthExpense("sa", CTool::GeneratePreMonth(str_CurMonth), false);
+
+    ptr_FAitfX->UpdateMonthSurplus(CTool::GeneratePreMonth(str_CurMonth), true);
+    ptr_FAitfX->SyncMonthSurplus(CTool::GeneratePreMonth(str_CurMonth));
+
+    ptr_FAitfX->UpdateSubMonthExpense("Books", str_CurMonth, false);
+    ptr_FAitfX->UpdateSubMonthExpense("KEEP", str_CurMonth, false);
+    ptr_FAitfX->UpdateSubMonthExpense("TB", str_CurMonth, false);
+    ptr_FAitfX->UpdateSubMonthExpense("sa", str_CurMonth, false);
+
+    ptr_FAitfX->UpdateMonthSurplus(str_CurMonth, true);
+    ptr_FAitfX->SyncMonthSurplus(str_CurMonth);
+
+    ptr_FAitfX->UpdateAggrSurplus(true);
 }
 
 /**************************************************/

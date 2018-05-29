@@ -35,7 +35,6 @@ m_cls_XMLRipper(cha_xmlPath)
     MonthRangeGenerator();
 }
 
-
 /**************************************************/
 //   CScriptRipper 析构函数
 /**************************************************/
@@ -44,7 +43,6 @@ CScriptRipper::~CScriptRipper()
     // Nothing To Do
 }
 
-
 /**************************************************/
 //   读取&解析 Version
 /**************************************************/
@@ -52,7 +50,6 @@ void CScriptRipper::VersionRipper()
 {
     m_str_Version = m_cls_XMLRipper.GetRootNodeAttr("version");
 }
-
 
 /**************************************************/
 //   读取&解析 Month
@@ -65,7 +62,6 @@ void CScriptRipper::MonthRipper()
     m_uni_OriginMonth = atoi(m_str_OriginMonth.c_str());
     m_uni_CurrentMonth = atoi(m_str_CurrentMonth.c_str());
 }
-
 
 /**************************************************/
 //   生成 Month Range
@@ -125,6 +121,19 @@ void CScriptRipper::MonthRangeGenerator()
     }
 }
 
+/**************************************************/
+//   拷贝 Month Range
+/**************************************************/
+void CScriptRipper::MonthRangeDuplicator(vector<string> &vec_str_DestMonth)
+{
+    vec_str_DestMonth.clear();
+
+    vector<string>::iterator itr_Month;
+    for(itr_Month = m_vec_str_Month.begin(); itr_Month != m_vec_str_Month.end(); itr_Month++)
+    {
+        vec_str_DestMonth.push_back(*itr_Month);
+    }
+}
 
 /**************************************************/
 //   判断是否存在 Month Range
@@ -145,7 +154,6 @@ bool CScriptRipper::IsIncludeMonthRange(const string str_SelMonth)
     return false;
 }
 
-
 /**************************************************/
 //   获取 Version
 /**************************************************/
@@ -154,7 +162,6 @@ string CScriptRipper::GetVersion()
     return m_str_Version;
 }
 
-
 /**************************************************/
 //   获取 OriginMonth
 /**************************************************/
@@ -162,7 +169,6 @@ string CScriptRipper::GetOriginMonth()
 {
     return m_str_OriginMonth;
 }
-
 
 /**************************************************/
 //   获取 CurrentMonth

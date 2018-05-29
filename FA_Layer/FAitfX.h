@@ -10,6 +10,7 @@
 #include "./../X_Frame/X_Tool.h"
 #include "./../X_Frame/Singleton.h"
 #include "./../X_Frame/X_CFGLoader.h"
+#include "./../XML_Ripper/Script_Ripper.h"
 #include "./../EP_Layer/FileManager.h"
 
 using namespace std;
@@ -38,10 +39,13 @@ public:
     /****************************************/
     //   总收支 操作区
     /****************************************/
+    void SummerizeMonth(int &int_MonthSalarySum, int &int_MonthExpenseSum, int &int_MonthSurplusSum,\
+                        bool bol_OFlag);
+    //int SummerizeTitle();
+
     int CheckAggrSurplus(int &int_AFRest, bool bol_OFlag);
     void UpdateAggrSurplus(bool bol_OFlag);
     void CheckFA(const string str_CurMonth);
-    void UpdateFA(const string str_CurMonth);
 
     /****************************************/
     //   月度 操作区
@@ -91,8 +95,6 @@ public:
 
     void AnalysisMonthTrend(const string str_MonthKey);
     void AnalysisMonthProportion(const string str_SelMonth);
-
-    void SummerizeAggrMonthSurplus();
 
     /****************************************/
     //   展示化 操作区

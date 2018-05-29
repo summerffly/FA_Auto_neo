@@ -26,7 +26,9 @@ public:
 
     void VersionRipper();
     void MonthRipper();
+
     void MonthRangeGenerator();
+    void MonthRangeDuplicator(vector<string> &vec_str_DestMonth);
     bool IsIncludeMonthRange(const string str_SelMonth);
 
     string GetVersion();
