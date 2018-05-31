@@ -199,7 +199,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->CheckFA(ptr_ScriptRipper->GetOriginMonth());
+            ptr_FAitfX->CheckFA(ptr_ScriptRipper->GetCurrentMonth());
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -215,7 +215,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_ASitfX->UpdateFA(ptr_ScriptRipper->GetOriginMonth());
+            ptr_ASitfX->UpdateFA(ptr_ScriptRipper->GetCurrentMonth());
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -234,11 +234,11 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(MONTH) )
             {
-                ptr_FAitfX->CheckMonthExpense(ptr_ScriptRipper->GetOriginMonth(), true);
+                ptr_FAitfX->CheckMonthExpense(ptr_ScriptRipper->GetCurrentMonth(), true);
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                ptr_FAitfX->CheckMonthExpense(CTool::GeneratePreMonth(ptr_ScriptRipper->GetOriginMonth()), true);
+                ptr_FAitfX->CheckMonthExpense(CTool::GeneratePreMonth(ptr_ScriptRipper->GetCurrentMonth()), true);
             }
 
             CCmdTarget::ShowTimeGap();
@@ -258,11 +258,11 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(MONTH) )
             {
-                ptr_FAitfX->CheckMonthSurplus(ptr_ScriptRipper->GetOriginMonth(), true);
+                ptr_FAitfX->CheckMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), true);
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                ptr_FAitfX->CheckMonthSurplus(CTool::GeneratePreMonth(ptr_ScriptRipper->GetOriginMonth()), true);
+                ptr_FAitfX->CheckMonthSurplus(CTool::GeneratePreMonth(ptr_ScriptRipper->GetCurrentMonth()), true);
             }
 
             CCmdTarget::ShowTimeGap();
@@ -305,13 +305,13 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(MONTH) )
             {
-                ptr_FAitfX->UpdateMonthSurplus(ptr_ScriptRipper->GetOriginMonth(), true);
-                ptr_FAitfX->SyncMonthSurplus(ptr_ScriptRipper->GetOriginMonth());
+                ptr_FAitfX->UpdateMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), true);
+                ptr_FAitfX->SyncMonthSurplus(ptr_ScriptRipper->GetCurrentMonth());
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                ptr_FAitfX->UpdateMonthSurplus(CTool::GeneratePreMonth(ptr_ScriptRipper->GetOriginMonth()), true);
-                ptr_FAitfX->SyncMonthSurplus(CTool::GeneratePreMonth(ptr_ScriptRipper->GetOriginMonth()));
+                ptr_FAitfX->UpdateMonthSurplus(CTool::GeneratePreMonth(ptr_ScriptRipper->GetCurrentMonth()), true);
+                ptr_FAitfX->SyncMonthSurplus(CTool::GeneratePreMonth(ptr_ScriptRipper->GetCurrentMonth()));
             }
 
             ptr_FAitfX->UpdateAggrSurplus(false);
@@ -355,8 +355,8 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->ModifyMonthSurplus(ptr_ScriptRipper->GetOriginMonth(), "生活费", atoi(X_CMD.GetCmd(2).c_str()));
-            ptr_FAitfX->SyncMonthSurplus(ptr_ScriptRipper->GetOriginMonth());
+            ptr_FAitfX->ModifyMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), "生活费", atoi(X_CMD.GetCmd(2).c_str()));
+            ptr_FAitfX->SyncMonthSurplus(ptr_ScriptRipper->GetCurrentMonth());
             ptr_FAitfX->UpdateAggrSurplus(false);
 
             CCmdTarget::ShowTimeGap();
@@ -375,19 +375,19 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(BOOKS) )
             {
-                ptr_FAitfX->CheckSubMonthExpense("Books", ptr_ScriptRipper->GetOriginMonth(), true);
+                ptr_FAitfX->CheckSubMonthExpense("Books", ptr_ScriptRipper->GetCurrentMonth(), true);
             }
             else if( X_CMD.CmpCmdBack(KEEP) )
             {
-                ptr_FAitfX->CheckSubMonthExpense("KEEP", ptr_ScriptRipper->GetOriginMonth(), true);
+                ptr_FAitfX->CheckSubMonthExpense("KEEP", ptr_ScriptRipper->GetCurrentMonth(), true);
             }
             else if( X_CMD.CmpCmdBack(TB) )
             {
-                ptr_FAitfX->CheckSubMonthExpense("TB", ptr_ScriptRipper->GetOriginMonth(), true);
+                ptr_FAitfX->CheckSubMonthExpense("TB", ptr_ScriptRipper->GetCurrentMonth(), true);
             }
             else if( X_CMD.CmpCmdBack(SA) )
             {
-                ptr_FAitfX->CheckSubMonthExpense("sa", ptr_ScriptRipper->GetOriginMonth(), true);
+                ptr_FAitfX->CheckSubMonthExpense("sa", ptr_ScriptRipper->GetCurrentMonth(), true);
             }
             else
             {
@@ -412,19 +412,19 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(BOOKS) )
             {
-                ptr_FAitfX->UpdateSubMonthExpense("Books", ptr_ScriptRipper->GetOriginMonth(), true);
+                ptr_FAitfX->UpdateSubMonthExpense("Books", ptr_ScriptRipper->GetCurrentMonth(), true);
             }
             else if( X_CMD.CmpCmdBack(KEEP) )
             {
-                ptr_FAitfX->UpdateSubMonthExpense("KEEP", ptr_ScriptRipper->GetOriginMonth(), true);
+                ptr_FAitfX->UpdateSubMonthExpense("KEEP", ptr_ScriptRipper->GetCurrentMonth(), true);
             }
             else if( X_CMD.CmpCmdBack(TB) )
             {
-                ptr_FAitfX->UpdateSubMonthExpense("TB", ptr_ScriptRipper->GetOriginMonth(), true);
+                ptr_FAitfX->UpdateSubMonthExpense("TB", ptr_ScriptRipper->GetCurrentMonth(), true);
             }
             else if( X_CMD.CmpCmdBack(SA) )
             {
-                ptr_FAitfX->UpdateSubMonthExpense("sa", ptr_ScriptRipper->GetOriginMonth(), true);
+                ptr_FAitfX->UpdateSubMonthExpense("sa", ptr_ScriptRipper->GetCurrentMonth(), true);
             }
             else
             {
@@ -433,8 +433,8 @@ int main(int argc, char **argv, char *env[])
                 continue;
             }
 
-            ptr_FAitfX->UpdateMonthSurplus(ptr_ScriptRipper->GetOriginMonth(), false);
-            ptr_FAitfX->SyncMonthSurplus(ptr_ScriptRipper->GetOriginMonth());
+            ptr_FAitfX->UpdateMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), false);
+            ptr_FAitfX->SyncMonthSurplus(ptr_ScriptRipper->GetCurrentMonth());
             ptr_FAitfX->UpdateAggrSurplus(false);
 
             CCmdTarget::ShowTimeGap();
@@ -680,10 +680,10 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   统计 累计月度收支
-        //   CMD >>> sz month aggr
+        //   汇总 Month累计收支
+        //   CMD >>> sz month
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(SUMMARIZE) && X_CMD.CmpCmd(2, MONTH) && X_CMD.CmpCmdBack(AGGREGATION) )
+        else if( X_CMD.CmpCmdFront(SUMMARIZE) && X_CMD.CmpCmdBack(MONTH) )
         {   
             CCmdTarget::TagTimeBait();
 
@@ -692,6 +692,38 @@ int main(int argc, char **argv, char *env[])
             int int_MonthSurplusSum = 0;
             ptr_FAitfX->SummerizeMonth(int_MonthSalarySum, int_MonthExpenseSum,\
                                        int_MonthSurplusSum, true);
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   汇总 Title累计收支
+        //   CMD >>> sz tt
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(SUMMARIZE) && X_CMD.CmpCmdBack(TITLE) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            ptr_FAitfX->SummerizeTitle(1);
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   汇总 Tail累计收支
+        //   CMD >>> sz tail
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(SUMMARIZE) && X_CMD.CmpCmdBack(TAIL) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            ptr_FAitfX->SummerizeTail(1);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -710,11 +742,11 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(MONTH) )
             {
-                ptr_FAitfX->ShowMDRawMonth(ptr_ScriptRipper->GetOriginMonth(), true);
+                ptr_FAitfX->ShowMDRawMonth(ptr_ScriptRipper->GetCurrentMonth(), true);
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                ptr_FAitfX->ShowMDRawMonth(CTool::GeneratePreMonth(ptr_ScriptRipper->GetOriginMonth()), true);
+                ptr_FAitfX->ShowMDRawMonth(CTool::GeneratePreMonth(ptr_ScriptRipper->GetCurrentMonth()), true);
             }
 
             CCmdTarget::ShowTimeGap();
@@ -787,11 +819,11 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(MONTH) )
             {
-                ptr_ASitfX->ShowMDRawSubMonthTraversal(ptr_ScriptRipper->GetOriginMonth(), false);
+                ptr_ASitfX->ShowMDRawSubMonthTraversal(ptr_ScriptRipper->GetCurrentMonth(), false);
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                ptr_ASitfX->ShowMDRawSubMonthTraversal(CTool::GeneratePreMonth(ptr_ScriptRipper->GetOriginMonth()), false);
+                ptr_ASitfX->ShowMDRawSubMonthTraversal(CTool::GeneratePreMonth(ptr_ScriptRipper->GetCurrentMonth()), false);
             }
 
             CCmdTarget::ShowTimeGap();
@@ -827,11 +859,11 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(MONTH) )
             {
-                ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetOriginMonth(), 1);
+                ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), 1);
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                ptr_FAitfX->ShowMonthSurplus(CTool::GeneratePreMonth(ptr_ScriptRipper->GetOriginMonth()), 1);
+                ptr_FAitfX->ShowMonthSurplus(CTool::GeneratePreMonth(ptr_ScriptRipper->GetCurrentMonth()), 1);
             }            
 
             CCmdTarget::ShowTimeGap();
@@ -864,7 +896,7 @@ int main(int argc, char **argv, char *env[])
         {
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetOriginMonth(), 2);
+            ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), 2);
             ptr_FAitfX->ShowAggrSurplus(2);
 
             CCmdTarget::ShowTimeGap();

@@ -57,6 +57,7 @@ extern string PROPORTION;
 extern string AGGREGATION;
 extern string CONSUMPTION;
 extern string ROOM;
+extern string TAIL;
 
 /**************************************************/
 //   展示工具命令

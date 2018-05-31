@@ -26,14 +26,22 @@ public:
 
     void VersionRipper();
     void MonthRipper();
+    void TitleRipper();
+    void TitleDeepRipper();
+    void SubMonthRipper();
+    void TailRipper();
+    void DPSRipper();
 
     void MonthRangeGenerator();
-    void MonthRangeDuplicator(vector<string> &vec_str_DestMonth);
     bool IsIncludeMonthRange(const string str_SelMonth);
 
     string GetVersion();
     string GetOriginMonth();
     string GetCurrentMonth();
+
+    void MonthRangeDuplicator(vector<string> &vec_str_DestMonth);
+    void TitleDuplicator(vector<string> &vec_str_Dest);
+    void TailDuplicator(vector<string> &vec_str_Dest);
 
 private:
     CXMLRipper m_cls_XMLRipper;
@@ -45,7 +53,13 @@ private:
     unsigned int m_uni_OriginMonth;
     unsigned int m_uni_CurrentMonth;
 
+    unsigned int m_uni_TitleNum;
+    unsigned int m_uni_TitleDeepNum;
+    unsigned int m_uni_SubMonthNum;
+    unsigned int m_uni_TailNum;
+    unsigned int m_uni_DPSNum;
     vector<string> m_vec_str_Title;
+    vector<string> m_vec_str_TitleDeep;
     vector<string> m_vec_str_SubMonth;
     vector<string> m_vec_str_Tail;
     vector<string> m_vec_str_DPS;

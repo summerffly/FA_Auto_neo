@@ -41,7 +41,8 @@ public:
     /****************************************/
     void SummerizeMonth(int &int_MonthSalarySum, int &int_MonthExpenseSum, int &int_MonthSurplusSum,\
                         bool bol_OFlag);
-    //int SummerizeTitle();
+    int SummerizeTitle(int int_OFlag);
+    int SummerizeTail(int int_OFlag);
 
     int CheckAggrSurplus(int &int_AFRest, bool bol_OFlag);
     void UpdateAggrSurplus(bool bol_OFlag);

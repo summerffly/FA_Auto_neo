@@ -241,8 +241,16 @@ void CASitfX::HelpAll()
     cout << ">>> " << ANALYSIS << ' ' << PROPORTION << ' ' << CCFGLoader::m_str_CurrentMonth << endl;
     cout << endl;
 
-    cout << "统计 累计月度收支" << endl;
-    cout << ">>> " << SUMMARIZE << ' ' << MONTH << ' ' << AGGREGATION << endl;
+    cout << "汇总 Month累计收支" << endl;
+    cout << ">>> " << SUMMARIZE << ' ' << MONTH << endl;
+    cout << endl;
+
+    cout << "汇总 Title累计收支" << endl;
+    cout << ">>> " << SUMMARIZE << ' ' << TITLE << endl;
+    cout << endl;
+
+    cout << "汇总 Tail累计收支" << endl;
+    cout << ">>> " << SUMMARIZE << ' ' << TAIL << endl;
     cout << endl;
 
     cout << "展示.md 月度 当月/上月" << endl;

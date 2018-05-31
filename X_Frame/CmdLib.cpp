@@ -54,6 +54,7 @@ string PROPORTION = "pp";
 string AGGREGATION = "aggr";
 string CONSUMPTION = "csm";
 string ROOM = "room";
+string TAIL = "tail";
 
 /**************************************************/
 //   展示工具命令

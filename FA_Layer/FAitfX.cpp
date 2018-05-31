@@ -50,7 +50,7 @@ CFAitfX::~CFAitfX()
 }
 
 /**************************************************/
-//   汇总 月度累计收支
+//   汇总 Month累计收支
 /**************************************************/
 void CFAitfX::SummerizeMonth(int &int_MonthSalarySum, int &int_MonthExpenseSum, int &int_MonthSurplusSum,\
                              bool bol_OFlag)
@@ -71,7 +71,7 @@ void CFAitfX::SummerizeMonth(int &int_MonthSalarySum, int &int_MonthExpenseSum, 
     for(itr_Month = vec_str_MonthRange.begin(); itr_Month != vec_str_MonthRange.end(); itr_Month++)
     {
         str_MonthKey = "## life." + *itr_Month;
-        unsigned int uni_MonthCount = m_cls_FM_SUM.SearchLineKey(str_MonthKey.c_str());
+        m_cls_FM_SUM.SearchLineKey(str_MonthKey.c_str());
         uni_MonthLine = m_cls_FM_SUM.GetSearchLineIndex(1);
 
         int_MonthSalarySum += m_cls_FM_SUM.GetLineValue(uni_MonthLine+1);
@@ -82,14 +82,100 @@ void CFAitfX::SummerizeMonth(int &int_MonthSalarySum, int &int_MonthExpenseSum, 
     if(bol_OFlag)
     {
         cout << "----------------------------------------" << endl;
-        cout << "### 累计月度收支统计 ###" << endl;
+        cout << "### Month累计收支统计 ###" << endl;
         cout << endl;
 
-        cout << "累计月度收入: " << CTool::TransOutFormat(int_MonthSalarySum) << endl;
-        cout << "累计月度支出: " << CTool::TransOutFormat(int_MonthExpenseSum) << endl;
-        cout << "累计月度结余: " << CTool::TransOutFormat(int_MonthSurplusSum) << endl;
+        cout << "Month累计收入: " << CTool::TransOutFormat(int_MonthSalarySum) << endl;
+        cout << "Month累计支出: " << CTool::TransOutFormat(int_MonthExpenseSum) << endl;
+        cout << "Month累计结余: " << CTool::TransOutFormat(int_MonthSurplusSum) << endl;
         cout << "----------------------------------------" << endl;
     }
+}
+
+/**************************************************/
+//   汇总 Title累计收支
+/**************************************************/
+int CFAitfX::SummerizeTitle(int int_OFlag)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
+    vector<string> vec_str_Title;
+    ptr_ScriptRipper->TitleDuplicator(vec_str_Title);
+
+    string str_TitleKey;
+    unsigned int uni_TitleLine = 0;
+    int int_TitleSUM = 0;
+
+    vector<string>::iterator itr_Title;
+    for(itr_Title = vec_str_Title.begin(); itr_Title != vec_str_Title.end(); itr_Title++)
+    {
+        str_TitleKey = "## " + *itr_Title;
+        m_cls_FM_SUM.SearchLineKey(str_TitleKey.c_str());
+        uni_TitleLine = m_cls_FM_SUM.GetSearchLineIndex(1);
+
+        int int_TitleCount = m_cls_FM_SUM.GetLineValue(uni_TitleLine+1);
+        int_TitleSUM += int_TitleCount;
+
+        if(int_OFlag == 1)
+        {
+            cout << *itr_Title << ": " << CTool::TransOutFormat(int_TitleCount) << endl;
+        }
+    }
+
+    if(int_OFlag == 2)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### Title累计统计 ###" << endl;
+        cout << endl;
+
+        cout << "Title累计支出: " << CTool::TransOutFormat(int_TitleSUM) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+
+    return int_TitleSUM;
+}
+
+/**************************************************/
+//   汇总 Tail累计收支
+/**************************************************/
+int CFAitfX::SummerizeTail(int int_OFlag)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
+    vector<string> vec_str_Tail;
+    ptr_ScriptRipper->TailDuplicator(vec_str_Tail);
+
+    string str_TailKey;
+    unsigned int uni_TailLine = 0;
+    int int_TailSUM = 0;
+
+    vector<string>::iterator itr_Tail;
+    for(itr_Tail = vec_str_Tail.begin(); itr_Tail != vec_str_Tail.end(); itr_Tail++)
+    {
+        str_TailKey = *itr_Tail;
+        m_cls_FM_SUM.SearchLineKey(str_TailKey.c_str());
+        uni_TailLine = m_cls_FM_SUM.GetSearchLineIndex(1);
+
+        int int_TailCount = m_cls_FM_SUM.GetLineValue(uni_TailLine);
+        int_TailSUM += int_TailCount;
+
+        if(int_OFlag == 1)
+        {
+            cout << *itr_Tail << ": " << CTool::TransOutFormat(int_TailCount) << endl;
+        }
+    }
+
+    if(int_OFlag == 2)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### Tail累计统计 ###" << endl;
+        cout << endl;
+
+        cout << "Tail累计收支: " << CTool::TransOutFormat(int_TailSUM) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+
+    return int_TailSUM;
 }
 
 /**************************************************/
