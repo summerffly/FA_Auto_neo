@@ -43,10 +43,10 @@ public:
                         bool bol_OFlag);
     int SummerizeTitle(int int_OFlag);
     int SummerizeTail(int int_OFlag);
+    int SummerizeDPS(int int_OFlag);
 
     int CheckAggrSurplus(int &int_AFRest, bool bol_OFlag);
     void UpdateAggrSurplus(bool bol_OFlag);
-    void CheckFA(const string str_CurMonth);
 
     /****************************************/
     //   月度 操作区

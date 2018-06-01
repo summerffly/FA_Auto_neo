@@ -199,7 +199,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->CheckFA(ptr_ScriptRipper->GetCurrentMonth());
+            ptr_ASitfX->CheckFA();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -215,7 +215,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_ASitfX->UpdateFA(ptr_ScriptRipper->GetCurrentMonth());
+            ptr_ASitfX->UpdateFA();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

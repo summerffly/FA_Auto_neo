@@ -11,6 +11,7 @@
 #include "./../X_Frame/X_Tool.h"
 #include "./../X_Frame/Singleton.h"
 #include "./../X_Frame/X_CFGLoader.h"
+#include "./../XML_Ripper/Script_Ripper.h"
 #include "./../FA_Layer/FAitfX.h"
 
 using namespace std;
@@ -24,7 +25,8 @@ public:
     CASitfX();
     ~CASitfX();
 
-    void UpdateFA(const string str_CurMonth);
+    void CheckFA();
+    void UpdateFA();
 
     /****************************************/
     //   统计化 操作区

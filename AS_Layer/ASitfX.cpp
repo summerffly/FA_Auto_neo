@@ -28,33 +28,108 @@ CASitfX::~CASitfX()
 }
 
 /**************************************************/
-//   FA全系统更新 总收支
+//   检查 FA全系统总收支
 /**************************************************/
-void CASitfX::UpdateFA(const string str_CurMonth)
+void CASitfX::CheckFA()
 {
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
-    ptr_FAitfX->UpdateTitleExpense("lottery", false);
-    ptr_FAitfX->UpdateTitleExpense("DK", false);
-    ptr_FAitfX->UpdateTitleExpense("NS", false);
-    ptr_FAitfX->UpdateTitleExpense("travel", false);
+    string str_CurMonth = ptr_ScriptRipper->GetCurrentMonth();
 
-    ptr_FAitfX->UpdateSubMonthExpense("Books", CTool::GeneratePreMonth(str_CurMonth), false);
-    ptr_FAitfX->UpdateSubMonthExpense("KEEP", CTool::GeneratePreMonth(str_CurMonth), false);
-    ptr_FAitfX->UpdateSubMonthExpense("TB", CTool::GeneratePreMonth(str_CurMonth), false);
-    ptr_FAitfX->UpdateSubMonthExpense("sa", CTool::GeneratePreMonth(str_CurMonth), false);
+    // Check TitleDeep
+    vector<string> vec_str_TitleDeep;
+    ptr_ScriptRipper->TitleDeepDuplicator(vec_str_TitleDeep);
 
+    vector<string>::iterator itr_TitleDeep;
+    for(itr_TitleDeep = vec_str_TitleDeep.begin(); itr_TitleDeep != vec_str_TitleDeep.end(); itr_TitleDeep++)
+    {
+        if( 0 != ptr_FAitfX->CheckTitleExpense(*itr_TitleDeep, false) )
+        {
+            string str_Message = *itr_TitleDeep + " NOT Pass Check";
+            CTool::MassageOutFotmat(str_Message, '!');
+            return;
+        }
+    }
+
+    // Check SubMonth
+    vector<string> vec_str_SubMonth;
+    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+
+    vector<string>::iterator itr_SubMonth;
+    for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
+    {
+        if( 0 != ptr_FAitfX->CheckSubMonthExpense(*itr_SubMonth, str_CurMonth, false) )
+        {
+            string str_Message = *itr_SubMonth + " NOT Pass Check";
+            CTool::MassageOutFotmat(str_Message, '!');
+            return;
+        }
+    }
+
+    // Check Month
+    if( 0 != ptr_FAitfX->CheckMonthSurplus(str_CurMonth, false) )
+    {
+        CTool::MassageOutFotmat("Month NOT Pass Check", '!');
+        return;
+    }
+
+    // Check Sum
+    int int_AFRest = 0;
+    int int_RetCheck = ptr_FAitfX->CheckAggrSurplus(int_AFRest, false);
+
+    if( 0 != int_RetCheck )
+    {
+        CTool::MassageOutFotmat("FA_SUM NOT Pass Check", '!');
+    }
+    else
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "###   FA全系统校验Pass :)   ###" << endl;
+        cout << "当前财富: " << CTool::TransOutFormat(int_AFRest) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+}
+
+/**************************************************/
+//   更新 FA全系统总收支
+/**************************************************/
+void CASitfX::UpdateFA()
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    string str_CurMonth = ptr_ScriptRipper->GetCurrentMonth();
+
+    // Update TitleDeep
+    vector<string> vec_str_TitleDeep;
+    ptr_ScriptRipper->TitleDeepDuplicator(vec_str_TitleDeep);
+
+    vector<string>::iterator itr_TitleDeep;
+    for(itr_TitleDeep = vec_str_TitleDeep.begin(); itr_TitleDeep != vec_str_TitleDeep.end(); itr_TitleDeep++)
+    {
+        ptr_FAitfX->UpdateTitleExpense(*itr_TitleDeep, false);
+    }
+
+    // Update SubMonth
+    vector<string> vec_str_SubMonth;
+    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+
+    vector<string>::iterator itr_SubMonth;
+    for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
+    {
+        ptr_FAitfX->UpdateSubMonthExpense(*itr_SubMonth, CTool::GeneratePreMonth(str_CurMonth), false);
+        ptr_FAitfX->UpdateSubMonthExpense(*itr_SubMonth, str_CurMonth, false);
+    }
+
+    // Update Month
     ptr_FAitfX->UpdateMonthSurplus(CTool::GeneratePreMonth(str_CurMonth), true);
     ptr_FAitfX->SyncMonthSurplus(CTool::GeneratePreMonth(str_CurMonth));
-
-    ptr_FAitfX->UpdateSubMonthExpense("Books", str_CurMonth, false);
-    ptr_FAitfX->UpdateSubMonthExpense("KEEP", str_CurMonth, false);
-    ptr_FAitfX->UpdateSubMonthExpense("TB", str_CurMonth, false);
-    ptr_FAitfX->UpdateSubMonthExpense("sa", str_CurMonth, false);
 
     ptr_FAitfX->UpdateMonthSurplus(str_CurMonth, true);
     ptr_FAitfX->SyncMonthSurplus(str_CurMonth);
 
+    // Update Sum
     ptr_FAitfX->UpdateAggrSurplus(true);
 }
 
@@ -134,6 +209,8 @@ void CASitfX::ShowMDRawSubMonthTraversal(const string str_SelMonth, bool bol_Num
 /**************************************************/
 void CASitfX::HelpAll()
 {
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    
     cout << "******************************" << endl;
     cout << endl;
             
@@ -178,7 +255,7 @@ void CASitfX::HelpAll()
     cout << endl;
 
     cout << "校验 任意月度 收支" << endl;
-    cout << ">>> " << CHECK << ' ' << MONTH << ' ' << CCFGLoader::m_str_OriginMonth << endl;
+    cout << ">>> " << CHECK << ' ' << MONTH << ' ' << ptr_ScriptRipper->GetCurrentMonth() << endl;
     cout << endl;
 
     cout << "更新 当月/上月 收支" << endl;
@@ -186,7 +263,7 @@ void CASitfX::HelpAll()
     cout << endl;
 
     cout << "更新 任意月度 收支" << endl;
-    cout << ">>> " << UPDATE << ' ' << MONTH << ' ' << CCFGLoader::m_str_OriginMonth << endl;
+    cout << ">>> " << UPDATE << ' ' << MONTH << ' ' << ptr_ScriptRipper->GetCurrentMonth() << endl;
     cout << endl;
 
     cout << "增加 当月 生活费" << endl;
@@ -218,7 +295,7 @@ void CASitfX::HelpAll()
     cout << endl;
 
     cout << "插入 月度 脚本" << endl;
-    cout << ">>> " << APPEND << ' ' << MONTH << ' ' << CCFGLoader::m_str_CurrentMonth << endl;
+    cout << ">>> " << APPEND << ' ' << MONTH << ' ' << ptr_ScriptRipper->GetCurrentMonth() << endl;
     cout << endl;
 
     cout << "校验 temp 支出" << endl;
@@ -238,7 +315,7 @@ void CASitfX::HelpAll()
     cout << endl;
 
     cout << "分析 月度百分占比" << endl;
-    cout << ">>> " << ANALYSIS << ' ' << PROPORTION << ' ' << CCFGLoader::m_str_CurrentMonth << endl;
+    cout << ">>> " << ANALYSIS << ' ' << PROPORTION << ' ' << ptr_ScriptRipper->GetCurrentMonth() << endl;
     cout << endl;
 
     cout << "汇总 Month累计收支" << endl;

@@ -41,7 +41,10 @@ public:
 
     void MonthRangeDuplicator(vector<string> &vec_str_DestMonth);
     void TitleDuplicator(vector<string> &vec_str_Dest);
+    void TitleDeepDuplicator(vector<string> &vec_str_Dest);
+    void SubMonthDuplicator(vector<string> &vec_str_Dest);
     void TailDuplicator(vector<string> &vec_str_Dest);
+    void DPSDuplicator(vector<string> &vec_str_Dest);
 
 private:
     CXMLRipper m_cls_XMLRipper;

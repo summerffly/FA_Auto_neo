@@ -373,88 +373,11 @@ void CFAitfX::UpdateAggrSurplus(bool bol_OFlag)
 }
 
 /**************************************************/
-//   FA全系统校验 总收支
-/**************************************************/
-void CFAitfX::CheckFA(const string str_CurMonth)
-{
-    int int_RetCheck = 0;
-    int int_AFRest = 0;
-
-    if( 0 != CheckTitleExpense("lottery", false) )
-    {
-        CTool::MassageOutFotmat("lottery NOT Pass Check", '!');
-        return;
-    }
-
-    if( 0 != CheckTitleExpense("DK", false) )
-    {
-        CTool::MassageOutFotmat("DK NOT Pass Check", '!');
-        return;
-    }
-
-    if( 0 != CheckTitleExpense("NS", false) )
-    {
-        CTool::MassageOutFotmat("NS NOT Pass Check", '!');
-        return;
-    }
-
-    if( 0 != CheckTitleExpense("travel", false) )
-    {
-        CTool::MassageOutFotmat("travel NOT Pass Check", '!');
-        return;
-    }
-
-    if( 0 != CheckSubMonthExpense("Books", str_CurMonth, false) )
-    {
-        CTool::MassageOutFotmat("Books NOT Pass Check", '!');
-        return;
-    }
-
-    if( 0 != CheckSubMonthExpense("KEEP", str_CurMonth, false) )
-    {
-        CTool::MassageOutFotmat("KEEP NOT Pass Check", '!');
-        return;
-    }
-
-    if( 0 != CheckSubMonthExpense("TB", str_CurMonth, false) )
-    {
-        CTool::MassageOutFotmat("TB NOT Pass Check", '!');
-        return;
-    }
-
-    if( 0 != CheckSubMonthExpense("sa", str_CurMonth, false) )
-    {
-        CTool::MassageOutFotmat("sa NOT Pass Check", '!');
-        return;
-    }
-
-    if( 0 != CheckMonthSurplus(str_CurMonth, false) )
-    {
-        CTool::MassageOutFotmat("Month NOT Pass Check", '!');
-        return;
-    }
-
-    int_RetCheck = CheckAggrSurplus(int_AFRest, false);
-
-    if( 0 != int_RetCheck )
-    {
-        CTool::MassageOutFotmat("FA_SUM NOT Pass Check", '!');
-    }
-    else
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "###   FA全系统校验Pass :)   ###" << endl;
-        cout << "当前财富: " << CTool::TransOutFormat(int_AFRest) << endl;
-        cout << "----------------------------------------" << endl;
-    }
-}
-
-/**************************************************/
 //   增加行 life.M
 /**************************************************/
 void CFAitfX::InsertMonth(const unsigned int uni_VecIndex, const int int_LineValue, const string str_LineContent)
 {
-    m_cls_FM_life.InsertLine(uni_VecIndex, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
+    //m_cls_FM_life.InsertLine(uni_VecIndex, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
 }
 
 /**************************************************/
@@ -1130,12 +1053,15 @@ void CFAitfX::CheckTempExpense()
 /**************************************************/
 void CFAitfX::GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey)
 {
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    
     unsigned int uni_TrendIndex = 0;
     TREND_INFO stc_TrendInfo;
 
-    string str_TrendMonth = CCFGLoader::m_str_OriginMonth;
+    string str_TrendMonth = ptr_ScriptRipper->GetOriginMonth();
+    string str_TerminalMonth = CTool::GenerateNextMonth(ptr_ScriptRipper->GetCurrentMonth());
 
-    while( str_TrendMonth != CTool::GenerateNextMonth(CCFGLoader::m_str_CurrentMonth) )
+    while( str_TrendMonth != str_TerminalMonth )
     {
         string str_RangeTop = "## life.M" + str_TrendMonth;
         string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_TrendMonth);
@@ -1171,13 +1097,16 @@ void CFAitfX::GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, co
 /**************************************************/
 void CFAitfX::AppendMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey)
 {
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
     unsigned int uni_TrendIndex = 0;
     unsigned int uni_VecIndex = 0;
     TREND_INFO stc_TrendInfo;
 
-    string str_TrendMonth = CCFGLoader::m_str_OriginMonth;
+    string str_TrendMonth = ptr_ScriptRipper->GetOriginMonth();
+    string str_TerminalMonth = CTool::GenerateNextMonth(ptr_ScriptRipper->GetCurrentMonth());
 
-    while( str_TrendMonth != CTool::GenerateNextMonth(CCFGLoader::m_str_CurrentMonth) )
+    while( str_TrendMonth != str_TerminalMonth )
     {
         string str_RangeTop = "## life.M" + str_TrendMonth;
         string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_TrendMonth);

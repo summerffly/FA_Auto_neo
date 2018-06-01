@@ -32,9 +32,13 @@ m_cls_XMLRipper(cha_xmlPath)
 
     VersionRipper();
     MonthRipper();
-    MonthRangeGenerator();
     TitleRipper();
+    TitleDeepRipper();
+    SubMonthRipper();
     TailRipper();
+    DPSRipper();
+
+    MonthRangeGenerator();
 }
 
 /**************************************************/
@@ -204,48 +208,6 @@ void CScriptRipper::MonthRangeGenerator()
 }
 
 /**************************************************/
-//   拷贝 Month Range
-/**************************************************/
-void CScriptRipper::MonthRangeDuplicator(vector<string> &vec_str_DestMonth)
-{
-    vec_str_DestMonth.clear();
-
-    vector<string>::iterator itr_Month;
-    for(itr_Month = m_vec_str_Month.begin(); itr_Month != m_vec_str_Month.end(); itr_Month++)
-    {
-        vec_str_DestMonth.push_back(*itr_Month);
-    }
-}
-
-/**************************************************/
-//   拷贝 Title
-/**************************************************/
-void CScriptRipper::TitleDuplicator(vector<string> &vec_str_Dest)
-{
-    vec_str_Dest.clear();
-
-    vector<string>::iterator itr_Title;
-    for(itr_Title = m_vec_str_Title.begin(); itr_Title != m_vec_str_Title.end(); itr_Title++)
-    {
-        vec_str_Dest.push_back(*itr_Title);
-    }
-}
-
-/**************************************************/
-//   拷贝 Tail
-/**************************************************/
-void CScriptRipper::TailDuplicator(vector<string> &vec_str_Dest)
-{
-    vec_str_Dest.clear();
-
-    vector<string>::iterator itr_Tail;
-    for(itr_Tail = m_vec_str_Tail.begin(); itr_Tail != m_vec_str_Tail.end(); itr_Tail++)
-    {
-        vec_str_Dest.push_back(*itr_Tail);
-    }
-}
-
-/**************************************************/
 //   判断是否存在 Month Range
 /**************************************************/
 bool CScriptRipper::IsIncludeMonthRange(const string str_SelMonth)
@@ -286,6 +248,90 @@ string CScriptRipper::GetOriginMonth()
 string CScriptRipper::GetCurrentMonth()
 {
     return m_str_CurrentMonth;
+}
+
+/**************************************************/
+//   拷贝 Month Range
+/**************************************************/
+void CScriptRipper::MonthRangeDuplicator(vector<string> &vec_str_DestMonth)
+{
+    vec_str_DestMonth.clear();
+
+    vector<string>::iterator itr_Month;
+    for(itr_Month = m_vec_str_Month.begin(); itr_Month != m_vec_str_Month.end(); itr_Month++)
+    {
+        vec_str_DestMonth.push_back(*itr_Month);
+    }
+}
+
+/**************************************************/
+//   拷贝 Title
+/**************************************************/
+void CScriptRipper::TitleDuplicator(vector<string> &vec_str_Dest)
+{
+    vec_str_Dest.clear();
+
+    vector<string>::iterator itr_Title;
+    for(itr_Title = m_vec_str_Title.begin(); itr_Title != m_vec_str_Title.end(); itr_Title++)
+    {
+        vec_str_Dest.push_back(*itr_Title);
+    }
+}
+
+/**************************************************/
+//   拷贝 TitleDeep
+/**************************************************/
+void CScriptRipper::TitleDeepDuplicator(vector<string> &vec_str_Dest)
+{
+    vec_str_Dest.clear();
+
+    vector<string>::iterator itr_TitleDeep;
+    for(itr_TitleDeep = m_vec_str_TitleDeep.begin(); itr_TitleDeep != m_vec_str_TitleDeep.end(); itr_TitleDeep++)
+    {
+        vec_str_Dest.push_back(*itr_TitleDeep);
+    }
+}
+
+/**************************************************/
+//   拷贝 SubMonth
+/**************************************************/
+void CScriptRipper::SubMonthDuplicator(vector<string> &vec_str_Dest)
+{
+    vec_str_Dest.clear();
+
+    vector<string>::iterator itr_SubMonth;
+    for(itr_SubMonth = m_vec_str_SubMonth.begin(); itr_SubMonth != m_vec_str_SubMonth.end(); itr_SubMonth++)
+    {
+        vec_str_Dest.push_back(*itr_SubMonth);
+    }
+}
+
+/**************************************************/
+//   拷贝 Tail
+/**************************************************/
+void CScriptRipper::TailDuplicator(vector<string> &vec_str_Dest)
+{
+    vec_str_Dest.clear();
+
+    vector<string>::iterator itr_Tail;
+    for(itr_Tail = m_vec_str_Tail.begin(); itr_Tail != m_vec_str_Tail.end(); itr_Tail++)
+    {
+        vec_str_Dest.push_back(*itr_Tail);
+    }
+}
+
+/**************************************************/
+//   拷贝 DPS
+/**************************************************/
+void CScriptRipper::DPSDuplicator(vector<string> &vec_str_Dest)
+{
+    vec_str_Dest.clear();
+
+    vector<string>::iterator itr_DPS;
+    for(itr_DPS = m_vec_str_DPS.begin(); itr_DPS != m_vec_str_DPS.end(); itr_DPS++)
+    {
+        vec_str_Dest.push_back(*itr_DPS);
+    }
 }
 
 
