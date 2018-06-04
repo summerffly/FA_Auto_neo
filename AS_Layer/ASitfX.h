@@ -10,7 +10,6 @@
 #include "./../X_Frame/CmdLib.h"
 #include "./../X_Frame/X_Tool.h"
 #include "./../X_Frame/Singleton.h"
-#include "./../X_Frame/X_CFGLoader.h"
 #include "./../XML_Ripper/Script_Ripper.h"
 #include "./../FA_Layer/FAitfX.h"
 
@@ -25,17 +24,26 @@ public:
     CASitfX();
     ~CASitfX();
 
+    /****************************************/
+    //   FA全系统 计算区
+    /****************************************/
     void CheckFA();
     void UpdateFA();
 
     /****************************************/
-    //   统计化 操作区
+    //   SUM 计算区
+    /****************************************/
+    int CheckSum(int int_OFlag);
+    void UpdateSum(int int_OFlag);
+
+    /****************************************/
+    //   统计区
     /****************************************/
     void AnalysisMonthTrend_CSM();
     void AnalysisMonthTrend_ROOM();
 
     /****************************************/
-    //   展示化 操作区
+    //   展示区
     /****************************************/
     void ShowMDRawSubMonthTraversal(const string str_SelMonth, bool bol_NumFlag);
 

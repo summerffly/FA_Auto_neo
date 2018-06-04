@@ -7,7 +7,7 @@ lfa = ./FA_Layer/
 las = ./AS_Layer/
 
 
-obj_X = $(px)CmdLib.o $(px)RegExLib.o $(px)X_Tool.o $(px)X_CmdTarget.o $(px)X_CFGLoader.o $(px)X_XMLParser.o $(px)tinyxml2.o
+obj_X = $(px)CmdLib.o $(px)RegExLib.o $(px)X_Tool.o $(px)X_CmdTarget.o
 obj_XML = $(lxml)pugixml.o $(lxml)XML_Ripper.o $(lxml)Script_Ripper.o
 obj_OP = $(lop)FileOPer.o
 obj_EP = $(lep)LineEPer.o $(lep)FileManager.o
@@ -32,15 +32,6 @@ X_Tool.o: $(px)X_Tool.h $(px)X_Tool.cpp
 
 X_CmdTarget.o: $(px)X_CmdTarget.h $(px)X_CmdTarget.cpp
 	g++ -c $(px)X_CmdTarget.cpp
-
-X_CFGLoader.o: $(px)X_CFGLoader.h $(px)X_CFGLoader.cpp
-	g++ -c $(px)X_CFGLoader.cpp
-
-X_XMLParser.o: $(px)X_XMLParser.h $(px)X_XMLParser.cpp
-	g++ -c $(px)X_XMLParser.cpp
-
-tinyxml2.o: $(px)tinyxml2.h $(px)tinyxml2.cpp
-	g++ -c $(px)tinyxml2.cpp
 
 pugixml.o: $(lxml)pugixml.cpp
 	g++ -c $(lxml)pugixml.cpp

@@ -15,8 +15,6 @@
 #include "./X_Frame/X_Tool.h"
 #include "./X_Frame/Singleton.h"
 #include "./X_Frame/X_CmdTarget.h"
-#include "./X_Frame/X_XMLParser.h"
-#include "./X_Frame/X_CFGLoader.h"
 
 #include "./XML_Ripper/Script_Ripper.h"
 
@@ -32,11 +30,6 @@ using namespace std;
 
 int main(int argc, char **argv, char *env[])
 {
-    CCFGLoader::LoadCFG("./FA_Script.xml");
-    CCFGLoader::LoadVersion();
-    CCFGLoader::LoadMonth();
-    CCFGLoader::LoadFA();
-
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
@@ -166,8 +159,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            int int_AFRest = 0;
-            ptr_FAitfX->CheckAggrSurplus(int_AFRest, true);
+            ptr_ASitfX->CheckSum(1);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -183,7 +175,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->UpdateAggrSurplus(true);
+            ptr_ASitfX->UpdateSum(1);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -314,7 +306,7 @@ int main(int argc, char **argv, char *env[])
                 ptr_FAitfX->SyncMonthSurplus(CTool::GeneratePreMonth(ptr_ScriptRipper->GetCurrentMonth()));
             }
 
-            ptr_FAitfX->UpdateAggrSurplus(false);
+            ptr_ASitfX->UpdateSum(0);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -339,7 +331,7 @@ int main(int argc, char **argv, char *env[])
 
             ptr_FAitfX->UpdateMonthSurplus(X_CMD.GetCmd(3), true);
             ptr_FAitfX->SyncMonthSurplus(X_CMD.GetCmd(3));
-            ptr_FAitfX->UpdateAggrSurplus(false);
+            ptr_ASitfX->UpdateSum(0);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -357,7 +349,7 @@ int main(int argc, char **argv, char *env[])
 
             ptr_FAitfX->ModifyMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), "生活费", atoi(X_CMD.GetCmd(2).c_str()));
             ptr_FAitfX->SyncMonthSurplus(ptr_ScriptRipper->GetCurrentMonth());
-            ptr_FAitfX->UpdateAggrSurplus(false);
+            ptr_ASitfX->UpdateSum(0);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -435,7 +427,7 @@ int main(int argc, char **argv, char *env[])
 
             ptr_FAitfX->UpdateMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), false);
             ptr_FAitfX->SyncMonthSurplus(ptr_ScriptRipper->GetCurrentMonth());
-            ptr_FAitfX->UpdateAggrSurplus(false);
+            ptr_ASitfX->UpdateSum(0);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -511,7 +503,7 @@ int main(int argc, char **argv, char *env[])
                 continue;
             }
 
-            ptr_FAitfX->UpdateAggrSurplus(false);
+            ptr_ASitfX->UpdateSum(0);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -544,7 +536,7 @@ int main(int argc, char **argv, char *env[])
                 continue;
             }
 
-            ptr_FAitfX->UpdateAggrSurplus(false);
+            ptr_ASitfX->UpdateSum(0);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -687,11 +679,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            int int_MonthSalarySum = 0;
-            int int_MonthExpenseSum = 0;
-            int int_MonthSurplusSum = 0;
-            ptr_FAitfX->SummerizeMonth(int_MonthSalarySum, int_MonthExpenseSum,\
-                                       int_MonthSurplusSum, true);
+            ptr_FAitfX->SummerizeMonth(2);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -880,7 +868,8 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->ShowAggrSurplus(1);
+            // tips 番茄@20180604 - 增加接口
+            //ptr_FAitfX->ShowAggrSurplus(1);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -897,7 +886,7 @@ int main(int argc, char **argv, char *env[])
             CCmdTarget::TagTimeBait();
 
             ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), 2);
-            ptr_FAitfX->ShowAggrSurplus(2);
+            ptr_FAitfX->SummerizeCAF(1);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -930,7 +919,7 @@ int main(int argc, char **argv, char *env[])
 
             CCmdTarget::TagTimeBait();
 
-            //ptr_ScriptRipper->PrintMonthRange();
+            //ptr_ASitfX->CheckSum(1);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

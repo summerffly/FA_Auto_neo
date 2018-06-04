@@ -9,7 +9,6 @@
 #include <map>
 #include "./../X_Frame/X_Tool.h"
 #include "./../X_Frame/Singleton.h"
-#include "./../X_Frame/X_CFGLoader.h"
 #include "./../XML_Ripper/Script_Ripper.h"
 #include "./../EP_Layer/FileManager.h"
 
@@ -32,21 +31,22 @@ class CFAitfX
 {
 public:
     friend class Singleton<CFAitfX>;
+    friend class CASitfX;   // tips 番茄@20180604 - 破坏封装性的风险
     
     CFAitfX();
     ~CFAitfX();
 
     /****************************************/
-    //   总收支 操作区
+    //   SUM 计算区
     /****************************************/
-    void SummerizeMonth(int &int_MonthSalarySum, int &int_MonthExpenseSum, int &int_MonthSurplusSum,\
-                        bool bol_OFlag);
-    int SummerizeTitle(int int_OFlag);
-    int SummerizeTail(int int_OFlag);
-    int SummerizeDPS(int int_OFlag);
+    void LoadSum(int int_OFlag);
+    void SummerizeMonth(int int_OFlag);
+    void SummerizeTitle(int int_OFlag);
+    void SummerizeTail(int int_OFlag);
+    void SummerizeCAF(int int_OFlag);
 
-    int CheckAggrSurplus(int &int_AFRest, bool bol_OFlag);
-    void UpdateAggrSurplus(bool bol_OFlag);
+    void UpdateCurrentSum(const int int_CurrentSum);
+    void UpdateCAF(const int int_CAFSum);
 
     /****************************************/
     //   月度 操作区
@@ -104,7 +104,6 @@ public:
     void ShowMDRawSubMonth(const string str_SubMonthKey, const string str_SelMonth, bool bol_NumFlag, bool bol_ShowFlag);
 
     void ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag);
-    void ShowAggrSurplus(int int_ShowFlag);
 
     /****************************************/
     //   文件读写 操作区
@@ -113,6 +112,25 @@ public:
     void WriteAllFile();
     void BackUpAllFile(const string str_BackUpPath);
 
+
+/****************************************/
+//   SUM成员
+/****************************************/
+private:
+    int m_int_OriginSum;
+    int m_int_CurrentSum;
+
+    int m_int_MonthSalarySum;
+    int m_int_MonthExpenseSum;
+    int m_int_MonthSurplusSum;
+
+    int m_int_TitleSum;
+    int m_int_TailSum;
+    int m_int_CAFSum;
+
+/****************************************/
+//   FM成员
+/****************************************/
 private:
     CFileManager m_cls_FM_SUM;
     CFileManager m_cls_FM_life;

@@ -28,6 +28,17 @@ using namespace std;
 /**************************************************/
 CFAitfX::CFAitfX()
 {
+    m_int_OriginSum = 0;
+    m_int_CurrentSum = 0;
+
+    m_int_MonthSalarySum = 0;
+    m_int_MonthExpenseSum = 0;
+    m_int_MonthSurplusSum = 0;
+
+    m_int_TitleSum = 0;
+    m_int_TailSum = 0;
+    m_int_CAFSum = 0;
+
     m_cls_FM_SUM = CFileManager("./FA_SUM.md");
     m_cls_FM_life = CFileManager("./life.M.md");
     m_cls_FM_sm_Books = CFileManager("./Books.M.md");
@@ -50,22 +61,50 @@ CFAitfX::~CFAitfX()
 }
 
 /**************************************************/
-//   汇总 Month累计收支
+//   读取 初始&当前Sum
 /**************************************************/
-void CFAitfX::SummerizeMonth(int &int_MonthSalarySum, int &int_MonthExpenseSum, int &int_MonthSurplusSum,\
-                             bool bol_OFlag)
+void CFAitfX::LoadSum(int int_OFlag)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
+    string str_OriginSum = ptr_ScriptRipper->GetOriginSum();
+    string str_CurrentSum = ptr_ScriptRipper->GetCurrentSum();
+
+    unsigned int uni_SumLine = 0;
+
+    m_cls_FM_SUM.SearchLineKey(str_OriginSum.c_str());
+    uni_SumLine = m_cls_FM_SUM.GetSearchLineIndex(1);
+    m_int_OriginSum = m_cls_FM_SUM.GetLineValue(uni_SumLine);
+
+    m_cls_FM_SUM.SearchLineKey(str_CurrentSum.c_str());
+    uni_SumLine = m_cls_FM_SUM.GetSearchLineIndex(1);
+    m_int_CurrentSum = m_cls_FM_SUM.GetLineValue(uni_SumLine);
+
+    if(int_OFlag == 1)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << str_OriginSum << ": " << CTool::TransOutFormat(m_int_OriginSum) << endl;
+        cout << str_CurrentSum << ": " << CTool::TransOutFormat(m_int_CurrentSum) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+}
+
+/**************************************************/
+//   汇总 Month累计收支
+/**************************************************/
+void CFAitfX::SummerizeMonth(int int_OFlag)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
+    int int_MonthSalarySum = 0;
+    int int_MonthExpenseSum = 0;
+    int int_MonthSurplusSum = 0;
 
     vector<string> vec_str_MonthRange;
     ptr_ScriptRipper->MonthRangeDuplicator(vec_str_MonthRange);
 
     string str_MonthKey;
     unsigned int uni_MonthLine = 0;
-
-    int_MonthSalarySum = 0;
-    int_MonthExpenseSum = 0;
-    int_MonthSurplusSum = 0;
 
     vector<string>::iterator itr_Month;
     for(itr_Month = vec_str_MonthRange.begin(); itr_Month != vec_str_MonthRange.end(); itr_Month++)
@@ -79,15 +118,19 @@ void CFAitfX::SummerizeMonth(int &int_MonthSalarySum, int &int_MonthExpenseSum, 
         int_MonthSurplusSum += m_cls_FM_SUM.GetLineValue(uni_MonthLine+3);
     }
 
-    if(bol_OFlag)
+    m_int_MonthSalarySum = int_MonthSalarySum;
+    m_int_MonthExpenseSum = int_MonthExpenseSum;
+    m_int_MonthSurplusSum = int_MonthSurplusSum;
+
+    if(int_OFlag == 2)
     {
         cout << "----------------------------------------" << endl;
         cout << "### Month累计收支统计 ###" << endl;
         cout << endl;
 
-        cout << "Month累计收入: " << CTool::TransOutFormat(int_MonthSalarySum) << endl;
-        cout << "Month累计支出: " << CTool::TransOutFormat(int_MonthExpenseSum) << endl;
-        cout << "Month累计结余: " << CTool::TransOutFormat(int_MonthSurplusSum) << endl;
+        cout << "Month累计收入: " << CTool::TransOutFormat(m_int_MonthSalarySum) << endl;
+        cout << "Month累计支出: " << CTool::TransOutFormat(m_int_MonthExpenseSum) << endl;
+        cout << "Month累计结余: " << CTool::TransOutFormat(m_int_MonthSurplusSum) << endl;
         cout << "----------------------------------------" << endl;
     }
 }
@@ -95,16 +138,17 @@ void CFAitfX::SummerizeMonth(int &int_MonthSalarySum, int &int_MonthExpenseSum, 
 /**************************************************/
 //   汇总 Title累计收支
 /**************************************************/
-int CFAitfX::SummerizeTitle(int int_OFlag)
+void CFAitfX::SummerizeTitle(int int_OFlag)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
+    int int_TitleSum = 0;
 
     vector<string> vec_str_Title;
     ptr_ScriptRipper->TitleDuplicator(vec_str_Title);
 
     string str_TitleKey;
     unsigned int uni_TitleLine = 0;
-    int int_TitleSUM = 0;
 
     vector<string>::iterator itr_Title;
     for(itr_Title = vec_str_Title.begin(); itr_Title != vec_str_Title.end(); itr_Title++)
@@ -114,7 +158,7 @@ int CFAitfX::SummerizeTitle(int int_OFlag)
         uni_TitleLine = m_cls_FM_SUM.GetSearchLineIndex(1);
 
         int int_TitleCount = m_cls_FM_SUM.GetLineValue(uni_TitleLine+1);
-        int_TitleSUM += int_TitleCount;
+        int_TitleSum += int_TitleCount;
 
         if(int_OFlag == 1)
         {
@@ -122,32 +166,33 @@ int CFAitfX::SummerizeTitle(int int_OFlag)
         }
     }
 
+    m_int_TitleSum = int_TitleSum;
+
     if(int_OFlag == 2)
     {
         cout << "----------------------------------------" << endl;
         cout << "### Title累计统计 ###" << endl;
         cout << endl;
 
-        cout << "Title累计支出: " << CTool::TransOutFormat(int_TitleSUM) << endl;
+        cout << "Title累计支出: " << CTool::TransOutFormat(m_int_TitleSum) << endl;
         cout << "----------------------------------------" << endl;
     }
-
-    return int_TitleSUM;
 }
 
 /**************************************************/
 //   汇总 Tail累计收支
 /**************************************************/
-int CFAitfX::SummerizeTail(int int_OFlag)
+void CFAitfX::SummerizeTail(int int_OFlag)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
+    int int_TailSum = 0;
 
     vector<string> vec_str_Tail;
     ptr_ScriptRipper->TailDuplicator(vec_str_Tail);
 
     string str_TailKey;
     unsigned int uni_TailLine = 0;
-    int int_TailSUM = 0;
 
     vector<string>::iterator itr_Tail;
     for(itr_Tail = vec_str_Tail.begin(); itr_Tail != vec_str_Tail.end(); itr_Tail++)
@@ -157,7 +202,7 @@ int CFAitfX::SummerizeTail(int int_OFlag)
         uni_TailLine = m_cls_FM_SUM.GetSearchLineIndex(1);
 
         int int_TailCount = m_cls_FM_SUM.GetLineValue(uni_TailLine);
-        int_TailSUM += int_TailCount;
+        int_TailSum += int_TailCount;
 
         if(int_OFlag == 1)
         {
@@ -165,211 +210,104 @@ int CFAitfX::SummerizeTail(int int_OFlag)
         }
     }
 
+    m_int_TailSum = int_TailSum;
+
     if(int_OFlag == 2)
     {
         cout << "----------------------------------------" << endl;
         cout << "### Tail累计统计 ###" << endl;
         cout << endl;
 
-        cout << "Tail累计收支: " << CTool::TransOutFormat(int_TailSUM) << endl;
+        cout << "Tail累计收支: " << CTool::TransOutFormat(m_int_TailSum) << endl;
         cout << "----------------------------------------" << endl;
     }
-
-    return int_TailSUM;
 }
 
 /**************************************************/
-//   校验 总收支
+//   汇总 CAF累计收支
 /**************************************************/
-int CFAitfX::CheckAggrSurplus(int &int_AFRest, bool bol_OFlag)
+void CFAitfX::SummerizeCAF(int int_OFlag)
 {
-    unsigned int uni_ItemSize = CCFGLoader::m_vec_stc_FAItem.size();
-    unsigned int uni_ItemCounter = 0;
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
-    int int_AggrSurplusEX = 0;
-    int int_AggrSurplusCK = 0;
-    int int_AggrSurplusPlusEX = 0;
-    int int_AggrSurplusPlusCK = 0;
+    int int_CAFSum = 0;
 
-    unsigned int uni_WXRest = 0;
-    unsigned int uni_AliRest = 0;
+    vector<string> vec_str_CAF;
+    ptr_ScriptRipper->CAFDuplicator(vec_str_CAF);
 
-    string str_ItemFlagContent("");
-    string str_ItemFlagAttrbute("");
-    unsigned int uni_ItemFlag = 0;
+    string str_CAFKey;
+    unsigned int uni_CAFLine = 0;
 
-    while( uni_ItemCounter < uni_ItemSize )
+    vector<string>::iterator itr_CAF;
+    for(itr_CAF = vec_str_CAF.begin(); itr_CAF != vec_str_CAF.end(); itr_CAF++)
     {
-        str_ItemFlagContent.clear();
-        str_ItemFlagAttrbute.clear();
-        str_ItemFlagContent += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemContent;
-        str_ItemFlagAttrbute += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemAttrbute;
+        str_CAFKey = *itr_CAF;
+        m_cls_FM_SUM.SearchLineKey(str_CAFKey.c_str());
+        uni_CAFLine = m_cls_FM_SUM.GetSearchLineIndex(1);
 
-        m_cls_FM_SUM.SearchLineKey(str_ItemFlagContent.c_str());
-        uni_ItemFlag = m_cls_FM_SUM.GetSearchLineIndex(1);
+        int int_CAFCount = m_cls_FM_SUM.GetLineValue(uni_CAFLine);
+        int_CAFSum += int_CAFCount;
 
-        if( str_ItemFlagAttrbute.compare("FO")==0 )
+        if(int_OFlag == 1)
         {
-            int_AggrSurplusCK += m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
-            int_AggrSurplusPlusCK += m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
+            cout << *itr_CAF << ": " << CTool::TransOutFormat(int_CAFCount) << endl;
         }
-        else if( str_ItemFlagAttrbute.compare("Title")==0 )
-        {
-            int_AggrSurplusCK += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+1);
-            int_AggrSurplusPlusCK += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+1);
-        }
-        else if( str_ItemFlagAttrbute.compare("Month")==0 )
-        {
-            int_AggrSurplusCK += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+3);
-            int_AggrSurplusPlusCK += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+3);
-        }
-        else if( str_ItemFlagAttrbute.compare("FC")==0 )
-        {
-            int_AggrSurplusEX = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
-
-            if( bol_OFlag )
-            {
-                cout << "----------------------------------------" << endl;
-                cout << "### 当前财富 ###" << endl;
-                cout << "读取值: " << CTool::TransOutFormat(int_AggrSurplusEX) << endl;
-                cout << "校验值: " << CTool::TransOutFormat(int_AggrSurplusCK) << endl;
-            }
-
-            int_AFRest = int_AggrSurplusEX;
-        }
-        else if( str_ItemFlagAttrbute.compare("FTail")==0 )
-        {
-            int_AggrSurplusPlusCK += m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
-        }
-        else if( str_ItemFlagAttrbute.compare("Fwx")==0 )
-        {
-            uni_WXRest = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
-        }
-        else if( str_ItemFlagAttrbute.compare("FF")==0 )
-        {
-            uni_AliRest = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
-            int_AggrSurplusPlusEX = uni_WXRest + uni_AliRest;
-
-            if( bol_OFlag )
-            {
-                cout << "----------------------------------------" << endl;
-                cout << "### 支配财富 ###" << endl;
-                cout << "读取值: " << CTool::TransOutFormat(int_AggrSurplusPlusEX) << endl;
-                cout << "校验值: " << CTool::TransOutFormat(int_AggrSurplusPlusCK) << endl;
-                cout << "----------------------------------------" << endl;
-                cout << "### 理财分配 ###" << endl;
-                cout << "零钱通: " << CTool::TransOutFormat(uni_WXRest) << endl;
-                cout << "余额宝: " << CTool::TransOutFormat(uni_AliRest) << endl;
-                cout << "----------------------------------------" << endl;
-            }
-        }
-
-        uni_ItemCounter++;
     }
 
-    if( int_AggrSurplusEX != int_AggrSurplusCK )
+    m_int_CAFSum = int_CAFSum;
+
+    if(int_OFlag == 2)
     {
-        return -1;
-    }
-    else if( int_AggrSurplusPlusEX != int_AggrSurplusPlusCK )
-    {
-        return -2;
-    }
-    else
-    {
-        return 0;
+        cout << "----------------------------------------" << endl;
+        cout << "### CAF累计统计 ###" << endl;
+        cout << endl;
+
+        cout << "CAF累计收支: " << CTool::TransOutFormat(m_int_CAFSum) << endl;
+        cout << "----------------------------------------" << endl;
     }
 }
 
 /**************************************************/
-//   更新 总收支
+//   更新 当前财富
 /**************************************************/
-void CFAitfX::UpdateAggrSurplus(bool bol_OFlag)
+void CFAitfX::UpdateCurrentSum(const int int_CurrentSum)
 {
-    unsigned int uni_ItemSize = CCFGLoader::m_vec_stc_FAItem.size();
-    unsigned int uni_ItemCounter = 0;
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
-    int int_AggrSurplusEX = 0;
-    int int_AggrSurplusUD = 0;
-    int int_AggrSurplusPlusEX = 0;
-    int int_AggrSurplusPlusUD = 0;
+    string str_CurrentSum = ptr_ScriptRipper->GetCurrentSum();
+    m_cls_FM_SUM.SearchLineKey(str_CurrentSum.c_str());
+    unsigned int uni_SumLine = m_cls_FM_SUM.GetSearchLineIndex(1);
+    m_cls_FM_SUM.ModifyLineValue(uni_SumLine, int_CurrentSum);
+}
 
-    unsigned int uni_WXRest = 0;
-    unsigned int uni_AliRest = 0;
+/**************************************************/
+//   更新 CAF
+//   默认逻辑最后项扣费
+/**************************************************/
+void CFAitfX::UpdateCAF(const int int_CAFSum)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
-    string str_ItemFlagContent("");
-    string str_ItemFlagAttrbute("");
-    unsigned int uni_ItemFlag = 0;
+    vector<string> vec_str_CAF;
+    ptr_ScriptRipper->CAFDuplicator(vec_str_CAF);
 
-    while( uni_ItemCounter < uni_ItemSize )
+    string str_CAFKey;
+    unsigned int uni_CAFLine = 0;
+    int int_CAFCount = 0;
+    int int_CAFSumRest = int_CAFSum;
+
+    vector<string>::iterator itr_CAF;
+    for(itr_CAF = vec_str_CAF.begin(); itr_CAF != vec_str_CAF.end(); itr_CAF++)
     {
-        str_ItemFlagContent.clear();
-        str_ItemFlagAttrbute.clear();
-        str_ItemFlagContent += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemContent;
-        str_ItemFlagAttrbute += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemAttrbute;
-
-        m_cls_FM_SUM.SearchLineKey(str_ItemFlagContent.c_str());
-        uni_ItemFlag = m_cls_FM_SUM.GetSearchLineIndex(1);
-
-        if( str_ItemFlagAttrbute.compare("FO")==0 )
-        {
-            int_AggrSurplusUD += m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
-            int_AggrSurplusPlusUD += m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
-        }
-        else if( str_ItemFlagAttrbute.compare("Title")==0 )
-        {
-            int_AggrSurplusUD += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+1);
-            int_AggrSurplusPlusUD += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+1);
-        }
-        else if( str_ItemFlagAttrbute.compare("Month")==0 )
-        {
-            int_AggrSurplusUD += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+3);
-            int_AggrSurplusPlusUD += m_cls_FM_SUM.GetLineValue(uni_ItemFlag+3);
-        }
-        else if( str_ItemFlagAttrbute.compare("FC")==0 )
-        {
-            int_AggrSurplusEX = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
-            m_cls_FM_SUM.ModifyLineValue(uni_ItemFlag, int_AggrSurplusUD);
-
-            if( bol_OFlag )
-            {
-                cout << "----------------------------------------" << endl;
-                cout << "### 当前财富 ###" << endl;
-                cout << "初始值: " << CTool::TransOutFormat(int_AggrSurplusEX) << endl;
-                cout << "更新值: " << CTool::TransOutFormat(int_AggrSurplusUD) << endl;
-            }
-        }
-        else if( str_ItemFlagAttrbute.compare("FTail")==0 )
-        {
-            int_AggrSurplusPlusUD += m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
-        }
-        else if( str_ItemFlagAttrbute.compare("Fwx")==0 )
-        {
-            uni_WXRest = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
-        }
-        else if( str_ItemFlagAttrbute.compare("FF")==0 )
-        {
-            uni_AliRest = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
-            int_AggrSurplusPlusEX = uni_WXRest + uni_AliRest;
-
-            m_cls_FM_SUM.ModifyLineValue(uni_ItemFlag, (int_AggrSurplusPlusUD-uni_WXRest));
-
-            if( bol_OFlag )
-            {
-                cout << "----------------------------------------" << endl;
-                cout << "### 支配财富 ###" << endl;
-                cout << "读取值: " << CTool::TransOutFormat(int_AggrSurplusPlusEX) << endl;
-                cout << "更新值: " << CTool::TransOutFormat(int_AggrSurplusPlusUD) << endl;
-                cout << "----------------------------------------" << endl;
-                cout << "### 理财分配 ###" << endl;
-                cout << "零钱通: " << CTool::TransOutFormat(uni_WXRest) << endl;
-                cout << "余额宝: " << CTool::TransOutFormat(int_AggrSurplusPlusUD-uni_WXRest) << endl;
-                cout << "----------------------------------------" << endl;
-            }
-        }
-
-        uni_ItemCounter++;
+        str_CAFKey = *itr_CAF;
+        m_cls_FM_SUM.SearchLineKey(str_CAFKey.c_str());
+        uni_CAFLine = m_cls_FM_SUM.GetSearchLineIndex(1);
+        int_CAFCount = m_cls_FM_SUM.GetLineValue(uni_CAFLine);
+        int_CAFSumRest -= int_CAFCount;
     }
+    int_CAFSumRest += int_CAFCount;   // tips 番茄@20189604 - 补加最后项
+
+    m_cls_FM_SUM.ModifyLineValue(uni_CAFLine, int_CAFSumRest);
 }
 
 /**************************************************/
@@ -1414,108 +1352,6 @@ void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag)
     {
         cout << "----------------------------------------" << endl;
         cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
-    }
-}
-
-/**************************************************/
-//   展示 总收支
-//   int_ShowFlag == 1 >>> 完整显示模式
-//   int_ShowFlag == 2 >>> 结余显示模式
-/**************************************************/
-void CFAitfX::ShowAggrSurplus(int int_ShowFlag)
-{
-    unsigned int uni_ItemSize = CCFGLoader::m_vec_stc_FAItem.size();
-    unsigned int uni_ItemCounter = 0;
-
-    int int_AFtemp = 0;
-    int int_AggrSurplus = 0;
-    unsigned int uni_AggrSurplusPlus = 0;
-
-    unsigned int uni_WXRest = 0;
-    unsigned int uni_AliRest = 0;
-
-    string str_ItemFlagContent("");
-    string str_ItemFlagAttrbute("");
-    unsigned int uni_ItemFlag = 0;
-
-    while( uni_ItemCounter < uni_ItemSize )
-    {
-        str_ItemFlagContent.clear();
-        str_ItemFlagAttrbute.clear();
-        str_ItemFlagContent += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemContent;
-        str_ItemFlagAttrbute += CCFGLoader::m_vec_stc_FAItem.at(uni_ItemCounter).str_ItemAttrbute;
-
-        m_cls_FM_SUM.SearchLineKey(str_ItemFlagContent.c_str());
-        uni_ItemFlag = m_cls_FM_SUM.GetSearchLineIndex(1);
-
-        if( str_ItemFlagAttrbute.compare("FO")==0 )
-        {
-            int_AFtemp = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
-
-            if(int_ShowFlag == 1)
-            {
-                cout << "----------------------------------------" << endl;
-                cout << "### 原始财富 ###" << endl;
-                cout << "财富值: " << CTool::TransOutFormat(int_AFtemp) << endl;
-                cout << "----------------------------------------" << endl;
-            }            
-        }
-        else if( str_ItemFlagAttrbute.compare("Title")==0 )
-        {
-            int_AFtemp = m_cls_FM_SUM.GetLineValue(uni_ItemFlag+1);
-            
-            if(int_ShowFlag == 1)
-            {
-                cout << str_ItemFlagContent << ": " << CTool::TransOutFormat(int_AFtemp) << endl;
-            }
-        }
-        else if( str_ItemFlagAttrbute.compare("Month")==0 )
-        {
-            int_AFtemp = m_cls_FM_SUM.GetLineValue(uni_ItemFlag+3);
-            
-            if(int_ShowFlag == 1)
-            {
-                cout << str_ItemFlagContent << ": " << CTool::TransOutFormat(int_AFtemp) << endl;
-            }
-        }
-        else if( str_ItemFlagAttrbute.compare("FC")==0 )
-        {
-            int_AFtemp = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
-
-            if((int_ShowFlag == 1) || (int_ShowFlag == 2))
-            {
-                cout << "----------------------------------------" << endl;
-                cout << "### 当前财富 ###" << endl;
-                cout << "财富值: " << CTool::TransOutFormat(int_AFtemp) << endl;
-            }
-        }
-        else if( str_ItemFlagAttrbute.compare("FTail")==0 )
-        {
-            // Nothing To Do
-        }
-        else if( str_ItemFlagAttrbute.compare("Fwx")==0 )
-        {
-            uni_WXRest = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
-        }
-        else if( str_ItemFlagAttrbute.compare("FF")==0 )
-        {
-            uni_AliRest = m_cls_FM_SUM.GetLineValue(uni_ItemFlag);
-            uni_AggrSurplusPlus = uni_WXRest + uni_AliRest;
-
-            if((int_ShowFlag == 1) || (int_ShowFlag == 2))
-            {
-                cout << "----------------------------------------" << endl;
-                cout << "### 支配财富 ###" << endl;
-                cout << "财富值: " << CTool::TransOutFormat(uni_AggrSurplusPlus) << endl;
-                cout << "----------------------------------------" << endl;
-                cout << "### 理财分配 ###" << endl;
-                cout << "零钱通: " << CTool::TransOutFormat(uni_WXRest) << endl;
-                cout << "余额宝: " << CTool::TransOutFormat(uni_AliRest) << endl;
-                cout << "----------------------------------------" << endl;
-            }
-        }
-
-        uni_ItemCounter++;
     }
 }
 

@@ -26,11 +26,12 @@ public:
 
     void VersionRipper();
     void MonthRipper();
+    void SumRipper();
     void TitleRipper();
     void TitleDeepRipper();
     void SubMonthRipper();
     void TailRipper();
-    void DPSRipper();
+    void CAFRipper();
 
     void MonthRangeGenerator();
     bool IsIncludeMonthRange(const string str_SelMonth);
@@ -38,36 +39,43 @@ public:
     string GetVersion();
     string GetOriginMonth();
     string GetCurrentMonth();
+    string GetOriginSum();
+    string GetCurrentSum();
 
     void MonthRangeDuplicator(vector<string> &vec_str_DestMonth);
     void TitleDuplicator(vector<string> &vec_str_Dest);
     void TitleDeepDuplicator(vector<string> &vec_str_Dest);
     void SubMonthDuplicator(vector<string> &vec_str_Dest);
     void TailDuplicator(vector<string> &vec_str_Dest);
-    void DPSDuplicator(vector<string> &vec_str_Dest);
+    void CAFDuplicator(vector<string> &vec_str_Dest);
 
 private:
     CXMLRipper m_cls_XMLRipper;
     string m_str_ScriptFilePath;
 
     string m_str_Version;
+
     string m_str_OriginMonth;
     string m_str_CurrentMonth;
     unsigned int m_uni_OriginMonth;
     unsigned int m_uni_CurrentMonth;
+    vector<string> m_vec_str_Month;   // Month需要计算生成
+
+    string m_str_OriginSum;
+    string m_str_CurrentSum;
 
     unsigned int m_uni_TitleNum;
     unsigned int m_uni_TitleDeepNum;
     unsigned int m_uni_SubMonthNum;
     unsigned int m_uni_TailNum;
-    unsigned int m_uni_DPSNum;
+    unsigned int m_uni_CAFNum;
     vector<string> m_vec_str_Title;
     vector<string> m_vec_str_TitleDeep;
     vector<string> m_vec_str_SubMonth;
     vector<string> m_vec_str_Tail;
-    vector<string> m_vec_str_DPS;
+    vector<string> m_vec_str_CAF;
 
-    vector<string> m_vec_str_Month;   // Month需要计算生成
+    
 };
 
 

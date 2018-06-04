@@ -75,8 +75,7 @@ void CASitfX::CheckFA()
     }
 
     // Check Sum
-    int int_AFRest = 0;
-    int int_RetCheck = ptr_FAitfX->CheckAggrSurplus(int_AFRest, false);
+    int int_RetCheck = CheckSum(0);
 
     if( 0 != int_RetCheck )
     {
@@ -86,7 +85,7 @@ void CASitfX::CheckFA()
     {
         cout << "----------------------------------------" << endl;
         cout << "###   FA全系统校验Pass :)   ###" << endl;
-        cout << "当前财富: " << CTool::TransOutFormat(int_AFRest) << endl;
+        cout << "当前财富: " << CTool::TransOutFormat(ptr_FAitfX->m_int_CurrentSum) << endl;
         cout << "----------------------------------------" << endl;
     }
 }
@@ -123,14 +122,112 @@ void CASitfX::UpdateFA()
     }
 
     // Update Month
-    ptr_FAitfX->UpdateMonthSurplus(CTool::GeneratePreMonth(str_CurMonth), true);
+    ptr_FAitfX->UpdateMonthSurplus(CTool::GeneratePreMonth(str_CurMonth), false);
     ptr_FAitfX->SyncMonthSurplus(CTool::GeneratePreMonth(str_CurMonth));
 
-    ptr_FAitfX->UpdateMonthSurplus(str_CurMonth, true);
+    ptr_FAitfX->UpdateMonthSurplus(str_CurMonth, false);
     ptr_FAitfX->SyncMonthSurplus(str_CurMonth);
 
     // Update Sum
-    ptr_FAitfX->UpdateAggrSurplus(true);
+    UpdateSum(1);
+}
+
+/**************************************************/
+//   校验 SUM收支
+/**************************************************/
+int CASitfX::CheckSum(int int_OFlag)
+{
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    ptr_FAitfX->LoadSum(0);
+    ptr_FAitfX->SummerizeMonth(0);
+    ptr_FAitfX->SummerizeTitle(0);
+    ptr_FAitfX->SummerizeTail(0);
+    ptr_FAitfX->SummerizeCAF(0);
+
+    int int_OriginSum = ptr_FAitfX->m_int_OriginSum;
+    int int_CurrentSum = ptr_FAitfX->m_int_CurrentSum;
+
+    int int_MonthSalarySum = ptr_FAitfX->m_int_MonthSalarySum;
+    int int_MonthExpenseSum = ptr_FAitfX->m_int_MonthExpenseSum;
+    int int_MonthSurplusSum = ptr_FAitfX->m_int_MonthSurplusSum;
+
+    int int_TitleSum = ptr_FAitfX->m_int_TitleSum;
+    int int_TailSum = ptr_FAitfX->m_int_TailSum;
+    int int_CAFSum = ptr_FAitfX->m_int_CAFSum;
+
+    int int_CurrentSumCK = int_OriginSum + int_MonthSurplusSum + int_TitleSum;
+    int int_CAFSumCK = int_CurrentSumCK + int_TailSum;
+
+    if(int_OFlag == 1)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### 当前财富 ###" << endl;
+        cout << "读取值: " << CTool::TransOutFormat(int_CurrentSum) << endl;
+        cout << "校验值: " << CTool::TransOutFormat(int_CurrentSumCK) << endl;
+        cout << "----------------------------------------" << endl;
+        cout << "### 支配财富 ###" << endl;
+        cout << "读取值: " << CTool::TransOutFormat(int_CAFSum) << endl;
+        cout << "校验值: " << CTool::TransOutFormat(int_CAFSumCK) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+
+    if(int_CurrentSum != int_CurrentSumCK)
+    {
+        return -1;
+    }
+    else if(int_CAFSum != int_CAFSumCK)
+    {
+        return -2;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+/**************************************************/
+//   更新 SUM收支
+/**************************************************/
+void CASitfX::UpdateSum(int int_OFlag)
+{
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    ptr_FAitfX->LoadSum(0);
+    ptr_FAitfX->SummerizeMonth(0);
+    ptr_FAitfX->SummerizeTitle(0);
+    ptr_FAitfX->SummerizeTail(0);
+    ptr_FAitfX->SummerizeCAF(0);
+
+    int int_OriginSum = ptr_FAitfX->m_int_OriginSum;
+    int int_CurrentSum = ptr_FAitfX->m_int_CurrentSum;
+
+    int int_MonthSalarySum = ptr_FAitfX->m_int_MonthSalarySum;
+    int int_MonthExpenseSum = ptr_FAitfX->m_int_MonthExpenseSum;
+    int int_MonthSurplusSum = ptr_FAitfX->m_int_MonthSurplusSum;
+
+    int int_TitleSum = ptr_FAitfX->m_int_TitleSum;
+    int int_TailSum = ptr_FAitfX->m_int_TailSum;
+    int int_CAFSum = ptr_FAitfX->m_int_CAFSum;
+
+    int int_CurrentSumUD = int_OriginSum + int_TitleSum + int_MonthSurplusSum;
+    int int_CAFSumUD = int_CurrentSumUD + int_TailSum;
+
+    ptr_FAitfX->UpdateCurrentSum(int_CurrentSumUD);
+    ptr_FAitfX->UpdateCAF(int_CAFSumUD);
+
+    if(int_OFlag == 1)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### 当前财富 ###" << endl;
+        cout << "读取值: " << CTool::TransOutFormat(int_CurrentSum) << endl;
+        cout << "更新值: " << CTool::TransOutFormat(int_CurrentSumUD) << endl;
+        cout << "----------------------------------------" << endl;
+        cout << "### 支配财富 ###" << endl;
+        cout << "读取值: " << CTool::TransOutFormat(int_CAFSum) << endl;
+        cout << "更新值: " << CTool::TransOutFormat(int_CAFSumUD) << endl;
+        cout << "----------------------------------------" << endl;
+    }
 }
 
 /**************************************************/

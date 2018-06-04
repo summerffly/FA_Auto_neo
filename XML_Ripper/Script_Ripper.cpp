@@ -26,17 +26,18 @@ m_cls_XMLRipper(cha_xmlPath)
     m_vec_str_Title.clear();
     m_vec_str_SubMonth.clear();
     m_vec_str_Tail.clear();
-    m_vec_str_DPS.clear();
+    m_vec_str_CAF.clear();
 
     m_vec_str_Month.clear();
 
     VersionRipper();
     MonthRipper();
+    SumRipper();
     TitleRipper();
     TitleDeepRipper();
     SubMonthRipper();
     TailRipper();
-    DPSRipper();
+    CAFRipper();
 
     MonthRangeGenerator();
 }
@@ -67,6 +68,15 @@ void CScriptRipper::MonthRipper()
 
     m_uni_OriginMonth = atoi(m_str_OriginMonth.c_str());
     m_uni_CurrentMonth = atoi(m_str_CurrentMonth.c_str());
+}
+
+/**************************************************/
+//   读取&解析 Sum
+/**************************************************/
+void CScriptRipper::SumRipper()
+{
+    m_str_OriginSum = m_cls_XMLRipper.GetL2NodeAttr_UNI("FA_SUM", "OriginSum", "content");
+    m_str_CurrentSum = m_cls_XMLRipper.GetL2NodeAttr_UNI("FA_SUM", "CurrentSum", "content");
 }
 
 /**************************************************/
@@ -134,18 +144,18 @@ void CScriptRipper::TailRipper()
 }
 
 /**************************************************/
-//   读取&解析 DPS
+//   读取&解析 CAF   // Consum Availible Fund
 /**************************************************/
-void CScriptRipper::DPSRipper()
+void CScriptRipper::CAFRipper()
 {
-    string str_DPSNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_DPS", "num");
-    m_uni_DPSNum = atoi(str_DPSNum.c_str());
+    string str_CAFNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_CAF", "num");
+    m_uni_CAFNum = atoi(str_CAFNum.c_str());
 
     string str_Temp;
-    for(int i=1; i<=m_uni_DPSNum; i++)
+    for(int i=1; i<=m_uni_CAFNum; i++)
     {
-        str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_DPS", "DPSItem", i,"item");
-        m_vec_str_DPS.push_back(str_Temp);
+        str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_CAF", "CAFItem", i,"item");
+        m_vec_str_CAF.push_back(str_Temp);
     }
 }
 
@@ -251,6 +261,22 @@ string CScriptRipper::GetCurrentMonth()
 }
 
 /**************************************************/
+//   获取 OriginSum
+/**************************************************/
+string CScriptRipper::GetOriginSum()
+{
+    return m_str_OriginSum;
+}
+
+/**************************************************/
+//   获取 CurrentSum
+/**************************************************/
+string CScriptRipper::GetCurrentSum()
+{
+    return m_str_CurrentSum;
+}
+
+/**************************************************/
 //   拷贝 Month Range
 /**************************************************/
 void CScriptRipper::MonthRangeDuplicator(vector<string> &vec_str_DestMonth)
@@ -321,19 +347,18 @@ void CScriptRipper::TailDuplicator(vector<string> &vec_str_Dest)
 }
 
 /**************************************************/
-//   拷贝 DPS
+//   拷贝 CAF
 /**************************************************/
-void CScriptRipper::DPSDuplicator(vector<string> &vec_str_Dest)
+void CScriptRipper::CAFDuplicator(vector<string> &vec_str_Dest)
 {
     vec_str_Dest.clear();
 
-    vector<string>::iterator itr_DPS;
-    for(itr_DPS = m_vec_str_DPS.begin(); itr_DPS != m_vec_str_DPS.end(); itr_DPS++)
+    vector<string>::iterator itr_CAF;
+    for(itr_CAF = m_vec_str_CAF.begin(); itr_CAF != m_vec_str_CAF.end(); itr_CAF++)
     {
-        vec_str_Dest.push_back(*itr_DPS);
+        vec_str_Dest.push_back(*itr_CAF);
     }
 }
-
 
 //------------------------------//
 //   River flows in summer
