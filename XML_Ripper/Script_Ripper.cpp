@@ -360,6 +360,15 @@ void CScriptRipper::CAFDuplicator(vector<string> &vec_str_Dest)
     }
 }
 
+/**************************************************/
+//   修改 当前Month
+/**************************************************/
+void CScriptRipper::ModifyCurrentMonth(const string str_SelMonth)
+{
+    m_cls_XMLRipper.SetL1NodeAttr_UNI("CurrentMonth", "month", str_SelMonth);
+    m_cls_XMLRipper.XMLSaver();
+}
+
 //------------------------------//
 //   River flows in summer
 //------------------------------//

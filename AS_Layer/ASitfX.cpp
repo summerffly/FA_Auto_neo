@@ -302,6 +302,34 @@ void CASitfX::ShowMDRawSubMonthTraversal(const string str_SelMonth, bool bol_Num
 }
 
 /**************************************************/
+//   添加NextMonth脚本
+/**************************************************/
+void CASitfX::AppendNextMonth(const string str_SelMonth)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    // 修改Script
+    ptr_ScriptRipper->ModifyCurrentMonth(str_SelMonth);
+
+    // 添加Sum脚本
+    ptr_FAitfX->AddScriptSum(str_SelMonth);
+
+    // 添加Month脚本
+    ptr_FAitfX->AddScriptMonth(str_SelMonth);
+
+    // 添加SubMonth脚本
+    vector<string> vec_str_SubMonth;
+    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+
+    vector<string>::iterator itr_SubMonth;
+    for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
+    {
+        ptr_FAitfX->AddScriptSubMonth(*itr_SubMonth, CTool::GenerateNextMonth(str_SelMonth));
+    }
+}
+
+/**************************************************/
 //   帮助提示
 /**************************************************/
 void CASitfX::HelpAll()

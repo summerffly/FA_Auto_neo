@@ -82,8 +82,9 @@ public:
     /****************************************/
     void TransferBalance(const string str_FirstKey, const string str_SecondKey,
                          const bool bol_TransferFlag, const unsigned int uni_BalanceValueABS);
-    void AppendMonth(const string str_SelMonth);
-    void AppendsubMonth(const string str_SubMonthKey, const string str_SelMonth);
+    void AddScriptSum(const string str_SelMonth);
+    void AddScriptMonth(const string str_SelMonth);
+    void AddScriptSubMonth(const string str_SubMonthKey, const string str_SelMonth);
     void CheckTempExpense();
 
     /****************************************/
@@ -106,7 +107,7 @@ public:
     void ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag);
 
     /****************************************/
-    //   文件读写 操作区
+    //   文件读写区
     /****************************************/
     void SyncAllFile();
     void WriteAllFile();

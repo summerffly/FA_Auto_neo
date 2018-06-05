@@ -874,38 +874,36 @@ void CFAitfX::TransferBalance(const string str_FirstKey, const string str_Second
 }
 
 /**************************************************/
-//   插入 月度 脚本
+//   添加Sum脚本
 /**************************************************/
-void CFAitfX::AppendMonth(const string str_SelMonth)
+void CFAitfX::AddScriptSum(const string str_SelMonth)
 {
-    // 插入 AF(Aggr Financial).md文件 脚本
-    string str_AFMonthTitle = string("## life.M");
-    string str_AFMonthSalary = str_SelMonth;
-    string str_AFMonthExpense = str_SelMonth;
-    string str_AFMonthRest = str_SelMonth;
-    str_AFMonthTitle += str_SelMonth;
-    str_AFMonthSalary += "月薪资";
-    str_AFMonthExpense += "月支出";
-    str_AFMonthRest += "月结余";
+    string str_SUMMonthTitle = string("## life.M") + str_SelMonth;
+    string str_SUMMonthSalary = str_SelMonth + "月薪资";
+    string str_SUMMonthExpense = str_SelMonth + "月支出";
+    string str_SUMMonthRest = str_SelMonth + "月结余";
 
     m_cls_FM_SUM.SearchLineKey("## Summary");
-    unsigned int uni_AFLine = m_cls_FM_SUM.GetSearchLineIndex(1);
+    unsigned int uni_SUMLine = m_cls_FM_SUM.GetSearchLineIndex(1);
 
-    m_cls_FM_SUM.InsertBlankLine(uni_AFLine-1);
-    m_cls_FM_SUM.InsertLine(uni_AFLine, LTYPE_MONTHTITLE, 0, str_AFMonthTitle);
-    m_cls_FM_SUM.InsertLine(uni_AFLine+1, LTYPE_FBIRC_MONTHSUM, 0, str_AFMonthSalary);
-    m_cls_FM_SUM.InsertLine(uni_AFLine+2, LTYPE_FBIRC_MONTHSUM, 0, str_AFMonthExpense);
-    m_cls_FM_SUM.InsertLine(uni_AFLine+3, LTYPE_FBIRC_MONTHSUM, 0, str_AFMonthRest);
+    m_cls_FM_SUM.InsertBlankLine(uni_SUMLine-1);
+    m_cls_FM_SUM.InsertLine(uni_SUMLine, LTYPE_MONTHTITLE, 0, str_SUMMonthTitle);
+    m_cls_FM_SUM.InsertLine(uni_SUMLine+1, LTYPE_FBIRC_MONTHSUM, 0, str_SUMMonthSalary);
+    m_cls_FM_SUM.InsertLine(uni_SUMLine+2, LTYPE_FBIRC_MONTHSUM, 0, str_SUMMonthExpense);
+    m_cls_FM_SUM.InsertLine(uni_SUMLine+3, LTYPE_FBIRC_MONTHSUM, 0, str_SUMMonthRest);
+}
 
-    // 插入 life.md文件 脚本
-    string str_lifeMonthTitle = string("## life.M");
-    string str_lifeMonthSalary = CTool::GenerateNextMonth(str_SelMonth);
-    string str_lifeMonthExpense = CTool::GenerateNextMonth(str_SelMonth);
-    string str_lifeMonthRest = CTool::GenerateNextMonth(str_SelMonth);
-    str_lifeMonthTitle += CTool::GenerateNextMonth(str_SelMonth);
-    str_lifeMonthSalary += "月薪资";
-    str_lifeMonthExpense += "月支出";
-    str_lifeMonthRest += "月结余";
+/**************************************************/
+//   添加Month脚本
+/**************************************************/
+void CFAitfX::AddScriptMonth(const string str_SelMonth)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
+    string str_lifeMonthTitle = string("## life.M") + CTool::GenerateNextMonth(str_SelMonth);
+    string str_lifeMonthSalary = CTool::GenerateNextMonth(str_SelMonth) + "月薪资";
+    string str_lifeMonthExpense = CTool::GenerateNextMonth(str_SelMonth) + "月支出";
+    string str_lifeMonthRest = CTool::GenerateNextMonth(str_SelMonth) + "月结余";
 
     m_cls_FM_life.SearchLineKey("---");
     unsigned int uni_lifeLine = m_cls_FM_life.GetSearchLineIndex(1);
@@ -921,33 +919,25 @@ void CFAitfX::AppendMonth(const string str_SelMonth)
 
     m_cls_FM_life.InsertBlankLine(uni_lifeLine-4);
     m_cls_FM_life.InsertLine(uni_lifeLine-3, LTYPE_FBIRC_LINEUINT, 0, str_lifeMonthLife);
-
-    string str_lifeSMbooks("Books.M");
-    string str_lifeSMkeep("KEEP.M");
-    string str_lifeSMtb("TB.M");
-    string str_lifeSMsa("sa.M");
-    str_lifeSMbooks += str_SelMonth;
-    str_lifeSMkeep += str_SelMonth;
-    str_lifeSMtb += str_SelMonth;
-    str_lifeSMsa += str_SelMonth;
-
     m_cls_FM_life.InsertBlankLine(uni_lifeLine-2);
-    m_cls_FM_life.InsertLine(uni_lifeLine-1, LTYPE_FBIRC_LINEUINT, 0, str_lifeSMbooks);
-    m_cls_FM_life.InsertLine(uni_lifeLine, LTYPE_FBIRC_LINEUINT, 0, str_lifeSMkeep);
-    m_cls_FM_life.InsertLine(uni_lifeLine+1, LTYPE_FBIRC_LINEUINT, 0, str_lifeSMtb);
-    m_cls_FM_life.InsertLine(uni_lifeLine+2, LTYPE_FBIRC_LINEUINT, 0, str_lifeSMsa);
 
-    // 插入 子项.M.md文件 脚本
-    AppendsubMonth("Books", CTool::GenerateNextMonth(str_SelMonth));
-    AppendsubMonth("KEEP", CTool::GenerateNextMonth(str_SelMonth));
-    AppendsubMonth("TB", CTool::GenerateNextMonth(str_SelMonth));
-    AppendsubMonth("sa", CTool::GenerateNextMonth(str_SelMonth));
+    vector<string> vec_str_SubMonth;
+    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+
+    vector<string>::iterator itr_SubMonth;
+    int int_LineCount = 0;
+    for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
+    {
+        string str_lifeSM = *itr_SubMonth + ".M" + str_SelMonth;
+        m_cls_FM_life.InsertLine(uni_lifeLine-1+int_LineCount, LTYPE_FBIRC_LINEUINT, 0, str_lifeSM);
+        int_LineCount++;
+    }
 }
 
 /**************************************************/
-//   插入 子项.M 脚本
+//   添加SubMonth脚本
 /**************************************************/
-void CFAitfX::AppendsubMonth(const string str_SubMonthKey, const string str_SelMonth)
+void CFAitfX::AddScriptSubMonth(const string str_SubMonthKey, const string str_SelMonth)
 {
     string str_SMTitle = string("## ");
     str_SMTitle += str_SubMonthKey;

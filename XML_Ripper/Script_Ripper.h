@@ -24,6 +24,9 @@ public:
     CScriptRipper(const char *cha_xmlPath);
     ~CScriptRipper();
 
+    /****************************************/
+    //   解析 Script
+    /****************************************/
     void VersionRipper();
     void MonthRipper();
     void SumRipper();
@@ -36,6 +39,9 @@ public:
     void MonthRangeGenerator();
     bool IsIncludeMonthRange(const string str_SelMonth);
 
+    /****************************************/
+    //   读取 Script
+    /****************************************/
     string GetVersion();
     string GetOriginMonth();
     string GetCurrentMonth();
@@ -48,6 +54,11 @@ public:
     void SubMonthDuplicator(vector<string> &vec_str_Dest);
     void TailDuplicator(vector<string> &vec_str_Dest);
     void CAFDuplicator(vector<string> &vec_str_Dest);
+
+    /****************************************/
+    //   修改 Script
+    /****************************************/
+    void ModifyCurrentMonth(const string str_SelMonth);
 
 private:
     CXMLRipper m_cls_XMLRipper;

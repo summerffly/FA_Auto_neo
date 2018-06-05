@@ -42,7 +42,7 @@ int main(int argc, char **argv, char *env[])
     cout << "***                                  ***" << endl;
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
-    cout << "***          Version: " << ptr_ScriptRipper->GetVersion() << "          ***" << endl;
+    cout << "***         Version: " << ptr_ScriptRipper->GetVersion() << "          ***" << endl;
     cout << "***                                  ***" << endl;
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
@@ -582,7 +582,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->AppendMonth(X_CMD.GetCmd(3));
+            ptr_ASitfX->AppendNextMonth(X_CMD.GetCmd(3));
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

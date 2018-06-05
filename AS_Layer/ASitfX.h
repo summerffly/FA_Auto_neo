@@ -48,8 +48,9 @@ public:
     void ShowMDRawSubMonthTraversal(const string str_SelMonth, bool bol_NumFlag);
 
     /****************************************/
-    //   帮助提示
+    //   其他
     /****************************************/
+    void AppendNextMonth(const string str_SelMonth);
     void HelpAll();
 };
 

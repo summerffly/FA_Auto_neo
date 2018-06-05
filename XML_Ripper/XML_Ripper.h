@@ -24,12 +24,18 @@ public:
 
     bool XMLSaver();
 
+    /****************************************/
+    //   读取 XML
+    /****************************************/
     string GetRootNodeAttr(const string str_RootNodeAttr);
     string GetL1NodeAttr_UNI(const string str_L1Node, const string str_L1NodeAttr);
     string GetL2NodeAttr_UNI(const string str_L1Node, const string str_L2Node, const string str_L2NodeAttr);
     string GetL2NodeAttr_IDX(const string str_L1Node, const string str_L2Node,\
                              const unsigned int uni_L2NodeIndex, const string str_L2NodeAttr);
     
+    /****************************************/
+    //   修改 XML
+    /****************************************/
     bool SetL1NodeAttr_UNI(const string str_L1Node, const string str_L1NodeAttr, const string str_L1NodeValue);
 
 private:
