@@ -52,32 +52,13 @@ void CASitfX::CheckFA()
         }
     }
 
-    // Check SubMonth
-    vector<string> vec_str_SubMonth;
-    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
-
-    vector<string>::iterator itr_SubMonth;
-    for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
-    {
-        if( 0 != ptr_FAitfX->CheckSubMonthExpense(*itr_SubMonth, str_CurMonth, false) )
-        {
-            string str_Message = *itr_SubMonth + " NOT Pass Check";
-            CTool::MassageOutFotmat(str_Message, '!');
-            return;
-        }
-    }
-
     // Check Month
-    if( 0 != ptr_FAitfX->CheckMonthSurplus(str_CurMonth, false) )
+    if( 0 != CheckMonth(str_CurMonth, 0) )
     {
-        CTool::MassageOutFotmat("Month NOT Pass Check", '!');
         return;
     }
 
-    // Check Sum
-    int int_RetCheck = CheckSum(0);
-
-    if( 0 != int_RetCheck )
+    if( 0 != CheckSum(0) )
     {
         CTool::MassageOutFotmat("FA_SUM NOT Pass Check", '!');
     }
@@ -110,23 +91,8 @@ void CASitfX::UpdateFA()
         ptr_FAitfX->UpdateTitleExpense(*itr_TitleDeep, false);
     }
 
-    // Update SubMonth
-    vector<string> vec_str_SubMonth;
-    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
-
-    vector<string>::iterator itr_SubMonth;
-    for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
-    {
-        ptr_FAitfX->UpdateSubMonthExpense(*itr_SubMonth, CTool::GeneratePreMonth(str_CurMonth), false);
-        ptr_FAitfX->UpdateSubMonthExpense(*itr_SubMonth, str_CurMonth, false);
-    }
-
-    // Update Month
-    ptr_FAitfX->UpdateMonthSurplus(CTool::GeneratePreMonth(str_CurMonth), false);
-    ptr_FAitfX->SyncMonthSurplus(CTool::GeneratePreMonth(str_CurMonth));
-
-    ptr_FAitfX->UpdateMonthSurplus(str_CurMonth, false);
-    ptr_FAitfX->SyncMonthSurplus(str_CurMonth);
+    // Update CurrentMonth
+    UpdateMonth(str_CurMonth, 0);
 
     // Update Sum
     UpdateSum(1);
@@ -231,19 +197,93 @@ void CASitfX::UpdateSum(int int_OFlag)
 }
 
 /**************************************************/
+//   校验 Month收支
+/**************************************************/
+int CASitfX::CheckMonth(const string str_SelMonth, int int_OFlag)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    // Check SubMonth
+    vector<string> vec_str_SubMonth;
+    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+
+    vector<string>::iterator itr_SubMonth;
+    for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
+    {
+        if( 0 != ptr_FAitfX->CheckSubMonthExpense(*itr_SubMonth, str_SelMonth, false) )
+        {
+            string str_Message = "M" + str_SelMonth + "." + *itr_SubMonth + " NOT Pass Check";
+            CTool::MassageOutFotmat(str_Message, '!');
+            return -1;
+        }
+    }
+
+    // Check Month
+    if( 0 != ptr_FAitfX->CheckMonthSurplus(str_SelMonth, false) )
+    {
+        string str_Message = "Month " + str_SelMonth + " NOT Pass Check";
+        CTool::MassageOutFotmat("Month NOT Pass Check", '!');
+        return -2;
+    }
+
+    if(int_OFlag == 1)
+    {
+        ptr_FAitfX->ShowMonthSurplus(str_SelMonth, 1);
+    }
+
+    return 0;
+}
+
+/**************************************************/
+//   更新 Month收支
+/**************************************************/
+void CASitfX::UpdateMonth(const string str_SelMonth, int int_OFlag)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    // Update SubMonth
+    vector<string> vec_str_SubMonth;
+    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+
+    vector<string>::iterator itr_SubMonth;
+    for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
+    {
+        ptr_FAitfX->UpdateSubMonthExpense(*itr_SubMonth, str_SelMonth, false);
+    }
+
+    // Update Month
+    ptr_FAitfX->UpdateMonthSurplus(str_SelMonth, false);
+    ptr_FAitfX->SyncMonthSurplus(str_SelMonth);
+
+    if(int_OFlag == 1)
+    {
+        ptr_FAitfX->ShowMonthSurplus(str_SelMonth, 1);
+    }
+}
+
+/**************************************************/
 //   分析月度趋势 CSM消费支出
 /**************************************************/
 void CASitfX::AnalysisMonthTrend_CSM()
 {
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
     vector<TREND_INFO> vec_stc_TrendInfo;
 
-    // 建构 趋势Vector
-    // tips 番茄@20180307 - 这里需要升级为XML脚本读取
-    ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, "Books");
-    ptr_FAitfX->AppendMonthTrendVector(vec_stc_TrendInfo, "KEEP");
-    ptr_FAitfX->AppendMonthTrendVector(vec_stc_TrendInfo, "TB");
-    ptr_FAitfX->AppendMonthTrendVector(vec_stc_TrendInfo, "sa");
+    vector<string> vec_str_SubMonth;
+    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+
+    vector<string>::iterator itr_SubMonth;
+    for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
+    {
+        if(itr_SubMonth == vec_str_SubMonth.begin())
+            ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, *itr_SubMonth);
+
+        ptr_FAitfX->AppendMonthTrendVector(vec_stc_TrendInfo, *itr_SubMonth);
+    }
 
     // 绘制 趋势Vector
     cout << "----------------------------------------" << endl;
@@ -287,16 +327,21 @@ void CASitfX::AnalysisMonthTrend_ROOM()
 /**************************************************/
 void CASitfX::ShowMDRawSubMonthTraversal(const string str_SelMonth, bool bol_NumFlag)
 {
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
     cout << "----------------------------------------" << endl;
     cout << "### 全部月度.M 展示.md ###" << endl;
     cout << endl;
 
-    ptr_FAitfX->ShowMDRawSubMonth("Books", str_SelMonth, bol_NumFlag, false);
-    ptr_FAitfX->ShowMDRawSubMonth("KEEP", str_SelMonth, bol_NumFlag, false);
-    ptr_FAitfX->ShowMDRawSubMonth("TB", str_SelMonth, bol_NumFlag, false);
-    ptr_FAitfX->ShowMDRawSubMonth("sa", str_SelMonth, bol_NumFlag, false);
+    vector<string> vec_str_SubMonth;
+    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+
+    vector<string>::iterator itr_SubMonth;
+    for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
+    {
+        ptr_FAitfX->ShowMDRawSubMonth(*itr_SubMonth, str_SelMonth, bol_NumFlag, false);
+    }
 
     cout << "----------------------------------------" << endl;
 }
@@ -371,24 +416,20 @@ void CASitfX::HelpAll()
     cout << ">>> " << UPDATE << endl;
     cout << endl;
 
-    cout << "校验 当月/上月 支出" << endl;
-    cout << ">>> " << CHECK << ' ' << EXPENSE << ' ' << MONTH << '/' << EX_MONTH << endl;
+    cout << "校验 任意Month 收支" << endl;
+    cout << ">>> " << CHECK << ' ' << MONTH << ' ' << ptr_ScriptRipper->GetCurrentMonth() << endl;
     cout << endl;
 
     cout << "校验 当月/上月 收支" << endl;
     cout << ">>> " << CHECK << ' ' << MONTH << '/' << EX_MONTH << endl;
     cout << endl;
 
-    cout << "校验 任意月度 收支" << endl;
-    cout << ">>> " << CHECK << ' ' << MONTH << ' ' << ptr_ScriptRipper->GetCurrentMonth() << endl;
+    cout << "更新 任意Month 收支" << endl;
+    cout << ">>> " << UPDATE << ' ' << MONTH << ' ' << ptr_ScriptRipper->GetCurrentMonth() << endl;
     cout << endl;
 
     cout << "更新 当月/上月 收支" << endl;
     cout << ">>> " << UPDATE << ' ' << MONTH << '/' << EX_MONTH << endl;
-    cout << endl;
-
-    cout << "更新 任意月度 收支" << endl;
-    cout << ">>> " << UPDATE << ' ' << MONTH << ' ' << ptr_ScriptRipper->GetCurrentMonth() << endl;
     cout << endl;
 
     cout << "增加 当月 生活费" << endl;

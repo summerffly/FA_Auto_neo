@@ -49,9 +49,9 @@ public:
     void UpdateCAF(const int int_CAFSum);
 
     /****************************************/
-    //   月度 操作区
+    //   Month 计算区
     /****************************************/
-    void InsertMonth(const unsigned int uni_VecIndex, const int int_LineValue, const string str_LineContent);
+    //void InsertMonth(const unsigned int uni_VecIndex, const int int_LineValue, const string str_LineContent);
     int CheckMonthExpense(const string str_SelMonth, bool bol_OFlag);
     int CheckMonthSurplus(const string str_SelMonth, bool bol_OFlag);
     void UpdateMonthSurplus(const string str_SelMonth, bool bol_OFlag);
@@ -60,7 +60,7 @@ public:
     void SyncMonthSurplus(const string str_SelMonth);
 
     /****************************************/
-    //   子项.M 操作区
+    //   SubMonth 计算区
     /****************************************/
     int CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag);
     void UpdateSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag);
@@ -68,7 +68,7 @@ public:
                                const int int_LineValue, const string str_LineContent);
 
     /****************************************/
-    //   Tt分项 操作区
+    //   Title 计算区
     /****************************************/
     int CheckTitleExpense(const string str_TitleKey, bool bol_OFlag);
     void UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag);
@@ -78,7 +78,7 @@ public:
                        const string str_LineDate);
 
     /****************************************/
-    //   综合 操作区
+    //   综合操作区
     /****************************************/
     void TransferBalance(const string str_FirstKey, const string str_SecondKey,
                          const bool bol_TransferFlag, const unsigned int uni_BalanceValueABS);
@@ -88,7 +88,7 @@ public:
     void CheckTempExpense();
 
     /****************************************/
-    //   统计化 操作区
+    //   统计区
     /****************************************/
     void GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey);
     void AppendMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey);
@@ -99,12 +99,12 @@ public:
     void AnalysisMonthProportion(const string str_SelMonth);
 
     /****************************************/
-    //   展示化 操作区
+    //   展示区
     /****************************************/
     void ShowMDRawMonth(const string str_SelMonth, bool bol_NumFlag);
     void ShowMDRawSubMonth(const string str_SubMonthKey, const string str_SelMonth, bool bol_NumFlag, bool bol_ShowFlag);
 
-    void ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag);
+    void ShowMonthSurplus(const string str_SelMonth, int int_OFlag);
 
     /****************************************/
     //   文件读写区
@@ -135,6 +135,7 @@ private:
 private:
     CFileManager m_cls_FM_SUM;
     CFileManager m_cls_FM_life;
+    CFileManager m_cls_FM_sm_DGtler;
     CFileManager m_cls_FM_sm_Books;
     CFileManager m_cls_FM_sm_KEEP;
     CFileManager m_cls_FM_sm_TB;

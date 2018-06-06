@@ -37,6 +37,12 @@ public:
     void UpdateSum(int int_OFlag);
 
     /****************************************/
+    //   Month 计算区
+    /****************************************/
+    int CheckMonth(const string str_SelMonth, int int_OFlag);
+    void UpdateMonth(const string str_SelMonth, int int_OFlag);
+
+    /****************************************/
     //   统计区
     /****************************************/
     void AnalysisMonthTrend_CSM();

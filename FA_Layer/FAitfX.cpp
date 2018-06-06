@@ -12,10 +12,11 @@ using namespace std;
 
 
 // tips 番茄@20171211 - 使用带参宏函数Key填错会有风险，用m_cls_FM_SUM的head进行校验
+// tips 番茄@20180606 - m_cls_FM_sm_DGtler临时用法
 #define FM_SUBMONTH(str)  ((!(str).compare("Books"))?(m_cls_FM_sm_Books):\
                            ((!(str).compare("KEEP"))?(m_cls_FM_sm_KEEP):\
                            ((!(str).compare("TB"))?(m_cls_FM_sm_TB):\
-                           ((!(str).compare("sa"))?(m_cls_FM_sm_sa):(m_cls_FM_SUM)))) )
+                           ((!(str).compare("sa"))?(m_cls_FM_sm_sa):(m_cls_FM_sm_DGtler)))) )
 
 // tips 番茄@20171211 - 使用带参宏函数Key填错会有风险，用m_cls_FM_SUM的head进行校验
 #define FM_TITLE(str)  ((!(str).compare("DK"))?(m_cls_FM_tt_DK):\
@@ -41,6 +42,7 @@ CFAitfX::CFAitfX()
 
     m_cls_FM_SUM = CFileManager("./FA_SUM.md");
     m_cls_FM_life = CFileManager("./life.M.md");
+    m_cls_FM_sm_DGtler = CFileManager("./DGtler.M.md");
     m_cls_FM_sm_Books = CFileManager("./Books.M.md");
     m_cls_FM_sm_KEEP = CFileManager("./KEEP.M.md");
     m_cls_FM_sm_TB = CFileManager("./TB.M.md");
@@ -313,10 +315,12 @@ void CFAitfX::UpdateCAF(const int int_CAFSum)
 /**************************************************/
 //   增加行 life.M
 /**************************************************/
+/*
 void CFAitfX::InsertMonth(const unsigned int uni_VecIndex, const int int_LineValue, const string str_LineContent)
 {
     //m_cls_FM_life.InsertLine(uni_VecIndex, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
 }
+*/
 
 /**************************************************/
 //   校验 life.M 月度支出
@@ -516,7 +520,7 @@ void CFAitfX::ModifyMonthSurplus(const string str_SelMonth, const string str_Mon
 /**************************************************/
 void CFAitfX::SyncMonthSurplus(const string str_SelMonth)
 {
-    string str_SelMonthFL = "## life.M" + str_SelMonth;   // tips 番茄@20171219 - FullLine
+    string str_SelMonthFL = "## life.M" + str_SelMonth;
 
     m_cls_FM_life.SearchLineKey(str_SelMonthFL.c_str());
     unsigned int uni_SelMonth = m_cls_FM_life.GetSearchLineIndex(1);
@@ -536,7 +540,7 @@ void CFAitfX::SyncMonthSurplus(const string str_SelMonth)
 }
 
 /**************************************************/
-//   校验 子项.M 月度支出
+//   校验 SubMonth 支出
 /**************************************************/
 int CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag)
 {
@@ -587,7 +591,7 @@ int CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str
 }
 
 /**************************************************/
-//   更新 子项.M 月度支出
+//   更新 SubMonth 支出
 /**************************************************/
 void CFAitfX::UpdateSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag)
 {
@@ -626,7 +630,7 @@ void CFAitfX::UpdateSubMonthExpense(const string str_SubMonthKey, const string s
 }
 
 /**************************************************/
-//   添加行 子项.M 月度支出
+//   添加行 SubMonth 支出
 /**************************************************/
 void CFAitfX::AppendSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth,\
                                     const int int_LineValue, const string str_LineContent)
@@ -1313,10 +1317,10 @@ void CFAitfX::ShowMDRawSubMonth(const string str_SubMonthKey, const string str_S
 
 /**************************************************/
 //   展示 life.M 月度收支
-//   int_ShowFlag == 1 >>> 完整显示模式
-//   int_ShowFlag == 2 >>> 衔接显示模式
+//   int_OFlag == 1 >>> 完整显示模式
+//   int_OFlag == 2 >>> 衔接显示模式
 /**************************************************/
-void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag)
+void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_OFlag)
 {
     string str_RangeTop = "## life.M" + str_SelMonth;
     string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
@@ -1330,7 +1334,7 @@ void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag)
     int int_MonthExpense = m_cls_FM_life.GetLineValue(uni_RangeTop+2);
     int int_MonthRest = m_cls_FM_life.GetLineValue(uni_RangeTop+3);
 
-    if(int_ShowFlag == 1)
+    if(int_OFlag == 1)
     {
         cout << "----------------------------------------" << endl;
         cout << str_SelMonth << "月/薪资: " << CTool::TransOutFormat(uni_MonthSalary) << endl;
@@ -1338,7 +1342,7 @@ void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_ShowFlag)
         cout << str_SelMonth << "月/结余: " << CTool::TransOutFormat(int_MonthRest) << endl;
         cout << "----------------------------------------" << endl;
     }
-    else if(int_ShowFlag == 2)
+    else if(int_OFlag == 2)
     {
         cout << "----------------------------------------" << endl;
         cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
@@ -1349,6 +1353,7 @@ void CFAitfX::SyncAllFile()
 {
     m_cls_FM_SUM.SyncFile();
     m_cls_FM_life.SyncFile();
+    m_cls_FM_sm_DGtler.SyncFile();
     m_cls_FM_sm_Books.SyncFile();
     m_cls_FM_sm_KEEP.SyncFile();
     m_cls_FM_sm_TB.SyncFile();
@@ -1364,6 +1369,7 @@ void CFAitfX::WriteAllFile()
 {
     m_cls_FM_SUM.UpdateTimeStamp();
     m_cls_FM_life.UpdateTimeStamp();
+    m_cls_FM_sm_DGtler.UpdateTimeStamp();
     m_cls_FM_sm_Books.UpdateTimeStamp();
     m_cls_FM_sm_KEEP.UpdateTimeStamp();
     m_cls_FM_sm_TB.UpdateTimeStamp();
@@ -1376,6 +1382,7 @@ void CFAitfX::WriteAllFile()
 
     m_cls_FM_SUM.FileWriter();
     m_cls_FM_life.FileWriter();
+    m_cls_FM_sm_DGtler.FileWriter();
     m_cls_FM_sm_Books.FileWriter();
     m_cls_FM_sm_KEEP.FileWriter();
     m_cls_FM_sm_TB.FileWriter();
@@ -1391,6 +1398,7 @@ void CFAitfX::BackUpAllFile(const string str_BackUpPath)
 {
     m_cls_FM_SUM.BackUpFile(str_BackUpPath);
     m_cls_FM_life.BackUpFile(str_BackUpPath);
+    m_cls_FM_sm_DGtler.BackUpFile(str_BackUpPath);
     m_cls_FM_sm_Books.BackUpFile(str_BackUpPath);
     m_cls_FM_sm_KEEP.BackUpFile(str_BackUpPath);
     m_cls_FM_sm_TB.BackUpFile(str_BackUpPath);
