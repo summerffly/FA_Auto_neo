@@ -113,6 +113,8 @@ public:
     void WriteAllFile();
     void BackUpAllFile(const string str_BackUpPath);
 
+    CFileManager *GetPtrSubMonthFM(const string str_SubMonthKey);
+    CFileManager *GetPtrTitleFM(const string str_TitleKey);
 
 /****************************************/
 //   SUM成员
@@ -132,19 +134,19 @@ private:
 /****************************************/
 //   FM成员
 /****************************************/
-private:
-    CFileManager m_cls_FM_SUM;
-    CFileManager m_cls_FM_life;
-    CFileManager m_cls_FM_sm_DGtler;
-    CFileManager m_cls_FM_sm_Books;
-    CFileManager m_cls_FM_sm_KEEP;
-    CFileManager m_cls_FM_sm_TB;
-    CFileManager m_cls_FM_sm_sa;
-    CFileManager m_cls_FM_tt_DK;
-    CFileManager m_cls_FM_tt_NS;
-    CFileManager m_cls_FM_tt_travel;
-    CFileManager m_cls_FM_tt_lottery;
-    CFileManager m_cls_FM_temp_BOX;
+private:    
+    CFileManager *m_ptr_FM_SUM;
+    CFileManager *m_ptr_FM_life;
+    CFileManager *m_ptr_FM_sm_DGtler;
+    CFileManager *m_ptr_FM_sm_Books;
+    CFileManager *m_ptr_FM_sm_KEEP;
+    CFileManager *m_ptr_FM_sm_TB;
+    CFileManager *m_ptr_FM_sm_sa;
+    CFileManager *m_ptr_FM_tt_DK;
+    CFileManager *m_ptr_FM_tt_NS;
+    CFileManager *m_ptr_FM_tt_travel;
+    CFileManager *m_ptr_FM_tt_lottery;
+    CFileManager *m_ptr_FM_temp_BOX;
 };
 
 //------------------------------//
