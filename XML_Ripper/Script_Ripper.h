@@ -9,6 +9,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include "./../X_Frame/X_Tool.h"
 #include "./../X_Frame/Singleton.h"
 #include "XML_Ripper.h"
 
@@ -45,6 +46,7 @@ public:
     string GetVersion();
     string GetOriginMonth();
     string GetCurrentMonth();
+    string GetPreviousMonth();
     string GetOriginSum();
     string GetCurrentSum();
 
@@ -68,8 +70,10 @@ private:
 
     string m_str_OriginMonth;
     string m_str_CurrentMonth;
+    string m_str_PreviousMonth;
     unsigned int m_uni_OriginMonth;
     unsigned int m_uni_CurrentMonth;
+    unsigned int m_uni_PreviousMonth;
     vector<string> m_vec_str_Month;   // Month需要计算生成
 
     string m_str_OriginSum;

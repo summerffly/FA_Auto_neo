@@ -50,6 +50,14 @@ CFAitfX::~CFAitfX()
 }
 
 /**************************************************/
+//   Summerize区OFlag输出规范
+//   0 >>> 空输出
+//   1 >>> 嵌入输出
+//   2 >>> 完整输出
+//   9 >>> 测试输出
+/**************************************************/
+
+/**************************************************/
 //   读取 初始&当前Sum
 /**************************************************/
 void CFAitfX::LoadSum(int int_OFlag)
@@ -70,6 +78,13 @@ void CFAitfX::LoadSum(int int_OFlag)
     m_int_CurrentSum = m_ptr_FM_SUM->GetLineValue(uni_SumLine);
 
     if(int_OFlag == 1)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << str_OriginSum << ": " << CTool::TransOutFormat(m_int_OriginSum) << endl;
+        cout << str_CurrentSum << ": " << CTool::TransOutFormat(m_int_CurrentSum) << endl;
+    }
+
+    if(int_OFlag == 2)
     {
         cout << "----------------------------------------" << endl;
         cout << str_OriginSum << ": " << CTool::TransOutFormat(m_int_OriginSum) << endl;
@@ -111,12 +126,19 @@ void CFAitfX::SummerizeMonth(int int_OFlag)
     m_int_MonthExpenseSum = int_MonthExpenseSum;
     m_int_MonthSurplusSum = int_MonthSurplusSum;
 
+    if(int_OFlag == 1)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "Month累计收入: " << CTool::TransOutFormat(m_int_MonthSalarySum) << endl;
+        cout << "Month累计支出: " << CTool::TransOutFormat(m_int_MonthExpenseSum) << endl;
+        cout << "Month累计结余: " << CTool::TransOutFormat(m_int_MonthSurplusSum) << endl;
+    }
+
     if(int_OFlag == 2)
     {
         cout << "----------------------------------------" << endl;
         cout << "### Month累计收支统计 ###" << endl;
         cout << endl;
-
         cout << "Month累计收入: " << CTool::TransOutFormat(m_int_MonthSalarySum) << endl;
         cout << "Month累计支出: " << CTool::TransOutFormat(m_int_MonthExpenseSum) << endl;
         cout << "Month累计结余: " << CTool::TransOutFormat(m_int_MonthSurplusSum) << endl;
@@ -138,6 +160,11 @@ void CFAitfX::SummerizeTitle(int int_OFlag)
 
     string str_TitleKey;
     unsigned int uni_TitleLine = 0;
+
+    if(int_OFlag == 1)
+    {
+        cout << "----------------------------------------" << endl;
+    }
 
     vector<string>::iterator itr_Title;
     for(itr_Title = vec_str_Title.begin(); itr_Title != vec_str_Title.end(); itr_Title++)
@@ -183,6 +210,11 @@ void CFAitfX::SummerizeTail(int int_OFlag)
     string str_TailKey;
     unsigned int uni_TailLine = 0;
 
+    if(int_OFlag == 1)
+    {
+        cout << "----------------------------------------" << endl;
+    }
+
     vector<string>::iterator itr_Tail;
     for(itr_Tail = vec_str_Tail.begin(); itr_Tail != vec_str_Tail.end(); itr_Tail++)
     {
@@ -226,6 +258,12 @@ void CFAitfX::SummerizeCAF(int int_OFlag)
 
     string str_CAFKey;
     unsigned int uni_CAFLine = 0;
+
+    if(int_OFlag == 1)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "支配财富: " << CTool::TransOutFormat(m_int_CAFSum) << endl;
+    }
 
     vector<string>::iterator itr_CAF;
     for(itr_CAF = vec_str_CAF.begin(); itr_CAF != vec_str_CAF.end(); itr_CAF++)
@@ -1304,18 +1342,20 @@ void CFAitfX::ShowMDRawSubMonth(const string str_SubMonthKey, const string str_S
 
 /**************************************************/
 //   展示 life.M 月度收支
-//   int_OFlag == 1 >>> 完整显示模式
-//   int_OFlag == 2 >>> 衔接显示模式
+//   OFlag == 1 >>> 嵌入显示模式
+//   OFlag == 2 >>> 嵌入显示模式
+//   OFlag == 3 >>> NONE (预留)
+//   OFlag == 4 >>> 完整显示模式
 /**************************************************/
 void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_OFlag)
 {
     string str_RangeTop = "## life.M" + str_SelMonth;
-    string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
+    //string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
 
     m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
     unsigned int uni_RangeTop = m_ptr_FM_life->GetSearchLineIndex(1);
-    m_ptr_FM_life->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = m_ptr_FM_life->GetSearchLineIndex(1);
+    //m_ptr_FM_life->SearchLineKey(str_RangeBottom.c_str());
+    //unsigned int uni_RangeBottom = m_ptr_FM_life->GetSearchLineIndex(1);
 
     unsigned int uni_MonthSalary = m_ptr_FM_life->GetLineValue(uni_RangeTop+1);
     int int_MonthExpense = m_ptr_FM_life->GetLineValue(uni_RangeTop+2);
@@ -1327,12 +1367,21 @@ void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_OFlag)
         cout << str_SelMonth << "月/薪资: " << CTool::TransOutFormat(uni_MonthSalary) << endl;
         cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
         cout << str_SelMonth << "月/结余: " << CTool::TransOutFormat(int_MonthRest) << endl;
-        cout << "----------------------------------------" << endl;
     }
-    else if(int_OFlag == 2)
+
+    if(int_OFlag == 2)
     {
         cout << "----------------------------------------" << endl;
         cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
+    }
+
+    if(int_OFlag == 4)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << str_SelMonth << "月/薪资: " << CTool::TransOutFormat(uni_MonthSalary) << endl;
+        cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
+        cout << str_SelMonth << "月/结余: " << CTool::TransOutFormat(int_MonthRest) << endl;
+        cout << "----------------------------------------" << endl;
     }
 }
 

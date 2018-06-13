@@ -20,8 +20,10 @@ m_cls_XMLRipper(cha_xmlPath)
     m_str_Version = "";
     m_str_OriginMonth = "";
     m_str_CurrentMonth = "";
+    m_str_PreviousMonth = "";
     m_uni_OriginMonth = 0;
     m_uni_CurrentMonth = 0;
+    m_uni_PreviousMonth = 0;
 
     m_vec_str_Title.clear();
     m_vec_str_SubMonth.clear();
@@ -65,9 +67,11 @@ void CScriptRipper::MonthRipper()
 {
     m_str_OriginMonth = m_cls_XMLRipper.GetL1NodeAttr_UNI("OriginMonth", "month");
     m_str_CurrentMonth = m_cls_XMLRipper.GetL1NodeAttr_UNI("CurrentMonth", "month");
+    m_str_PreviousMonth = CTool::GeneratePreMonth(m_str_CurrentMonth);
 
     m_uni_OriginMonth = atoi(m_str_OriginMonth.c_str());
     m_uni_CurrentMonth = atoi(m_str_CurrentMonth.c_str());
+    m_uni_PreviousMonth = atoi(m_str_PreviousMonth.c_str());
 }
 
 /**************************************************/
@@ -258,6 +262,14 @@ string CScriptRipper::GetOriginMonth()
 string CScriptRipper::GetCurrentMonth()
 {
     return m_str_CurrentMonth;
+}
+
+/**************************************************/
+//   获取 PreviousMonth
+/**************************************************/
+string CScriptRipper::GetPreviousMonth()
+{
+    return m_str_PreviousMonth;
 }
 
 /**************************************************/

@@ -25,19 +25,21 @@ public:
     ~CASitfX();
 
     /****************************************/
-    //   FA全系统 计算区
+    //   FA全系统
     /****************************************/
     void CheckFA();
     void UpdateFA();
+    void ShowFA();
 
     /****************************************/
-    //   SUM 计算区
+    //   SUM
     /****************************************/
     int CheckSum(int int_OFlag);
     void UpdateSum(int int_OFlag);
+    void ShowSum();
 
     /****************************************/
-    //   Month 计算区
+    //   Month
     /****************************************/
     int CheckMonth(const string str_SelMonth, int int_OFlag);
     void UpdateMonth(const string str_SelMonth, int int_OFlag);

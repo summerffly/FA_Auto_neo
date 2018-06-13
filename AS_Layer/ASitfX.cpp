@@ -99,6 +99,23 @@ void CASitfX::UpdateFA()
 }
 
 /**************************************************/
+//   展示 FA全系统总收支
+/**************************************************/
+void CASitfX::ShowFA()
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    ptr_FAitfX->LoadSum(1);
+    ptr_FAitfX->SummerizeTitle(1);
+    ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetPreviousMonth(), 1);
+    ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), 2);
+    ptr_FAitfX->SummerizeCAF(1);
+
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
 //   校验 SUM收支
 /**************************************************/
 int CASitfX::CheckSum(int int_OFlag)
@@ -197,6 +214,23 @@ void CASitfX::UpdateSum(int int_OFlag)
 }
 
 /**************************************************/
+//   展示 SUM收支
+/**************************************************/
+void CASitfX::ShowSum()
+{
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    ptr_FAitfX->SummerizeTitle(1);
+    ptr_FAitfX->SummerizeTail(1);
+    ptr_FAitfX->SummerizeMonth(1);
+
+    ptr_FAitfX->LoadSum(1);
+    ptr_FAitfX->SummerizeCAF(1);
+
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
 //   校验 Month收支
 /**************************************************/
 int CASitfX::CheckMonth(const string str_SelMonth, int int_OFlag)
@@ -229,7 +263,7 @@ int CASitfX::CheckMonth(const string str_SelMonth, int int_OFlag)
 
     if(int_OFlag == 1)
     {
-        ptr_FAitfX->ShowMonthSurplus(str_SelMonth, 1);
+        ptr_FAitfX->ShowMonthSurplus(str_SelMonth, 4);
     }
 
     return 0;
@@ -259,7 +293,7 @@ void CASitfX::UpdateMonth(const string str_SelMonth, int int_OFlag)
 
     if(int_OFlag == 1)
     {
-        ptr_FAitfX->ShowMonthSurplus(str_SelMonth, 1);
+        ptr_FAitfX->ShowMonthSurplus(str_SelMonth, 4);
     }
 }
 

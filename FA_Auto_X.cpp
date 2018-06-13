@@ -35,6 +35,11 @@ int main(int argc, char **argv, char *env[])
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
     CASitfX *ptr_ASitfX = Singleton<CASitfX>::GetInstance();
 
+    ptr_FAitfX->SummerizeMonth(0);
+    ptr_FAitfX->SummerizeTitle(0);
+    ptr_FAitfX->SummerizeTail(0);
+    ptr_FAitfX->SummerizeCAF(0);
+
     cout << "****************************************" << endl;
     cout << "****************************************" << endl;
     cout << "***                                  ***" << endl;
@@ -253,7 +258,7 @@ int main(int argc, char **argv, char *env[])
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                ptr_ASitfX->CheckMonth(CTool::GeneratePreMonth(ptr_ScriptRipper->GetCurrentMonth()), 1);
+                ptr_ASitfX->CheckMonth(ptr_ScriptRipper->GetPreviousMonth(), 1);
             }
 
             CCmdTarget::ShowTimeGap();
@@ -301,7 +306,7 @@ int main(int argc, char **argv, char *env[])
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                ptr_ASitfX->UpdateMonth(CTool::GeneratePreMonth(ptr_ScriptRipper->GetCurrentMonth()), 1);
+                ptr_ASitfX->UpdateMonth(ptr_ScriptRipper->GetPreviousMonth(), 1);
             }
 
             ptr_ASitfX->UpdateSum(0);
@@ -707,7 +712,7 @@ int main(int argc, char **argv, char *env[])
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                ptr_FAitfX->ShowMDRawMonth(CTool::GeneratePreMonth(ptr_ScriptRipper->GetCurrentMonth()), true);
+                ptr_FAitfX->ShowMDRawMonth(ptr_ScriptRipper->GetPreviousMonth(), true);
             }
 
             CCmdTarget::ShowTimeGap();
@@ -784,7 +789,7 @@ int main(int argc, char **argv, char *env[])
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                ptr_ASitfX->ShowMDRawSubMonthTraversal(CTool::GeneratePreMonth(ptr_ScriptRipper->GetCurrentMonth()), false);
+                ptr_ASitfX->ShowMDRawSubMonthTraversal(ptr_ScriptRipper->GetPreviousMonth(), false);
             }
 
             CCmdTarget::ShowTimeGap();
@@ -820,11 +825,11 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(MONTH) )
             {
-                ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), 1);
+                ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), 4);
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                ptr_FAitfX->ShowMonthSurplus(CTool::GeneratePreMonth(ptr_ScriptRipper->GetCurrentMonth()), 1);
+                ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetPreviousMonth(), 4);
             }            
 
             CCmdTarget::ShowTimeGap();
@@ -841,8 +846,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            // tips 番茄@20180604 - 增加接口
-            //ptr_FAitfX->ShowAggrSurplus(1);
+            ptr_ASitfX->ShowSum();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -858,8 +862,7 @@ int main(int argc, char **argv, char *env[])
         {
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), 2);
-            ptr_FAitfX->SummerizeCAF(1);
+            ptr_ASitfX->ShowFA();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

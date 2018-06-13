@@ -113,6 +113,9 @@ public:
     void WriteAllFile();
     void BackUpAllFile(const string str_BackUpPath);
 
+    /****************************************/
+    //   Ptr
+    /****************************************/
     CFileManager *GetPtrSubMonthFM(const string str_SubMonthKey);
     CFileManager *GetPtrTitleFM(const string str_TitleKey);
 
