@@ -825,11 +825,11 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(MONTH) )
             {
-                ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), 4);
+                ptr_ASitfX->ShowMonth(ptr_ScriptRipper->GetCurrentMonth());
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetPreviousMonth(), 4);
+                ptr_ASitfX->ShowMonth(ptr_ScriptRipper->GetPreviousMonth());
             }            
 
             CCmdTarget::ShowTimeGap();
@@ -895,7 +895,7 @@ int main(int argc, char **argv, char *env[])
 
             CCmdTarget::TagTimeBait();
 
-            //ptr_ASitfX->CheckSum(1);
+            //ptr_ASitfX->ShowMonth(ptr_ScriptRipper->GetCurrentMonth());
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

@@ -106,10 +106,11 @@ void CASitfX::ShowFA()
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
-    ptr_FAitfX->LoadSum(1);
-    ptr_FAitfX->SummerizeTitle(1);
-    ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetPreviousMonth(), 1);
+    ptr_FAitfX->ShowLife(ptr_ScriptRipper->GetCurrentMonth(), 1);
+    ptr_FAitfX->ShowRoom(ptr_ScriptRipper->GetCurrentMonth(), 3);
+    ptr_FAitfX->ShowSubMonth(ptr_ScriptRipper->GetCurrentMonth(), 2);
     ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), 2);
+    ptr_FAitfX->LoadSum(1);
     ptr_FAitfX->SummerizeCAF(1);
 
     cout << "----------------------------------------" << endl;
@@ -298,6 +299,57 @@ void CASitfX::UpdateMonth(const string str_SelMonth, int int_OFlag)
 }
 
 /**************************************************/
+//   展示 Month收支
+/**************************************************/
+void CASitfX::ShowMonth(const string str_SelMonth)
+{
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    ptr_FAitfX->ShowLife(str_SelMonth, 1);
+    ptr_FAitfX->ShowRoom(str_SelMonth, 2);
+    ptr_FAitfX->ShowSubMonth(str_SelMonth, 2);
+    ptr_FAitfX->ShowMonthSurplus(str_SelMonth, 2);
+
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
+//   分析月度趋势 ROOM租房支出
+/**************************************************/
+void CASitfX::AnalysisMonthTrend_ROOM()
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    vector<TREND_INFO> vec_stc_TrendInfo;
+
+    vector<string> vec_str_Room;
+    ptr_ScriptRipper->RoomDuplicator(vec_str_Room);
+
+    vector<string>::iterator itr_Room;
+    for(itr_Room = vec_str_Room.begin(); itr_Room != vec_str_Room.end(); itr_Room++)
+    {
+        if(itr_Room == vec_str_Room.begin())
+        {
+            ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, *itr_Room);
+            continue;
+        }
+
+        ptr_FAitfX->AppendMonthTrendVector(vec_stc_TrendInfo, *itr_Room);
+    }
+
+    // 绘制 趋势Vector
+    cout << "----------------------------------------" << endl;
+    cout << "### 月度ROOM趋势分析 ###" << endl;
+    cout << endl;
+
+    ptr_FAitfX->DrawMonthTrendVector(vec_stc_TrendInfo, "ROOM");
+
+    cout << endl;
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
 //   分析月度趋势 CSM消费支出
 /**************************************************/
 void CASitfX::AnalysisMonthTrend_CSM()
@@ -314,43 +366,20 @@ void CASitfX::AnalysisMonthTrend_CSM()
     for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
     {
         if(itr_SubMonth == vec_str_SubMonth.begin())
+        {
             ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, *itr_SubMonth);
+            continue;
+        }
 
         ptr_FAitfX->AppendMonthTrendVector(vec_stc_TrendInfo, *itr_SubMonth);
     }
 
     // 绘制 趋势Vector
     cout << "----------------------------------------" << endl;
-    cout << "### 月度CSM消费趋势分析 ###" << endl;
+    cout << "### 月度CSM趋势分析 ###" << endl;
     cout << endl;
 
-    ptr_FAitfX->DrawMonthTrendVector(vec_stc_TrendInfo, "CSM消费");
-
-    cout << endl;
-    cout << "----------------------------------------" << endl;
-}
-
-/**************************************************/
-//   分析月度趋势 租房支出
-/**************************************************/
-void CASitfX::AnalysisMonthTrend_ROOM()
-{
-    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
-    vector<TREND_INFO> vec_stc_TrendInfo;
-
-    // 建构 趋势Vector
-    // tips 番茄@20180307 - 这里需要升级为XML脚本读取
-    ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, "ONE房租");
-    ptr_FAitfX->AppendMonthTrendVector(vec_stc_TrendInfo, "ONE水电费");
-    ptr_FAitfX->AppendMonthTrendVector(vec_stc_TrendInfo, "ONE管理费");
-    ptr_FAitfX->AppendMonthTrendVector(vec_stc_TrendInfo, "ONE网络费");
-
-    // 绘制 趋势Vector
-    cout << "----------------------------------------" << endl;
-    cout << "### 月度租房支出趋势分析 ###" << endl;
-    cout << endl;
-
-    ptr_FAitfX->DrawMonthTrendVector(vec_stc_TrendInfo, "租房");
+    ptr_FAitfX->DrawMonthTrendVector(vec_stc_TrendInfo, "CSM");
 
     cout << endl;
     cout << "----------------------------------------" << endl;

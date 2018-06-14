@@ -262,7 +262,7 @@ void CFAitfX::SummerizeCAF(int int_OFlag)
     if(int_OFlag == 1)
     {
         cout << "----------------------------------------" << endl;
-        cout << "支配财富: " << CTool::TransOutFormat(m_int_CAFSum) << endl;
+        cout << "--> 支配财富: " << CTool::TransOutFormat(m_int_CAFSum) << endl;
     }
 
     vector<string>::iterator itr_CAF;
@@ -1341,10 +1341,10 @@ void CFAitfX::ShowMDRawSubMonth(const string str_SubMonthKey, const string str_S
 }
 
 /**************************************************/
-//   展示 life.M 月度收支
+//   展示 Month 收支
 //   OFlag == 1 >>> 嵌入显示模式
 //   OFlag == 2 >>> 嵌入显示模式
-//   OFlag == 3 >>> NONE (预留)
+//   OFlag == 3 >>> 嵌入显示模式
 //   OFlag == 4 >>> 完整显示模式
 /**************************************************/
 void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_OFlag)
@@ -1375,12 +1375,145 @@ void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_OFlag)
         cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
     }
 
+    if(int_OFlag == 3)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+
     if(int_OFlag == 4)
     {
         cout << "----------------------------------------" << endl;
         cout << str_SelMonth << "月/薪资: " << CTool::TransOutFormat(uni_MonthSalary) << endl;
         cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
         cout << str_SelMonth << "月/结余: " << CTool::TransOutFormat(int_MonthRest) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+}
+
+/**************************************************/
+//   展示 life 支出
+//   OFlag == 1 >>> 嵌入显示模式
+//   OFlag == 2 >>> NONE (预留)
+//   OFlag == 3 >>> NONE (预留)
+//   OFlag == 4 >>> 完整显示模式
+/**************************************************/
+void CFAitfX::ShowLife(const string str_SelMonth, int int_OFlag)
+{
+    if( int_OFlag > 0 )
+    {
+        cout << "----------------------------------------" << endl;
+    }
+
+    string str_LifeItem = str_SelMonth + "月_生活费";
+    m_ptr_FM_life->SearchLineKey(str_LifeItem.c_str());
+    unsigned int uni_LifeLine = m_ptr_FM_life->GetSearchLineIndex(1);
+    int int_LifeExpense = m_ptr_FM_life->GetLineValue(uni_LifeLine);
+
+    if( int_OFlag > 0 )
+    {
+        cout << str_SelMonth << "月/生活费: " << CTool::TransOutFormat(int_LifeExpense) << endl;
+    }
+
+    if( int_OFlag == 4 )
+    {
+        cout << "----------------------------------------" << endl;
+    }
+}
+
+/**************************************************/
+//   展示 Room 支出
+//   OFlag == 1 >>> 嵌入显示模式
+//   OFlag == 2 >>> 嵌入显示模式
+//   OFlag == 3 >>> 嵌入显示模式
+//   OFlag == 4 >>> 完整显示模式
+/**************************************************/
+void CFAitfX::ShowRoom(const string str_SelMonth, int int_OFlag)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
+    int int_TotalRMExpense = 0;
+    vector<string> vec_str_Room;
+    ptr_ScriptRipper->RoomDuplicator(vec_str_Room);
+
+    if(int_OFlag > 0)
+    {
+        cout << "----------------------------------------" << endl;
+    }
+
+    vector<string>::iterator itr_Room;
+    for(itr_Room = vec_str_Room.begin(); itr_Room != vec_str_Room.end(); itr_Room++)
+    {
+        string str_RMItem = str_SelMonth + "月_" + *itr_Room;
+        m_ptr_FM_life->SearchLineKey(str_RMItem.c_str());
+        unsigned int uni_RMLine = m_ptr_FM_life->GetSearchLineIndex(1);
+        int int_RMExpense = m_ptr_FM_life->GetLineValue(uni_RMLine);
+        int_TotalRMExpense += int_RMExpense;
+        if( (int_OFlag > 0) && (int_OFlag != 3) )
+        {
+            cout << str_SelMonth << "月/" << *itr_Room << ": " << CTool::TransOutFormat(int_RMExpense) << endl;
+        }
+    }
+
+    if( int_OFlag == 2 )
+    {
+        cout << "--> " << str_SelMonth << "月/ROOM支出: " << CTool::TransOutFormat(int_TotalRMExpense) << endl;
+    }
+
+    if( int_OFlag == 3 )
+    {
+        cout << str_SelMonth << "月/ROOM支出: " << CTool::TransOutFormat(int_TotalRMExpense) << endl;
+    }
+
+    if( int_OFlag == 4 )
+    {
+        cout << endl;
+        cout << str_SelMonth << "月/ROOM支出: " << CTool::TransOutFormat(int_TotalRMExpense) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+}
+
+/**************************************************/
+//   展示 SubMonth 支出
+//   OFlag == 1 >>> 嵌入显示模式
+//   OFlag == 2 >>> 嵌入显示模式
+//   OFlag == 3 >>> NONE (预留)
+//   OFlag == 4 >>> 完整显示模式
+/**************************************************/
+void CFAitfX::ShowSubMonth(const string str_SelMonth, int int_OFlag)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
+    int int_TotalSMExpense = 0;
+    vector<string> vec_str_SubMonth;
+    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+
+    if(int_OFlag > 0)
+    {
+        cout << "----------------------------------------" << endl;
+    }
+
+    vector<string>::iterator itr_SubMonth;
+    for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
+    {
+        string str_SMItem = *itr_SubMonth + ".M" + str_SelMonth;
+        m_ptr_FM_life->SearchLineKey(str_SMItem.c_str());
+        unsigned int uni_SMLine = m_ptr_FM_life->GetSearchLineIndex(1);
+        int int_SMExpense = m_ptr_FM_life->GetLineValue(uni_SMLine);
+        int_TotalSMExpense += int_SMExpense;
+        cout << str_SelMonth << "月/" << *itr_SubMonth << ": " << CTool::TransOutFormat(int_SMExpense) << endl;
+    }
+
+    if( int_OFlag == 2 )
+    {
+        cout << "--> " << str_SelMonth << "月/CSM支出: " << CTool::TransOutFormat(int_TotalSMExpense) << endl;
+    }
+
+    if( int_OFlag == 4 )
+    {
+        cout << endl;
+        cout << str_SelMonth << "月/CSM支出: " << CTool::TransOutFormat(int_TotalSMExpense) << endl;
         cout << "----------------------------------------" << endl;
     }
 }

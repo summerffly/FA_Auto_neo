@@ -33,9 +33,10 @@ public:
     void SumRipper();
     void TitleRipper();
     void TitleDeepRipper();
-    void SubMonthRipper();
     void TailRipper();
     void CAFRipper();
+    void RoomRipper();
+    void SubMonthRipper();
 
     void MonthRangeGenerator();
     bool IsIncludeMonthRange(const string str_SelMonth);
@@ -53,9 +54,10 @@ public:
     void MonthRangeDuplicator(vector<string> &vec_str_DestMonth);
     void TitleDuplicator(vector<string> &vec_str_Dest);
     void TitleDeepDuplicator(vector<string> &vec_str_Dest);
-    void SubMonthDuplicator(vector<string> &vec_str_Dest);
     void TailDuplicator(vector<string> &vec_str_Dest);
     void CAFDuplicator(vector<string> &vec_str_Dest);
+    void RoomDuplicator(vector<string> &vec_str_Dest);
+    void SubMonthDuplicator(vector<string> &vec_str_Dest);
 
     /****************************************/
     //   修改 Script
@@ -81,15 +83,16 @@ private:
 
     unsigned int m_uni_TitleNum;
     unsigned int m_uni_TitleDeepNum;
-    unsigned int m_uni_SubMonthNum;
     unsigned int m_uni_TailNum;
     unsigned int m_uni_CAFNum;
+    unsigned int m_uni_RoomNum;
+    unsigned int m_uni_SubMonthNum;
     vector<string> m_vec_str_Title;
     vector<string> m_vec_str_TitleDeep;
-    vector<string> m_vec_str_SubMonth;
     vector<string> m_vec_str_Tail;
     vector<string> m_vec_str_CAF;
-
+    vector<string> m_vec_str_Room;
+    vector<string> m_vec_str_SubMonth;
     
 };
 

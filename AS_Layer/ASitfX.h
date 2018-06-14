@@ -43,12 +43,13 @@ public:
     /****************************************/
     int CheckMonth(const string str_SelMonth, int int_OFlag);
     void UpdateMonth(const string str_SelMonth, int int_OFlag);
+    void ShowMonth(const string str_SelMonth);
 
     /****************************************/
     //   统计区
     /****************************************/
-    void AnalysisMonthTrend_CSM();
     void AnalysisMonthTrend_ROOM();
+    void AnalysisMonthTrend_CSM();
 
     /****************************************/
     //   展示区

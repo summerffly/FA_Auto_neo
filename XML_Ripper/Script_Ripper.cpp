@@ -37,9 +37,10 @@ m_cls_XMLRipper(cha_xmlPath)
     SumRipper();
     TitleRipper();
     TitleDeepRipper();
-    SubMonthRipper();
     TailRipper();
     CAFRipper();
+    RoomRipper();
+    SubMonthRipper();
 
     MonthRangeGenerator();
 }
@@ -116,22 +117,6 @@ void CScriptRipper::TitleDeepRipper()
 }
 
 /**************************************************/
-//   读取&解析 SubMonth
-/**************************************************/
-void CScriptRipper::SubMonthRipper()
-{
-    string str_SubMonthNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_SubMonth", "num");
-    m_uni_SubMonthNum = atoi(str_SubMonthNum.c_str());
-
-    string str_Temp;
-    for(int i=1; i<=m_uni_SubMonthNum; i++)
-    {
-        str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_SubMonth", "SMItem", i,"item");
-        m_vec_str_SubMonth.push_back(str_Temp);
-    }
-}
-
-/**************************************************/
 //   读取&解析 Tail
 /**************************************************/
 void CScriptRipper::TailRipper()
@@ -160,6 +145,38 @@ void CScriptRipper::CAFRipper()
     {
         str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_CAF", "CAFItem", i,"item");
         m_vec_str_CAF.push_back(str_Temp);
+    }
+}
+
+/**************************************************/
+//   读取&解析 Room
+/**************************************************/
+void CScriptRipper::RoomRipper()
+{
+    string str_RoomNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_Room", "num");
+    m_uni_RoomNum = atoi(str_RoomNum.c_str());
+
+    string str_Temp;
+    for(int i=1; i<=m_uni_RoomNum; i++)
+    {
+        str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_Room", "RMItem", i,"item");
+        m_vec_str_Room.push_back(str_Temp);
+    }
+}
+
+/**************************************************/
+//   读取&解析 SubMonth
+/**************************************************/
+void CScriptRipper::SubMonthRipper()
+{
+    string str_SubMonthNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_SubMonth", "num");
+    m_uni_SubMonthNum = atoi(str_SubMonthNum.c_str());
+
+    string str_Temp;
+    for(int i=1; i<=m_uni_SubMonthNum; i++)
+    {
+        str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_SubMonth", "SMItem", i,"item");
+        m_vec_str_SubMonth.push_back(str_Temp);
     }
 }
 
@@ -331,20 +348,6 @@ void CScriptRipper::TitleDeepDuplicator(vector<string> &vec_str_Dest)
 }
 
 /**************************************************/
-//   拷贝 SubMonth
-/**************************************************/
-void CScriptRipper::SubMonthDuplicator(vector<string> &vec_str_Dest)
-{
-    vec_str_Dest.clear();
-
-    vector<string>::iterator itr_SubMonth;
-    for(itr_SubMonth = m_vec_str_SubMonth.begin(); itr_SubMonth != m_vec_str_SubMonth.end(); itr_SubMonth++)
-    {
-        vec_str_Dest.push_back(*itr_SubMonth);
-    }
-}
-
-/**************************************************/
 //   拷贝 Tail
 /**************************************************/
 void CScriptRipper::TailDuplicator(vector<string> &vec_str_Dest)
@@ -369,6 +372,34 @@ void CScriptRipper::CAFDuplicator(vector<string> &vec_str_Dest)
     for(itr_CAF = m_vec_str_CAF.begin(); itr_CAF != m_vec_str_CAF.end(); itr_CAF++)
     {
         vec_str_Dest.push_back(*itr_CAF);
+    }
+}
+
+/**************************************************/
+//   拷贝 Room
+/**************************************************/
+void CScriptRipper::RoomDuplicator(vector<string> &vec_str_Dest)
+{
+    vec_str_Dest.clear();
+
+    vector<string>::iterator itr_Room;
+    for(itr_Room = m_vec_str_Room.begin(); itr_Room != m_vec_str_Room.end(); itr_Room++)
+    {
+        vec_str_Dest.push_back(*itr_Room);
+    }
+}
+
+/**************************************************/
+//   拷贝 SubMonth
+/**************************************************/
+void CScriptRipper::SubMonthDuplicator(vector<string> &vec_str_Dest)
+{
+    vec_str_Dest.clear();
+
+    vector<string>::iterator itr_SubMonth;
+    for(itr_SubMonth = m_vec_str_SubMonth.begin(); itr_SubMonth != m_vec_str_SubMonth.end(); itr_SubMonth++)
+    {
+        vec_str_Dest.push_back(*itr_SubMonth);
     }
 }
 
