@@ -170,6 +170,9 @@ int CLineEPer::LineParser()
         else
         {
             cout << "----------------------------------------" << endl;
+            cout << "ERROR LINE" << endl;
+            cout << ">>> " << m_str_FullLine << endl;
+            cout << "----------------------------------------" << endl;
             cout << "!!!       Line Type Un-Matched       !!!" << endl;
             cout << "----------------------------------------" << endl;
 
