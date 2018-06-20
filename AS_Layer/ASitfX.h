@@ -48,6 +48,7 @@ public:
     /****************************************/
     //   统计区
     /****************************************/
+    void AnalysisMonthTrend_LIFE();
     void AnalysisMonthTrend_ROOM();
     void AnalysisMonthTrend_CSM();
 

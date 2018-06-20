@@ -602,14 +602,14 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   分析月度趋势 CSM消费支出
-        //   CMD >>> as tt csm
+        //   分析月度趋势 LIFE生活支出
+        //   CMD >>> as tt life
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, TREND) && X_CMD.CmpCmdBack(CONSUMPTION) )
+        else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, TREND) && X_CMD.CmpCmdBack(MODIFY_LIFE) )
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_ASitfX->AnalysisMonthTrend_CSM();
+            ptr_ASitfX->AnalysisMonthTrend_LIFE();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -618,7 +618,7 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   分析月度趋势 租房支出
+        //   分析月度趋势 ROOM租房支出
         //   CMD >>> as tt room
         /**************************************************/
         else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, TREND) && X_CMD.CmpCmdBack(ROOM) )
@@ -626,6 +626,22 @@ int main(int argc, char **argv, char *env[])
             CCmdTarget::TagTimeBait();
 
             ptr_ASitfX->AnalysisMonthTrend_ROOM();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   分析月度趋势 CSM消费支出
+        //   CMD >>> as tt csm
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, TREND) && X_CMD.CmpCmdBack(CONSUMPTION) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            ptr_ASitfX->AnalysisMonthTrend_CSM();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -895,7 +911,7 @@ int main(int argc, char **argv, char *env[])
 
             CCmdTarget::TagTimeBait();
 
-            //ptr_ASitfX->ShowMonth(ptr_ScriptRipper->GetCurrentMonth());
+            //ptr_ASitfX->AnalysisMonthTrend_LIFE();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

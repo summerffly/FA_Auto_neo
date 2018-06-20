@@ -314,6 +314,27 @@ void CASitfX::ShowMonth(const string str_SelMonth)
 }
 
 /**************************************************/
+//   分析月度趋势 LIFE生活支出
+/**************************************************/
+void CASitfX::AnalysisMonthTrend_LIFE()
+{
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    vector<TREND_INFO> vec_stc_TrendInfo;
+    ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, "生活费");
+
+    // 绘制 趋势Vector
+    cout << "----------------------------------------" << endl;
+    cout << "### 月度LIFE趋势分析 ###" << endl;
+    cout << endl;
+
+    ptr_FAitfX->DrawMonthTrendVector(vec_stc_TrendInfo, "LIFE");
+
+    cout << endl;
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
 //   分析月度趋势 ROOM租房支出
 /**************************************************/
 void CASitfX::AnalysisMonthTrend_ROOM()
@@ -535,12 +556,16 @@ void CASitfX::HelpAll()
     cout << ">>> " << ANALYSIS << ' ' << TREND << " 生活费" << endl;
     cout << endl;
 
-    cout << "分析月度趋势 CSM消费支出" << endl;
-    cout << ">>> " << ANALYSIS << ' ' << TREND << ' ' << CONSUMPTION << endl;
+    cout << "分析月度趋势 LIFE生活支出" << endl;
+    cout << ">>> " << ANALYSIS << ' ' << TREND << ' ' << MODIFY_LIFE << endl;
     cout << endl;
 
-    cout << "分析月度趋势 租房支出" << endl;
+    cout << "分析月度趋势 ROOM租房支出" << endl;
     cout << ">>> " << ANALYSIS << ' ' << TREND << ' ' << ROOM << endl;
+    cout << endl;
+
+    cout << "分析月度趋势 CSM消费支出" << endl;
+    cout << ">>> " << ANALYSIS << ' ' << TREND << ' ' << CONSUMPTION << endl;
     cout << endl;
 
     cout << "分析 月度百分占比" << endl;
