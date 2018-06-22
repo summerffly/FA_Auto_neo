@@ -585,23 +585,6 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   分析 月度趋势
-        //   CMD >>> as tt Books
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, TREND) && (X_CMD.GetCmdNum() == 3)
-                 && !X_CMD.CmpCmdBack(CONSUMPTION) && !X_CMD.CmpCmdBack(ROOM) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_FAitfX->AnalysisMonthTrend(X_CMD.GetCmd(3));
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
         //   分析月度趋势 LIFE生活支出
         //   CMD >>> as tt life
         /**************************************************/
@@ -642,6 +625,23 @@ int main(int argc, char **argv, char *env[])
             CCmdTarget::TagTimeBait();
 
             ptr_ASitfX->AnalysisMonthTrend_CSM();
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   分析 月度趋势
+        //   CMD >>> as tt Books
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, TREND) && (X_CMD.GetCmdNum() == 3)
+                 && !X_CMD.CmpCmdBack(CONSUMPTION) && !X_CMD.CmpCmdBack(ROOM) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            ptr_FAitfX->AnalysisMonthTrend(X_CMD.GetCmd(3));
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
