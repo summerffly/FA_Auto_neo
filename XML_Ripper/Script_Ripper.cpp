@@ -410,6 +410,9 @@ void CScriptRipper::ModifyCurrentMonth(const string str_SelMonth)
 {
     m_cls_XMLRipper.SetL1NodeAttr_UNI("CurrentMonth", "month", str_SelMonth);
     m_cls_XMLRipper.XMLSaver();
+
+    m_str_CurrentMonth = str_SelMonth;
+    m_str_PreviousMonth = CTool::GeneratePreMonth(m_str_CurrentMonth);
 }
 
 //------------------------------//

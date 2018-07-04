@@ -936,30 +936,39 @@ void CFAitfX::AddScriptMonth(const string str_SelMonth)
 
     m_ptr_FM_life->SearchLineKey("---");
     unsigned int uni_lifeLine = m_ptr_FM_life->GetSearchLineIndex(1);
+    unsigned int uni_InsertLine = uni_lifeLine-4;
 
-    m_ptr_FM_life->InsertBlankLine(uni_lifeLine-4);
-    m_ptr_FM_life->InsertLine(uni_lifeLine-3, LTYPE_MONTHTITLE, 0, str_lifeMonthTitle);
-    m_ptr_FM_life->InsertLine(uni_lifeLine-2, LTYPE_FBIRC_MONTHSUM, 0, str_lifeMonthSalary);
-    m_ptr_FM_life->InsertLine(uni_lifeLine-1, LTYPE_FBIRC_MONTHSUM, 0, str_lifeMonthExpense);
-    m_ptr_FM_life->InsertLine(uni_lifeLine, LTYPE_FBIRC_MONTHSUM, 0, str_lifeMonthRest);
+    m_ptr_FM_life->InsertBlankLine(uni_InsertLine++);
+    m_ptr_FM_life->InsertLine(uni_InsertLine++, LTYPE_MONTHTITLE, 0, str_lifeMonthTitle);
+    m_ptr_FM_life->InsertLine(uni_InsertLine++, LTYPE_FBIRC_MONTHSUM, 0, str_lifeMonthSalary);
+    m_ptr_FM_life->InsertLine(uni_InsertLine++, LTYPE_FBIRC_MONTHSUM, 0, str_lifeMonthExpense);
+    m_ptr_FM_life->InsertLine(uni_InsertLine++, LTYPE_FBIRC_MONTHSUM, 0, str_lifeMonthRest);
 
-    string str_lifeMonthLife = str_SelMonth;
-    str_lifeMonthLife += "月_生活费{&霞}";
+    string str_lifeMonthLife = str_SelMonth + "月_" + "生活费{&霞}";
+    uni_InsertLine = uni_lifeLine-4;
 
-    m_ptr_FM_life->InsertBlankLine(uni_lifeLine-4);
-    m_ptr_FM_life->InsertLine(uni_lifeLine-3, LTYPE_FBIRC_LINEUINT, 0, str_lifeMonthLife);
-    m_ptr_FM_life->InsertBlankLine(uni_lifeLine-2);
+    m_ptr_FM_life->InsertBlankLine(uni_InsertLine++);
+    m_ptr_FM_life->InsertLine(uni_InsertLine++, LTYPE_FBIRC_LINEUINT, 0, str_lifeMonthLife);
+    
+    vector<string> vec_str_Room;
+    ptr_ScriptRipper->RoomDuplicator(vec_str_Room);
+
+    vector<string>::iterator itr_Room;
+    for(itr_Room = vec_str_Room.begin(); itr_Room != vec_str_Room.end(); itr_Room++)
+    {
+        string str_lifeRM = str_SelMonth + "月_" + *itr_Room;
+        m_ptr_FM_life->InsertLine(uni_InsertLine++, LTYPE_FBIRC_LINEUINT, 0, str_lifeRM);
+    }
 
     vector<string> vec_str_SubMonth;
     ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
 
+    m_ptr_FM_life->InsertBlankLine(uni_InsertLine++);
     vector<string>::iterator itr_SubMonth;
-    int int_LineCount = 0;
     for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
     {
         string str_lifeSM = *itr_SubMonth + ".M" + str_SelMonth;
-        m_ptr_FM_life->InsertLine(uni_lifeLine-1+int_LineCount, LTYPE_FBIRC_LINEUINT, 0, str_lifeSM);
-        int_LineCount++;
+        m_ptr_FM_life->InsertLine(uni_InsertLine++, LTYPE_FBIRC_LINEUINT, 0, str_lifeSM);
     }
 }
 
