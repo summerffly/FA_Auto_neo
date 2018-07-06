@@ -51,6 +51,7 @@ public:
     void AnalysisMonthTrend_LIFE();
     void AnalysisMonthTrend_ROOM();
     void AnalysisMonthTrend_CSM();
+    void AnalysisMonthTrend(const string str_MonthKey);
 
     /****************************************/
     //   展示区

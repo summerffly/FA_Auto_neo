@@ -1176,27 +1176,6 @@ void CFAitfX::DrawMonthTrendVector(const vector<TREND_INFO> vec_stc_TrendInfo, c
 }
 
 /**************************************************/
-//   分析 月度变化趋势
-/**************************************************/
-void CFAitfX::AnalysisMonthTrend(const string str_MonthKey)
-{
-    vector<TREND_INFO> vec_stc_TrendInfo;
-
-    // 建构 趋势Vector
-    GenerateMonthTrendVector(vec_stc_TrendInfo, str_MonthKey);
-
-    // 绘制 趋势Vector
-    cout << "----------------------------------------" << endl;
-    cout << "### 月度趋势分析 ###" << endl;
-    cout << endl;
-
-    DrawMonthTrendVector(vec_stc_TrendInfo, str_MonthKey);
-
-    cout << endl;
-    cout << "----------------------------------------" << endl;
-}
-
-/**************************************************/
 //   分析 月度支出占比
 /**************************************************/
 void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
@@ -1262,6 +1241,65 @@ void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
         printf("%.1f", (dob_PPRate*100));
         cout << "%)" << endl;
     }
+
+    cout << endl;
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
+//   预测 未来财富
+/**************************************************/
+void CFAitfX::ForecastFutureSum(const string str_SelMonth, const int int_MonthPatch)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
+    if(ptr_ScriptRipper->GetCurrentMonth() == ptr_ScriptRipper->GetOriginMonth())
+    {
+        // tips 番茄@20180706 - 后期需要完善优化
+        CTool::MassageOutFotmat("OriginMonth-UnSupported", '!');
+        return;
+    }
+
+    int int_SurveySum = 0;
+    int int_SurveyCounter = 0;
+    int int_AverageMonthExpense = 0;
+
+    string str_SurveyMonth = ptr_ScriptRipper->GetCurrentMonth();
+
+    for(int i=0; ; i++)
+    {
+        str_SurveyMonth = CTool::GeneratePreMonth(str_SurveyMonth);
+        
+        string str_SurveyMonthTop = "## life.M" + str_SurveyMonth;
+        m_ptr_FM_life->SearchLineKey(str_SurveyMonthTop.c_str());
+        unsigned int uni_SurveyMonthTop = m_ptr_FM_life->GetSearchLineIndex(1);
+
+        int_SurveySum += m_ptr_FM_life->GetLineValue(uni_SurveyMonthTop+2);
+        int_SurveyCounter++;
+
+        if(str_SurveyMonth == ptr_ScriptRipper->GetOriginMonth())
+            break;
+    }
+
+    int_AverageMonthExpense = int_SurveySum / int_SurveyCounter;
+
+    int int_MonthSalary = ptr_ScriptRipper->GetMonthSalary();
+    int int_MonthSurplus = int_MonthSalary + int_AverageMonthExpense;
+    int int_MonthCounter = CTool::CountMonth(ptr_ScriptRipper->GetCurrentMonth(), str_SelMonth);
+    int_MonthCounter--;   // tips 番茄@20180706 - 检查为什么CountMonth需要+1
+
+    int int_FutureSum = m_int_CurrentSum + (int_MonthSurplus * int_MonthCounter);
+    int_FutureSum += int_MonthSalary * int_MonthPatch;
+    int int_CAFSum = m_int_CAFSum + (int_MonthSurplus * int_MonthCounter);
+    int_CAFSum += int_MonthSalary * int_MonthPatch;
+
+    cout << "----------------------------------------" << endl;
+    cout << "### 未来财富预测 ###" << endl;
+    cout << endl;
+
+    cout << "平均月度结余: " << int_MonthSurplus << endl;
+    cout << "未来财富: " << int_FutureSum << endl;
+    cout << "可支配财富: " << int_CAFSum << endl;
 
     cout << endl;
     cout << "----------------------------------------" << endl;

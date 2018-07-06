@@ -35,6 +35,7 @@ int main(int argc, char **argv, char *env[])
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
     CASitfX *ptr_ASitfX = Singleton<CASitfX>::GetInstance();
 
+    ptr_FAitfX->LoadSum(0);
     ptr_FAitfX->SummerizeMonth(0);
     ptr_FAitfX->SummerizeTitle(0);
     ptr_FAitfX->SummerizeTail(0);
@@ -641,7 +642,7 @@ int main(int argc, char **argv, char *env[])
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->AnalysisMonthTrend(X_CMD.GetCmd(3));
+            ptr_ASitfX->AnalysisMonthTrend(X_CMD.GetCmd(3));
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -658,6 +659,32 @@ int main(int argc, char **argv, char *env[])
             CCmdTarget::TagTimeBait();
 
             ptr_FAitfX->AnalysisMonthProportion(X_CMD.GetCmd(3));
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   预测 未来财富
+        //   CMD >>> ff
+        /**************************************************/
+        else if( X_CMD.CmpSoloCmd(FORECAST) )
+        {   
+            char cha_FutureMonth[10];
+            cout << "Input FutureMonth: ";
+            cin.getline(cha_FutureMonth, 10);
+            string str_FutureMonth(cha_FutureMonth);
+
+            char cha_MonthPatch[10];
+            cout << "Input MonthPatch: ";
+            cin.getline(cha_MonthPatch, 10);
+            int int_MonthPatch = atoi(cha_MonthPatch);
+
+            CCmdTarget::TagTimeBait();
+
+            ptr_FAitfX->ForecastFutureSum(cha_FutureMonth, int_MonthPatch);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -908,10 +935,9 @@ int main(int argc, char **argv, char *env[])
         /**************************************************/
         else if( X_CMD.CmpSoloCmd(TEST) )
         {
-
             CCmdTarget::TagTimeBait();
 
-            //ptr_ASitfX->AnalysisMonthTrend_LIFE();
+            //ptr_FAitfX->ForecastFutureSum(cha_FutureMonth, int_MonthPatch);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

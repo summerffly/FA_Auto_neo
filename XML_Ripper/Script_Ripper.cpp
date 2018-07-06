@@ -18,12 +18,15 @@ m_cls_XMLRipper(cha_xmlPath)
     m_str_ScriptFilePath = cha_xmlPath;
 
     m_str_Version = "";
+
     m_str_OriginMonth = "";
     m_str_CurrentMonth = "";
     m_str_PreviousMonth = "";
     m_uni_OriginMonth = 0;
     m_uni_CurrentMonth = 0;
     m_uni_PreviousMonth = 0;
+
+    m_uni_MonthSalary = 0;
 
     m_vec_str_Title.clear();
     m_vec_str_SubMonth.clear();
@@ -34,6 +37,7 @@ m_cls_XMLRipper(cha_xmlPath)
 
     VersionRipper();
     MonthRipper();
+    SalaryRipper();
     SumRipper();
     TitleRipper();
     TitleDeepRipper();
@@ -73,6 +77,15 @@ void CScriptRipper::MonthRipper()
     m_uni_OriginMonth = atoi(m_str_OriginMonth.c_str());
     m_uni_CurrentMonth = atoi(m_str_CurrentMonth.c_str());
     m_uni_PreviousMonth = atoi(m_str_PreviousMonth.c_str());
+}
+
+/**************************************************/
+//   读取&解析 MonthSalary
+/**************************************************/
+void CScriptRipper::SalaryRipper()
+{
+    string str_MonthSalary = m_cls_XMLRipper.GetL1NodeAttr_UNI("MonthSalary", "value");
+    m_uni_MonthSalary = atoi(str_MonthSalary.c_str());
 }
 
 /**************************************************/
@@ -303,6 +316,14 @@ string CScriptRipper::GetOriginSum()
 string CScriptRipper::GetCurrentSum()
 {
     return m_str_CurrentSum;
+}
+
+/**************************************************/
+//   获取 MonthSalary
+/**************************************************/
+unsigned int CScriptRipper::GetMonthSalary()
+{
+    return m_uni_MonthSalary;
 }
 
 /**************************************************/

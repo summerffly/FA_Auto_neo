@@ -95,8 +95,9 @@ public:
     unsigned int GetMonthTrendVectorMax(const vector<TREND_INFO> vec_stc_TrendInfo);
     void DrawMonthTrendVector(const vector<TREND_INFO> vec_stc_TrendInfo, const string str_MonthKey);
 
-    void AnalysisMonthTrend(const string str_MonthKey);
     void AnalysisMonthProportion(const string str_SelMonth);
+
+    void ForecastFutureSum(const string str_SelMonth, const int int_MonthPatch);
 
     /****************************************/
     //   展示区

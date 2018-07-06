@@ -49,6 +49,8 @@ string XM = "xm";
 
 string ANALYSIS = "as";
 string SUMMARIZE = "sz";
+string FORECAST = "ff";
+
 string TREND = "tt";
 string PROPORTION = "pp";
 string AGGREGATION = "aggr";

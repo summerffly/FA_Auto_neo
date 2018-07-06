@@ -30,6 +30,7 @@ public:
     /****************************************/
     void VersionRipper();
     void MonthRipper();
+    void SalaryRipper();
     void SumRipper();
     void TitleRipper();
     void TitleDeepRipper();
@@ -50,6 +51,8 @@ public:
     string GetPreviousMonth();
     string GetOriginSum();
     string GetCurrentSum();
+
+    unsigned int GetMonthSalary();
 
     void MonthRangeDuplicator(vector<string> &vec_str_DestMonth);
     void TitleDuplicator(vector<string> &vec_str_Dest);
@@ -78,6 +81,8 @@ private:
     unsigned int m_uni_PreviousMonth;
     vector<string> m_vec_str_Month;   // Month需要计算生成
 
+    unsigned int m_uni_MonthSalary;
+
     string m_str_OriginSum;
     string m_str_CurrentSum;
 
@@ -93,7 +98,6 @@ private:
     vector<string> m_vec_str_CAF;
     vector<string> m_vec_str_Room;
     vector<string> m_vec_str_SubMonth;
-    
 };
 
 

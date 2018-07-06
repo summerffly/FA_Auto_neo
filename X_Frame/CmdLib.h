@@ -52,6 +52,8 @@ extern string XM;
 
 extern string ANALYSIS;
 extern string SUMMARIZE;
+extern string FORECAST;
+
 extern string TREND;
 extern string PROPORTION;
 extern string AGGREGATION;

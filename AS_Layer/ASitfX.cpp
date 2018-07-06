@@ -407,6 +407,29 @@ void CASitfX::AnalysisMonthTrend_CSM()
 }
 
 /**************************************************/
+//   分析 月度变化趋势
+/**************************************************/
+void CASitfX::AnalysisMonthTrend(const string str_MonthKey)
+{
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    vector<TREND_INFO> vec_stc_TrendInfo;
+
+    // 建构 趋势Vector
+    ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, str_MonthKey);
+
+    // 绘制 趋势Vector
+    cout << "----------------------------------------" << endl;
+    cout << "### 月度趋势分析 ###" << endl;
+    cout << endl;
+
+    ptr_FAitfX->DrawMonthTrendVector(vec_stc_TrendInfo, str_MonthKey);
+
+    cout << endl;
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
 //   展示.md 全部月度.M
 /**************************************************/
 void CASitfX::ShowMDRawSubMonthTraversal(const string str_SelMonth, bool bol_NumFlag)
@@ -552,10 +575,6 @@ void CASitfX::HelpAll()
     cout << ">>> " << CHECK << ' ' << TEMP << endl;
     cout << endl;
 
-    cout << "分析 月度趋势" << endl;
-    cout << ">>> " << ANALYSIS << ' ' << TREND << " 生活费" << endl;
-    cout << endl;
-
     cout << "分析月度趋势 LIFE生活支出" << endl;
     cout << ">>> " << ANALYSIS << ' ' << TREND << ' ' << MODIFY_LIFE << endl;
     cout << endl;
@@ -568,8 +587,16 @@ void CASitfX::HelpAll()
     cout << ">>> " << ANALYSIS << ' ' << TREND << ' ' << CONSUMPTION << endl;
     cout << endl;
 
+    cout << "分析 月度趋势" << endl;
+    cout << ">>> " << ANALYSIS << ' ' << TREND << " Books" << endl;
+    cout << endl;
+
     cout << "分析 月度百分占比" << endl;
     cout << ">>> " << ANALYSIS << ' ' << PROPORTION << ' ' << ptr_ScriptRipper->GetCurrentMonth() << endl;
+    cout << endl;
+
+    cout << "预测 未来财富" << endl;
+    cout << ">>> " << FORECAST << endl;
     cout << endl;
 
     cout << "汇总 Month累计收支" << endl;
