@@ -21,6 +21,7 @@ extern string UPDATE;
 extern string APPEND;
 extern string INSERT;
 extern string MODIFY_LIFE;
+extern string MODIFY_LIFE_WC;
 extern string TRANSFER;
 
 extern string EXPENSE;

@@ -18,6 +18,7 @@ string UPDATE = "update";
 string APPEND = "append";
 string INSERT = "insert";
 string MODIFY_LIFE = "life";
+string MODIFY_LIFE_WC = "wlife";
 string TRANSFER = "tf";
 
 string EXPENSE = "expense";

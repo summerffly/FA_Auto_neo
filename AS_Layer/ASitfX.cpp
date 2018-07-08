@@ -543,6 +543,10 @@ void CASitfX::HelpAll()
     cout << ">>> " << MODIFY_LIFE << " 100" << endl;
     cout << endl;
 
+    cout << "增加 当月 微信生活费" << endl;
+    cout << ">>> " << MODIFY_LIFE_WC << " 100" << endl;
+    cout << endl;
+
     cout << "校验 子项.M 支出" << endl;
     cout << ">>> " << CHECK << ' ' << SUBMONTH << " books/keep/tb/sa" << endl;
     cout << endl;

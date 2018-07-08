@@ -337,6 +337,26 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
+        //   增加 当月 微信生活费
+        //   CMD >>> wlife 50
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(MODIFY_LIFE_WC) && (X_CMD.GetCmdNum() == 2) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            ptr_FAitfX->ModifyMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), "生活费", atoi(X_CMD.GetCmd(2).c_str()));
+            ptr_FAitfX->SyncMonthSurplus(ptr_ScriptRipper->GetCurrentMonth());
+            ptr_ASitfX->UpdateSum(0);
+
+            ptr_FAitfX->TransferBalance("零钱通", "余额宝", false, atoi(X_CMD.GetCmd(2).c_str()));
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
         //   校验 子项.M 支出
         //   CMD >>> check sm books/keep/tb/sa
         /**************************************************/
