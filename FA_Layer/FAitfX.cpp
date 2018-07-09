@@ -1306,9 +1306,9 @@ void CFAitfX::ForecastFutureSum(const string str_SelMonth, const int int_MonthPa
 }
 
 /**************************************************/
-//   展示.md 月度
+//   Print 月度
 /**************************************************/
-void CFAitfX::ShowMDRawMonth(const string str_SelMonth, bool bol_NumFlag)
+void CFAitfX::PrintMonth(const string str_SelMonth, bool bol_NumFlag)
 {
     string str_RangeTop = "## life.M" + str_SelMonth;
     string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
@@ -1347,9 +1347,9 @@ void CFAitfX::ShowMDRawMonth(const string str_SelMonth, bool bol_NumFlag)
 }
 
 /**************************************************/
-//   展示.md 月度.M
+//   Print 月度.M
 /**************************************************/
-void CFAitfX::ShowMDRawSubMonth(const string str_SubMonthKey, const string str_SelMonth, bool bol_NumFlag, bool bol_ShowFlag)
+void CFAitfX::PrintSubMonth(const string str_SubMonthKey, const string str_SelMonth, bool bol_NumFlag, bool bol_ShowFlag)
 {
     string str_RangeTop = str_SubMonthKey + ".M" + str_SelMonth;
     string str_RangeBottom = str_SubMonthKey + ".M" + CTool::GenerateNextMonth(str_SelMonth);
@@ -1383,6 +1383,46 @@ void CFAitfX::ShowMDRawSubMonth(const string str_SubMonthKey, const string str_S
 
     if( bol_ShowFlag )
     {
+        cout << "----------------------------------------" << endl;
+    }
+}
+
+/**************************************************/
+//   Print Tt分项
+/**************************************************/
+void CFAitfX::PrintTitle(const string str_TitleKey, bool bol_NumFlag)
+{
+    //string str_RangeTop;
+    string str_RangeBottom = "Update Time";
+
+    unsigned int uni_RangeTop = 1;
+    GetPtrTitleFM(str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = GetPtrTitleFM(str_TitleKey)->GetSearchLineIndex(1)-1;
+
+    if( bol_NumFlag )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### Print " << str_TitleKey << ".md ###" << endl;
+        cout << endl;
+
+        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
+        {
+            cout << "【" << i << "】" << GetPtrTitleFM(str_TitleKey)->GetFullLine(i) << endl;
+        }
+
+        cout << "----------------------------------------" << endl;
+    }
+    else
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### Print " << str_TitleKey << ".md ###" << endl;
+        cout << endl;
+                
+        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
+        {
+            cout << m_ptr_FM_life->GetFullLine(i) << endl;
+        }
+
         cout << "----------------------------------------" << endl;
     }
 }

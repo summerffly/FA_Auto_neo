@@ -761,7 +761,7 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   展示.md 月度 当月/上月
+        //   Print 月度 当月/上月
         //   CMD >>> print month/exmonth
         /**************************************************/
         else if( X_CMD.CmpCmdFront(PRINT) && (X_CMD.GetCmdNum() == 2) &&\
@@ -771,11 +771,11 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(MONTH) )
             {
-                ptr_FAitfX->ShowMDRawMonth(ptr_ScriptRipper->GetCurrentMonth(), true);
+                ptr_FAitfX->PrintMonth(ptr_ScriptRipper->GetCurrentMonth(), true);
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                ptr_FAitfX->ShowMDRawMonth(ptr_ScriptRipper->GetPreviousMonth(), true);
+                ptr_FAitfX->PrintMonth(ptr_ScriptRipper->GetPreviousMonth(), true);
             }
 
             CCmdTarget::ShowTimeGap();
@@ -785,14 +785,14 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   展示.md 月度 任意月份
+        //   Print 月度 任意月份
         //   CMD >>> print month 04
         /**************************************************/
         else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, MONTH) && (X_CMD.GetCmdNum() == 3) )
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->ShowMDRawMonth(X_CMD.GetCmd(3), true);
+            ptr_FAitfX->PrintMonth(X_CMD.GetCmd(3), true);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -801,7 +801,7 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   展示.md 月度.M 任意月份
+        //   Print 月度.M 任意月份
         //   CMD >>> print sm tb 04
         /**************************************************/
         else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 4) )
@@ -810,19 +810,19 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmd(3, BOOKS) )
             {
-                ptr_FAitfX->ShowMDRawSubMonth("Books", X_CMD.GetCmd(4), true, true);
+                ptr_FAitfX->PrintSubMonth("Books", X_CMD.GetCmd(4), true, true);
             }
             else if( X_CMD.CmpCmd(3, KEEP) )
             {
-                ptr_FAitfX->ShowMDRawSubMonth("KEEP", X_CMD.GetCmd(4), true, true);
+                ptr_FAitfX->PrintSubMonth("KEEP", X_CMD.GetCmd(4), true, true);
             }
             else if( X_CMD.CmpCmd(3, TB) )
             {
-                ptr_FAitfX->ShowMDRawSubMonth("TB", X_CMD.GetCmd(4), true, true);
+                ptr_FAitfX->PrintSubMonth("TB", X_CMD.GetCmd(4), true, true);
             }
             else if( X_CMD.CmpCmd(3, SA) )
             {
-                ptr_FAitfX->ShowMDRawSubMonth("sa", X_CMD.GetCmd(4), true, true);
+                ptr_FAitfX->PrintSubMonth("sa", X_CMD.GetCmd(4), true, true);
             }
             else
             {
@@ -838,7 +838,7 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   展示.md 全部月度.M 当月/上月
+        //   Print 全部月度.M 当月/上月
         //   CMD >>> print sm month/exmonth
         /**************************************************/
         else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 3)  &&\
@@ -848,11 +848,11 @@ int main(int argc, char **argv, char *env[])
 
             if( X_CMD.CmpCmdBack(MONTH) )
             {
-                ptr_ASitfX->ShowMDRawSubMonthTraversal(ptr_ScriptRipper->GetCurrentMonth(), false);
+                ptr_ASitfX->PrintSubMonthTraversal(ptr_ScriptRipper->GetCurrentMonth(), false);
             }
             else if( X_CMD.CmpCmdBack(EX_MONTH) )
             {
-                ptr_ASitfX->ShowMDRawSubMonthTraversal(ptr_ScriptRipper->GetPreviousMonth(), false);
+                ptr_ASitfX->PrintSubMonthTraversal(ptr_ScriptRipper->GetPreviousMonth(), false);
             }
 
             CCmdTarget::ShowTimeGap();
@@ -862,14 +862,67 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   展示.md 全部月度.M 任意月份
+        //   Print 全部月度.M 任意月份
         //   CMD >>> print sm 04
         /**************************************************/
         else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 3) )
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_ASitfX->ShowMDRawSubMonthTraversal(X_CMD.GetCmd(3), false);
+            ptr_ASitfX->PrintSubMonthTraversal(X_CMD.GetCmd(3), false);
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   Print 全部月度.M 任意月份
+        //   CMD >>> print sm 04
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 3) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            ptr_ASitfX->PrintSubMonthTraversal(X_CMD.GetCmd(3), false);
+
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+
+            continue;
+        }
+
+        /**************************************************/
+        //   Print Tt分项
+        //   CMD >>> print tt dk
+        /**************************************************/
+        else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, TITLE) && (X_CMD.GetCmdNum() == 3) )
+        {   
+            CCmdTarget::TagTimeBait();
+
+            if( X_CMD.CmpCmd(3, DK) )
+            {
+                ptr_FAitfX->PrintTitle("DK", true);
+            }
+            else if( X_CMD.CmpCmd(3, NS) )
+            {
+                ptr_FAitfX->PrintTitle("NS", true);
+            }
+            else if( X_CMD.CmpCmd(3, TRAVEL) )
+            {
+                ptr_FAitfX->PrintTitle("travel", true);
+            }
+            else if( X_CMD.CmpCmd(3, LOTTERY) )
+            {
+                ptr_FAitfX->PrintTitle("lottery", true);
+            }
+            else
+            {
+                CTool::MassageOutFotmat("Error Param", '!');
+
+                continue;
+            }
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -957,7 +1010,7 @@ int main(int argc, char **argv, char *env[])
         {
             CCmdTarget::TagTimeBait();
 
-            //ptr_FAitfX->ForecastFutureSum(cha_FutureMonth, int_MonthPatch);
+            //ptr_FAitfX->PrintTitle("DK", true);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

@@ -432,7 +432,7 @@ void CASitfX::AnalysisMonthTrend(const string str_MonthKey)
 /**************************************************/
 //   展示.md 全部月度.M
 /**************************************************/
-void CASitfX::ShowMDRawSubMonthTraversal(const string str_SelMonth, bool bol_NumFlag)
+void CASitfX::PrintSubMonthTraversal(const string str_SelMonth, bool bol_NumFlag)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
@@ -447,7 +447,7 @@ void CASitfX::ShowMDRawSubMonthTraversal(const string str_SelMonth, bool bol_Num
     vector<string>::iterator itr_SubMonth;
     for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
     {
-        ptr_FAitfX->ShowMDRawSubMonth(*itr_SubMonth, str_SelMonth, bol_NumFlag, false);
+        ptr_FAitfX->PrintSubMonth(*itr_SubMonth, str_SelMonth, bol_NumFlag, false);
     }
 
     cout << "----------------------------------------" << endl;

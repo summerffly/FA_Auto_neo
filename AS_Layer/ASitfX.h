@@ -56,7 +56,7 @@ public:
     /****************************************/
     //   展示区
     /****************************************/
-    void ShowMDRawSubMonthTraversal(const string str_SelMonth, bool bol_NumFlag);
+    void PrintSubMonthTraversal(const string str_SelMonth, bool bol_NumFlag);
 
     /****************************************/
     //   其他
