@@ -72,6 +72,8 @@ public:
     /****************************************/
     int CheckTitleExpense(const string str_TitleKey, bool bol_OFlag);
     void UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag);
+    void InsertTitle(const string str_TitleKey, const unsigned int uni_VecIndex,\
+                     const int int_LineValue, const string str_LineContent);
     void AppendTitleExpense(const string str_TitleKey,\
                             const int int_LineValue, const string str_LineContent);
     void AppendLottery(const bool bol_LineFlag, const unsigned int int_LineValueABS,\

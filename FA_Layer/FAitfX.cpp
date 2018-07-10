@@ -785,6 +785,14 @@ void CFAitfX::UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag)
 }
 
 /**************************************************/
+//   添加行 Tt分项
+/**************************************************/
+void CFAitfX::InsertTitle(const string str_TitleKey, const unsigned int uni_VecIndex, const int int_LineValue, const string str_LineContent)
+{
+    GetPtrTitleFM(str_TitleKey)->InsertLine(uni_VecIndex, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
+}
+
+/**************************************************/
 //   添加行 Tt分项 月度支出
 /**************************************************/
 void CFAitfX::AppendTitleExpense(const string str_TitleKey,\
