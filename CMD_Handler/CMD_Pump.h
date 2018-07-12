@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include "./../X_Frame/X_CmdTarget.h"
 #include "DefCMDType.h"
+#include "CMD_Ripper.h"
 
 using namespace std;
 
 
 // 定义函数指针
-typedef void (*PTRFUNC)(CCmdTarget cls_Cmd);
+typedef void (*PTRFUNC)(CCMDRipper cls_CMD);
 
 /****************************************/
 //   
@@ -29,7 +29,7 @@ struct X_CMD_TYPE_ENTRY
 /****************************************/
 #define  X_DECLARE_CMD_MAP()   \
 public:   \
-    void CmdNotify(CCmdTarget cls_Cmd);   \
+    void CmdNotify(CCMDRipper cls_CMD);   \
 private:   \
     static const X_CMD_TYPE_ENTRY CmdTypeEntries[];   \
 
@@ -51,14 +51,14 @@ private:   \
 //   定义CMD_LOOP()宏
 /****************************************/
 #define  CMD_LOOP(thisClass)   \
-    void thisClass::CmdNotify(CCmdTarget cls_Cmd)   \
+    void thisClass::CmdNotify(CCMDRipper cls_CMD)   \
     {   \
         for(int i=0; ;i++)   \
         {   \
             if("" == CmdTypeEntries[i].str_CmdType)   \
             {   \
                 if(CmdTypeEntries[i].pfn_CmdCBFunc != NULL)   \
-                    CmdTypeEntries[i].pfn_CmdCBFunc(cls_Cmd);   \
+                    CmdTypeEntries[i].pfn_CmdCBFunc(cls_CMD);   \
             }   \
         }   \
     }   \
