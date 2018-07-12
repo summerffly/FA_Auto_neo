@@ -64,4 +64,4 @@ ASitfX.o: $(las)ASitfX.h $(las)ASitfX.cpp
 
 .PHONY:clean
 clean:
-	rm $(px)*.o $(lxml)*.o $(lop)*.o $(lep)*.o $(lfa)*.o $(las)*.o *.o FA_Auto_X
+	rm $(px)*.o $(lxml)*.o $(lcmd)*.o $(lop)*.o $(lep)*.o $(lfa)*.o $(las)*.o *.o FA_Auto_X
