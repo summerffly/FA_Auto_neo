@@ -18,6 +18,8 @@
 
 #include "./XML_Ripper/Script_Ripper.h"
 
+#include "./CMD_Handler/CMD_Handler.h"
+
 #include "./OP_Layer/FileOPer.h"
 #include "./EP_Layer/LineEPer.h"
 #include "./EP_Layer/FileManager.h"

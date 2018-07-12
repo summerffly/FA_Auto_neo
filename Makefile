@@ -1,6 +1,7 @@
 
 px = ./X_Frame/
 lxml = ./XML_Ripper/
+lcmd = ./CMD_Handler/
 lop = ./OP_Layer/
 lep = ./EP_Layer/
 lfa = ./FA_Layer/
@@ -9,14 +10,15 @@ las = ./AS_Layer/
 
 obj_X = $(px)CmdLib.o $(px)RegExLib.o $(px)X_Tool.o $(px)X_CmdTarget.o
 obj_XML = $(lxml)pugixml.o $(lxml)XML_Ripper.o $(lxml)Script_Ripper.o
+obj_CMD = $(lcmd)CMD_Handler.o
 obj_OP = $(lop)FileOPer.o
 obj_EP = $(lep)LineEPer.o $(lep)FileManager.o
 obj_FA = $(lfa)FAitfX.o
 obj_AS = $(las)ASitfX.o
 
 
-FA_Auto_X: $(obj_X) $(obj_XML) $(obj_OP) $(obj_EP) $(obj_FA) $(obj_AS) FA_Auto_X.o
-	g++ -o FA_Auto_X $(obj_X) $(obj_XML) $(obj_OP) $(obj_EP) $(obj_FA) $(obj_AS) FA_Auto_X.o
+FA_Auto_X: $(obj_X) $(obj_XML) $(obj_CMD) $(obj_OP) $(obj_EP) $(obj_FA) $(obj_AS) FA_Auto_X.o
+	g++ -o FA_Auto_X $(obj_X) $(obj_XML) $(obj_CMD) $(obj_OP) $(obj_EP) $(obj_FA) $(obj_AS) FA_Auto_X.o
 
 FA_Auto_X.o: FA_Auto_X.cpp
 	g++ -c FA_Auto_X.cpp
@@ -41,6 +43,9 @@ XML_Ripper.o: $(lxml)XML_Ripper.h $(lxml)XML_Ripper.cpp
 
 Script_Ripper.o: $(lxml)Script_Ripper.h $(lxml)Script_Ripper.cpp
 	g++ -c $(lxml)Script_Ripper.cpp
+
+CMD_Handler.o: $(lcmd)CMD_Handler.h $(lcmd)CMD_Handler.cpp
+	g++ -c $(lcmd)CMD_Handler.cpp
 
 FileOPer.o: $(lop)FileOPer.h $(lop)FileOPer.cpp
 	g++ -c $(lop)FileOPer.cpp
