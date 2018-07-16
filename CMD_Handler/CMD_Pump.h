@@ -7,20 +7,21 @@
 #pragma once
 
 #include "DefCMDType.h"
-#include "CMD_Ripper.h"
+#include "CMD_Packet.h"
 
 using namespace std;
 
 
 // 定义函数指针
-typedef void (*PTRFUNC)(CCMDRipper cls_CMD);
+typedef void (*PTRFUNC)(CMD_Packet cls_CMD);
 
 /****************************************/
-//   
+//   定义CMD_TYPE_ENTRY
 /****************************************/
 struct X_CMD_TYPE_ENTRY
 {
     string str_CmdType;
+    string str_CmdHelpTip;
     PTRFUNC pfn_CmdCBFunc;
 };
 
@@ -29,7 +30,7 @@ struct X_CMD_TYPE_ENTRY
 /****************************************/
 #define  X_DECLARE_CMD_MAP()   \
 public:   \
-    void CmdNotify(CCMDRipper cls_CMD);   \
+    void CmdNotify(CMD_Packet cls_CMD);   \
 private:   \
     static const X_CMD_TYPE_ENTRY CmdTypeEntries[];   \
 
@@ -38,20 +39,20 @@ private:   \
     {   \
 
 #define  X_END_CMD_MAP()   \
-        {"", NULL}   \
+        {"", "", NULL}   \
     };   \
 
 /****************************************/
-//   定义CMD_TYPE()宏
+//   定义ON_CMD_TYPE()宏
 /****************************************/
-#define  X_ON_CMD_TYPE(CmdType, memberFxn)   \
-        {CmdType, memberFxn},   \
+#define  X_ON_CMD_TYPE(CmdType, CmdHelpTip, memberFxn)   \
+        {CmdType, CmdHelpTip, memberFxn},   \
 
 /****************************************/
 //   定义CMD_LOOP()宏
 /****************************************/
 #define  CMD_LOOP(thisClass)   \
-    void thisClass::CmdNotify(CCMDRipper cls_CMD)   \
+    void thisClass::CmdNotify(CMD_Packet cls_CMD)   \
     {   \
         for(int i=0; ;i++)   \
         {   \

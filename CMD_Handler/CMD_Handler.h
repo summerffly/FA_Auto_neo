@@ -21,6 +21,9 @@ public:
     ~CCMDHandler();
 
     X_DECLARE_CMD_MAP()
+
+public:
+
 };
 
 //------------------------------//

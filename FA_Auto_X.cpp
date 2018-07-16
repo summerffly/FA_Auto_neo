@@ -26,6 +26,7 @@
 #include "./FA_Layer/FAitfX.h"
 #include "./AS_Layer/ASitfX.h"
 
+#define TEST_MODE  0
 
 using namespace std;
 
@@ -67,11 +68,19 @@ int main(int argc, char **argv, char *env[])
     // Advanced_CMD循环模式
     CCmdTarget X_CMD = CCmdTarget();
     char CMD_linebuffer[MAX_COMMAND];
+
+    #if TEST_MODE   // test 番茄
+        char CMD_xlinebuffer[MAX_COMMAND];
+    #endif
     
     while(1)
     {
         cout << "CMD >>> ";
         cin.getline(CMD_linebuffer, MAX_COMMAND);
+
+        #if TEST_MODE   // test 番茄
+            strcpy(CMD_xlinebuffer, CMD_linebuffer);
+        #endif
 
         /**************************************************/
         //   判断 空行
@@ -1008,11 +1017,19 @@ int main(int argc, char **argv, char *env[])
         /**************************************************/
         //   FA_Auto_X 接口测试
         /**************************************************/
-        else if( X_CMD.CmpSoloCmd(TEST) )
+        else if( X_CMD.CmpCmdFront(TEST) )
         {
             CCmdTarget::TagTimeBait();
 
             //ptr_FAitfX->PrintTitle("DK", true);
+
+            #if TEST_MODE   // test 番茄
+                cout << CMD_xlinebuffer << endl;
+
+                CMD_Packet xCmdPacket = CMD_Packet();
+                xCmdPacket.CMDRipper(CMD_xlinebuffer);
+                cout << "CMDFilter: " << xCmdPacket.CMDFilter() << endl;
+            #endif
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

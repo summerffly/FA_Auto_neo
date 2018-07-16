@@ -10,7 +10,7 @@ las = ./AS_Layer/
 
 obj_X = $(px)CmdLib.o $(px)RegExLib.o $(px)X_Tool.o $(px)X_CmdTarget.o
 obj_XML = $(lxml)pugixml.o $(lxml)XML_Ripper.o $(lxml)Script_Ripper.o
-obj_CMD = $(lcmd)CMD_Ripper.o $(lcmd)CMD_Handler.o
+obj_CMD = $(lcmd)CMD_Packet.o $(lcmd)CMD_Handler.o
 obj_OP = $(lop)FileOPer.o
 obj_EP = $(lep)LineEPer.o $(lep)FileManager.o
 obj_FA = $(lfa)FAitfX.o
@@ -44,8 +44,8 @@ XML_Ripper.o: $(lxml)XML_Ripper.h $(lxml)XML_Ripper.cpp
 Script_Ripper.o: $(lxml)Script_Ripper.h $(lxml)Script_Ripper.cpp
 	g++ -c $(lxml)Script_Ripper.cpp
 
-CMD_Ripper.o: $(lcmd)CMD_Ripper.h $(lcmd)CMD_Ripper.cpp
-	g++ -c $(lcmd)CMD_Ripper.cpp
+CMD_Packet.o: $(lcmd)CMD_Packet.h $(lcmd)CMD_Packet.cpp
+	g++ -c $(lcmd)CMD_Packet.cpp
 
 CMD_Handler.o: $(lcmd)CMD_Handler.h $(lcmd)CMD_Handler.cpp
 	g++ -c $(lcmd)CMD_Handler.cpp
