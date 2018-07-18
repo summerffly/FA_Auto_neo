@@ -23,7 +23,7 @@ public:
     int CMDFilter();
     int CMDParser();
 
-private:
+public:
     string m_str_CmdType;          // CMD类型
     
     int m_int_PreCmdNum;           // CMD预处理数量
@@ -31,11 +31,11 @@ private:
     int m_int_CmdNum;              // CMD数量
     vector<string> m_vec_Cmd;      // CMD内容
 
-    int m_int_ParamValue;
-    string m_str_ParamMonth;
-    string m_str_ParamSubMonth;
-    string m_str_ParamTitle;
-    string m_str_ParamDate;
+    int m_int_ParamValue;         // -f
+    string m_str_ParamMonth;      // -m
+    string m_str_ParamDate;       // -d
+    string m_str_ParamSubMonth;   // -sm
+    string m_str_ParamTitle;      // -tt
 
     int m_int_ResParam;      // Reserved Param Int
     string m_str_ResParam;   // Reserved Param String

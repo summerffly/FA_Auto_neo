@@ -8,6 +8,7 @@
 
 #include "DefCMDType.h"
 #include "CMD_Packet.h"
+#include "./../X_Frame/Singleton.h"
 
 using namespace std;
 
@@ -56,7 +57,7 @@ private:   \
     {   \
         for(int i=0; ;i++)   \
         {   \
-            if("" == CmdTypeEntries[i].str_CmdType)   \
+            if(cls_CMD.m_str_CmdType == CmdTypeEntries[i].str_CmdType)   \
             {   \
                 if(CmdTypeEntries[i].pfn_CmdCBFunc != NULL)   \
                     CmdTypeEntries[i].pfn_CmdCBFunc(cls_CMD);   \

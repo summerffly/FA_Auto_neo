@@ -4,7 +4,7 @@
 //   @summer studio
 //------------------------------//
 
-#include "CmdLib.h"
+#include "DefCMD.h"
 
 using namespace std;
 
@@ -13,7 +13,7 @@ using namespace std;
 //   计算工具命令
 /**************************************************/
 
-string CHECK = "check";
+string CHECK = "ck";
 string UPDATE = "update";
 string APPEND = "append";
 string INSERT = "insert";

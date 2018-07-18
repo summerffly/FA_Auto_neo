@@ -26,7 +26,7 @@
 #include "./FA_Layer/FAitfX.h"
 #include "./AS_Layer/ASitfX.h"
 
-#define TEST_MODE  0
+#define X_TEST_MODE   0
 
 using namespace std;
 
@@ -37,6 +37,8 @@ int main(int argc, char **argv, char *env[])
 
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
     CASitfX *ptr_ASitfX = Singleton<CASitfX>::GetInstance();
+
+    CCMDHandler *ptr_CMDHandler = Singleton<CCMDHandler>::GetInstance();
 
     ptr_FAitfX->LoadSum(0);
     ptr_FAitfX->SummerizeMonth(0);
@@ -69,7 +71,7 @@ int main(int argc, char **argv, char *env[])
     CCmdTarget X_CMD = CCmdTarget();
     char CMD_linebuffer[MAX_COMMAND];
 
-    #if TEST_MODE   // test 番茄
+    #if X_TEST_MODE   // test 番茄
         char CMD_xlinebuffer[MAX_COMMAND];
     #endif
     
@@ -78,7 +80,7 @@ int main(int argc, char **argv, char *env[])
         cout << "CMD >>> ";
         cin.getline(CMD_linebuffer, MAX_COMMAND);
 
-        #if TEST_MODE   // test 番茄
+        #if X_TEST_MODE   // test 番茄
             strcpy(CMD_xlinebuffer, CMD_linebuffer);
         #endif
 
@@ -1015,20 +1017,23 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   FA_Auto_X 接口测试
+        //   FA_Auto_X 测试
         /**************************************************/
         else if( X_CMD.CmpCmdFront(TEST) )
         {
             CCmdTarget::TagTimeBait();
 
-            //ptr_FAitfX->PrintTitle("DK", true);
+            #if X_TEST_MODE   // test 番茄
+                //ptr_FAitfX->PrintTitle("DK", true);
 
-            #if TEST_MODE   // test 番茄
-                cout << CMD_xlinebuffer << endl;
+                cout << "CMD buffer: " <<  CMD_xlinebuffer << endl;
 
                 CMD_Packet xCmdPacket = CMD_Packet();
                 xCmdPacket.CMDRipper(CMD_xlinebuffer);
-                cout << "CMDFilter: " << xCmdPacket.CMDFilter() << endl;
+                xCmdPacket.CMDFilter();
+                xCmdPacket.CMDParser();
+
+                ptr_CMDHandler->CmdNotify(xCmdPacket);
             #endif
 
             CCmdTarget::ShowTimeGap();

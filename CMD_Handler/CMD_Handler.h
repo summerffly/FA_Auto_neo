@@ -17,13 +17,15 @@ using namespace std;
 class CCMDHandler
 {
 public:
+	friend class Singleton<CCMDHandler>;
+
     CCMDHandler();
     ~CCMDHandler();
 
     X_DECLARE_CMD_MAP()
 
 public:
-
+	void OnCmdTest(CMD_Packet cls_CMD);
 };
 
 //------------------------------//

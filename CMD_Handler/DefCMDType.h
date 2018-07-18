@@ -14,6 +14,8 @@
 #define  X_CMD_TYPE_UPDATE_FA   ("UpdateFA")
 #define  X_CMD_TYPE_SHOW_FA     ("ShowFA")
 
+#define  X_CMD_TYPE_TEST        ("Test")
+
 
 //------------------------------//
 //   River flows in summer

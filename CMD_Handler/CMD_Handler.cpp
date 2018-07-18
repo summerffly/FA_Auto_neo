@@ -14,6 +14,7 @@
 //   CMD_MAP()宏
 /**************************************************/
 X_BEGIN_CMD_MAP(CCMDHandler)
+	//X_ON_CMD_TYPE(X_CMD_TYPE_TEST, "", OnCmdTest)
 X_END_CMD_MAP()
 
 /**************************************************/
@@ -35,6 +36,11 @@ CCMDHandler::CCMDHandler()
 CCMDHandler::~CCMDHandler()
 {
     // Nothing To Do
+}
+
+void CCMDHandler::OnCmdTest(CMD_Packet cls_CMD)
+{
+	cout << "CMD_MAP() test success" << endl;
 }
 
 //------------------------------//
