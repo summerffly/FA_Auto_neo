@@ -11,7 +11,6 @@
 #include <sys/time.h>
 
 #include "./X_Frame/DefLib.h"
-#include "./X_Frame/CmdLib.h"
 #include "./X_Frame/X_Tool.h"
 #include "./X_Frame/Singleton.h"
 #include "./X_Frame/X_CmdTarget.h"
@@ -25,8 +24,6 @@
 #include "./EP_Layer/FileManager.h"
 #include "./FA_Layer/FAitfX.h"
 #include "./AS_Layer/ASitfX.h"
-
-#define X_TEST_MODE   0
 
 using namespace std;
 
@@ -68,113 +65,69 @@ int main(int argc, char **argv, char *env[])
     cout << "****************************************" << endl;
 
     // Advanced_CMD循环模式
-    CCmdTarget X_CMD = CCmdTarget();
+    CCmdTarget X_CMD = CCmdTarget();   // ToDel 番茄
     char CMD_linebuffer[MAX_COMMAND];
-
-    #if X_TEST_MODE   // test 番茄
-        char CMD_xlinebuffer[MAX_COMMAND];
-    #endif
+    char CMD_xlinebuffer[MAX_COMMAND];   // ToDel 番茄
     
     while(1)
     {
         cout << "CMD >>> ";
         cin.getline(CMD_linebuffer, MAX_COMMAND);
+        strcpy(CMD_xlinebuffer, CMD_linebuffer);   // ToDel 番茄
 
-        #if X_TEST_MODE   // test 番茄
-            strcpy(CMD_xlinebuffer, CMD_linebuffer);
-        #endif
+        CMD_Packet xCmdPacket = CMD_Packet();
 
-        /**************************************************/
-        //   判断 空行
-        /**************************************************/
-        if( X_CMD.CmdParser(CMD_linebuffer) == -1 )
+        if(-1 == xCmdPacket.CMDRipper(CMD_linebuffer))
         {
             CTool::MassageOutFotmat("Blank CMD", '!');
-            
-            continue;
-        }
-        
-        /**************************************************/
-        //   撤销 输入
-        /**************************************************/
-        if( X_CMD.CmpCmdBack(CANCEL) )
-        {
-            cout << "----------------------------------------" << endl;
-            cout << "###           CMD canceled           ###" << endl;
-            cout << "----------------------------------------" << endl;
-            
             continue;
         }
 
-        /**************************************************/
-        //   退出 FA_Auto_X
-        /**************************************************/
-        if( X_CMD.CmpSoloCmd(EXIT) )
+        if(0 != xCmdPacket.CMDFilter())
         {
-            cout << endl;
-            cout << "****************************************" << endl;
-            cout << "***          FA_Auto X Pro           ***" << endl;
-            cout << "***              EXIT                ***" << endl;
-            cout << "****************************************" << endl;
-            cout << endl;
+            CTool::MassageOutFotmat("Error-Format CMD", '!');
+            continue;
+        }
 
+        int int_RetParser = xCmdPacket.CMDParser();
+        if(-1 == int_RetParser)
+        {
+            CTool::MassageOutFotmat("Error-Format CMD Param", '!');
+            continue;
+        }
+        else if(-2 == int_RetParser)
+        {
+            // 未定义CMDType
+            // 完成后切换ERROR提示
+        }
+
+        CCmdTarget::TagTimeBait();
+        int int_RetNotify = ptr_CMDHandler->CmdNotify(xCmdPacket);
+
+        if(0 == int_RetNotify)
+        {
+            CCmdTarget::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+            continue;
+        }
+        else if(1 == int_RetNotify)
             break;
-        }
-
-        /**************************************************/
-        //   同步 所有.md
-        //   CMD >>> sync
-        /**************************************************/
-        else if( X_CMD.CmpSoloCmd(SYNC) )
+        else
         {
-            CCmdTarget::TagTimeBait();
-
-            ptr_FAitfX->SyncAllFile();
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
+            // 目前交付while()消息循环处理
+            // 完成后切换ERROR提示
         }
 
         /**************************************************/
-        //   写回 所有.md
-        //   CMD >>> write
+        //   while()循环 消息 预处理
         /**************************************************/
-        else if( X_CMD.CmpSoloCmd(WRITE) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_FAitfX->WriteAllFile();
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   备份 所有.md
-        //   CMD >>> bakup
-        /**************************************************/
-        else if( X_CMD.CmpSoloCmd(BACKUP) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_FAitfX->BackUpAllFile("./FA_SZ.bak/");
-            ptr_FAitfX->BackUpAllFile("./../Hacker/FA_Auto_X/X_Executable/");
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
+        X_CMD.CmdParser(CMD_xlinebuffer);
 
         /**************************************************/
         //   校验 SUM总收支
         //   CMD >>> check sum
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmdBack(SUM) )
+        if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmdBack(SUM) )
         {   
             CCmdTarget::TagTimeBait();
 
@@ -195,38 +148,6 @@ int main(int argc, char **argv, char *env[])
             CCmdTarget::TagTimeBait();
 
             ptr_ASitfX->UpdateSum(1);
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   校验 FA全系统总收支
-        //   CMD >>> check
-        /**************************************************/
-        else if( X_CMD.CmpSoloCmd(CHECK) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_ASitfX->CheckFA();
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   更新 FA全系统总收支
-        //   CMD >>> update
-        /**************************************************/
-        else if( X_CMD.CmpSoloCmd(UPDATE) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_ASitfX->UpdateFA();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -984,23 +905,6 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   展示 FA当前状态
-        //   CMD >>> show
-        /**************************************************/
-        else if( X_CMD.CmpSoloCmd(SHOW) )
-        {
-            CCmdTarget::TagTimeBait();
-
-            ptr_ASitfX->ShowFA();
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-
-        }
-
-        /**************************************************/
         //   FA_Auto_X 帮助提示
         /**************************************************/
         else if( X_CMD.CmpSoloCmd(HELP) )
@@ -1009,32 +913,6 @@ int main(int argc, char **argv, char *env[])
             CCmdTarget::TagTimeBait();
 
             ptr_ASitfX->HelpAll();
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-            
-            continue;
-        }
-
-        /**************************************************/
-        //   FA_Auto_X 测试
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(TEST) )
-        {
-            CCmdTarget::TagTimeBait();
-
-            #if X_TEST_MODE   // test 番茄
-                //ptr_FAitfX->PrintTitle("DK", true);
-
-                cout << "CMD buffer: " <<  CMD_xlinebuffer << endl;
-
-                CMD_Packet xCmdPacket = CMD_Packet();
-                xCmdPacket.CMDRipper(CMD_xlinebuffer);
-                xCmdPacket.CMDFilter();
-                xCmdPacket.CMDParser();
-
-                ptr_CMDHandler->CmdNotify(xCmdPacket);
-            #endif
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

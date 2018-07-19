@@ -14,7 +14,7 @@ using namespace std;
 
 
 // 定义函数指针
-typedef void (*PTRFUNC)(CMD_Packet cls_CMD);
+typedef void (*PTRFUNC)(CMD_Packet srt_CMD);
 
 /****************************************/
 //   定义CMD_TYPE_ENTRY
@@ -31,7 +31,7 @@ struct X_CMD_TYPE_ENTRY
 /****************************************/
 #define  X_DECLARE_CMD_MAP()   \
 public:   \
-    void CmdNotify(CMD_Packet cls_CMD);   \
+    static int CmdNotify(CMD_Packet srt_CMD);   \
 private:   \
     static const X_CMD_TYPE_ENTRY CmdTypeEntries[];   \
 
@@ -40,7 +40,7 @@ private:   \
     {   \
 
 #define  X_END_CMD_MAP()   \
-        {"", "", NULL}   \
+        {"EndOfCmdMap", "", NULL}   \
     };   \
 
 /****************************************/
@@ -53,14 +53,24 @@ private:   \
 //   定义CMD_LOOP()宏
 /****************************************/
 #define  CMD_LOOP(thisClass)   \
-    void thisClass::CmdNotify(CMD_Packet cls_CMD)   \
+    int thisClass::CmdNotify(CMD_Packet srt_CMD)   \
     {   \
         for(int i=0; ;i++)   \
         {   \
-            if(cls_CMD.m_str_CmdType == CmdTypeEntries[i].str_CmdType)   \
+            if(srt_CMD.m_str_CmdType == CmdTypeEntries[i].str_CmdType)   \
             {   \
                 if(CmdTypeEntries[i].pfn_CmdCBFunc != NULL)   \
-                    CmdTypeEntries[i].pfn_CmdCBFunc(cls_CMD);   \
+                {   \
+                    CmdTypeEntries[i].pfn_CmdCBFunc(srt_CMD);   \
+                    if(srt_CMD.m_str_CmdType == X_CMD_TYPE_EXIT)   \
+                        return 1;   \
+                    else   \
+                        return 0;   \
+                }   \
+            }   \
+            else if("EndOfCmdMap" == CmdTypeEntries[i].str_CmdType)   \
+            {   \
+                return -1;   \
             }   \
         }   \
     }   \

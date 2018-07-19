@@ -13,7 +13,7 @@
 using namespace std;
 
 
-class CMD_Packet
+struct CMD_Packet
 {
 public:
     CMD_Packet();
@@ -29,6 +29,7 @@ public:
     int m_int_PreCmdNum;           // CMD预处理数量
     vector<string> m_vec_PreCmd;   // CMD预处理内容
     int m_int_CmdNum;              // CMD数量
+    int m_int_CmdProNum;           // CMD主数量
     vector<string> m_vec_Cmd;      // CMD内容
 
     int m_int_ParamValue;         // -f
@@ -37,8 +38,8 @@ public:
     string m_str_ParamSubMonth;   // -sm
     string m_str_ParamTitle;      // -tt
 
-    int m_int_ResParam;      // Reserved Param Int
-    string m_str_ResParam;   // Reserved Param String
+    int m_int_ResParam;      // -ip
+    string m_str_ResParam;   // -sp
 };
 
 //------------------------------//

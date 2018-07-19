@@ -14,6 +14,13 @@
 #define  X_CMD_TYPE_UPDATE_FA   ("UpdateFA")
 #define  X_CMD_TYPE_SHOW_FA     ("ShowFA")
 
+#define  X_CMD_TYPE_SYNC        ("Sync")
+#define  X_CMD_TYPE_WRITE       ("Write")
+#define  X_CMD_TYPE_BACKUP      ("Backup")
+
+#define  X_CMD_TYPE_CANCEL      ("Cancel")
+#define  X_CMD_TYPE_EXIT        ("Exit")
+
 #define  X_CMD_TYPE_TEST        ("Test")
 
 
