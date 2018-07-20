@@ -6,6 +6,8 @@
 
 #include "CMD_Handler.h"
 
+#include "./../X_Frame/X_Tool.h"
+
 
 CScriptRipper* CCMDHandler::m_ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 CFAitfX* CCMDHandler::m_ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
@@ -18,6 +20,12 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_FA, "", OnCmdCheckFA)
 	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_FA, "", OnCmdUpdateFA)
 	X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_FA, "", OnCmdShowFA)
+	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_MONTH, "", OnCmdCheckMonth)
+	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_MONTH, "", OnCmdUpdateMonth)
+	X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_MONTH, "", OnCmdShowMonth)
+	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_SUBMONTH, "", OnCmdCheckSubMonth)
+	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_SUBMONTH, "", OnCmdUpdateSubMonth)
+	X_ON_CMD_TYPE(X_CMD_TYPE_FORECAST, "", OnCmdForecast)
 	X_ON_CMD_TYPE(X_CMD_TYPE_SYNC, "", OnCmdSync)
 	X_ON_CMD_TYPE(X_CMD_TYPE_WRITE, "", OnCmdWrite)
 	X_ON_CMD_TYPE(X_CMD_TYPE_BACKUP, "", OnCmdBackup)
@@ -60,6 +68,79 @@ void CCMDHandler::OnCmdUpdateFA(CMD_Packet srt_CMD)
 void CCMDHandler::OnCmdShowFA(CMD_Packet srt_CMD)
 {
 	m_ptr_ASitfX->ShowFA();
+}
+
+void CCMDHandler::OnCmdCheckMonth(CMD_Packet srt_CMD)
+{
+    m_ptr_ASitfX->CheckMonth(srt_CMD.m_str_ParamMonth, 1);
+}
+
+void CCMDHandler::OnCmdUpdateMonth(CMD_Packet srt_CMD)
+{
+    m_ptr_ASitfX->UpdateMonth(srt_CMD.m_str_ParamMonth, 1);
+    m_ptr_ASitfX->UpdateSum(0);
+}
+
+void CCMDHandler::OnCmdShowMonth(CMD_Packet srt_CMD)
+{
+    m_ptr_ASitfX->ShowMonth(srt_CMD.m_str_ParamMonth);
+}
+
+void CCMDHandler::OnCmdCheckSubMonth(CMD_Packet srt_CMD)
+{
+	if( srt_CMD.m_str_ParamSubMonth == BOOKS )
+    {
+        m_ptr_FAitfX->CheckSubMonthExpense("Books", srt_CMD.m_str_ParamMonth, true);
+    }
+    else if( srt_CMD.m_str_ParamSubMonth == KEEP )
+    {
+        m_ptr_FAitfX->CheckSubMonthExpense("KEEP", srt_CMD.m_str_ParamMonth, true);
+    }
+    else if( srt_CMD.m_str_ParamSubMonth == TB )
+    {
+        m_ptr_FAitfX->CheckSubMonthExpense("TB", srt_CMD.m_str_ParamMonth, true);
+    }
+    else if( srt_CMD.m_str_ParamSubMonth == SA )
+    {
+        m_ptr_FAitfX->CheckSubMonthExpense("sa", srt_CMD.m_str_ParamMonth, true);
+    }
+    else
+    {
+        CTool::MassageOutFotmat("Error SM Param", '!');
+    }
+}
+
+void CCMDHandler::OnCmdUpdateSubMonth(CMD_Packet srt_CMD)
+{
+	if( srt_CMD.m_str_ParamSubMonth == BOOKS )
+    {
+        m_ptr_FAitfX->UpdateSubMonthExpense("Books", srt_CMD.m_str_ParamMonth, true);
+    }
+    else if( srt_CMD.m_str_ParamSubMonth == KEEP )
+    {
+        m_ptr_FAitfX->UpdateSubMonthExpense("KEEP", srt_CMD.m_str_ParamMonth, true);
+    }
+    else if( srt_CMD.m_str_ParamSubMonth == TB )
+    {
+        m_ptr_FAitfX->UpdateSubMonthExpense("TB", srt_CMD.m_str_ParamMonth, true);
+    }
+    else if( srt_CMD.m_str_ParamSubMonth == SA )
+    {
+        m_ptr_FAitfX->UpdateSubMonthExpense("sa", srt_CMD.m_str_ParamMonth, true);
+    }
+    else
+    {
+        CTool::MassageOutFotmat("Error SM Param", '!');
+    }
+
+    m_ptr_FAitfX->UpdateMonthSurplus(srt_CMD.m_str_ParamMonth, false);
+    m_ptr_FAitfX->SyncMonthSurplus(srt_CMD.m_str_ParamMonth);
+    m_ptr_ASitfX->UpdateSum(0);
+}
+
+void CCMDHandler::OnCmdForecast(CMD_Packet srt_CMD)
+{
+	m_ptr_FAitfX->ForecastFutureSum(srt_CMD.m_str_ResParam.c_str(), srt_CMD.m_int_ResParam);
 }
 
 void CCMDHandler::OnCmdSync(CMD_Packet srt_CMD)

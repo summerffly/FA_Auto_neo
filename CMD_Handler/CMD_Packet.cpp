@@ -8,6 +8,7 @@
 
 #include "DefCMDType.h"
 #include "DefCMD.h"
+#include "./../XML_Ripper/Script_Ripper.h"
 
 
 /**************************************************/
@@ -15,6 +16,8 @@
 /**************************************************/
 CMD_Packet::CMD_Packet()
 {
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
     m_str_CmdType = "";
 
     m_int_PreCmdNum = 0;
@@ -24,7 +27,7 @@ CMD_Packet::CMD_Packet()
     m_vec_Cmd.clear();
 
     m_int_ParamValue = 0;
-    m_str_ParamMonth = "";
+    m_str_ParamMonth = ptr_ScriptRipper->GetCurrentMonth();
     m_str_ParamSubMonth = "";
     m_str_ParamTitle = "";
     m_str_ParamDate = "";
@@ -181,6 +184,7 @@ int CMD_Packet::CMDFilter()
 int CMD_Packet::CMDParser()
 {
     m_int_CmdProNum = m_int_CmdNum;
+    int int_ParamType = 0;
 
     vector<string>::iterator itr_Cmd;
     for(itr_Cmd = m_vec_Cmd.begin(); itr_Cmd != m_vec_Cmd.end(); itr_Cmd++)
@@ -199,6 +203,10 @@ int CMD_Packet::CMDParser()
             m_str_ParamMonth = *itr_Cmd;
             m_int_CmdProNum -= 2;
 
+            CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+            if( !ptr_ScriptRipper->IsIncludeMonthRange(m_str_ParamMonth) )
+                return -3;
+
             continue;
         }
         else if((*itr_Cmd) == "-d")
@@ -215,6 +223,11 @@ int CMD_Packet::CMDParser()
             m_str_ParamSubMonth = *itr_Cmd;
             m_int_CmdProNum -= 2;
 
+            if(int_ParamType == 0)
+                int_ParamType = 1;
+            else
+                return -2;   // ERROR: Param冲突
+
             continue;
         }
         else if((*itr_Cmd) == "-tt")
@@ -222,6 +235,11 @@ int CMD_Packet::CMDParser()
             itr_Cmd++;
             m_str_ParamTitle = *itr_Cmd;
             m_int_CmdProNum -= 2;
+
+            if(int_ParamType == 0)
+                int_ParamType = 2;
+            else
+                return -2;   // ERROR: Param冲突
 
             continue;
         }
@@ -258,7 +276,7 @@ int CMD_Packet::CMDParser()
     if(m_int_CmdProNum == 3)
         str_CmdPro_C = m_vec_Cmd.at(2);
 
-    if(m_int_CmdProNum == 1)
+    if((m_int_CmdProNum == 1) && (int_ParamType == 0))
     {
         if(str_CmdPro_A == CHECK)
             m_str_CmdType = X_CMD_TYPE_CHECK_FA;
@@ -270,6 +288,8 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_SYNC;
         else if(str_CmdPro_A == WRITE)
             m_str_CmdType = X_CMD_TYPE_WRITE;
+        else if(str_CmdPro_A == FORECAST)
+            m_str_CmdType = X_CMD_TYPE_FORECAST;
         else if(str_CmdPro_A == BACKUP)
             m_str_CmdType = X_CMD_TYPE_BACKUP;
         else if(str_CmdPro_A == CANCEL)
@@ -279,11 +299,27 @@ int CMD_Packet::CMDParser()
         else if(str_CmdPro_A == TEST)
             m_str_CmdType = X_CMD_TYPE_TEST;
         else
-            return -2;   // ERROR: 未定义的CmdType
+            return -4;   // ERROR: 未定义的CmdType
+    }
+    else if((m_int_CmdProNum == 1) && (int_ParamType > 0))
+    {
+        if((str_CmdPro_A == CHECK) && (int_ParamType = 1))
+            m_str_CmdType = X_CMD_TYPE_CHECK_SUBMONTH;
+        else if((str_CmdPro_A == UPDATE) && (int_ParamType = 1))
+            m_str_CmdType = X_CMD_TYPE_UPDATE_SUBMONTH;
+        else
+            return -4;   // ERROR: 未定义的CmdType
     }
     else if(m_int_CmdProNum == 2)
     {
-        //
+        if((str_CmdPro_A == CHECK) && (str_CmdPro_B == MONTH))
+            m_str_CmdType = X_CMD_TYPE_CHECK_MONTH;
+        else if((str_CmdPro_A == UPDATE) && (str_CmdPro_B == MONTH))
+            m_str_CmdType = X_CMD_TYPE_UPDATE_MONTH;
+        else if((str_CmdPro_A == SHOW) && (str_CmdPro_B == MONTH))
+            m_str_CmdType = X_CMD_TYPE_SHOW_MONTH;
+        else
+            return -4;   // ERROR: 未定义的CmdType
     }
     else if(m_int_CmdProNum == 3)
     {

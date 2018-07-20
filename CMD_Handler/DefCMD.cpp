@@ -13,7 +13,7 @@ using namespace std;
 //   计算工具命令
 /**************************************************/
 
-string CHECK = "ck";
+string CHECK = "check";
 string UPDATE = "update";
 string APPEND = "append";
 string INSERT = "insert";

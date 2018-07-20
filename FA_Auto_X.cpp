@@ -64,9 +64,11 @@ int main(int argc, char **argv, char *env[])
     cout << "****************************************" << endl;
     cout << "****************************************" << endl;
 
-    // Advanced_CMD循环模式
-    CCmdTarget X_CMD = CCmdTarget();   // ToDel 番茄
+    // NEX_CMD循环模式
     char CMD_linebuffer[MAX_COMMAND];
+
+    // Advance_CMD循环模式
+    CCmdTarget X_CMD = CCmdTarget();   // ToDel 番茄
     char CMD_xlinebuffer[MAX_COMMAND];   // ToDel 番茄
     
     while(1)
@@ -96,6 +98,16 @@ int main(int argc, char **argv, char *env[])
             continue;
         }
         else if(-2 == int_RetParser)
+        {
+            CTool::MassageOutFotmat("Conflict CMD Param", '!');
+            continue;
+        }
+        else if(-3 == int_RetParser)
+        {
+            CTool::MassageOutFotmat("Invalid Month Param", '!');
+            continue;
+        }
+        else if(-4 == int_RetParser)
         {
             // 未定义CMDType
             // 完成后切换ERROR提示
@@ -156,103 +168,6 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   校验 任意Month 收支
-        //   CMD >>> check month 09
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, MONTH) &&\
-                (X_CMD.GetCmdNum() == 3) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            if( !ptr_ScriptRipper->IsIncludeMonthRange(X_CMD.GetCmd(3)) )
-            {
-                CTool::MassageOutFotmat("Invalid Month Input", '!');
-                continue;
-            }
-
-            ptr_ASitfX->CheckMonth(X_CMD.GetCmd(3), 1);
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   校验 当月/上月 收支
-        //   CMD >>> check month/exmonth
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(CHECK) &&\
-                 ( X_CMD.CmpCmdBack(MONTH) || X_CMD.CmpCmdBack(EX_MONTH) ) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            if( X_CMD.CmpCmdBack(MONTH) )
-            {
-                ptr_ASitfX->CheckMonth(ptr_ScriptRipper->GetCurrentMonth(), 1);
-            }
-            else if( X_CMD.CmpCmdBack(EX_MONTH) )
-            {
-                ptr_ASitfX->CheckMonth(ptr_ScriptRipper->GetPreviousMonth(), 1);
-            }
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   更新 任意Month 收支
-        //   CMD >>> update month 09
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(UPDATE) && X_CMD.CmpCmd(2, MONTH) &&\
-                (X_CMD.GetCmdNum() == 3) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            if( !ptr_ScriptRipper->IsIncludeMonthRange(X_CMD.GetCmd(3)) )
-            {
-                CTool::MassageOutFotmat("Invalid Month Input", '!');
-                continue;
-            }
-
-            ptr_ASitfX->UpdateMonth(X_CMD.GetCmd(3), 1);
-            ptr_ASitfX->UpdateSum(0);
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   更新 当月/上月 收支
-        //   CMD >>> update month/exmonth
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(UPDATE) &&\
-                 ( X_CMD.CmpCmdBack(MONTH) || X_CMD.CmpCmdBack(EX_MONTH) ) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            if( X_CMD.CmpCmdBack(MONTH) )
-            {
-                ptr_ASitfX->UpdateMonth(ptr_ScriptRipper->GetCurrentMonth(), 1);
-            }
-            else if( X_CMD.CmpCmdBack(EX_MONTH) )
-            {
-                ptr_ASitfX->UpdateMonth(ptr_ScriptRipper->GetPreviousMonth(), 1);
-            }
-
-            ptr_ASitfX->UpdateSum(0);
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
         //   增加 当月 生活费
         //   CMD >>> life 50
         /**************************************************/
@@ -283,84 +198,6 @@ int main(int argc, char **argv, char *env[])
             ptr_ASitfX->UpdateSum(0);
 
             ptr_FAitfX->TransferBalance("零钱通", "余额宝", false, atoi(X_CMD.GetCmd(2).c_str()));
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   校验 子项.M 支出
-        //   CMD >>> check sm books/keep/tb/sa
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 3) )
-        {
-            CCmdTarget::TagTimeBait();
-
-            if( X_CMD.CmpCmdBack(BOOKS) )
-            {
-                ptr_FAitfX->CheckSubMonthExpense("Books", ptr_ScriptRipper->GetCurrentMonth(), true);
-            }
-            else if( X_CMD.CmpCmdBack(KEEP) )
-            {
-                ptr_FAitfX->CheckSubMonthExpense("KEEP", ptr_ScriptRipper->GetCurrentMonth(), true);
-            }
-            else if( X_CMD.CmpCmdBack(TB) )
-            {
-                ptr_FAitfX->CheckSubMonthExpense("TB", ptr_ScriptRipper->GetCurrentMonth(), true);
-            }
-            else if( X_CMD.CmpCmdBack(SA) )
-            {
-                ptr_FAitfX->CheckSubMonthExpense("sa", ptr_ScriptRipper->GetCurrentMonth(), true);
-            }
-            else
-            {
-                CTool::MassageOutFotmat("Error Param", '!');
-
-                continue;
-            }
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   更新 子项.M 支出
-        //   CMD >>> update sm books/keep/tb/sa
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(UPDATE) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 3) )
-        {
-            CCmdTarget::TagTimeBait();
-
-            if( X_CMD.CmpCmdBack(BOOKS) )
-            {
-                ptr_FAitfX->UpdateSubMonthExpense("Books", ptr_ScriptRipper->GetCurrentMonth(), true);
-            }
-            else if( X_CMD.CmpCmdBack(KEEP) )
-            {
-                ptr_FAitfX->UpdateSubMonthExpense("KEEP", ptr_ScriptRipper->GetCurrentMonth(), true);
-            }
-            else if( X_CMD.CmpCmdBack(TB) )
-            {
-                ptr_FAitfX->UpdateSubMonthExpense("TB", ptr_ScriptRipper->GetCurrentMonth(), true);
-            }
-            else if( X_CMD.CmpCmdBack(SA) )
-            {
-                ptr_FAitfX->UpdateSubMonthExpense("sa", ptr_ScriptRipper->GetCurrentMonth(), true);
-            }
-            else
-            {
-                CTool::MassageOutFotmat("Error Param", '!');
-
-                continue;
-            }
-
-            ptr_FAitfX->UpdateMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), false);
-            ptr_FAitfX->SyncMonthSurplus(ptr_ScriptRipper->GetCurrentMonth());
-            ptr_ASitfX->UpdateSum(0);
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -621,32 +458,6 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   预测 未来财富
-        //   CMD >>> ff
-        /**************************************************/
-        else if( X_CMD.CmpSoloCmd(FORECAST) )
-        {   
-            char cha_FutureMonth[10];
-            cout << "Input FutureMonth: ";
-            cin.getline(cha_FutureMonth, 10);
-            string str_FutureMonth(cha_FutureMonth);
-
-            char cha_MonthPatch[10];
-            cout << "Input MonthPatch: ";
-            cin.getline(cha_MonthPatch, 10);
-            int int_MonthPatch = atoi(cha_MonthPatch);
-
-            CCmdTarget::TagTimeBait();
-
-            ptr_FAitfX->ForecastFutureSum(cha_FutureMonth, int_MonthPatch);
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
         //   汇总 Month累计收支
         //   CMD >>> sz month
         /**************************************************/
@@ -857,30 +668,6 @@ int main(int argc, char **argv, char *env[])
 
                 continue;
             }
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   展示 当月/上月 收支
-        //   CMD >>> show month/exmonth
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(SHOW) &&\
-                 ( X_CMD.CmpCmdBack(MONTH) || X_CMD.CmpCmdBack(EX_MONTH) ) )
-        {
-            CCmdTarget::TagTimeBait();
-
-            if( X_CMD.CmpCmdBack(MONTH) )
-            {
-                ptr_ASitfX->ShowMonth(ptr_ScriptRipper->GetCurrentMonth());
-            }
-            else if( X_CMD.CmpCmdBack(EX_MONTH) )
-            {
-                ptr_ASitfX->ShowMonth(ptr_ScriptRipper->GetPreviousMonth());
-            }            
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;

@@ -33,6 +33,15 @@ public:
 	static void OnCmdUpdateFA(CMD_Packet srt_CMD);
 	static void OnCmdShowFA(CMD_Packet srt_CMD);
 
+	static void OnCmdCheckMonth(CMD_Packet srt_CMD);
+	static void OnCmdUpdateMonth(CMD_Packet srt_CMD);
+	static void OnCmdShowMonth(CMD_Packet srt_CMD);
+
+	static void OnCmdCheckSubMonth(CMD_Packet srt_CMD);
+	static void OnCmdUpdateSubMonth(CMD_Packet srt_CMD);
+
+	static void OnCmdForecast(CMD_Packet srt_CMD);
+
 	static void OnCmdSync(CMD_Packet srt_CMD);
 	static void OnCmdWrite(CMD_Packet srt_CMD);
 	static void OnCmdBackup(CMD_Packet srt_CMD);
