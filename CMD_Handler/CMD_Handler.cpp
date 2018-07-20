@@ -20,11 +20,13 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_FA, "", OnCmdCheckFA)
 	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_FA, "", OnCmdUpdateFA)
 	X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_FA, "", OnCmdShowFA)
+    X_ON_CMD_TYPE(X_CMD_TYPE_MODIFY_LIFE, "", OnCmdModifyLife)
 	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_MONTH, "", OnCmdCheckMonth)
 	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_MONTH, "", OnCmdUpdateMonth)
 	X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_MONTH, "", OnCmdShowMonth)
 	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_SUBMONTH, "", OnCmdCheckSubMonth)
 	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_SUBMONTH, "", OnCmdUpdateSubMonth)
+    X_ON_CMD_TYPE(X_CMD_TYPE_ANALYSIS_TREND, "", OnCmdAnalysisTrend)
 	X_ON_CMD_TYPE(X_CMD_TYPE_FORECAST, "", OnCmdForecast)
 	X_ON_CMD_TYPE(X_CMD_TYPE_SYNC, "", OnCmdSync)
 	X_ON_CMD_TYPE(X_CMD_TYPE_WRITE, "", OnCmdWrite)
@@ -68,6 +70,18 @@ void CCMDHandler::OnCmdUpdateFA(CMD_Packet srt_CMD)
 void CCMDHandler::OnCmdShowFA(CMD_Packet srt_CMD)
 {
 	m_ptr_ASitfX->ShowFA();
+}
+
+void CCMDHandler::OnCmdModifyLife(CMD_Packet srt_CMD)
+{
+    m_ptr_FAitfX->ModifyMonthSurplus(srt_CMD.m_str_ParamMonth, "生活费", srt_CMD.m_int_ParamValue);
+    m_ptr_FAitfX->SyncMonthSurplus(srt_CMD.m_str_ParamMonth);
+    m_ptr_ASitfX->UpdateSum(0);
+
+    if( srt_CMD.m_str_ResParam == WEIXIN )
+    {
+        m_ptr_FAitfX->TransferBalance("零钱通", "余额宝", false, srt_CMD.m_int_ParamValue);
+    }
 }
 
 void CCMDHandler::OnCmdCheckMonth(CMD_Packet srt_CMD)
@@ -136,6 +150,30 @@ void CCMDHandler::OnCmdUpdateSubMonth(CMD_Packet srt_CMD)
     m_ptr_FAitfX->UpdateMonthSurplus(srt_CMD.m_str_ParamMonth, false);
     m_ptr_FAitfX->SyncMonthSurplus(srt_CMD.m_str_ParamMonth);
     m_ptr_ASitfX->UpdateSum(0);
+}
+
+void CCMDHandler::OnCmdAnalysisTrend(CMD_Packet srt_CMD)
+{
+    if( srt_CMD.m_str_ResParam == EXPENSE )
+    {
+        m_ptr_ASitfX->AnalysisMonthTrend_EXP();
+    }
+    else if( srt_CMD.m_str_ResParam == MODIFY_LIFE )
+    {
+        m_ptr_ASitfX->AnalysisMonthTrend_LIFE();
+    }
+    else if( srt_CMD.m_str_ResParam == ROOM )
+    {
+        m_ptr_ASitfX->AnalysisMonthTrend_ROOM();
+    }
+    else if( srt_CMD.m_str_ResParam == CONSUMPTION )
+    {
+        m_ptr_ASitfX->AnalysisMonthTrend_CSM();
+    }
+    else
+    {
+        m_ptr_ASitfX->AnalysisMonthTrend(srt_CMD.m_str_ResParam);
+    }
 }
 
 void CCMDHandler::OnCmdForecast(CMD_Packet srt_CMD)

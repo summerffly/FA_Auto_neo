@@ -284,6 +284,8 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_UPDATE_FA;
         else if(str_CmdPro_A == SHOW)
             m_str_CmdType = X_CMD_TYPE_SHOW_FA;
+        else if(str_CmdPro_A == MODIFY_LIFE)
+            m_str_CmdType = X_CMD_TYPE_MODIFY_LIFE;
         else if(str_CmdPro_A == SYNC)
             m_str_CmdType = X_CMD_TYPE_SYNC;
         else if(str_CmdPro_A == WRITE)
@@ -318,6 +320,8 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_UPDATE_MONTH;
         else if((str_CmdPro_A == SHOW) && (str_CmdPro_B == MONTH))
             m_str_CmdType = X_CMD_TYPE_SHOW_MONTH;
+        else if((str_CmdPro_A == ANALYSIS) && (str_CmdPro_B == TREND))
+            m_str_CmdType = X_CMD_TYPE_ANALYSIS_TREND;
         else
             return -4;   // ERROR: 未定义的CmdType
     }

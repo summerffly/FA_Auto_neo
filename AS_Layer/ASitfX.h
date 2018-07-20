@@ -48,6 +48,7 @@ public:
     /****************************************/
     //   统计区
     /****************************************/
+    void AnalysisMonthTrend_EXP();
     void AnalysisMonthTrend_LIFE();
     void AnalysisMonthTrend_ROOM();
     void AnalysisMonthTrend_CSM();
@@ -62,7 +63,6 @@ public:
     //   其他
     /****************************************/
     void AppendNextMonth(const string str_SelMonth);
-    void HelpAll();
 };
 
 //------------------------------//

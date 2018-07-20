@@ -10,7 +10,6 @@
 #include <string>
 
 #include "CMD_Pump.h"
-
 #include "./../XML_Ripper/Script_Ripper.h"
 #include "./../FA_Layer/FAitfX.h"
 #include "./../AS_Layer/ASitfX.h"
@@ -33,12 +32,16 @@ public:
 	static void OnCmdUpdateFA(CMD_Packet srt_CMD);
 	static void OnCmdShowFA(CMD_Packet srt_CMD);
 
+	static void OnCmdModifyLife(CMD_Packet srt_CMD);
+
 	static void OnCmdCheckMonth(CMD_Packet srt_CMD);
 	static void OnCmdUpdateMonth(CMD_Packet srt_CMD);
 	static void OnCmdShowMonth(CMD_Packet srt_CMD);
 
 	static void OnCmdCheckSubMonth(CMD_Packet srt_CMD);
 	static void OnCmdUpdateSubMonth(CMD_Packet srt_CMD);
+
+	static void OnCmdAnalysisTrend(CMD_Packet srt_CMD);
 
 	static void OnCmdForecast(CMD_Packet srt_CMD);
 

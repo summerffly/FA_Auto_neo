@@ -18,10 +18,9 @@ string UPDATE = "update";
 string APPEND = "append";
 string INSERT = "insert";
 string MODIFY_LIFE = "life";
-string MODIFY_LIFE_WC = "wlife";
 string TRANSFER = "tf";
 
-string EXPENSE = "expense";
+string EXPENSE = "exp";
 string SURPLUS = "surplus";
 
 string MONTH = "month";
@@ -43,6 +42,10 @@ string LOTTERY = "lottery";
 string TEMP = "temp";
 string BOX = "box";
 string XM = "xm";
+
+string ZHIFUBAO = "zf";
+string WEIXIN = "wc";
+string JINGDONG = "jd";
 
 /**************************************************/
 //   统计工具命令

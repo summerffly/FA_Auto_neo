@@ -314,6 +314,27 @@ void CASitfX::ShowMonth(const string str_SelMonth)
 }
 
 /**************************************************/
+//   分析月度趋势 EXP总支出
+/**************************************************/
+void CASitfX::AnalysisMonthTrend_EXP()
+{
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    vector<TREND_INFO> vec_stc_TrendInfo;
+    ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, "月支出");
+
+    // 绘制 趋势Vector
+    cout << "----------------------------------------" << endl;
+    cout << "### 月度EXP趋势分析 ###" << endl;
+    cout << endl;
+
+    ptr_FAitfX->DrawMonthTrendVector(vec_stc_TrendInfo, "EXP");
+
+    cout << endl;
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
 //   分析月度趋势 LIFE生活支出
 /**************************************************/
 void CASitfX::AnalysisMonthTrend_LIFE()
@@ -479,172 +500,6 @@ void CASitfX::AppendNextMonth(const string str_SelMonth)
     {
         ptr_FAitfX->AddScriptSubMonth(*itr_SubMonth, CTool::GenerateNextMonth(str_SelMonth));
     }
-}
-
-/**************************************************/
-//   帮助提示
-/**************************************************/
-void CASitfX::HelpAll()
-{
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
-    
-    cout << "******************************" << endl;
-    cout << endl;
-            
-    cout << "退出 FA_Auto_X" << endl;
-    cout << ">>> " << EXIT << endl;
-    cout << endl;
-
-    cout << "同步 所有.md" << endl;
-    cout << ">>> " << SYNC << endl;
-    cout << endl;
-
-    cout << "写回 所有.md" << endl;
-    cout << ">>> " << WRITE << endl;
-    cout << endl;
-
-    cout << "备份 所有.md" << endl;
-    cout << ">>> " << BACKUP << endl;
-    cout << endl;
-
-    cout << "校验 SUM总收支" << endl;
-    cout << ">>> " << CHECK << ' ' << SUM << endl;
-    cout << endl;
-
-    cout << "更新 SUM总收支" << endl;
-    cout << ">>> " << UPDATE << ' ' << SUM << endl;
-    cout << endl;
-            
-    cout << "校验 FA全系统总收支" << endl;
-    cout << ">>> " << CHECK << endl;
-    cout << endl;            
-
-    cout << "更新 FA全系统总收支" << endl;
-    cout << ">>> " << UPDATE << endl;
-    cout << endl;
-
-    cout << "校验 任意Month 收支" << endl;
-    cout << ">>> " << CHECK << ' ' << MONTH << ' ' << ptr_ScriptRipper->GetCurrentMonth() << endl;
-    cout << endl;
-
-    cout << "校验 当月/上月 收支" << endl;
-    cout << ">>> " << CHECK << ' ' << MONTH << '/' << EX_MONTH << endl;
-    cout << endl;
-
-    cout << "更新 任意Month 收支" << endl;
-    cout << ">>> " << UPDATE << ' ' << MONTH << ' ' << ptr_ScriptRipper->GetCurrentMonth() << endl;
-    cout << endl;
-
-    cout << "更新 当月/上月 收支" << endl;
-    cout << ">>> " << UPDATE << ' ' << MONTH << '/' << EX_MONTH << endl;
-    cout << endl;
-
-    cout << "增加 当月 生活费" << endl;
-    cout << ">>> " << MODIFY_LIFE << " 100" << endl;
-    cout << endl;
-
-    cout << "增加 当月 微信生活费" << endl;
-    cout << ">>> " << MODIFY_LIFE_WC << " 100" << endl;
-    cout << endl;
-
-    cout << "校验 子项.M 支出" << endl;
-    cout << ">>> " << CHECK << ' ' << SUBMONTH << " books/keep/tb/sa" << endl;
-    cout << endl;
-
-    cout << "更新 子项.M 支出" << endl;
-    cout << ">>> " << UPDATE << ' ' << SUBMONTH << " books/keep/tb/sa" << endl;
-    cout << endl;
-
-    cout << "校验 Tt分项 支出" << endl;
-    cout << ">>> " << CHECK << ' ' << TITLE << " dk/ns/travel/lottery" << endl;
-    cout << endl;
-
-    cout << "更新 Tt分项 支出" << endl;
-    cout << ">>> " << UPDATE << ' ' << TITLE << " dk/ns/travel/lottery" << endl;
-    cout << endl;
-
-    cout << "增加 lottery 收支" << endl;
-    cout << ">>> " << LOTTERY << " ++/-- " << "200 20170906" << endl;
-    cout << endl;
-
-    cout << "transfer 操作" << endl;
-    cout << ">>> " << TRANSFER << " ++/-- " << "300" << endl;
-    cout << endl;
-
-    cout << "插入 月度 脚本" << endl;
-    cout << ">>> " << APPEND << ' ' << MONTH << ' ' << ptr_ScriptRipper->GetCurrentMonth() << endl;
-    cout << endl;
-
-    cout << "校验 temp 支出" << endl;
-    cout << ">>> " << CHECK << ' ' << TEMP << endl;
-    cout << endl;
-
-    cout << "分析月度趋势 LIFE生活支出" << endl;
-    cout << ">>> " << ANALYSIS << ' ' << TREND << ' ' << MODIFY_LIFE << endl;
-    cout << endl;
-
-    cout << "分析月度趋势 ROOM租房支出" << endl;
-    cout << ">>> " << ANALYSIS << ' ' << TREND << ' ' << ROOM << endl;
-    cout << endl;
-
-    cout << "分析月度趋势 CSM消费支出" << endl;
-    cout << ">>> " << ANALYSIS << ' ' << TREND << ' ' << CONSUMPTION << endl;
-    cout << endl;
-
-    cout << "分析 月度趋势" << endl;
-    cout << ">>> " << ANALYSIS << ' ' << TREND << " Books" << endl;
-    cout << endl;
-
-    cout << "分析 月度百分占比" << endl;
-    cout << ">>> " << ANALYSIS << ' ' << PROPORTION << ' ' << ptr_ScriptRipper->GetCurrentMonth() << endl;
-    cout << endl;
-
-    cout << "预测 未来财富" << endl;
-    cout << ">>> " << FORECAST << endl;
-    cout << endl;
-
-    cout << "汇总 Month累计收支" << endl;
-    cout << ">>> " << SUMMARIZE << ' ' << MONTH << endl;
-    cout << endl;
-
-    cout << "汇总 Title累计收支" << endl;
-    cout << ">>> " << SUMMARIZE << ' ' << TITLE << endl;
-    cout << endl;
-
-    cout << "汇总 Tail累计收支" << endl;
-    cout << ">>> " << SUMMARIZE << ' ' << TAIL << endl;
-    cout << endl;
-
-    cout << "展示.md 月度 当月/上月" << endl;
-    cout << ">>> " << PRINT << ' ' << MONTH << '/' << EX_MONTH << endl;
-    cout << endl;
-
-    cout << "展示.md 月度 任意月份" << endl;
-    cout << ">>> " << PRINT << ' ' << MONTH << " 04" << endl;
-    cout << endl;
-
-    cout << "展示.md 月度.M 任意月份" << endl;
-    cout << ">>> " << PRINT << ' ' << SUBMONTH << " books 04" << endl;
-    cout << endl;
-
-    cout << "展示.md 全部月度.M 任意月份" << endl;
-    cout << ">>> " << PRINT << ' ' << SUBMONTH << " 04" << endl;
-    cout << endl;
-
-    cout << "展示 当月/上月 收支" << endl;
-    cout << ">>> " << SHOW << ' ' << MONTH << '/' << EX_MONTH << endl;
-    cout << endl;
-
-    cout << "展示 SUM总收支" << endl;
-    cout << ">>> " << SHOW << ' ' << SUM << endl;
-    cout << endl;
-
-    cout << "展示 FA当前状态" << endl;
-    cout << ">>> " << SHOW << endl;
-    cout << endl;
-
-    cout << "******************************" << endl;
-
 }
 
 

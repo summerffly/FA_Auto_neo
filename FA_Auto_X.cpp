@@ -6,22 +6,13 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
-#include <regex>
-#include <sys/time.h>
 
 #include "./X_Frame/DefLib.h"
 #include "./X_Frame/X_Tool.h"
-#include "./X_Frame/Singleton.h"
 #include "./X_Frame/X_CmdTarget.h"
 
 #include "./XML_Ripper/Script_Ripper.h"
-
 #include "./CMD_Handler/CMD_Handler.h"
-
-#include "./OP_Layer/FileOPer.h"
-#include "./EP_Layer/LineEPer.h"
-#include "./EP_Layer/FileManager.h"
 #include "./FA_Layer/FAitfX.h"
 #include "./AS_Layer/ASitfX.h"
 
@@ -168,36 +159,14 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   增加 当月 生活费
-        //   CMD >>> life 50
+        //   展示 SUM总收支
+        //   CMD >>> show sum
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(MODIFY_LIFE) && (X_CMD.GetCmdNum() == 2) )
+        else if( X_CMD.CmpCmdFront(SHOW) && X_CMD.CmpCmdBack(SUM) )
         {   
             CCmdTarget::TagTimeBait();
 
-            ptr_FAitfX->ModifyMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), "生活费", atoi(X_CMD.GetCmd(2).c_str()));
-            ptr_FAitfX->SyncMonthSurplus(ptr_ScriptRipper->GetCurrentMonth());
-            ptr_ASitfX->UpdateSum(0);
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   增加 当月 微信生活费
-        //   CMD >>> wlife 50
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(MODIFY_LIFE_WC) && (X_CMD.GetCmdNum() == 2) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_FAitfX->ModifyMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), "生活费", atoi(X_CMD.GetCmd(2).c_str()));
-            ptr_FAitfX->SyncMonthSurplus(ptr_ScriptRipper->GetCurrentMonth());
-            ptr_ASitfX->UpdateSum(0);
-
-            ptr_FAitfX->TransferBalance("零钱通", "余额宝", false, atoi(X_CMD.GetCmd(2).c_str()));
+            ptr_ASitfX->ShowSum();
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -369,71 +338,6 @@ int main(int argc, char **argv, char *env[])
             CCmdTarget::TagTimeBait();
 
             ptr_FAitfX->CheckTempExpense();
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   分析月度趋势 LIFE生活支出
-        //   CMD >>> as tt life
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, TREND) && X_CMD.CmpCmdBack(MODIFY_LIFE) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_ASitfX->AnalysisMonthTrend_LIFE();
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   分析月度趋势 ROOM租房支出
-        //   CMD >>> as tt room
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, TREND) && X_CMD.CmpCmdBack(ROOM) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_ASitfX->AnalysisMonthTrend_ROOM();
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   分析月度趋势 CSM消费支出
-        //   CMD >>> as tt csm
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, TREND) && X_CMD.CmpCmdBack(CONSUMPTION) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_ASitfX->AnalysisMonthTrend_CSM();
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   分析 月度趋势
-        //   CMD >>> as tt Books
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(ANALYSIS) && X_CMD.CmpCmd(2, TREND) && (X_CMD.GetCmdNum() == 3)
-                 && !X_CMD.CmpCmdBack(CONSUMPTION) && !X_CMD.CmpCmdBack(ROOM) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_ASitfX->AnalysisMonthTrend(X_CMD.GetCmd(3));
 
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
@@ -623,22 +527,6 @@ int main(int argc, char **argv, char *env[])
         }
 
         /**************************************************/
-        //   Print 全部月度.M 任意月份
-        //   CMD >>> print sm 04
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(PRINT) && X_CMD.CmpCmd(2, SUBMONTH) && (X_CMD.GetCmdNum() == 3) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_ASitfX->PrintSubMonthTraversal(X_CMD.GetCmd(3), false);
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
         //   Print Tt分项
         //   CMD >>> print tt dk
         /**************************************************/
@@ -672,38 +560,6 @@ int main(int argc, char **argv, char *env[])
             CCmdTarget::ShowTimeGap();
             cout << "----------------------------------------" << endl;
 
-            continue;
-        }
-
-        /**************************************************/
-        //   展示 SUM总收支
-        //   CMD >>> show sum
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(SHOW) && X_CMD.CmpCmdBack(SUM) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_ASitfX->ShowSum();
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   FA_Auto_X 帮助提示
-        /**************************************************/
-        else if( X_CMD.CmpSoloCmd(HELP) )
-        {
-
-            CCmdTarget::TagTimeBait();
-
-            ptr_ASitfX->HelpAll();
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-            
             continue;
         }
 
