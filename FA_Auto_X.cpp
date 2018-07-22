@@ -127,58 +127,10 @@ int main(int argc, char **argv, char *env[])
         X_CMD.CmdParser(CMD_xlinebuffer);
 
         /**************************************************/
-        //   校验 SUM总收支
-        //   CMD >>> check sum
-        /**************************************************/
-        if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmdBack(SUM) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_ASitfX->CheckSum(1);
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   更新 SUM总收支
-        //   CMD >>> update sum
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(UPDATE) && X_CMD.CmpCmdBack(SUM) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_ASitfX->UpdateSum(1);
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
-        //   展示 SUM总收支
-        //   CMD >>> show sum
-        /**************************************************/
-        else if( X_CMD.CmpCmdFront(SHOW) && X_CMD.CmpCmdBack(SUM) )
-        {   
-            CCmdTarget::TagTimeBait();
-
-            ptr_ASitfX->ShowSum();
-
-            CCmdTarget::ShowTimeGap();
-            cout << "----------------------------------------" << endl;
-
-            continue;
-        }
-
-        /**************************************************/
         //   校验 Tt分项 支出
         //   CMD >>> check tt dk/ns/travel/lottery
         /**************************************************/
-        else if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, TITLE) && (X_CMD.GetCmdNum() == 3) )
+        if( X_CMD.CmpCmdFront(CHECK) && X_CMD.CmpCmd(2, TITLE) && (X_CMD.GetCmdNum() == 3) )
         {
             CCmdTarget::TagTimeBait();
 

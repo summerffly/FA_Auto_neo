@@ -314,7 +314,13 @@ int CMD_Packet::CMDParser()
     }
     else if(m_int_CmdProNum == 2)
     {
-        if((str_CmdPro_A == CHECK) && (str_CmdPro_B == MONTH))
+        if((str_CmdPro_A == CHECK) && (str_CmdPro_B == SUM))
+            m_str_CmdType = X_CMD_TYPE_CHECK_SUM;
+        else if((str_CmdPro_A == UPDATE) && (str_CmdPro_B == SUM))
+            m_str_CmdType = X_CMD_TYPE_UPDATE_SUM;
+        else if((str_CmdPro_A == SHOW) && (str_CmdPro_B == SUM))
+            m_str_CmdType = X_CMD_TYPE_SHOW_SUM;
+        else if((str_CmdPro_A == CHECK) && (str_CmdPro_B == MONTH))
             m_str_CmdType = X_CMD_TYPE_CHECK_MONTH;
         else if((str_CmdPro_A == UPDATE) && (str_CmdPro_B == MONTH))
             m_str_CmdType = X_CMD_TYPE_UPDATE_MONTH;

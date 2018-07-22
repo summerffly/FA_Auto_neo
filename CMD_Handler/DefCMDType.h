@@ -14,6 +14,10 @@
 #define  X_CMD_TYPE_UPDATE_FA   ("UpdateFA")
 #define  X_CMD_TYPE_SHOW_FA     ("ShowFA")
 
+#define  X_CMD_TYPE_CHECK_SUM    ("CheckSum")
+#define  X_CMD_TYPE_UPDATE_SUM   ("UpdateSum")
+#define  X_CMD_TYPE_SHOW_SUM     ("ShowSum")
+
 #define  X_CMD_TYPE_MODIFY_LIFE     ("ModifyLife")
 
 #define  X_CMD_TYPE_CHECK_MONTH    ("CheckMonth")

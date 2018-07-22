@@ -20,6 +20,9 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_FA, "", OnCmdCheckFA)
 	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_FA, "", OnCmdUpdateFA)
 	X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_FA, "", OnCmdShowFA)
+	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_SUM, "", OnCmdCheckSum)
+	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_SUM, "", OnCmdUpdateSum)
+	X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_SUM, "", OnCmdShowSum)
     X_ON_CMD_TYPE(X_CMD_TYPE_MODIFY_LIFE, "", OnCmdModifyLife)
 	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_MONTH, "", OnCmdCheckMonth)
 	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_MONTH, "", OnCmdUpdateMonth)
@@ -70,6 +73,21 @@ void CCMDHandler::OnCmdUpdateFA(CMD_Packet srt_CMD)
 void CCMDHandler::OnCmdShowFA(CMD_Packet srt_CMD)
 {
 	m_ptr_ASitfX->ShowFA();
+}
+
+void CCMDHandler::OnCmdCheckSum(CMD_Packet srt_CMD)
+{
+	m_ptr_ASitfX->CheckSum(1);
+}
+
+void CCMDHandler::OnCmdUpdateSum(CMD_Packet srt_CMD)
+{
+	m_ptr_ASitfX->UpdateSum(1);
+}
+
+void CCMDHandler::OnCmdShowSum(CMD_Packet srt_CMD)
+{
+	m_ptr_ASitfX->ShowSum();
 }
 
 void CCMDHandler::OnCmdModifyLife(CMD_Packet srt_CMD)

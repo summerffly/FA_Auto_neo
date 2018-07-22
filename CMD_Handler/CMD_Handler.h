@@ -32,6 +32,10 @@ public:
 	static void OnCmdUpdateFA(CMD_Packet srt_CMD);
 	static void OnCmdShowFA(CMD_Packet srt_CMD);
 
+	static void OnCmdCheckSum(CMD_Packet srt_CMD);
+	static void OnCmdUpdateSum(CMD_Packet srt_CMD);
+	static void OnCmdShowSum(CMD_Packet srt_CMD);
+
 	static void OnCmdModifyLife(CMD_Packet srt_CMD);
 
 	static void OnCmdCheckMonth(CMD_Packet srt_CMD);
