@@ -38,7 +38,6 @@ CFAitfX::CFAitfX()
     m_ptr_FM_tt_NS = new CFileManager("./NS.md");
     m_ptr_FM_tt_travel = new CFileManager("./travel.md");
     m_ptr_FM_tt_lottery = new CFileManager("./lottery.md");
-    m_ptr_FM_temp_BOX = new CFileManager("./temp.BOX.md");
 }
 
 /**************************************************/
@@ -1001,28 +1000,6 @@ void CFAitfX::AddScriptSubMonth(const string str_SubMonthKey, const string str_S
 }
 
 /**************************************************/
-//   校验 Temp 支出
-/**************************************************/
-void CFAitfX::CheckTempExpense()
-{
-    string str_RangeBottom("---");
-
-    unsigned int uni_RangeTop = 2;
-    unsigned int uni_RangeBottom = 0;
-    int int_TempExpenseCK = 0;
-
-    m_ptr_FM_temp_BOX->SearchLineKey(str_RangeBottom.c_str());
-    uni_RangeBottom = m_ptr_FM_temp_BOX->GetSearchLineIndex(1);
-    int_TempExpenseCK = m_ptr_FM_temp_BOX->CountRangeType(uni_RangeTop, uni_RangeBottom-1,\
-                                                         LTYPE_FBIRC_LINEUINT);
-
-    cout << "----------------------------------------" << endl;
-    cout << "### temp/支出 ###" << endl;
-    cout << "Temp_校验值: " << CTool::TransOutFormat(int_TempExpenseCK) << endl;
-    cout << "----------------------------------------" << endl;
-}
-
-/**************************************************/
 //   生成 月度趋势Vector
 /**************************************************/
 void CFAitfX::GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey)
@@ -1626,7 +1603,6 @@ void CFAitfX::SyncAllFile()
     m_ptr_FM_tt_NS->SyncFile();
     m_ptr_FM_tt_travel->SyncFile();
     m_ptr_FM_tt_lottery->SyncFile();
-    m_ptr_FM_temp_BOX->SyncFile();
 }
 
 void CFAitfX::WriteAllFile()
@@ -1642,7 +1618,6 @@ void CFAitfX::WriteAllFile()
     m_ptr_FM_tt_NS->UpdateTimeStamp();
     m_ptr_FM_tt_travel->UpdateTimeStamp();
     m_ptr_FM_tt_lottery->UpdateTimeStamp();
-    m_ptr_FM_temp_BOX->UpdateTimeStamp();
 
     m_ptr_FM_SUM->FileWriter();
     m_ptr_FM_life->FileWriter();
@@ -1655,7 +1630,6 @@ void CFAitfX::WriteAllFile()
     m_ptr_FM_tt_NS->FileWriter();
     m_ptr_FM_tt_travel->FileWriter();
     m_ptr_FM_tt_lottery->FileWriter();
-    m_ptr_FM_temp_BOX->FileWriter();
 }
 
 void CFAitfX::BackUpAllFile(const string str_BackUpPath)
@@ -1671,7 +1645,6 @@ void CFAitfX::BackUpAllFile(const string str_BackUpPath)
     m_ptr_FM_tt_NS->BackUpFile(str_BackUpPath);
     m_ptr_FM_tt_travel->BackUpFile(str_BackUpPath);
     m_ptr_FM_tt_lottery->BackUpFile(str_BackUpPath);
-    m_ptr_FM_temp_BOX->BackUpFile(str_BackUpPath);
 }
 
 CFileManager *CFAitfX::GetPtrSubMonthFM(const string str_SubMonthKey)

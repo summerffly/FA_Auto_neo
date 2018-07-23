@@ -6,11 +6,13 @@
 
 #pragma once
 
+#include <unistd.h>
 #include <time.h>
 #include <string>
 #include <iostream>
 
 using namespace std;
+
 
 typedef enum
 {
@@ -33,6 +35,9 @@ class CTool
 public:
     CTool();
     ~CTool();
+
+    static int CheckFilesExist();
+
     static string GenerateNextMonth(const string str_CurMonth);
     static string GenerateNextMonth(const int int_CurMonth);
     static string GeneratePreMonth(const string str_CurMonth);

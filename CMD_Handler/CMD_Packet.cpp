@@ -305,10 +305,18 @@ int CMD_Packet::CMDParser()
     }
     else if((m_int_CmdProNum == 1) && (int_ParamType > 0))
     {
-        if((str_CmdPro_A == CHECK) && (int_ParamType = 1))
+        if((str_CmdPro_A == CHECK) && (int_ParamType == 1))
             m_str_CmdType = X_CMD_TYPE_CHECK_SUBMONTH;
-        else if((str_CmdPro_A == UPDATE) && (int_ParamType = 1))
+        else if((str_CmdPro_A == UPDATE) && (int_ParamType == 1))
             m_str_CmdType = X_CMD_TYPE_UPDATE_SUBMONTH;
+        else if((str_CmdPro_A == CHECK) && (int_ParamType == 2))
+            m_str_CmdType = X_CMD_TYPE_CHECK_TITLE;
+        else if((str_CmdPro_A == UPDATE) && (int_ParamType == 2))
+            m_str_CmdType = X_CMD_TYPE_UPDATE_TITLE;
+        else if((str_CmdPro_A == PRINT) && (int_ParamType == 1))
+            m_str_CmdType = X_CMD_TYPE_PRINT_SUBMONTH;
+        else if((str_CmdPro_A == PRINT) && (int_ParamType == 2))
+            m_str_CmdType = X_CMD_TYPE_PRINT_TITLE;
         else
             return -4;   // ERROR: 未定义的CmdType
     }
@@ -328,12 +336,18 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_SHOW_MONTH;
         else if((str_CmdPro_A == ANALYSIS) && (str_CmdPro_B == TREND))
             m_str_CmdType = X_CMD_TYPE_ANALYSIS_TREND;
+        else if((str_CmdPro_A == ANALYSIS) && (str_CmdPro_B == PROPORTION))
+            m_str_CmdType = X_CMD_TYPE_ANALYSIS_PROPORTION;
+        else if((str_CmdPro_A == PRINT) && (str_CmdPro_B == MONTH))
+            m_str_CmdType = X_CMD_TYPE_PRINT_MONTH;
+        else if((str_CmdPro_A == APPEND) && (str_CmdPro_B == MONTH))
+            m_str_CmdType = X_CMD_TYPE_APPEND_MONTH;
         else
             return -4;   // ERROR: 未定义的CmdType
     }
     else if(m_int_CmdProNum == 3)
     {
-        //
+        // Reserved CMD Pro
     }
 
     return 0;   // CORRECT

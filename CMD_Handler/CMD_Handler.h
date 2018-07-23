@@ -45,9 +45,19 @@ public:
 	static void OnCmdCheckSubMonth(CMD_Packet srt_CMD);
 	static void OnCmdUpdateSubMonth(CMD_Packet srt_CMD);
 
+	static void OnCmdCheckTitle(CMD_Packet srt_CMD);
+	static void OnCmdUpdateTitle(CMD_Packet srt_CMD);
+
 	static void OnCmdAnalysisTrend(CMD_Packet srt_CMD);
+	static void OnCmdAnalysisProportion(CMD_Packet srt_CMD);
 
 	static void OnCmdForecast(CMD_Packet srt_CMD);
+
+	static void OnCmdPrintMonth(CMD_Packet srt_CMD);
+	static void OnCmdPrintSubMonth(CMD_Packet srt_CMD);
+	static void OnCmdPrintTitle(CMD_Packet srt_CMD);
+
+	static void OnCmdAppendMonth(CMD_Packet srt_CMD);
 
 	static void OnCmdSync(CMD_Packet srt_CMD);
 	static void OnCmdWrite(CMD_Packet srt_CMD);

@@ -87,7 +87,6 @@ public:
     void AddScriptSum(const string str_SelMonth);
     void AddScriptMonth(const string str_SelMonth);
     void AddScriptSubMonth(const string str_SubMonthKey, const string str_SelMonth);
-    void CheckTempExpense();
 
     /****************************************/
     //   统计区
@@ -156,7 +155,6 @@ private:
     CFileManager *m_ptr_FM_tt_NS;
     CFileManager *m_ptr_FM_tt_travel;
     CFileManager *m_ptr_FM_tt_lottery;
-    CFileManager *m_ptr_FM_temp_BOX;
 };
 
 //------------------------------//

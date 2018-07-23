@@ -19,6 +19,25 @@ CTool::~CTool()
     // Do Nothing
 }
 
+int CTool::CheckFilesExist()
+{
+    int int_RetFC = 0;
+    int_RetFC += access("./FA_Auto_Script.xml", 0);
+    int_RetFC += access("./FA_SUM.md", 0);
+    int_RetFC += access("./life.M.md", 0);
+    int_RetFC += access("./DGtler.M.md", 0);
+    int_RetFC += access("./Books.M.md", 0);
+    int_RetFC += access("./KEEP.M.md", 0);
+    int_RetFC += access("./TB.M.md", 0);
+    int_RetFC += access("./sa.M.md", 0);
+    int_RetFC += access("./DK.md", 0);
+    int_RetFC += access("./NS.md", 0);
+    int_RetFC += access("./travel.md", 0);
+    int_RetFC += access("./lottery.md", 0);
+
+    return int_RetFC;
+}
+
 string CTool::GenerateNextMonth(const string str_CurMonth)
 {
     string str_NextMonth = string("");

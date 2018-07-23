@@ -27,9 +27,19 @@
 #define  X_CMD_TYPE_CHECK_SUBMONTH    ("CheckSubMonth")
 #define  X_CMD_TYPE_UPDATE_SUBMONTH   ("UpdateSubMonth")
 
-#define  X_CMD_TYPE_ANALYSIS_TREND    ("AnalysisTrend")
+#define  X_CMD_TYPE_CHECK_TITLE    ("CheckTitle")
+#define  X_CMD_TYPE_UPDATE_TITLE   ("UpdateTitle")
+
+#define  X_CMD_TYPE_ANALYSIS_TREND         ("AnalysisTrend")
+#define  X_CMD_TYPE_ANALYSIS_PROPORTION    ("AnalysisProportion")
 
 #define  X_CMD_TYPE_FORECAST    ("Forecast")
+
+#define  X_CMD_TYPE_PRINT_MONTH       ("PrintMonth")
+#define  X_CMD_TYPE_PRINT_SUBMONTH    ("PrintSubMonth")
+#define  X_CMD_TYPE_PRINT_TITLE       ("PrintTitle")
+
+#define  X_CMD_TYPE_APPEND_MONTH    ("AppendMonth")
 
 #define  X_CMD_TYPE_SYNC        ("Sync")
 #define  X_CMD_TYPE_WRITE       ("Write")

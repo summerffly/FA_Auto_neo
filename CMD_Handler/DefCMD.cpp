@@ -20,6 +20,7 @@ string INSERT = "insert";
 string MODIFY_LIFE = "life";
 string TRANSFER = "tf";
 
+string ALL = "all";
 string EXPENSE = "exp";
 string SURPLUS = "surplus";
 
@@ -28,9 +29,10 @@ string EX_MONTH = "exmonth";
 string SUM = "sum";
 
 string SUBMONTH = "sm";
+string DGTLER = "dgtler";
 string BOOKS = "books";
-string TB = "tb";
 string KEEP = "keep";
+string TB = "tb";
 string SA = "sa";
 
 string TITLE = "tt";

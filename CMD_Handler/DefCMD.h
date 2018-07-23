@@ -23,6 +23,7 @@ extern string INSERT;
 extern string MODIFY_LIFE;
 extern string TRANSFER;
 
+extern string ALL;
 extern string EXPENSE;
 extern string SURPLUS;
 
@@ -31,9 +32,10 @@ extern string EX_MONTH;
 extern string SUM;
 
 extern string SUBMONTH;
+extern string DGTLER;
 extern string BOOKS;
-extern string TB;
 extern string KEEP;
+extern string TB;
 extern string SA;
 
 extern string TITLE;

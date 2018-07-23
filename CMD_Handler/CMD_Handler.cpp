@@ -29,8 +29,15 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 	X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_MONTH, "", OnCmdShowMonth)
 	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_SUBMONTH, "", OnCmdCheckSubMonth)
 	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_SUBMONTH, "", OnCmdUpdateSubMonth)
+    X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_TITLE, "", OnCmdCheckTitle)
+    X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_TITLE, "", OnCmdUpdateTitle)
     X_ON_CMD_TYPE(X_CMD_TYPE_ANALYSIS_TREND, "", OnCmdAnalysisTrend)
+    X_ON_CMD_TYPE(X_CMD_TYPE_ANALYSIS_PROPORTION, "", OnCmdAnalysisProportion)
 	X_ON_CMD_TYPE(X_CMD_TYPE_FORECAST, "", OnCmdForecast)
+    X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_MONTH, "", OnCmdPrintMonth)
+    X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_SUBMONTH, "", OnCmdPrintSubMonth)
+    X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_TITLE, "", OnCmdPrintTitle)
+    X_ON_CMD_TYPE(X_CMD_TYPE_APPEND_MONTH, "", OnCmdAppendMonth)
 	X_ON_CMD_TYPE(X_CMD_TYPE_SYNC, "", OnCmdSync)
 	X_ON_CMD_TYPE(X_CMD_TYPE_WRITE, "", OnCmdWrite)
 	X_ON_CMD_TYPE(X_CMD_TYPE_BACKUP, "", OnCmdBackup)
@@ -120,7 +127,11 @@ void CCMDHandler::OnCmdShowMonth(CMD_Packet srt_CMD)
 
 void CCMDHandler::OnCmdCheckSubMonth(CMD_Packet srt_CMD)
 {
-	if( srt_CMD.m_str_ParamSubMonth == BOOKS )
+    if( srt_CMD.m_str_ParamSubMonth == DGTLER )
+    {
+        m_ptr_FAitfX->CheckSubMonthExpense("DGtler", srt_CMD.m_str_ParamMonth, true);
+    }
+	else if( srt_CMD.m_str_ParamSubMonth == BOOKS )
     {
         m_ptr_FAitfX->CheckSubMonthExpense("Books", srt_CMD.m_str_ParamMonth, true);
     }
@@ -144,7 +155,11 @@ void CCMDHandler::OnCmdCheckSubMonth(CMD_Packet srt_CMD)
 
 void CCMDHandler::OnCmdUpdateSubMonth(CMD_Packet srt_CMD)
 {
-	if( srt_CMD.m_str_ParamSubMonth == BOOKS )
+    if( srt_CMD.m_str_ParamSubMonth == DGTLER )
+    {
+        m_ptr_FAitfX->UpdateSubMonthExpense("DGtler", srt_CMD.m_str_ParamMonth, true);
+    }
+	else if( srt_CMD.m_str_ParamSubMonth == BOOKS )
     {
         m_ptr_FAitfX->UpdateSubMonthExpense("Books", srt_CMD.m_str_ParamMonth, true);
     }
@@ -170,6 +185,59 @@ void CCMDHandler::OnCmdUpdateSubMonth(CMD_Packet srt_CMD)
     m_ptr_ASitfX->UpdateSum(0);
 }
 
+void CCMDHandler::OnCmdCheckTitle(CMD_Packet srt_CMD)
+{
+    if( srt_CMD.m_str_ParamTitle == DK )
+    {
+        m_ptr_FAitfX->CheckTitleExpense("DK", true);
+    }
+    else if( srt_CMD.m_str_ParamTitle == NS )
+    {
+        m_ptr_FAitfX->CheckTitleExpense("NS", true);
+    }
+    else if( srt_CMD.m_str_ParamTitle == TRAVEL )
+    {
+        m_ptr_FAitfX->CheckTitleExpense("travel", true);
+    }
+    else if( srt_CMD.m_str_ParamTitle == LOTTERY )
+    {
+        m_ptr_FAitfX->CheckTitleExpense("lottery", true);
+    }
+    else
+    {
+        CTool::MassageOutFotmat("Error TT Param", '!');
+    }
+}
+
+void CCMDHandler::OnCmdUpdateTitle(CMD_Packet srt_CMD)
+{
+    if( srt_CMD.m_str_ParamTitle == DK )
+    {
+        m_ptr_FAitfX->UpdateTitleExpense("DK", true);
+    }
+    else if( srt_CMD.m_str_ParamTitle == NS )
+    {
+        m_ptr_FAitfX->UpdateTitleExpense("NS", true);
+    }
+    else if( srt_CMD.m_str_ParamTitle == TRAVEL )
+    {
+        m_ptr_FAitfX->UpdateTitleExpense("travel", true);
+    }
+    else if( srt_CMD.m_str_ParamTitle == LOTTERY )
+    {
+        m_ptr_FAitfX->UpdateTitleExpense("lottery", true);
+    }
+    else
+    {
+        CTool::MassageOutFotmat("Error TT Param", '!');
+
+        return;
+    }
+
+    m_ptr_ASitfX->UpdateSum(0);
+}
+
+
 void CCMDHandler::OnCmdAnalysisTrend(CMD_Packet srt_CMD)
 {
     if( srt_CMD.m_str_ResParam == EXPENSE )
@@ -194,9 +262,80 @@ void CCMDHandler::OnCmdAnalysisTrend(CMD_Packet srt_CMD)
     }
 }
 
+void CCMDHandler::OnCmdAnalysisProportion(CMD_Packet srt_CMD)
+{
+    m_ptr_FAitfX->AnalysisMonthProportion(srt_CMD.m_str_ParamMonth);
+}
+
 void CCMDHandler::OnCmdForecast(CMD_Packet srt_CMD)
 {
 	m_ptr_FAitfX->ForecastFutureSum(srt_CMD.m_str_ResParam.c_str(), srt_CMD.m_int_ResParam);
+}
+
+void CCMDHandler::OnCmdPrintMonth(CMD_Packet srt_CMD)
+{
+    m_ptr_FAitfX->PrintMonth(srt_CMD.m_str_ParamMonth, true);
+}
+
+void CCMDHandler::OnCmdPrintSubMonth(CMD_Packet srt_CMD)
+{
+    if( srt_CMD.m_str_ParamSubMonth == ALL )
+    {
+        m_ptr_ASitfX->PrintSubMonthTraversal(srt_CMD.m_str_ParamMonth, false);
+    }
+    else if( srt_CMD.m_str_ParamSubMonth == DGTLER )
+    {
+        m_ptr_FAitfX->PrintSubMonth("DGtler", srt_CMD.m_str_ParamMonth, true, true);
+    }
+    else if( srt_CMD.m_str_ParamSubMonth == BOOKS )
+    {
+        m_ptr_FAitfX->PrintSubMonth("Books", srt_CMD.m_str_ParamMonth, true, true);
+    }
+    else if( srt_CMD.m_str_ParamSubMonth == KEEP )
+    {
+        m_ptr_FAitfX->PrintSubMonth("KEEP", srt_CMD.m_str_ParamMonth, true, true);
+    }
+    else if( srt_CMD.m_str_ParamSubMonth == TB )
+    {
+        m_ptr_FAitfX->PrintSubMonth("TB", srt_CMD.m_str_ParamMonth, true, true);
+    }
+    else if( srt_CMD.m_str_ParamSubMonth == SA )
+    {
+        m_ptr_FAitfX->PrintSubMonth("sa", srt_CMD.m_str_ParamMonth, true, true);
+    }
+    else
+    {
+        CTool::MassageOutFotmat("Error SM Param", '!');
+    }
+}
+
+void CCMDHandler::OnCmdPrintTitle(CMD_Packet srt_CMD)
+{
+    if( srt_CMD.m_str_ParamTitle == DK )
+    {
+        m_ptr_FAitfX->PrintTitle("DK", true);
+    }
+    else if( srt_CMD.m_str_ParamTitle == NS )
+    {
+        m_ptr_FAitfX->PrintTitle("NS", true);
+    }
+    else if( srt_CMD.m_str_ParamTitle == TRAVEL )
+    {
+        m_ptr_FAitfX->PrintTitle("travel", true);
+    }
+    else if( srt_CMD.m_str_ParamTitle == LOTTERY )
+    {
+        m_ptr_FAitfX->PrintTitle("lottery", true);
+    }
+    else
+    {
+        CTool::MassageOutFotmat("Error TT Param", '!');
+    }
+}
+
+void CCMDHandler::OnCmdAppendMonth(CMD_Packet srt_CMD)
+{
+    m_ptr_ASitfX->AppendNextMonth(srt_CMD.m_str_ResParam);
 }
 
 void CCMDHandler::OnCmdSync(CMD_Packet srt_CMD)
