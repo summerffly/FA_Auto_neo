@@ -31,6 +31,8 @@ public:
 	static void CMD_Loop();
 	static void CMD_Init();
 
+	static void CMD_Help(CMD_Packet srt_CMD);
+
 public:
 	static void OnCmdCheckFA(CMD_Packet srt_CMD);
 	static void OnCmdUpdateFA(CMD_Packet srt_CMD);
@@ -71,10 +73,10 @@ public:
 	static void OnCmdWrite(CMD_Packet srt_CMD);
 	static void OnCmdBackup(CMD_Packet srt_CMD);
 
+	static void OnCmdTest(CMD_Packet srt_CMD);
+
 	static void OnCmdCancel(CMD_Packet srt_CMD);
 	static void OnCmdExit(CMD_Packet srt_CMD);
-
-	static void OnCmdTest(CMD_Packet srt_CMD);
 
 private:
 	static CScriptRipper *m_ptr_ScriptRipper;

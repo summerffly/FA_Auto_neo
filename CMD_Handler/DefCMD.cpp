@@ -10,23 +10,22 @@ using namespace std;
 
 
 /**************************************************/
-//   计算工具命令
+//   常用命令
 /**************************************************/
 
 string CHECK = "check";
 string UPDATE = "update";
-string APPEND = "append";
-string INSERT = "insert";
+string SHOW = "show";
+
 string MODIFY_LIFE = "life";
 string TRANSFER = "tf";
 
 string ALL = "all";
+string SUM = "sum";
 string EXPENSE = "exp";
 string SURPLUS = "surplus";
 
 string MONTH = "month";
-string EX_MONTH = "exmonth";
-string SUM = "sum";
 
 string SUBMONTH = "sm";
 string DGTLER = "dgtler";
@@ -41,16 +40,12 @@ string NS = "ns";
 string TRAVEL = "travel";
 string LOTTERY = "lottery";
 
-string TEMP = "temp";
-string BOX = "box";
-string XM = "xm";
-
 string ZHIFUBAO = "zf";
 string WEIXIN = "wc";
 string JINGDONG = "jd";
 
 /**************************************************/
-//   统计工具命令
+//   统计命令
 /**************************************************/
 
 string ANALYSIS = "as";
@@ -65,25 +60,27 @@ string ROOM = "room";
 string TAIL = "tail";
 
 /**************************************************/
-//   展示工具命令
+//   操作命令
 /**************************************************/
 
 string PRINT = "print";
-string SHOW = "show";
+string INSERT = "insert";
 
 /**************************************************/
-//   操作命令
+//   文件命令
 /**************************************************/
 
 string SYNC = "sync";
 string WRITE = "write";
 string BACKUP = "bakup";
 
+string APPEND = "append";
+
 string HELP = "help";
 string TEST = "test";
+
 string CANCEL = "cancel";
 string EXIT = "exit";
-
 
 //------------------------------//
 //   River flows in summer

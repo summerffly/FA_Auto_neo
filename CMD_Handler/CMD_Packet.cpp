@@ -184,9 +184,17 @@ int CMD_Packet::CMDFilter()
 int CMD_Packet::CMDParser()
 {
     m_int_CmdProNum = m_int_CmdNum;
+    vector<string>::iterator itr_Cmd;
     int int_ParamType = 0;
 
-    vector<string>::iterator itr_Cmd;
+    itr_Cmd = m_vec_Cmd.end();
+    itr_Cmd--;
+    if((*itr_Cmd) == CANCEL)
+    {
+        m_str_CmdType = X_CMD_TYPE_CANCEL;
+        return 0;
+    }
+
     for(itr_Cmd = m_vec_Cmd.begin(); itr_Cmd != m_vec_Cmd.end(); itr_Cmd++)
     {
         if((*itr_Cmd) == "-f")
@@ -300,12 +308,14 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_WRITE;
         else if(str_CmdPro_A == BACKUP)
             m_str_CmdType = X_CMD_TYPE_BACKUP;
+        else if(str_CmdPro_A == HELP)
+            m_str_CmdType = X_CMD_TYPE_HELP;
+        else if(str_CmdPro_A == TEST)
+            m_str_CmdType = X_CMD_TYPE_TEST;
         else if(str_CmdPro_A == CANCEL)
             m_str_CmdType = X_CMD_TYPE_CANCEL;
         else if(str_CmdPro_A == EXIT)
             m_str_CmdType = X_CMD_TYPE_EXIT;
-        else if(str_CmdPro_A == TEST)
-            m_str_CmdType = X_CMD_TYPE_TEST;
         else
             return -4;   // ERROR: 未定义的CmdType
     }

@@ -13,23 +13,22 @@ using namespace std;
 
 
 /**************************************************/
-//   计算工具命令
+//   常用命令
 /**************************************************/
 
 extern string CHECK;
 extern string UPDATE;
-extern string APPEND;
-extern string INSERT;
+extern string SHOW;
+
 extern string MODIFY_LIFE;
 extern string TRANSFER;
 
 extern string ALL;
+extern string SUM;
 extern string EXPENSE;
 extern string SURPLUS;
 
 extern string MONTH;
-extern string EX_MONTH;
-extern string SUM;
 
 extern string SUBMONTH;
 extern string DGTLER;
@@ -44,16 +43,12 @@ extern string NS;
 extern string TRAVEL;
 extern string LOTTERY;
 
-extern string TEMP;
-extern string BOX;
-extern string XM;
-
 extern string ZHIFUBAO;
 extern string WEIXIN;
 extern string JINGDONG;
 
 /**************************************************/
-//   统计工具命令
+//   统计命令
 /**************************************************/
 
 extern string ANALYSIS;
@@ -68,25 +63,27 @@ extern string ROOM;
 extern string TAIL;
 
 /**************************************************/
-//   展示工具命令
+//   操作命令
 /**************************************************/
 
 extern string PRINT;
-extern string SHOW;
+extern string INSERT;
 
 /**************************************************/
-//   操作命令
+//   文件命令
 /**************************************************/
 
 extern string SYNC;
 extern string WRITE;
 extern string BACKUP;
 
+extern string APPEND;
+
 extern string HELP;
 extern string TEST;
+
 extern string CANCEL;
 extern string EXIT;
-
 
 #endif
 

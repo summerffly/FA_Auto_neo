@@ -7,9 +7,6 @@
 #pragma once
 
 
-/****************************************/
-//   定义所有CMD类型
-/****************************************/
 #define  X_CMD_TYPE_CHECK_FA    ("CheckFA")
 #define  X_CMD_TYPE_UPDATE_FA   ("UpdateFA")
 #define  X_CMD_TYPE_SHOW_FA     ("ShowFA")
@@ -36,8 +33,8 @@
 #define  X_CMD_TYPE_ANALYSIS_TREND         ("AnalysisTrend")
 #define  X_CMD_TYPE_ANALYSIS_PROPORTION    ("AnalysisProportion")
 
-#define  X_CMD_TYPE_SUMMARIZE    ("Summerize")
-#define  X_CMD_TYPE_FORECAST    ("Forecast")
+#define  X_CMD_TYPE_SUMMARIZE    ("Summarize")
+#define  X_CMD_TYPE_FORECAST     ("Forecast")
 
 #define  X_CMD_TYPE_PRINT_MONTH       ("PrintMonth")
 #define  X_CMD_TYPE_PRINT_SUBMONTH    ("PrintSubMonth")
@@ -49,10 +46,11 @@
 #define  X_CMD_TYPE_WRITE       ("Write")
 #define  X_CMD_TYPE_BACKUP      ("Backup")
 
+#define  X_CMD_TYPE_HELP    ("Help")
+#define  X_CMD_TYPE_TEST    ("Test")
+
 #define  X_CMD_TYPE_CANCEL      ("Cancel")
 #define  X_CMD_TYPE_EXIT        ("Exit")
-
-#define  X_CMD_TYPE_TEST        ("Test")
 
 
 //------------------------------//

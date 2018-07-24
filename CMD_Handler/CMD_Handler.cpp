@@ -6,6 +6,7 @@
 
 #include "CMD_Handler.h"
 
+#include "./DefCMDHelp.h"
 #include "./../X_Frame/DefLib.h"
 #include "./../X_Frame/X_Tool.h"
 
@@ -18,36 +19,37 @@ CASitfX* CCMDHandler::m_ptr_ASitfX = Singleton<CASitfX>::GetInstance();
 //   CMD_MAP()宏
 /**************************************************/
 X_BEGIN_CMD_MAP(CCMDHandler)
-	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_FA, "", OnCmdCheckFA)
-	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_FA, "", OnCmdUpdateFA)
-	X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_FA, "", OnCmdShowFA)
-	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_SUM, "", OnCmdCheckSum)
-	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_SUM, "", OnCmdUpdateSum)
-	X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_SUM, "", OnCmdShowSum)
-    X_ON_CMD_TYPE(X_CMD_TYPE_MODIFY_LIFE, "", OnCmdModifyLife)
-	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_MONTH, "", OnCmdCheckMonth)
-	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_MONTH, "", OnCmdUpdateMonth)
-	X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_MONTH, "", OnCmdShowMonth)
-	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_SUBMONTH, "", OnCmdCheckSubMonth)
-	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_SUBMONTH, "", OnCmdUpdateSubMonth)
-    X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_TITLE, "", OnCmdCheckTitle)
-    X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_TITLE, "", OnCmdUpdateTitle)
-    X_ON_CMD_TYPE(X_CMD_TYPE_TRANSFER, "", OnCmdTransfer)
-    X_ON_CMD_TYPE(X_CMD_TYPE_LOTTERY, "", OnCmdLottery)
-    X_ON_CMD_TYPE(X_CMD_TYPE_ANALYSIS_TREND, "", OnCmdAnalysisTrend)
-    X_ON_CMD_TYPE(X_CMD_TYPE_ANALYSIS_PROPORTION, "", OnCmdAnalysisProportion)
-    X_ON_CMD_TYPE(X_CMD_TYPE_SUMMARIZE, "", OnCmdSummarize)
-	X_ON_CMD_TYPE(X_CMD_TYPE_FORECAST, "", OnCmdForecast)
-    X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_MONTH, "", OnCmdPrintMonth)
-    X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_SUBMONTH, "", OnCmdPrintSubMonth)
-    X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_TITLE, "", OnCmdPrintTitle)
-    X_ON_CMD_TYPE(X_CMD_TYPE_APPEND_MONTH, "", OnCmdAppendMonth)
-	X_ON_CMD_TYPE(X_CMD_TYPE_SYNC, "", OnCmdSync)
-	X_ON_CMD_TYPE(X_CMD_TYPE_WRITE, "", OnCmdWrite)
-	X_ON_CMD_TYPE(X_CMD_TYPE_BACKUP, "", OnCmdBackup)
-	X_ON_CMD_TYPE(X_CMD_TYPE_CANCEL, "", OnCmdCancel)
-	X_ON_CMD_TYPE(X_CMD_TYPE_EXIT, "", OnCmdExit)
-	X_ON_CMD_TYPE(X_CMD_TYPE_TEST, "", OnCmdTest)
+	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_FA, HELP_CMD_TYPE_CHECK_FA, "", OnCmdCheckFA)
+	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_FA, HELP_CMD_TYPE_UPDATE_FA, "", OnCmdUpdateFA)
+	X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_FA, HELP_CMD_TYPE_SHOW_FA, "", OnCmdShowFA)
+	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_SUM, HELP_CMD_TYPE_CHECK_SUM, "", OnCmdCheckSum)
+	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_SUM, HELP_CMD_TYPE_UPDATE_SUM, "", OnCmdUpdateSum)
+	X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_SUM, HELP_CMD_TYPE_SHOW_SUM, "", OnCmdShowSum)
+    X_ON_CMD_TYPE(X_CMD_TYPE_MODIFY_LIFE, HELP_CMD_TYPE_MODIFY_LIFE, "", OnCmdModifyLife)
+	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_MONTH, "", "", OnCmdCheckMonth)
+	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_MONTH, "", "", OnCmdUpdateMonth)
+	X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_MONTH, "", "", OnCmdShowMonth)
+	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_SUBMONTH, "", "", OnCmdCheckSubMonth)
+	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_SUBMONTH, "", "", OnCmdUpdateSubMonth)
+    X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_TITLE, "", "", OnCmdCheckTitle)
+    X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_TITLE, "", "", OnCmdUpdateTitle)
+    X_ON_CMD_TYPE(X_CMD_TYPE_TRANSFER, "", "", OnCmdTransfer)
+    X_ON_CMD_TYPE(X_CMD_TYPE_LOTTERY, "", "", OnCmdLottery)
+    X_ON_CMD_TYPE(X_CMD_TYPE_ANALYSIS_TREND, "", "", OnCmdAnalysisTrend)
+    X_ON_CMD_TYPE(X_CMD_TYPE_ANALYSIS_PROPORTION, "", "", OnCmdAnalysisProportion)
+    X_ON_CMD_TYPE(X_CMD_TYPE_SUMMARIZE, "", "", OnCmdSummarize)
+	X_ON_CMD_TYPE(X_CMD_TYPE_FORECAST, "", "", OnCmdForecast)
+    X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_MONTH, HELP_CMD_TYPE_PRINT_MONTH, "", OnCmdPrintMonth)
+    X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_SUBMONTH, HELP_CMD_TYPE_PRINT_SUBMONTH, "", OnCmdPrintSubMonth)
+    X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_TITLE, HELP_CMD_TYPE_PRINT_TITLE, "", OnCmdPrintTitle)
+    X_ON_CMD_TYPE(X_CMD_TYPE_APPEND_MONTH, HELP_CMD_TYPE_APPEND_MONTH, "", OnCmdAppendMonth)
+	X_ON_CMD_TYPE(X_CMD_TYPE_SYNC, "", "", OnCmdSync)
+	X_ON_CMD_TYPE(X_CMD_TYPE_WRITE, "", "", OnCmdWrite)
+	X_ON_CMD_TYPE(X_CMD_TYPE_BACKUP, "", "", OnCmdBackup)
+    X_ON_CMD_TYPE(X_CMD_TYPE_TEST, "", "", OnCmdTest)
+	X_ON_CMD_TYPE(X_CMD_TYPE_CANCEL, "", "", OnCmdCancel)
+	X_ON_CMD_TYPE(X_CMD_TYPE_EXIT, "", "", OnCmdExit)
+    X_ON_CMD_TYPE(X_CMD_TYPE_HELP, "", "", CMD_Help)
 X_END_CMD_MAP()
 
 /**************************************************/
@@ -164,6 +166,36 @@ void CCMDHandler::CMD_Init()
     cout << "***      >>>  番茄_summer  <<<       ***" << endl;
     cout << "***                                  ***" << endl;
     cout << "****************************************" << endl;
+    cout << "****************************************" << endl;
+}
+
+void CCMDHandler::CMD_Help(CMD_Packet srt_CMD)
+{
+    cout << "****************************************" << endl;
+    cout << "***          BEGIN OF HELP           ***" << endl;
+    cout << "****************************************" << endl;
+
+    for(int i=0; ;i++)
+    {
+        if("EndOfCmdMap" == CmdTypeEntries[i].str_CmdType)
+        {
+            break;
+        }
+        else
+        {
+            if("" != CmdTypeEntries[i].str_CmdHelpExample)
+            {
+                cout << "*** " <<CmdTypeEntries[i].str_CmdType << " ***" << endl;
+                cout << ">>> " << CmdTypeEntries[i].str_CmdHelpExample << endl;
+                cout << endl;
+            }
+
+            continue;
+        }
+    }
+
+    cout << "****************************************" << endl;
+    cout << "***            END OF HELP           ***" << endl;
     cout << "****************************************" << endl;
 }
 
@@ -496,6 +528,15 @@ void CCMDHandler::OnCmdBackup(CMD_Packet srt_CMD)
     m_ptr_FAitfX->BackUpAllFile("./../Hacker/FA_Auto_X/X_Executable/");
 }
 
+void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
+{
+    cout << srt_CMD.m_int_ParamValue << endl;
+    cout << srt_CMD.m_str_ParamMonth << endl;
+    cout << srt_CMD.m_str_ResParam << endl;
+    cout << srt_CMD.m_int_CmdNum << endl;
+    cout << srt_CMD.m_int_CmdProNum << endl;
+}
+
 void CCMDHandler::OnCmdCancel(CMD_Packet srt_CMD)
 {
 	cout << "----------------------------------------" << endl;
@@ -511,15 +552,6 @@ void CCMDHandler::OnCmdExit(CMD_Packet srt_CMD)
     cout << "***              EXIT                ***" << endl;
     cout << "****************************************" << endl;
     cout << endl;
-}
-
-void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
-{
-	cout << srt_CMD.m_int_ParamValue << endl;
-	cout << srt_CMD.m_str_ParamMonth << endl;
-	cout << srt_CMD.m_str_ResParam << endl;
-	cout << srt_CMD.m_int_CmdNum << endl;
-	cout << srt_CMD.m_int_CmdProNum << endl;
 }
 
 //------------------------------//
