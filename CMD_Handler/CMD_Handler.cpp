@@ -6,6 +6,7 @@
 
 #include "CMD_Handler.h"
 
+#include "./../X_Frame/DefLib.h"
 #include "./../X_Frame/X_Tool.h"
 
 
@@ -31,8 +32,11 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_SUBMONTH, "", OnCmdUpdateSubMonth)
     X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_TITLE, "", OnCmdCheckTitle)
     X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_TITLE, "", OnCmdUpdateTitle)
+    X_ON_CMD_TYPE(X_CMD_TYPE_TRANSFER, "", OnCmdTransfer)
+    X_ON_CMD_TYPE(X_CMD_TYPE_LOTTERY, "", OnCmdLottery)
     X_ON_CMD_TYPE(X_CMD_TYPE_ANALYSIS_TREND, "", OnCmdAnalysisTrend)
     X_ON_CMD_TYPE(X_CMD_TYPE_ANALYSIS_PROPORTION, "", OnCmdAnalysisProportion)
+    X_ON_CMD_TYPE(X_CMD_TYPE_SUMMARIZE, "", OnCmdSummarize)
 	X_ON_CMD_TYPE(X_CMD_TYPE_FORECAST, "", OnCmdForecast)
     X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_MONTH, "", OnCmdPrintMonth)
     X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_SUBMONTH, "", OnCmdPrintSubMonth)
@@ -47,9 +51,9 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 X_END_CMD_MAP()
 
 /**************************************************/
-//   CMD_LOOP()宏
+//   CMD_NOTIFY()宏
 /**************************************************/
-CMD_LOOP(CCMDHandler)
+CMD_NOTIFY(CCMDHandler)
 
 /**************************************************/
 //   CCMDHandler 构造函数
@@ -65,6 +69,102 @@ CCMDHandler::CCMDHandler()
 CCMDHandler::~CCMDHandler()
 {
     // Nothing To Do
+}
+
+/**************************************************/
+//   CMD 命令循环
+/**************************************************/
+void CCMDHandler::CMD_Loop()
+{
+    char CMD_linebuffer[MAX_COMMAND];
+    
+    while(1)
+    {
+        cout << "CMD >>> ";
+        cin.getline(CMD_linebuffer, MAX_COMMAND);
+
+        CMD_Packet xCmdPacket = CMD_Packet();
+
+        if(-1 == xCmdPacket.CMDRipper(CMD_linebuffer))
+        {
+            CTool::MassageOutFotmat("Blank CMD", '!');
+            continue;
+        }
+
+        if(0 != xCmdPacket.CMDFilter())
+        {
+            CTool::MassageOutFotmat("Error-Format CMD", '!');
+            continue;
+        }
+
+        int int_RetParser = xCmdPacket.CMDParser();
+        if(-1 == int_RetParser)
+        {
+            CTool::MassageOutFotmat("Error-Format CMD Param", '!');
+            continue;
+        }
+        else if(-2 == int_RetParser)
+        {
+            CTool::MassageOutFotmat("Conflict CMD Param", '!');
+            continue;
+        }
+        else if(-3 == int_RetParser)
+        {
+            CTool::MassageOutFotmat("Invalid Month Param", '!');
+            continue;
+        }
+        else if(-4 == int_RetParser)
+        {
+            // 未定义CMDType
+        }
+
+        CTool::TagTimeBait();
+        int int_RetNotify = CmdNotify(xCmdPacket);
+
+        if(0 == int_RetNotify)
+        {
+            CTool::ShowTimeGap();
+            cout << "----------------------------------------" << endl;
+            continue;
+        }
+        else if(1 == int_RetNotify)
+            break;
+        else
+        {
+            CTool::MassageOutFotmat("Error CMD", '!');
+            continue;
+        }
+    }
+}
+
+void CCMDHandler::CMD_Init()
+{
+    m_ptr_FAitfX->LoadSum(0);
+    m_ptr_FAitfX->SummarizeMonth(0);
+    m_ptr_FAitfX->SummarizeTitle(0);
+    m_ptr_FAitfX->SummarizeTail(0);
+    m_ptr_FAitfX->SummarizeCAF(0);
+
+    cout << "****************************************" << endl;
+    cout << "****************************************" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "***          FA_Auto X Pro           ***" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "***  ------------------------------  ***" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "***         Version: " << m_ptr_ScriptRipper->GetVersion() << "          ***" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "***  ------------------------------  ***" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "***          初始月度: " << m_ptr_ScriptRipper->GetOriginMonth() << "            ***" << endl;
+    cout << "***          当前月度: " << m_ptr_ScriptRipper->GetCurrentMonth() << "            ***" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "***  ------------------------------  ***" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "***      >>>  番茄_summer  <<<       ***" << endl;
+    cout << "***                                  ***" << endl;
+    cout << "****************************************" << endl;
+    cout << "****************************************" << endl;
 }
 
 void CCMDHandler::OnCmdCheckFA(CMD_Packet srt_CMD)
@@ -237,6 +337,32 @@ void CCMDHandler::OnCmdUpdateTitle(CMD_Packet srt_CMD)
     m_ptr_ASitfX->UpdateSum(0);
 }
 
+void CCMDHandler::OnCmdTransfer(CMD_Packet srt_CMD)
+{
+    if(srt_CMD.m_int_ParamValue > 0)
+    {
+        m_ptr_FAitfX->TransferBalance("零钱通", "余额宝", true, srt_CMD.m_int_ParamValue);
+    }
+    else
+    {
+        m_ptr_FAitfX->TransferBalance("零钱通", "余额宝", false, (-1)*srt_CMD.m_int_ParamValue);
+    }
+}
+
+void CCMDHandler::OnCmdLottery(CMD_Packet srt_CMD)
+{
+    if(srt_CMD.m_int_ParamValue > 0)
+    {
+        m_ptr_FAitfX->TransferBalance("零钱通", "余额宝", true, srt_CMD.m_int_ParamValue);
+        m_ptr_FAitfX->AppendLottery(true, srt_CMD.m_int_ParamValue, srt_CMD.m_str_ParamDate);
+    }
+    else
+    {
+        m_ptr_FAitfX->TransferBalance("零钱通", "余额宝", false, (-1)*srt_CMD.m_int_ParamValue);
+        m_ptr_FAitfX->AppendLottery(false, (-1)*srt_CMD.m_int_ParamValue, srt_CMD.m_str_ParamDate);
+    }
+    m_ptr_ASitfX->UpdateSum(0);
+}
 
 void CCMDHandler::OnCmdAnalysisTrend(CMD_Packet srt_CMD)
 {
@@ -265,6 +391,22 @@ void CCMDHandler::OnCmdAnalysisTrend(CMD_Packet srt_CMD)
 void CCMDHandler::OnCmdAnalysisProportion(CMD_Packet srt_CMD)
 {
     m_ptr_FAitfX->AnalysisMonthProportion(srt_CMD.m_str_ParamMonth);
+}
+
+void CCMDHandler::OnCmdSummarize(CMD_Packet srt_CMD)
+{
+    if( srt_CMD.m_str_ResParam == MONTH )
+    {
+        m_ptr_FAitfX->SummarizeMonth(2);
+    }
+    else if( srt_CMD.m_str_ResParam == TITLE )
+    {
+        m_ptr_FAitfX->SummarizeTitle(1);
+    }
+    else if( srt_CMD.m_str_ResParam == TAIL )
+    {
+        m_ptr_FAitfX->SummarizeTail(1);
+    }
 }
 
 void CCMDHandler::OnCmdForecast(CMD_Packet srt_CMD)

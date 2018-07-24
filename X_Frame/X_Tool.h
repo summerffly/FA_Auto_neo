@@ -8,6 +8,7 @@
 
 #include <unistd.h>
 #include <time.h>
+#include <sys/time.h>
 #include <string>
 #include <iostream>
 
@@ -48,6 +49,14 @@ public:
     static string TransOutFormat(const int int_Value);
     static void MassageOutFotmat(const string str_Message, const char cha_Flag);
     static string TimeOut();
+
+public:
+    static void TagTimeBait();
+    static double ShowTimeGap();
+
+private:
+    static struct timeval m_tvl_begin;
+    static struct timeval m_tvl_end;
 };
 
 

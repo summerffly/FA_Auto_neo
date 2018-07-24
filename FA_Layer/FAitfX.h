@@ -40,10 +40,10 @@ public:
     //   SUM 计算区
     /****************************************/
     void LoadSum(int int_OFlag);
-    void SummerizeMonth(int int_OFlag);
-    void SummerizeTitle(int int_OFlag);
-    void SummerizeTail(int int_OFlag);
-    void SummerizeCAF(int int_OFlag);
+    void SummarizeMonth(int int_OFlag);
+    void SummarizeTitle(int int_OFlag);
+    void SummarizeTail(int int_OFlag);
+    void SummarizeCAF(int int_OFlag);
 
     void UpdateCurrentSum(const int int_CurrentSum);
     void UpdateCAF(const int int_CAFSum);

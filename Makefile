@@ -8,7 +8,7 @@ lfa = ./FA_Layer/
 las = ./AS_Layer/
 
 
-obj_X = $(px)RegExLib.o $(px)X_Tool.o $(px)X_CmdTarget.o
+obj_X = $(px)RegExLib.o $(px)X_Tool.o
 obj_XML = $(lxml)pugixml.o $(lxml)XML_Ripper.o $(lxml)Script_Ripper.o
 obj_CMD = $(lcmd)DefCMD.o $(lcmd)CMD_Packet.o $(lcmd)CMD_Handler.o
 obj_OP = $(lop)FileOPer.o
@@ -28,9 +28,6 @@ RegExLib.o: $(px)RegExLib.h $(px)RegExLib.cpp
 
 X_Tool.o: $(px)X_Tool.h $(px)X_Tool.cpp
 	g++ -c $(px)X_Tool.cpp
-
-X_CmdTarget.o: $(px)X_CmdTarget.h $(px)X_CmdTarget.cpp
-	g++ -c $(px)X_CmdTarget.cpp
 
 pugixml.o: $(lxml)pugixml.cpp
 	g++ -c $(lxml)pugixml.cpp

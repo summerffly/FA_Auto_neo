@@ -9,6 +9,9 @@
 using namespace std;
 
 
+struct timeval CTool::m_tvl_begin;
+struct timeval CTool::m_tvl_end;
+
 CTool::CTool()
 {
     // Do Nothing
@@ -352,6 +355,26 @@ string CTool::TimeOut()
     delete []cha_TimeStampSec;
     
     return str_TimeOut;
+}
+
+void CTool::TagTimeBait()
+{
+    gettimeofday(&m_tvl_begin, NULL);
+}
+
+double CTool::ShowTimeGap()
+{
+    gettimeofday(&m_tvl_end, NULL);
+
+    long tgap_us;
+    double tgap_ms;
+
+    tgap_us = (m_tvl_end.tv_sec - m_tvl_begin.tv_sec) * 1000000 + m_tvl_end.tv_usec - m_tvl_begin.tv_usec;
+    tgap_ms = (double)tgap_us/1000;
+
+    cout << "CMD_TIME_GAP: " << tgap_ms << " ms" << endl;
+
+    return tgap_ms;
 }
 
 //------------------------------//

@@ -30,9 +30,13 @@
 #define  X_CMD_TYPE_CHECK_TITLE    ("CheckTitle")
 #define  X_CMD_TYPE_UPDATE_TITLE   ("UpdateTitle")
 
+#define  X_CMD_TYPE_TRANSFER    ("Transfer")
+#define  X_CMD_TYPE_LOTTERY     ("Lottery")
+
 #define  X_CMD_TYPE_ANALYSIS_TREND         ("AnalysisTrend")
 #define  X_CMD_TYPE_ANALYSIS_PROPORTION    ("AnalysisProportion")
 
+#define  X_CMD_TYPE_SUMMARIZE    ("Summerize")
 #define  X_CMD_TYPE_FORECAST    ("Forecast")
 
 #define  X_CMD_TYPE_PRINT_MONTH       ("PrintMonth")

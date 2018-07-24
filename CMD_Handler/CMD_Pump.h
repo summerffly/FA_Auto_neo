@@ -50,9 +50,9 @@ private:   \
         {CmdType, CmdHelpTip, memberFxn},   \
 
 /****************************************/
-//   定义CMD_LOOP()宏
+//   定义CMD_NOTIFY()宏
 /****************************************/
-#define  CMD_LOOP(thisClass)   \
+#define  CMD_NOTIFY(thisClass)   \
     int thisClass::CmdNotify(CMD_Packet srt_CMD)   \
     {   \
         for(int i=0; ;i++)   \

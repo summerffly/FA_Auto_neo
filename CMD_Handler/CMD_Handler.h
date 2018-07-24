@@ -28,6 +28,10 @@ public:
     X_DECLARE_CMD_MAP()
 
 public:
+	static void CMD_Loop();
+	static void CMD_Init();
+
+public:
 	static void OnCmdCheckFA(CMD_Packet srt_CMD);
 	static void OnCmdUpdateFA(CMD_Packet srt_CMD);
 	static void OnCmdShowFA(CMD_Packet srt_CMD);
@@ -48,9 +52,13 @@ public:
 	static void OnCmdCheckTitle(CMD_Packet srt_CMD);
 	static void OnCmdUpdateTitle(CMD_Packet srt_CMD);
 
+	static void OnCmdTransfer(CMD_Packet srt_CMD);
+	static void OnCmdLottery(CMD_Packet srt_CMD);
+
 	static void OnCmdAnalysisTrend(CMD_Packet srt_CMD);
 	static void OnCmdAnalysisProportion(CMD_Packet srt_CMD);
 
+	static void OnCmdSummarize(CMD_Packet srt_CMD);
 	static void OnCmdForecast(CMD_Packet srt_CMD);
 
 	static void OnCmdPrintMonth(CMD_Packet srt_CMD);

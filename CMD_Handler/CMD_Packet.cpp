@@ -158,10 +158,10 @@ int CMD_Packet::CMDFilter()
             {
                 return -12;   // ERROR: Param为空
             }
-            else if((*itr_Cmd).compare(0, 1, "-") == 0)
-            {
-                return -13;   // ERROR: Param为空
-            }
+            //else if((*itr_Cmd).compare(0, 1, "-") == 0)
+            //{
+                //return -13;   // ERROR: Param为空
+            //}
 
             itr_Cmd++;
             if(itr_Cmd == m_vec_Cmd.end())
@@ -286,12 +286,18 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_SHOW_FA;
         else if(str_CmdPro_A == MODIFY_LIFE)
             m_str_CmdType = X_CMD_TYPE_MODIFY_LIFE;
+        else if(str_CmdPro_A == TRANSFER)
+            m_str_CmdType = X_CMD_TYPE_TRANSFER;
+        else if(str_CmdPro_A == LOTTERY)
+            m_str_CmdType = X_CMD_TYPE_LOTTERY;
+        else if(str_CmdPro_A == SUMMARIZE)
+            m_str_CmdType = X_CMD_TYPE_SUMMARIZE;
+        else if(str_CmdPro_A == FORECAST)
+            m_str_CmdType = X_CMD_TYPE_FORECAST;
         else if(str_CmdPro_A == SYNC)
             m_str_CmdType = X_CMD_TYPE_SYNC;
         else if(str_CmdPro_A == WRITE)
             m_str_CmdType = X_CMD_TYPE_WRITE;
-        else if(str_CmdPro_A == FORECAST)
-            m_str_CmdType = X_CMD_TYPE_FORECAST;
         else if(str_CmdPro_A == BACKUP)
             m_str_CmdType = X_CMD_TYPE_BACKUP;
         else if(str_CmdPro_A == CANCEL)

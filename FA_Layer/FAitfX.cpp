@@ -49,7 +49,7 @@ CFAitfX::~CFAitfX()
 }
 
 /**************************************************/
-//   Summerize区OFlag输出规范
+//   Summarize区OFlag输出规范
 //   0 >>> 空输出
 //   1 >>> 嵌入输出
 //   2 >>> 完整输出
@@ -95,7 +95,7 @@ void CFAitfX::LoadSum(int int_OFlag)
 /**************************************************/
 //   汇总 Month累计收支
 /**************************************************/
-void CFAitfX::SummerizeMonth(int int_OFlag)
+void CFAitfX::SummarizeMonth(int int_OFlag)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
@@ -148,7 +148,7 @@ void CFAitfX::SummerizeMonth(int int_OFlag)
 /**************************************************/
 //   汇总 Title累计收支
 /**************************************************/
-void CFAitfX::SummerizeTitle(int int_OFlag)
+void CFAitfX::SummarizeTitle(int int_OFlag)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
@@ -197,7 +197,7 @@ void CFAitfX::SummerizeTitle(int int_OFlag)
 /**************************************************/
 //   汇总 Tail累计收支
 /**************************************************/
-void CFAitfX::SummerizeTail(int int_OFlag)
+void CFAitfX::SummarizeTail(int int_OFlag)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
@@ -246,7 +246,7 @@ void CFAitfX::SummerizeTail(int int_OFlag)
 /**************************************************/
 //   汇总 CAF累计收支
 /**************************************************/
-void CFAitfX::SummerizeCAF(int int_OFlag)
+void CFAitfX::SummarizeCAF(int int_OFlag)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 

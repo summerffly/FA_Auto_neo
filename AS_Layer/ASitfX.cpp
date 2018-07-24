@@ -111,7 +111,7 @@ void CASitfX::ShowFA()
     ptr_FAitfX->ShowSubMonth(ptr_ScriptRipper->GetCurrentMonth(), 2);
     ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), 2);
     ptr_FAitfX->LoadSum(1);
-    ptr_FAitfX->SummerizeCAF(1);
+    ptr_FAitfX->SummarizeCAF(1);
 
     cout << "----------------------------------------" << endl;
 }
@@ -124,10 +124,10 @@ int CASitfX::CheckSum(int int_OFlag)
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
     ptr_FAitfX->LoadSum(0);
-    ptr_FAitfX->SummerizeMonth(0);
-    ptr_FAitfX->SummerizeTitle(0);
-    ptr_FAitfX->SummerizeTail(0);
-    ptr_FAitfX->SummerizeCAF(0);
+    ptr_FAitfX->SummarizeMonth(0);
+    ptr_FAitfX->SummarizeTitle(0);
+    ptr_FAitfX->SummarizeTail(0);
+    ptr_FAitfX->SummarizeCAF(0);
 
     int int_OriginSum = ptr_FAitfX->m_int_OriginSum;
     int int_CurrentSum = ptr_FAitfX->m_int_CurrentSum;
@@ -178,10 +178,10 @@ void CASitfX::UpdateSum(int int_OFlag)
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
     ptr_FAitfX->LoadSum(0);
-    ptr_FAitfX->SummerizeMonth(0);
-    ptr_FAitfX->SummerizeTitle(0);
-    ptr_FAitfX->SummerizeTail(0);
-    ptr_FAitfX->SummerizeCAF(0);
+    ptr_FAitfX->SummarizeMonth(0);
+    ptr_FAitfX->SummarizeTitle(0);
+    ptr_FAitfX->SummarizeTail(0);
+    ptr_FAitfX->SummarizeCAF(0);
 
     int int_OriginSum = ptr_FAitfX->m_int_OriginSum;
     int int_CurrentSum = ptr_FAitfX->m_int_CurrentSum;
@@ -221,12 +221,12 @@ void CASitfX::ShowSum()
 {
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
-    ptr_FAitfX->SummerizeTitle(1);
-    ptr_FAitfX->SummerizeTail(1);
-    ptr_FAitfX->SummerizeMonth(1);
+    ptr_FAitfX->SummarizeTitle(1);
+    ptr_FAitfX->SummarizeTail(1);
+    ptr_FAitfX->SummarizeMonth(1);
 
     ptr_FAitfX->LoadSum(1);
-    ptr_FAitfX->SummerizeCAF(1);
+    ptr_FAitfX->SummarizeCAF(1);
 
     cout << "----------------------------------------" << endl;
 }
