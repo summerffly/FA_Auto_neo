@@ -37,6 +37,7 @@ public:
     string m_str_ParamDate;       // -d
     string m_str_ParamSubMonth;   // -sm
     string m_str_ParamTitle;      // -tt
+    int m_int_ParamLine;          // -l
 
     int m_int_ResParam;      // -ip
     string m_str_ResParam;   // -sp

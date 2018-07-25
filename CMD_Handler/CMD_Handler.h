@@ -31,7 +31,8 @@ public:
 	static void CMD_Loop();
 	static void CMD_Init();
 
-	static void CMD_PrintRecoder(CMD_Packet srt_CMD);
+	static void CMD_PrintRecode(CMD_Packet srt_CMD);
+	static void CMD_PrintRecovery();
 
 	static void CMD_Help();
 
@@ -70,6 +71,12 @@ public:
 	static void OnCmdPrintSubMonth(CMD_Packet srt_CMD);
 	static void OnCmdPrintTitle(CMD_Packet srt_CMD);
 
+	static void OnCmdInsertBlankLine(CMD_Packet srt_CMD);
+	static void OnCmdInsertLine(CMD_Packet srt_CMD);
+	static void OnCmdModifyLine(CMD_Packet srt_CMD);
+	static void OnCmdDeleteLine(CMD_Packet srt_CMD);
+	static void OnCmdMoveLine(CMD_Packet srt_CMD);
+
 	static void OnCmdAppendMonth(CMD_Packet srt_CMD);
 
 	static void OnCmdSync(CMD_Packet srt_CMD);
@@ -90,6 +97,7 @@ private:
 private:
 	static string ms_str_FM_Type;
 	static string ms_str_FM_Key;
+	static string ms_str_FM_Month;
 	static bool ms_bol_PR_Valid;
 };
 

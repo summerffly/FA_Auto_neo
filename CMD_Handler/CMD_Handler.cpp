@@ -17,7 +17,9 @@ CASitfX* CCMDHandler::ms_ptr_ASitfX = Singleton<CASitfX>::GetInstance();
 
 string CCMDHandler::ms_str_FM_Type = "";
 string CCMDHandler::ms_str_FM_Key = "";
+string CCMDHandler::ms_str_FM_Month = "";
 bool CCMDHandler::ms_bol_PR_Valid = false;
+
 
 /**************************************************/
 //   CMD_MAP()宏
@@ -69,9 +71,19 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_MONTH, CMD_HELP_PRINT_MONTH, "", OnCmdPrintMonth)
 
-    X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_SUBMONTH, CMD_HELP_PRINT_SUBMONTH, "", OnCmdPrintSubMonth)
+    X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_SUBMONTH, CMD_HELP_PRINT_SUBMONTH, CMD_HELP_PATCH_PRINT_SUBMONTH, OnCmdPrintSubMonth)
 
-    X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_TITLE, CMD_HELP_PRINT_TITLE, "", OnCmdPrintTitle)
+    X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_TITLE, CMD_HELP_PRINT_TITLE, CMD_HELP_PATCH_PRINT_TITLE, OnCmdPrintTitle)
+
+    X_ON_CMD_TYPE(X_CMD_TYPE_INSERT_BLANK_LINE, "", "", OnCmdInsertBlankLine)
+
+    X_ON_CMD_TYPE(X_CMD_TYPE_INSERT_LINE, CMD_HELP_INSERT_LINE, "", OnCmdInsertLine)
+
+    X_ON_CMD_TYPE(X_CMD_TYPE_MODIFY_LINE, CMD_HELP_MODIFY_LINE, "", OnCmdModifyLine)
+
+    X_ON_CMD_TYPE(X_CMD_TYPE_DELETE_LINE, CMD_HELP_DELETE_LINE, "", OnCmdDeleteLine)
+
+    X_ON_CMD_TYPE(X_CMD_TYPE_MOVE_LINE, CMD_HELP_MOVE_LINE, "", OnCmdMoveLine)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_APPEND_MONTH, CMD_HELP_APPEND_MONTH, "", OnCmdAppendMonth)
 
@@ -160,7 +172,7 @@ void CCMDHandler::CMD_Loop()
 
         CTool::TagTimeBait();
 
-        CMD_PrintRecoder(xCmdPacket);
+        CMD_PrintRecode(xCmdPacket);
         int int_RetNotify = CmdNotify(xCmdPacket);
 
         if(0 == int_RetNotify)
@@ -209,30 +221,34 @@ void CCMDHandler::CMD_Init()
     cout << "****************************************" << endl;
 }
 
-void CCMDHandler::CMD_PrintRecoder(CMD_Packet srt_CMD)
+void CCMDHandler::CMD_PrintRecode(CMD_Packet srt_CMD)
 {
     if(X_CMD_TYPE_PRINT_SUM == srt_CMD.m_str_CmdType)
     {
         ms_str_FM_Type = "SUM";
         ms_str_FM_Key = "";
+        ms_str_FM_Month = srt_CMD.m_str_ParamMonth;
         ms_bol_PR_Valid = true;
     }
     else if(X_CMD_TYPE_PRINT_MONTH == srt_CMD.m_str_CmdType)
     {
         ms_str_FM_Type = "MONTH";
         ms_str_FM_Key = "";
+        ms_str_FM_Month = srt_CMD.m_str_ParamMonth;
         ms_bol_PR_Valid = true;
     }
     else if(X_CMD_TYPE_PRINT_SUBMONTH == srt_CMD.m_str_CmdType)
     {
         ms_str_FM_Type = "SM";
         ms_str_FM_Key = srt_CMD.m_str_ParamSubMonth;
+        ms_str_FM_Month = srt_CMD.m_str_ParamMonth;
         ms_bol_PR_Valid = true;
     }
     else if(X_CMD_TYPE_PRINT_TITLE == srt_CMD.m_str_CmdType)
     {
         ms_str_FM_Type = "TT";
         ms_str_FM_Key = srt_CMD.m_str_ParamTitle;
+        ms_str_FM_Month = srt_CMD.m_str_ParamMonth;
         ms_bol_PR_Valid = true;
     }
     else if(X_CMD_TYPE_INSERT_BLANK_LINE == srt_CMD.m_str_CmdType)
@@ -263,6 +279,11 @@ void CCMDHandler::CMD_PrintRecoder(CMD_Packet srt_CMD)
     {
         ms_bol_PR_Valid = false;
     }
+}
+
+void CCMDHandler::CMD_PrintRecovery()
+{
+    //
 }
 
 void CCMDHandler::CMD_Help()
@@ -610,6 +631,60 @@ void CCMDHandler::OnCmdPrintTitle(CMD_Packet srt_CMD)
     {
         CTool::MassageOutFotmat("Error TT Param", '!');
     }
+}
+
+void CCMDHandler::OnCmdInsertBlankLine(CMD_Packet srt_CMD)
+{
+    if(ms_bol_PR_Valid)
+    {
+        ms_ptr_FAitfX->InsertLine(ms_str_FM_Type, ms_str_FM_Key, srt_CMD.m_int_ParamLine,\
+                                    srt_CMD.m_int_ResParam, srt_CMD.m_str_ResParam);
+    }
+    else
+        CTool::MassageOutFotmat("Print File Missing", '!');
+}
+
+void CCMDHandler::OnCmdInsertLine(CMD_Packet srt_CMD)
+{
+    if(ms_bol_PR_Valid)
+    {
+        ms_ptr_FAitfX->InsertLine(ms_str_FM_Type, ms_str_FM_Key, srt_CMD.m_int_ParamLine,\
+                                    srt_CMD.m_int_ResParam, srt_CMD.m_str_ResParam);
+    }
+    else
+        CTool::MassageOutFotmat("Print File Missing", '!');
+}
+
+void CCMDHandler::OnCmdModifyLine(CMD_Packet srt_CMD)
+{
+    if(ms_bol_PR_Valid)
+    {
+        ms_ptr_FAitfX->ModifyLine(ms_str_FM_Type, ms_str_FM_Key, srt_CMD.m_int_ParamLine,\
+                                    srt_CMD.m_int_ResParam, srt_CMD.m_str_ResParam);
+    }
+    else
+        CTool::MassageOutFotmat("Print File Missing", '!');
+}
+
+void CCMDHandler::OnCmdDeleteLine(CMD_Packet srt_CMD)
+{
+    if(ms_bol_PR_Valid)
+    {
+        ms_ptr_FAitfX->DeleteLine(ms_str_FM_Type, ms_str_FM_Key, srt_CMD.m_int_ParamLine);
+    }
+    else
+        CTool::MassageOutFotmat("Print File Missing", '!');
+}
+
+void CCMDHandler::OnCmdMoveLine(CMD_Packet srt_CMD)
+{
+    if(ms_bol_PR_Valid)
+    {
+        ms_ptr_FAitfX->MoveLine(ms_str_FM_Type, ms_str_FM_Key, srt_CMD.m_int_ParamLine,\
+                                srt_CMD.m_int_ResParam);
+    }
+    else
+        CTool::MassageOutFotmat("Print File Missing", '!');
 }
 
 void CCMDHandler::OnCmdAppendMonth(CMD_Packet srt_CMD)

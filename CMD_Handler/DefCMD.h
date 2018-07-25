@@ -70,16 +70,19 @@ extern string TAIL;
 
 extern string PRINT;
 extern string INSERT;
+extern string MODIFY;
+extern string DELETE;
+extern string MOVE;
 
 /**************************************************/
 //   文件命令
 /**************************************************/
 
+extern string APPEND;
+
 extern string SYNC;
 extern string WRITE;
 extern string BACKUP;
-
-extern string APPEND;
 
 extern string HELP;
 extern string TEST;

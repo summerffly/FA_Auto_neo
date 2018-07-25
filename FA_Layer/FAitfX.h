@@ -51,7 +51,6 @@ public:
     /****************************************/
     //   Month 计算区
     /****************************************/
-    //void InsertMonth(const unsigned int uni_VecIndex, const int int_LineValue, const string str_LineContent);
     int CheckMonthExpense(const string str_SelMonth, bool bol_OFlag);
     int CheckMonthSurplus(const string str_SelMonth, bool bol_OFlag);
     void UpdateMonthSurplus(const string str_SelMonth, bool bol_OFlag);
@@ -72,10 +71,6 @@ public:
     /****************************************/
     int CheckTitleExpense(const string str_TitleKey, bool bol_OFlag);
     void UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag);
-    void InsertTitle(const string str_TitleKey, const unsigned int uni_VecIndex,\
-                     const int int_LineValue, const string str_LineContent);
-    void AppendTitleExpense(const string str_TitleKey,\
-                            const int int_LineValue, const string str_LineContent);
     void AppendLottery(const bool bol_LineFlag, const unsigned int int_LineValueABS,\
                        const string str_LineDate);
 
@@ -116,6 +111,17 @@ public:
     void PrintSubMonth(const string str_SubMonthKey, const string str_SelMonth, bool bol_NumFlag, bool bol_ShowFlag);
     void PrintTitle(const string str_TitleKey, bool bol_NumFlag);
 
+    void InsertBlankLine(const string str_Type, const string str_Key,\
+                         const unsigned int uni_LineIndex);
+    void InsertLine(const string str_Type, const string str_Key,\
+                    const unsigned int uni_LineIndex, const int int_LineValue, const string str_LineContent);
+    void ModifyLine(const string str_Type, const string str_Key,\
+                    const unsigned int uni_LineIndex, const int int_LineValue, const string str_LineContent);
+    void DeleteLine(const string str_Type, const string str_Key,\
+                    const unsigned int uni_LineIndex);
+    void MoveLine(const string str_Type, const string str_Key,\
+                  const unsigned int uni_LineIndex, const unsigned int uni_LineIndexNew);
+
     /****************************************/
     //   文件读写区
     /****************************************/
@@ -126,6 +132,7 @@ public:
     /****************************************/
     //   Ptr
     /****************************************/
+    CFileManager *GetPtrFM(const string str_Type, const string str_Key);
     CFileManager *GetPtrSubMonthFM(const string str_SubMonthKey);
     CFileManager *GetPtrTitleFM(const string str_TitleKey);
 
@@ -159,6 +166,7 @@ private:
     CFileManager *m_ptr_FM_tt_NS;
     CFileManager *m_ptr_FM_tt_travel;
     CFileManager *m_ptr_FM_tt_lottery;
+    CFileManager *m_ptr_FM_NULL;
 };
 
 //------------------------------//

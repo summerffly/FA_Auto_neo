@@ -67,16 +67,19 @@ string TAIL = "tail";
 
 string PRINT = "print";
 string INSERT = "insert";
+string MODIFY = "modify";
+string DELETE = "delete";
+string MOVE = "move";
 
 /**************************************************/
 //   文件命令
 /**************************************************/
 
+string APPEND = "append";
+
 string SYNC = "sync";
 string WRITE = "write";
 string BACKUP = "bakup";
-
-string APPEND = "append";
 
 string HELP = "help";
 string TEST = "test";

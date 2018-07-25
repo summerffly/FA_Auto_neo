@@ -17,7 +17,7 @@ string  CMD_HELP_CHECK_SUM  = CHECK + " " + SUM;
 string  CMD_HELP_UPDATE_SUM = UPDATE + " " + SUM;
 string  CMD_HELP_SHOW_SUM   = SHOW + " " + SUM;
 
-string  CMD_HELP_MODIFY_LIFE = MODIFY_LIFE + " -f FV -sp SRC";
+string  CMD_HELP_MODIFY_LIFE = MODIFY_LIFE + " -f VALUE -sp SRC";
 string  CMD_HELP_PATCH_MODIFY_LIFE = "SRC = " + WEIXIN;
 
 //string  HELP_CMD_TYPE_CHECK_MONTH    ("CheckMonth")
@@ -41,8 +41,16 @@ string  CMD_HELP_PATCH_ANALYSIS_TREND = "TO = " + EXPENSE + "/" + LIFE + "/" + R
 //string  HELP_CMD_TYPE_FORECAST     ("Forecast")
 
 string  CMD_HELP_PRINT_MONTH    = PRINT + " " + MONTH + " -m MONTH";
-string  CMD_HELP_PRINT_SUBMONTH = PRINT + " -sm keep -m MONTH";
-string  CMD_HELP_PRINT_TITLE    = PRINT + " -tt dk";
+string  CMD_HELP_PRINT_SUBMONTH = PRINT + " -sm SM -m MONTH";
+string  CMD_HELP_PATCH_PRINT_SUBMONTH = "SM = " + DGTLER + "/" + BOOKS + "/" + KEEP + "/" + TB + "/" + SA;
+string  CMD_HELP_PRINT_TITLE    = PRINT + " -tt TT";
+string  CMD_HELP_PATCH_PRINT_TITLE = "TT = " + DK + "/" + NS + "/" + TRAVEL + "/" + LOTTERY;
+
+//string  CMD_HELP_INSERT_BLANK_LINE    ("InsertBlankLine")
+string  CMD_HELP_INSERT_LINE = INSERT + " -l LINE -ip VALUE -sp CONTENT";
+string  CMD_HELP_MODIFY_LINE = MODIFY + " -l LINE -ip VALUE -sp CONTENT";
+string  CMD_HELP_DELETE_LINE = DELETE + " -l LINE";
+string  CMD_HELP_MOVE_LINE   = MOVE + " -l LINE -ip NEWLINE";
 
 string  CMD_HELP_APPEND_MONTH = APPEND + " " + MONTH + " -sp MONTH";
 

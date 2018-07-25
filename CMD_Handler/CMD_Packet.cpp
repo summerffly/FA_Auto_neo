@@ -31,6 +31,7 @@ CMD_Packet::CMD_Packet()
     m_str_ParamSubMonth = "";
     m_str_ParamTitle = "";
     m_str_ParamDate = "";
+    m_int_ParamLine = 0;
 
     m_int_ResParam = 0;
     m_str_ResParam = "";
@@ -153,25 +154,25 @@ int CMD_Packet::CMDFilter()
                 return -11;   // ERROR: 第一个CMD不能为Param
             }
 
-            itr_Cmd++;
-            if(itr_Cmd == m_vec_Cmd.end())
-            {
-                return -12;   // ERROR: Param为空
-            }
+            //itr_Cmd++;
+            //if(itr_Cmd == m_vec_Cmd.end())
+            //{
+                //return -12;   // ERROR: Param为空
+            //}
             //else if((*itr_Cmd).compare(0, 1, "-") == 0)
             //{
                 //return -13;   // ERROR: Param为空
             //}
 
-            itr_Cmd++;
-            if(itr_Cmd == m_vec_Cmd.end())
-            {
-                return 0;   // CORRECT
-            }
-            else if((*itr_Cmd).compare(0, 1, "-") != 0)
-            {
-                return -14;   // ERROR: Param重复
-            }
+            //itr_Cmd++;
+            //if(itr_Cmd == m_vec_Cmd.end())
+            //{
+                //return 0;   // CORRECT
+            //}
+            //else if((*itr_Cmd).compare(0, 1, "-") != 0)
+            //{
+                //return -14;   // ERROR: Param重复
+            //}
         }
     }
 
@@ -248,6 +249,16 @@ int CMD_Packet::CMDParser()
                 int_ParamType = 2;
             else
                 return -2;   // ERROR: Param冲突
+
+            continue;
+        }
+        else if((*itr_Cmd) == "-l")
+        {
+            itr_Cmd++;
+            m_int_ParamLine = atoi((*itr_Cmd).c_str());
+            m_int_CmdProNum -= 2;
+
+            int_ParamType = 3;
 
             continue;
         }
@@ -333,6 +344,14 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_PRINT_SUBMONTH;
         else if((str_CmdPro_A == PRINT) && (int_ParamType == 2))
             m_str_CmdType = X_CMD_TYPE_PRINT_TITLE;
+        else if((str_CmdPro_A == INSERT) && (int_ParamType == 3))
+            m_str_CmdType = X_CMD_TYPE_INSERT_LINE;
+        else if((str_CmdPro_A == MODIFY) && (int_ParamType == 3))
+            m_str_CmdType = X_CMD_TYPE_MODIFY_LINE;
+        else if((str_CmdPro_A == DELETE) && (int_ParamType == 3))
+            m_str_CmdType = X_CMD_TYPE_DELETE_LINE;
+        else if((str_CmdPro_A == MOVE) && (int_ParamType == 3))
+            m_str_CmdType = X_CMD_TYPE_MOVE_LINE;
         else
             return -4;   // ERROR: 未定义的CmdType
     }

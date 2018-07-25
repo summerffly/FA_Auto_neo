@@ -7,6 +7,7 @@
 #include "FAitfX.h"
 
 #include "./../X_Frame/DefLib.h"
+#include "./../CMD_Handler/DefCMD.h"
 
 using namespace std;
 
@@ -38,6 +39,7 @@ CFAitfX::CFAitfX()
     m_ptr_FM_tt_NS = new CFileManager("./NS.md");
     m_ptr_FM_tt_travel = new CFileManager("./travel.md");
     m_ptr_FM_tt_lottery = new CFileManager("./lottery.md");
+    m_ptr_FM_NULL = NULL;
 }
 
 /**************************************************/
@@ -335,16 +337,6 @@ void CFAitfX::UpdateCAF(const int int_CAFSum)
 
     m_ptr_FM_SUM->ModifyLineValue(uni_CAFLine, int_CAFSumRest);
 }
-
-/**************************************************/
-//   增加行 life.M
-/**************************************************/
-/*
-void CFAitfX::InsertMonth(const unsigned int uni_VecIndex, const int int_LineValue, const string str_LineContent)
-{
-    //m_ptr_FM_life->InsertLine(uni_VecIndex, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
-}
-*/
 
 /**************************************************/
 //   校验 life.M 月度支出
@@ -781,55 +773,6 @@ void CFAitfX::UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag)
         cout << "Tt_更新值: " << CTool::TransOutFormat(int_TitleExpenseUD) << endl;
         cout << "----------------------------------------" << endl;
     }
-}
-
-/**************************************************/
-//   添加行 Tt分项
-/**************************************************/
-void CFAitfX::InsertTitle(const string str_TitleKey, const unsigned int uni_VecIndex, const int int_LineValue, const string str_LineContent)
-{
-    GetPtrTitleFM(str_TitleKey)->InsertLine(uni_VecIndex, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
-}
-
-/**************************************************/
-//   添加行 Tt分项 月度支出
-/**************************************************/
-void CFAitfX::AppendTitleExpense(const string str_TitleKey,\
-                                 const int int_LineValue, const string str_LineContent)
-{
-    if(GetPtrTitleFM(str_TitleKey)->GetFullLine(1).compare("# Financial Allocation of SUMMARY") == 0)
-    {
-        CTool::MassageOutFotmat("Title KeyWord Error", '!');
-        return;
-    }
-
-    string str_RangeTop = "## " + str_TitleKey;
-    string str_RangeBottom("## Total");
-
-    m_ptr_FM_SUM->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_AFLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
-
-    unsigned int uni_RangeTop = 2;
-    GetPtrTitleFM(str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrTitleFM(str_TitleKey)->GetSearchLineIndex(1);
-
-    int int_TitleExpense = GetPtrTitleFM(str_TitleKey)->GetLineValue(uni_RangeBottom+2);
-
-    GetPtrTitleFM(str_TitleKey)->InsertLine(uni_RangeBottom-1, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
-
-    // tips 番茄@20171212 - 注意计算总支出的时候要增加一行
-    int int_TitleExpenseAP = GetPtrTitleFM(str_TitleKey)->CountRangeType(uni_RangeTop, uni_RangeBottom,\
-                                      LTYPE_FBIRC_LINEUINT);
-
-    // tips 番茄@20171212 - 注意计算总支出的时候要增加一行
-    GetPtrTitleFM(str_TitleKey)->ModifyLineValue(uni_RangeBottom+3, int_TitleExpenseAP);
-    m_ptr_FM_SUM->ModifyLineValue(uni_AFLine+1, int_TitleExpenseAP);
-
-    cout << "----------------------------------------" << endl;
-    cout << "### " << str_TitleKey << "/支出 ###" << endl;
-    cout << "Tt_初始值: " << CTool::TransOutFormat(int_TitleExpense) << endl;
-    cout << "Tt_更新值: " << CTool::TransOutFormat(int_TitleExpenseAP) << endl;
-    cout << "----------------------------------------" << endl;
 }
 
 void CFAitfX::AppendLottery(const bool bol_LineFlag, const unsigned int uni_LineValueABS,\
@@ -1631,6 +1574,62 @@ void CFAitfX::PrintTitle(const string str_TitleKey, bool bol_NumFlag)
     }
 }
 
+/**************************************************/
+//   添加空白行
+/**************************************************/
+void CFAitfX::InsertBlankLine(const string str_Type, const string str_Key,\
+                              const unsigned int uni_LineIndex)
+{
+    GetPtrFM(str_Type, str_Key)->InsertBlankLine(uni_LineIndex);
+}
+
+/**************************************************/
+//   添加行
+/**************************************************/
+void CFAitfX::InsertLine(const string str_Type, const string str_Key,\
+                         const unsigned int uni_LineIndex, const int int_LineValue, const string str_LineContent)
+{
+    GetPtrFM(str_Type, str_Key)->InsertLine(uni_LineIndex, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
+}
+
+/**************************************************/
+//   修改行
+/**************************************************/
+void CFAitfX::ModifyLine(const string str_Type, const string str_Key,\
+                         const unsigned int uni_LineIndex, const int int_LineValue, const string str_LineContent)
+{
+    GetPtrFM(str_Type, str_Key)->ModifyLineValue(uni_LineIndex, int_LineValue);
+    GetPtrFM(str_Type, str_Key)->ModifyLineContent(uni_LineIndex, str_LineContent.c_str());
+}
+
+/**************************************************/
+//   删除行
+/**************************************************/
+void CFAitfX::DeleteLine(const string str_Type, const string str_Key,\
+                         const unsigned int uni_LineIndex)
+{
+    GetPtrFM(str_Type, str_Key)->DeleteLine(uni_LineIndex);
+}
+
+/**************************************************/
+//   移动行
+/**************************************************/
+void CFAitfX::MoveLine(const string str_Type, const string str_Key,\
+                       const unsigned int uni_LineIndex, const unsigned int uni_LineIndexNew)
+{
+    int int_LineValue = GetPtrFM(str_Type, str_Key)->GetLineValue(uni_LineIndex);
+    string str_LineContent = GetPtrFM(str_Type, str_Key)->GetLineContent(uni_LineIndex);
+
+    GetPtrFM(str_Type, str_Key)->DeleteLine(uni_LineIndex);
+
+    if(uni_LineIndex < uni_LineIndexNew)
+        GetPtrFM(str_Type, str_Key)->InsertLine(uni_LineIndexNew-1, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
+    else if(uni_LineIndex > uni_LineIndexNew)
+        GetPtrFM(str_Type, str_Key)->InsertLine(uni_LineIndexNew, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
+    else
+        return;
+}
+
 void CFAitfX::SyncAllFile()
 {
     m_ptr_FM_SUM->SyncFile();
@@ -1688,6 +1687,37 @@ void CFAitfX::BackUpAllFile(const string str_BackUpPath)
     m_ptr_FM_tt_lottery->BackUpFile(str_BackUpPath);
 }
 
+CFileManager *CFAitfX::GetPtrFM(const string str_Type, const string str_Key)
+{
+    if(str_Type == "SUM")
+        return m_ptr_FM_SUM;
+    else if(str_Type == "MONTH")
+        return m_ptr_FM_life;
+    else if( (str_Type == "SM") && (str_Key == DGTLER) )
+        return m_ptr_FM_sm_DGtler;
+    else if( (str_Type == "SM") && (str_Key == BOOKS) )
+        return m_ptr_FM_sm_Books;
+    else if( (str_Type == "SM") && (str_Key == KEEP) )
+        return m_ptr_FM_sm_KEEP;
+    else if( (str_Type == "SM") && (str_Key == TB) )
+        return m_ptr_FM_sm_TB;
+    else if( (str_Type == "SM") && (str_Key == SA) )
+        return m_ptr_FM_sm_sa;
+    else if( (str_Type == "TT") && (str_Key == DK) )
+        return m_ptr_FM_tt_DK;
+    else if( (str_Type == "TT") && (str_Key == NS) )
+        return m_ptr_FM_tt_NS;
+    else if( (str_Type == "TT") && (str_Key == TRAVEL) )
+        return m_ptr_FM_tt_travel;
+    else if( (str_Type == "TT") && (str_Key == LOTTERY) )
+        return m_ptr_FM_tt_lottery;
+    else
+    {
+        CTool::MassageOutFotmat("Key Error", '!');
+        return m_ptr_FM_NULL;
+    } 
+}
+
 CFileManager *CFAitfX::GetPtrSubMonthFM(const string str_SubMonthKey)
 {
     if(str_SubMonthKey == "DGtler")
@@ -1701,8 +1731,10 @@ CFileManager *CFAitfX::GetPtrSubMonthFM(const string str_SubMonthKey)
     else if(str_SubMonthKey == "sa")
         return m_ptr_FM_sm_sa;
     else
+    {
         CTool::MassageOutFotmat("SubMonthKey Error", '!');
-        return m_ptr_FM_SUM;
+        return m_ptr_FM_NULL;
+    } 
 }
 
 CFileManager *CFAitfX::GetPtrTitleFM(const string str_TitleKey)
@@ -1716,8 +1748,10 @@ CFileManager *CFAitfX::GetPtrTitleFM(const string str_TitleKey)
     else if(str_TitleKey == "lottery")
         return m_ptr_FM_tt_lottery;
     else
+    {
         CTool::MassageOutFotmat("TitleKey Error", '!');
-        return m_ptr_FM_SUM;
+        return m_ptr_FM_NULL;
+    }
 }
 
 
