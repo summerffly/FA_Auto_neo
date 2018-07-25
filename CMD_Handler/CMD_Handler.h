@@ -31,7 +31,9 @@ public:
 	static void CMD_Loop();
 	static void CMD_Init();
 
-	static void CMD_Help(CMD_Packet srt_CMD);
+	static void CMD_PrintRecoder(CMD_Packet srt_CMD);
+
+	static void CMD_Help();
 
 public:
 	static void OnCmdCheckFA(CMD_Packet srt_CMD);
@@ -63,6 +65,7 @@ public:
 	static void OnCmdSummarize(CMD_Packet srt_CMD);
 	static void OnCmdForecast(CMD_Packet srt_CMD);
 
+	static void OnCmdPrintSum(CMD_Packet srt_CMD);
 	static void OnCmdPrintMonth(CMD_Packet srt_CMD);
 	static void OnCmdPrintSubMonth(CMD_Packet srt_CMD);
 	static void OnCmdPrintTitle(CMD_Packet srt_CMD);
@@ -73,15 +76,21 @@ public:
 	static void OnCmdWrite(CMD_Packet srt_CMD);
 	static void OnCmdBackup(CMD_Packet srt_CMD);
 
+	static void OnCmdHelp(CMD_Packet srt_CMD);
 	static void OnCmdTest(CMD_Packet srt_CMD);
 
 	static void OnCmdCancel(CMD_Packet srt_CMD);
 	static void OnCmdExit(CMD_Packet srt_CMD);
 
 private:
-	static CScriptRipper *m_ptr_ScriptRipper;
-    static CFAitfX *m_ptr_FAitfX;
-    static CASitfX *m_ptr_ASitfX;
+	static CScriptRipper *ms_ptr_ScriptRipper;
+    static CFAitfX *ms_ptr_FAitfX;
+    static CASitfX *ms_ptr_ASitfX;
+
+private:
+	static string ms_str_FM_Type;
+	static string ms_str_FM_Key;
+	static bool ms_bol_PR_Valid;
 };
 
 //------------------------------//

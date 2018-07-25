@@ -25,7 +25,6 @@ extern string TRANSFER;
 
 extern string ALL;
 extern string SUM;
-extern string EXPENSE;
 extern string SURPLUS;
 
 extern string MONTH;
@@ -58,8 +57,11 @@ extern string FORECAST;
 extern string TREND;
 extern string PROPORTION;
 extern string AGGREGATION;
-extern string CONSUMPTION;
+
+extern string EXPENSE;
+extern string LIFE;
 extern string ROOM;
+extern string CONSUMPTION;
 extern string TAIL;
 
 /**************************************************/

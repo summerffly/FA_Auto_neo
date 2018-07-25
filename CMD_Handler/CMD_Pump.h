@@ -22,8 +22,8 @@ typedef void (*PTRFUNC)(CMD_Packet srt_CMD);
 struct X_CMD_TYPE_ENTRY
 {
     string str_CmdType;
-    string str_CmdHelpExample;
-    string str_CmdHelpTip;
+    string str_CmdHelp;
+    string str_CmdHelpPatch;
     PTRFUNC pfn_CmdCBFunc;
 };
 
@@ -47,8 +47,8 @@ private:   \
 /****************************************/
 //   定义ON_CMD_TYPE()宏
 /****************************************/
-#define  X_ON_CMD_TYPE(CmdType, CmdHelpExample, CmdHelpTip, memberFxn)   \
-        {CmdType, CmdHelpExample, CmdHelpTip, memberFxn},   \
+#define  X_ON_CMD_TYPE(CmdType, CmdHelp, CmdHelpPatch, memberFxn)   \
+        {CmdType, CmdHelp, CmdHelpPatch, memberFxn},   \
 
 /****************************************/
 //   定义CMD_NOTIFY()宏

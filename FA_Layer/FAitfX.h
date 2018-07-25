@@ -103,14 +103,18 @@ public:
     /****************************************/
     //   展示区
     /****************************************/
-    void PrintMonth(const string str_SelMonth, bool bol_NumFlag);
-    void PrintSubMonth(const string str_SubMonthKey, const string str_SelMonth, bool bol_NumFlag, bool bol_ShowFlag);
-    void PrintTitle(const string str_TitleKey, bool bol_NumFlag);
-
     void ShowMonthSurplus(const string str_SelMonth, int int_OFlag);
     void ShowLife(const string str_SelMonth, int int_OFlag);
     void ShowRoom(const string str_SelMonth, int int_OFlag);
     void ShowSubMonth(const string str_SelMonth, int int_OFlag);
+
+    /****************************************/
+    //   操作区
+    /****************************************/
+    void PrintSum(bool bol_NumFlag);
+    void PrintMonth(const string str_SelMonth, bool bol_NumFlag);
+    void PrintSubMonth(const string str_SubMonthKey, const string str_SelMonth, bool bol_NumFlag, bool bol_ShowFlag);
+    void PrintTitle(const string str_TitleKey, bool bol_NumFlag);
 
     /****************************************/
     //   文件读写区

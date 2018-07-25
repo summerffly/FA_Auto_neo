@@ -22,7 +22,6 @@ string TRANSFER = "tf";
 
 string ALL = "all";
 string SUM = "sum";
-string EXPENSE = "exp";
 string SURPLUS = "surplus";
 
 string MONTH = "month";
@@ -55,8 +54,11 @@ string FORECAST = "ff";
 string TREND = "tt";
 string PROPORTION = "pp";
 string AGGREGATION = "aggr";
-string CONSUMPTION = "csm";
+
+string EXPENSE = "exp";
+string LIFE = "life";
 string ROOM = "room";
+string CONSUMPTION = "csm";
 string TAIL = "tail";
 
 /**************************************************/

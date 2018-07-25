@@ -354,6 +354,8 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_ANALYSIS_TREND;
         else if((str_CmdPro_A == ANALYSIS) && (str_CmdPro_B == PROPORTION))
             m_str_CmdType = X_CMD_TYPE_ANALYSIS_PROPORTION;
+        else if((str_CmdPro_A == PRINT) && (str_CmdPro_B == SUM))
+            m_str_CmdType = X_CMD_TYPE_PRINT_SUM;
         else if((str_CmdPro_A == PRINT) && (str_CmdPro_B == MONTH))
             m_str_CmdType = X_CMD_TYPE_PRINT_MONTH;
         else if((str_CmdPro_A == APPEND) && (str_CmdPro_B == MONTH))

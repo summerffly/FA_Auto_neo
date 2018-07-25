@@ -1291,128 +1291,6 @@ void CFAitfX::ForecastFutureSum(const string str_SelMonth, const int int_MonthPa
 }
 
 /**************************************************/
-//   Print 月度
-/**************************************************/
-void CFAitfX::PrintMonth(const string str_SelMonth, bool bol_NumFlag)
-{
-    string str_RangeTop = "## life.M" + str_SelMonth;
-    string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
-
-    m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = m_ptr_FM_life->GetSearchLineIndex(1);
-    m_ptr_FM_life->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = m_ptr_FM_life->GetSearchLineIndex(1);
-
-    if( bol_NumFlag )
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "### 月度 展示.md ###" << endl;
-        cout << endl;
-
-        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
-        {
-            cout << "【" << i << "】" << m_ptr_FM_life->GetFullLine(i) << endl;
-        }
-
-        cout << "----------------------------------------" << endl;
-    }
-    else
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "### 月度 展示.md ###" << endl;
-        cout << endl;
-                
-        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
-        {
-            cout << m_ptr_FM_life->GetFullLine(i) << endl;
-        }
-
-        cout << "----------------------------------------" << endl;
-    }
-}
-
-/**************************************************/
-//   Print 月度.M
-/**************************************************/
-void CFAitfX::PrintSubMonth(const string str_SubMonthKey, const string str_SelMonth, bool bol_NumFlag, bool bol_ShowFlag)
-{
-    string str_RangeTop = str_SubMonthKey + ".M" + str_SelMonth;
-    string str_RangeBottom = str_SubMonthKey + ".M" + CTool::GenerateNextMonth(str_SelMonth);
-
-    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
-    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
-
-    if( bol_ShowFlag )
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "### 月度.M .md展示 ###" << endl;
-        cout << endl;
-    }
-
-    if( bol_NumFlag )
-    {
-        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
-        {
-            cout << "【" << i << "】" << GetPtrSubMonthFM(str_SubMonthKey)->GetFullLine(i) << endl;
-        }
-    }
-    else
-    {           
-        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
-        {
-            cout << GetPtrSubMonthFM(str_SubMonthKey)->GetFullLine(i) << endl;
-        }
-    }
-
-    if( bol_ShowFlag )
-    {
-        cout << "----------------------------------------" << endl;
-    }
-}
-
-/**************************************************/
-//   Print Tt分项
-/**************************************************/
-void CFAitfX::PrintTitle(const string str_TitleKey, bool bol_NumFlag)
-{
-    //string str_RangeTop;
-    string str_RangeBottom = "Update Time";
-
-    unsigned int uni_RangeTop = 1;
-    GetPtrTitleFM(str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrTitleFM(str_TitleKey)->GetSearchLineIndex(1)-1;
-
-    if( bol_NumFlag )
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "### Print " << str_TitleKey << ".md ###" << endl;
-        cout << endl;
-
-        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
-        {
-            cout << "【" << i << "】" << GetPtrTitleFM(str_TitleKey)->GetFullLine(i) << endl;
-        }
-
-        cout << "----------------------------------------" << endl;
-    }
-    else
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "### Print " << str_TitleKey << ".md ###" << endl;
-        cout << endl;
-                
-        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
-        {
-            cout << m_ptr_FM_life->GetFullLine(i) << endl;
-        }
-
-        cout << "----------------------------------------" << endl;
-    }
-}
-
-/**************************************************/
 //   展示 Month 收支
 //   OFlag == 1 >>> 嵌入显示模式
 //   OFlag == 2 >>> 嵌入显示模式
@@ -1586,6 +1464,169 @@ void CFAitfX::ShowSubMonth(const string str_SelMonth, int int_OFlag)
     {
         cout << endl;
         cout << str_SelMonth << "月/CSM支出: " << CTool::TransOutFormat(int_TotalSMExpense) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+}
+
+/**************************************************/
+//   Print Sum
+/**************************************************/
+void CFAitfX::PrintSum(bool bol_NumFlag)
+{
+    string str_RangeTop = "# Financial Allocation of SUMMARY";
+    string str_RangeBottom = "---";
+
+    m_ptr_FM_SUM->SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = m_ptr_FM_SUM->GetSearchLineIndex(1);
+    m_ptr_FM_SUM->SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = m_ptr_FM_SUM->GetSearchLineIndex(1) - 3;
+
+    if( bol_NumFlag )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### SUM 展示.md ###" << endl;
+        cout << endl;
+
+        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
+        {
+            cout << "【" << i << "】" << m_ptr_FM_SUM->GetFullLine(i) << endl;
+        }
+
+        cout << "----------------------------------------" << endl;
+    }
+    else
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### SUM 展示.md ###" << endl;
+        cout << endl;
+                
+        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
+        {
+            cout << m_ptr_FM_SUM->GetFullLine(i) << endl;
+        }
+
+        cout << "----------------------------------------" << endl;
+    }
+}
+
+/**************************************************/
+//   Print 月度
+/**************************************************/
+void CFAitfX::PrintMonth(const string str_SelMonth, bool bol_NumFlag)
+{
+    string str_RangeTop = "## life.M" + str_SelMonth;
+    string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
+
+    m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = m_ptr_FM_life->GetSearchLineIndex(1);
+    m_ptr_FM_life->SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = m_ptr_FM_life->GetSearchLineIndex(1);
+
+    if( bol_NumFlag )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### 月度 展示.md ###" << endl;
+        cout << endl;
+
+        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
+        {
+            cout << "【" << i << "】" << m_ptr_FM_life->GetFullLine(i) << endl;
+        }
+
+        cout << "----------------------------------------" << endl;
+    }
+    else
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### 月度 展示.md ###" << endl;
+        cout << endl;
+                
+        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
+        {
+            cout << m_ptr_FM_life->GetFullLine(i) << endl;
+        }
+
+        cout << "----------------------------------------" << endl;
+    }
+}
+
+/**************************************************/
+//   Print 月度.M
+/**************************************************/
+void CFAitfX::PrintSubMonth(const string str_SubMonthKey, const string str_SelMonth, bool bol_NumFlag, bool bol_ShowFlag)
+{
+    string str_RangeTop = str_SubMonthKey + ".M" + str_SelMonth;
+    string str_RangeBottom = str_SubMonthKey + ".M" + CTool::GenerateNextMonth(str_SelMonth);
+
+    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
+    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
+
+    if( bol_ShowFlag )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### 月度.M .md展示 ###" << endl;
+        cout << endl;
+    }
+
+    if( bol_NumFlag )
+    {
+        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
+        {
+            cout << "【" << i << "】" << GetPtrSubMonthFM(str_SubMonthKey)->GetFullLine(i) << endl;
+        }
+    }
+    else
+    {           
+        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
+        {
+            cout << GetPtrSubMonthFM(str_SubMonthKey)->GetFullLine(i) << endl;
+        }
+    }
+
+    if( bol_ShowFlag )
+    {
+        cout << "----------------------------------------" << endl;
+    }
+}
+
+/**************************************************/
+//   Print Tt分项
+/**************************************************/
+void CFAitfX::PrintTitle(const string str_TitleKey, bool bol_NumFlag)
+{
+    //string str_RangeTop;
+    string str_RangeBottom = "Update Time";
+
+    unsigned int uni_RangeTop = 1;
+    GetPtrTitleFM(str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = GetPtrTitleFM(str_TitleKey)->GetSearchLineIndex(1)-1;
+
+    if( bol_NumFlag )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### Print " << str_TitleKey << ".md ###" << endl;
+        cout << endl;
+
+        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
+        {
+            cout << "【" << i << "】" << GetPtrTitleFM(str_TitleKey)->GetFullLine(i) << endl;
+        }
+
+        cout << "----------------------------------------" << endl;
+    }
+    else
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### Print " << str_TitleKey << ".md ###" << endl;
+        cout << endl;
+                
+        for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
+        {
+            cout << m_ptr_FM_life->GetFullLine(i) << endl;
+        }
+
         cout << "----------------------------------------" << endl;
     }
 }
