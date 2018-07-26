@@ -63,8 +63,6 @@ public:
     /****************************************/
     int CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag);
     void UpdateSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag);
-    void AppendSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth,\
-                               const int int_LineValue, const string str_LineContent);
 
     /****************************************/
     //   Title 计算区

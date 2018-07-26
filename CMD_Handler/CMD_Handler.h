@@ -34,6 +34,9 @@ public:
 	static void CMD_PrintRecode(CMD_Packet srt_CMD);
 	static void CMD_PrintRecovery();
 
+	static string CMD_SMTranslate(const string str_SubMonthKey);
+	static string CMD_TTTranslate(const string str_TitleKey);
+
 	static void CMD_Help();
 
 public:

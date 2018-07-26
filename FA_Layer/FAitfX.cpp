@@ -646,47 +646,6 @@ void CFAitfX::UpdateSubMonthExpense(const string str_SubMonthKey, const string s
 }
 
 /**************************************************/
-//   添加行 SubMonth 支出
-/**************************************************/
-void CFAitfX::AppendSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth,\
-                                    const int int_LineValue, const string str_LineContent)
-{
-    if(GetPtrSubMonthFM(str_SubMonthKey)->GetFullLine(1).compare("# Financial Allocation of SUMMARY") == 0)
-    {
-        CTool::MassageOutFotmat("SubMonth KeyWord Error", '!');
-        return;
-    }
-
-    string str_RangeTop = str_SubMonthKey + ".M" + str_SelMonth;
-    string str_RangeBottom = str_SubMonthKey + ".M" + CTool::GenerateNextMonth(str_SelMonth);
-
-    m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_lifeLine = m_ptr_FM_life->GetSearchLineIndex(1);
-
-    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
-    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
-
-    int int_SubMonthExpense = GetPtrSubMonthFM(str_SubMonthKey)->GetLineValue(uni_RangeTop+1);
-
-    GetPtrSubMonthFM(str_SubMonthKey)->InsertLine(uni_RangeBottom-1, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
-
-    // tips 番茄@20171212 - 注意计算总支出的时候要增加一行
-    int int_SubMonthExpenseAP = GetPtrSubMonthFM(str_SubMonthKey)->CountRangeType(uni_RangeTop+2, uni_RangeBottom,\
-                                            LTYPE_FBIRC_LINEUINT);
-    
-    m_ptr_FM_life->ModifyLineValue(uni_lifeLine, int_SubMonthExpenseAP);
-    GetPtrSubMonthFM(str_SubMonthKey)->ModifyLineValue(uni_RangeTop+1, int_SubMonthExpenseAP);
-
-    cout << "----------------------------------------" << endl;
-    cout << "### " << str_SelMonth << "月/" << str_SubMonthKey << "支出 ###" << endl;
-    cout << "sub.M_初始值: " << CTool::TransOutFormat(int_SubMonthExpense) << endl;
-    cout << "sub.M_更新值: " << CTool::TransOutFormat(int_SubMonthExpenseAP) << endl;
-    cout << "----------------------------------------" << endl;
-}
-
-/**************************************************/
 //   校验 Tt分项 月度支出
 /**************************************************/
 int CFAitfX::CheckTitleExpense(const string str_TitleKey, bool bol_OFlag)

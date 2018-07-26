@@ -283,7 +283,75 @@ void CCMDHandler::CMD_PrintRecode(CMD_Packet srt_CMD)
 
 void CCMDHandler::CMD_PrintRecovery()
 {
-    //
+    if(ms_bol_PR_Valid == false)
+        return;
+
+    if(ms_str_FM_Type == "SUM")
+    {
+        ms_ptr_FAitfX->PrintSum(true);
+    }
+    else if(ms_str_FM_Type == "MONTH")
+    {
+        ms_ptr_FAitfX->PrintMonth(ms_str_FM_Month, true);
+    }
+    else if(ms_str_FM_Type == "SM")
+    {
+        string str_SubMonthKey = CMD_SMTranslate(ms_str_FM_Key);
+        ms_ptr_FAitfX->PrintSubMonth(str_SubMonthKey, ms_str_FM_Month, true, true);
+    }
+    else if(ms_str_FM_Type == "TT")
+    {
+        string str_TitleKey = CMD_TTTranslate(ms_str_FM_Key);
+        ms_ptr_FAitfX->PrintTitle(str_TitleKey, true);
+    }
+}
+
+/**************************************************/
+//   CMDHandler 接受全小写CMD，便于输入
+//   FAitfX 接受区分大小写Key，直接查找.md
+//   需要Translate做中间转换
+/**************************************************/
+string CCMDHandler::CMD_SMTranslate(const string str_SubMonthKey)
+{
+    string str_TranslateKey("");
+
+    if(str_SubMonthKey == DGTLER)
+        str_TranslateKey = "DGtler";
+    else if(str_SubMonthKey == BOOKS)
+        str_TranslateKey = "Books";
+    else if(str_SubMonthKey == KEEP)
+        str_TranslateKey = "KEEP";
+    else if(str_SubMonthKey == TB)
+        str_TranslateKey = "TB";
+    else if(str_SubMonthKey == SA)
+        str_TranslateKey = "sa";
+    else
+        str_TranslateKey = "ERROR";
+
+    return str_TranslateKey;
+}
+
+/**************************************************/
+//   CMDHandler 接受全小写CMD，便于输入
+//   FAitfX 接受区分大小写Key，直接查找.md
+//   需要Translate做中间转换
+/**************************************************/
+string CCMDHandler::CMD_TTTranslate(const string str_TitleKey)
+{
+    string str_TranslateKey("");
+
+    if(str_TitleKey == DK)
+        str_TranslateKey = "DK";
+    else if(str_TitleKey == NS)
+        str_TranslateKey = "NS";
+    else if(str_TitleKey == TRAVEL)
+        str_TranslateKey = "travel";
+    else if(str_TitleKey == LOTTERY)
+        str_TranslateKey = "lottery";
+    else
+        str_TranslateKey = "ERROR";
+
+    return str_TranslateKey;
 }
 
 void CCMDHandler::CMD_Help()
@@ -380,58 +448,14 @@ void CCMDHandler::OnCmdShowMonth(CMD_Packet srt_CMD)
 
 void CCMDHandler::OnCmdCheckSubMonth(CMD_Packet srt_CMD)
 {
-    if( srt_CMD.m_str_ParamSubMonth == DGTLER )
-    {
-        ms_ptr_FAitfX->CheckSubMonthExpense("DGtler", srt_CMD.m_str_ParamMonth, true);
-    }
-	else if( srt_CMD.m_str_ParamSubMonth == BOOKS )
-    {
-        ms_ptr_FAitfX->CheckSubMonthExpense("Books", srt_CMD.m_str_ParamMonth, true);
-    }
-    else if( srt_CMD.m_str_ParamSubMonth == KEEP )
-    {
-        ms_ptr_FAitfX->CheckSubMonthExpense("KEEP", srt_CMD.m_str_ParamMonth, true);
-    }
-    else if( srt_CMD.m_str_ParamSubMonth == TB )
-    {
-        ms_ptr_FAitfX->CheckSubMonthExpense("TB", srt_CMD.m_str_ParamMonth, true);
-    }
-    else if( srt_CMD.m_str_ParamSubMonth == SA )
-    {
-        ms_ptr_FAitfX->CheckSubMonthExpense("sa", srt_CMD.m_str_ParamMonth, true);
-    }
-    else
-    {
-        CTool::MassageOutFotmat("Error SM Param", '!');
-    }
+    string str_SubMonthKey = CMD_SMTranslate(srt_CMD.m_str_ParamSubMonth);
+    ms_ptr_FAitfX->CheckSubMonthExpense(str_SubMonthKey, srt_CMD.m_str_ParamMonth, true);
 }
 
 void CCMDHandler::OnCmdUpdateSubMonth(CMD_Packet srt_CMD)
 {
-    if( srt_CMD.m_str_ParamSubMonth == DGTLER )
-    {
-        ms_ptr_FAitfX->UpdateSubMonthExpense("DGtler", srt_CMD.m_str_ParamMonth, true);
-    }
-	else if( srt_CMD.m_str_ParamSubMonth == BOOKS )
-    {
-        ms_ptr_FAitfX->UpdateSubMonthExpense("Books", srt_CMD.m_str_ParamMonth, true);
-    }
-    else if( srt_CMD.m_str_ParamSubMonth == KEEP )
-    {
-        ms_ptr_FAitfX->UpdateSubMonthExpense("KEEP", srt_CMD.m_str_ParamMonth, true);
-    }
-    else if( srt_CMD.m_str_ParamSubMonth == TB )
-    {
-        ms_ptr_FAitfX->UpdateSubMonthExpense("TB", srt_CMD.m_str_ParamMonth, true);
-    }
-    else if( srt_CMD.m_str_ParamSubMonth == SA )
-    {
-        ms_ptr_FAitfX->UpdateSubMonthExpense("sa", srt_CMD.m_str_ParamMonth, true);
-    }
-    else
-    {
-        CTool::MassageOutFotmat("Error SM Param", '!');
-    }
+    string str_SubMonthKey = CMD_SMTranslate(srt_CMD.m_str_ParamSubMonth);
+    ms_ptr_FAitfX->UpdateSubMonthExpense(str_SubMonthKey, srt_CMD.m_str_ParamMonth, true);
 
     ms_ptr_FAitfX->UpdateMonthSurplus(srt_CMD.m_str_ParamMonth, false);
     ms_ptr_FAitfX->SyncMonthSurplus(srt_CMD.m_str_ParamMonth);
@@ -440,52 +464,14 @@ void CCMDHandler::OnCmdUpdateSubMonth(CMD_Packet srt_CMD)
 
 void CCMDHandler::OnCmdCheckTitle(CMD_Packet srt_CMD)
 {
-    if( srt_CMD.m_str_ParamTitle == DK )
-    {
-        ms_ptr_FAitfX->CheckTitleExpense("DK", true);
-    }
-    else if( srt_CMD.m_str_ParamTitle == NS )
-    {
-        ms_ptr_FAitfX->CheckTitleExpense("NS", true);
-    }
-    else if( srt_CMD.m_str_ParamTitle == TRAVEL )
-    {
-        ms_ptr_FAitfX->CheckTitleExpense("travel", true);
-    }
-    else if( srt_CMD.m_str_ParamTitle == LOTTERY )
-    {
-        ms_ptr_FAitfX->CheckTitleExpense("lottery", true);
-    }
-    else
-    {
-        CTool::MassageOutFotmat("Error TT Param", '!');
-    }
+    string str_TitleKey = CMD_TTTranslate(srt_CMD.m_str_ParamTitle);
+    ms_ptr_FAitfX->CheckTitleExpense(str_TitleKey, true);
 }
 
 void CCMDHandler::OnCmdUpdateTitle(CMD_Packet srt_CMD)
 {
-    if( srt_CMD.m_str_ParamTitle == DK )
-    {
-        ms_ptr_FAitfX->UpdateTitleExpense("DK", true);
-    }
-    else if( srt_CMD.m_str_ParamTitle == NS )
-    {
-        ms_ptr_FAitfX->UpdateTitleExpense("NS", true);
-    }
-    else if( srt_CMD.m_str_ParamTitle == TRAVEL )
-    {
-        ms_ptr_FAitfX->UpdateTitleExpense("travel", true);
-    }
-    else if( srt_CMD.m_str_ParamTitle == LOTTERY )
-    {
-        ms_ptr_FAitfX->UpdateTitleExpense("lottery", true);
-    }
-    else
-    {
-        CTool::MassageOutFotmat("Error TT Param", '!');
-
-        return;
-    }
+    string str_TitleKey = CMD_TTTranslate(srt_CMD.m_str_ParamTitle);
+    ms_ptr_FAitfX->UpdateTitleExpense(str_TitleKey, true);
 
     ms_ptr_ASitfX->UpdateSum(0);
 }
@@ -583,54 +569,17 @@ void CCMDHandler::OnCmdPrintSubMonth(CMD_Packet srt_CMD)
     {
         ms_ptr_ASitfX->PrintSubMonthTraversal(srt_CMD.m_str_ParamMonth, false);
     }
-    else if( srt_CMD.m_str_ParamSubMonth == DGTLER )
-    {
-        ms_ptr_FAitfX->PrintSubMonth("DGtler", srt_CMD.m_str_ParamMonth, true, true);
-    }
-    else if( srt_CMD.m_str_ParamSubMonth == BOOKS )
-    {
-        ms_ptr_FAitfX->PrintSubMonth("Books", srt_CMD.m_str_ParamMonth, true, true);
-    }
-    else if( srt_CMD.m_str_ParamSubMonth == KEEP )
-    {
-        ms_ptr_FAitfX->PrintSubMonth("KEEP", srt_CMD.m_str_ParamMonth, true, true);
-    }
-    else if( srt_CMD.m_str_ParamSubMonth == TB )
-    {
-        ms_ptr_FAitfX->PrintSubMonth("TB", srt_CMD.m_str_ParamMonth, true, true);
-    }
-    else if( srt_CMD.m_str_ParamSubMonth == SA )
-    {
-        ms_ptr_FAitfX->PrintSubMonth("sa", srt_CMD.m_str_ParamMonth, true, true);
-    }
     else
     {
-        CTool::MassageOutFotmat("Error SM Param", '!');
+        string str_SubMonthKey = CMD_SMTranslate(srt_CMD.m_str_ParamSubMonth);
+        ms_ptr_FAitfX->PrintSubMonth(str_SubMonthKey, srt_CMD.m_str_ParamMonth, true, true);
     }
 }
 
 void CCMDHandler::OnCmdPrintTitle(CMD_Packet srt_CMD)
 {
-    if( srt_CMD.m_str_ParamTitle == DK )
-    {
-        ms_ptr_FAitfX->PrintTitle("DK", true);
-    }
-    else if( srt_CMD.m_str_ParamTitle == NS )
-    {
-        ms_ptr_FAitfX->PrintTitle("NS", true);
-    }
-    else if( srt_CMD.m_str_ParamTitle == TRAVEL )
-    {
-        ms_ptr_FAitfX->PrintTitle("travel", true);
-    }
-    else if( srt_CMD.m_str_ParamTitle == LOTTERY )
-    {
-        ms_ptr_FAitfX->PrintTitle("lottery", true);
-    }
-    else
-    {
-        CTool::MassageOutFotmat("Error TT Param", '!');
-    }
+    string str_TitleKey = CMD_TTTranslate(srt_CMD.m_str_ParamTitle);
+    ms_ptr_FAitfX->PrintTitle(str_TitleKey, true);
 }
 
 void CCMDHandler::OnCmdInsertBlankLine(CMD_Packet srt_CMD)
@@ -642,6 +591,8 @@ void CCMDHandler::OnCmdInsertBlankLine(CMD_Packet srt_CMD)
     }
     else
         CTool::MassageOutFotmat("Print File Missing", '!');
+
+    CMD_PrintRecovery();
 }
 
 void CCMDHandler::OnCmdInsertLine(CMD_Packet srt_CMD)
@@ -653,6 +604,8 @@ void CCMDHandler::OnCmdInsertLine(CMD_Packet srt_CMD)
     }
     else
         CTool::MassageOutFotmat("Print File Missing", '!');
+
+    CMD_PrintRecovery();
 }
 
 void CCMDHandler::OnCmdModifyLine(CMD_Packet srt_CMD)
@@ -664,6 +617,8 @@ void CCMDHandler::OnCmdModifyLine(CMD_Packet srt_CMD)
     }
     else
         CTool::MassageOutFotmat("Print File Missing", '!');
+
+    CMD_PrintRecovery();
 }
 
 void CCMDHandler::OnCmdDeleteLine(CMD_Packet srt_CMD)
@@ -674,6 +629,8 @@ void CCMDHandler::OnCmdDeleteLine(CMD_Packet srt_CMD)
     }
     else
         CTool::MassageOutFotmat("Print File Missing", '!');
+
+    CMD_PrintRecovery();
 }
 
 void CCMDHandler::OnCmdMoveLine(CMD_Packet srt_CMD)
@@ -685,6 +642,8 @@ void CCMDHandler::OnCmdMoveLine(CMD_Packet srt_CMD)
     }
     else
         CTool::MassageOutFotmat("Print File Missing", '!');
+
+    CMD_PrintRecovery();
 }
 
 void CCMDHandler::OnCmdAppendMonth(CMD_Packet srt_CMD)
