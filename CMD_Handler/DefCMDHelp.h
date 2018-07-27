@@ -30,15 +30,15 @@ string  CMD_HELP_PATCH_MODIFY_LIFE = "SRC = " + WEIXIN;
 //string  HELP_CMD_TYPE_CHECK_TITLE    ("CheckTitle")
 //string  HELP_CMD_TYPE_UPDATE_TITLE   ("UpdateTitle")
 
-//string  HELP_CMD_TYPE_TRANSFER    ("Transfer")
-//string  HELP_CMD_TYPE_LOTTERY     ("Lottery")
+//string  CMD_HELP_TRANSFER    ("Transfer")
+//string  CMD_HELP_LOTTERY     ("Lottery")
 
 string  CMD_HELP_ANALYSIS_TREND = ANALYSIS + " " + TREND + " -sp TO";
 string  CMD_HELP_PATCH_ANALYSIS_TREND = "TO = " + EXPENSE + "/" + LIFE + "/" + ROOM + "/" + CONSUMPTION;
 //string  HELP_CMD_TYPE_ANALYSIS_PROPORTION    ("AnalysisProportion")
 
 //string  HELP_CMD_TYPE_SUMMARIZE    ("Summarize")
-//string  HELP_CMD_TYPE_FORECAST     ("Forecast")
+string  CMD_HELP_FORECAST = FORECAST + " -sp MONTH -ip SALARY_PATCH";
 
 string  CMD_HELP_PRINT_MONTH    = PRINT + " " + MONTH + " -m MONTH";
 string  CMD_HELP_PRINT_SUBMONTH = PRINT + " -sm SM -m MONTH";

@@ -65,7 +65,7 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_SUMMARIZE, "", "", OnCmdSummarize)
 
-	X_ON_CMD_TYPE(X_CMD_TYPE_FORECAST, "", "", OnCmdForecast)
+	X_ON_CMD_TYPE(X_CMD_TYPE_FORECAST, CMD_HELP_FORECAST, "", OnCmdForecast)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_PRINT_SUM, "", "", OnCmdPrintSum)
 
@@ -137,11 +137,15 @@ void CCMDHandler::CMD_Loop()
 
         CMD_Packet xCmdPacket = CMD_Packet();
 
+        /**************************************************/
+
         if(-1 == xCmdPacket.CMDRipper(CMD_linebuffer))
         {
             CTool::MassageOutFotmat("Blank CMD", '!');
             continue;
         }
+
+        /**************************************************/
 
         if(0 != xCmdPacket.CMDFilter())
         {
@@ -149,15 +153,17 @@ void CCMDHandler::CMD_Loop()
             continue;
         }
 
+        /**************************************************/
+
         int int_RetParser = xCmdPacket.CMDParser();
         if(-1 == int_RetParser)
         {
-            CTool::MassageOutFotmat("Error-Format CMD Param", '!');
+            CTool::MassageOutFotmat("Error -Option", '!');
             continue;
         }
         else if(-2 == int_RetParser)
         {
-            CTool::MassageOutFotmat("Conflict CMD Param", '!');
+            CTool::MassageOutFotmat("SM&TT-Conflict Param", '!');
             continue;
         }
         else if(-3 == int_RetParser)
@@ -167,8 +173,25 @@ void CCMDHandler::CMD_Loop()
         }
         else if(-4 == int_RetParser)
         {
-            // 未定义CMDType
+            CTool::MassageOutFotmat("Error CMD (BL)", '!');
+            continue;
         }
+
+        /**************************************************/
+
+        int int_RetParamChecker = xCmdPacket.CMDParamChecker();
+        if(-1 == int_RetParamChecker)
+        {
+            CTool::MassageOutFotmat("SM-Error Param", '!');
+            continue;
+        }
+        else if(-2 == int_RetParamChecker)
+        {
+            CTool::MassageOutFotmat("TT-Error Param", '!');
+            continue;
+        }
+
+        /**************************************************/
 
         CTool::TagTimeBait();
 
@@ -182,12 +205,16 @@ void CCMDHandler::CMD_Loop()
             continue;
         }
         else if(1 == int_RetNotify)
+        {
             break;
+        }
         else
         {
-            CTool::MassageOutFotmat("Error CMD", '!');
+            CTool::MassageOutFotmat("Error CMD (AL)", '!');
             continue;
         }
+
+        /**************************************************/
     }
 }
 

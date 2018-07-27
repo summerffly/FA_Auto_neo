@@ -144,37 +144,9 @@ int CMD_Packet::CMDFilter()
         }
     }
 
-    vector<string>::iterator itr_Cmd;
-    for(itr_Cmd = m_vec_Cmd.begin(); itr_Cmd != m_vec_Cmd.end(); itr_Cmd++)
-    {
-        if((*itr_Cmd).compare(0, 1, "-") == 0)
-        {
-            if(itr_Cmd == m_vec_Cmd.begin())
-            {
-                return -11;   // ERROR: 第一个CMD不能为Param
-            }
-
-            //itr_Cmd++;
-            //if(itr_Cmd == m_vec_Cmd.end())
-            //{
-                //return -12;   // ERROR: Param为空
-            //}
-            //else if((*itr_Cmd).compare(0, 1, "-") == 0)
-            //{
-                //return -13;   // ERROR: Param为空
-            //}
-
-            //itr_Cmd++;
-            //if(itr_Cmd == m_vec_Cmd.end())
-            //{
-                //return 0;   // CORRECT
-            //}
-            //else if((*itr_Cmd).compare(0, 1, "-") != 0)
-            //{
-                //return -14;   // ERROR: Param重复
-            //}
-        }
-    }
+    vector<string>::iterator itr_Cmd = m_vec_Cmd.begin();
+    if((*itr_Cmd).compare(0, 1, "-") == 0)
+        return -2;   // ERROR: 第一个CMD不能为Param
 
     return 0;   // CORRECT
 }
@@ -189,11 +161,10 @@ int CMD_Packet::CMDParser()
     int int_ParamType = 0;
 
     itr_Cmd = m_vec_Cmd.end();
-    itr_Cmd--;
-    if((*itr_Cmd) == CANCEL)
+    if((*(--itr_Cmd)) == CANCEL)
     {
         m_str_CmdType = X_CMD_TYPE_CANCEL;
-        return 0;
+        return 0;   // CANCEL CORRECT
     }
 
     for(itr_Cmd = m_vec_Cmd.begin(); itr_Cmd != m_vec_Cmd.end(); itr_Cmd++)
@@ -388,6 +359,44 @@ int CMD_Packet::CMDParser()
     }
 
     return 0;   // CORRECT
+}
+
+/**************************************************/
+//   CMD Param 检查
+/**************************************************/
+int CMD_Packet::CMDParamChecker()
+{
+    if("" != m_str_ParamSubMonth)
+    {
+        if(DGTLER == m_str_ParamSubMonth)
+            return 0;
+        else if(BOOKS == m_str_ParamSubMonth)
+            return 0;
+        else if(KEEP == m_str_ParamSubMonth)
+            return 0;
+        else if(TB == m_str_ParamSubMonth)
+            return 0;
+        else if(SA == m_str_ParamSubMonth)
+            return 0;
+        else
+            return -1;
+    }
+
+    if("" != m_str_ParamTitle)
+    {
+        if(DK == m_str_ParamTitle)
+            return 0;
+        else if(NS == m_str_ParamTitle)
+            return 0;
+        else if(TRAVEL == m_str_ParamTitle)
+            return 0;
+        else if(LOTTERY == m_str_ParamTitle)
+            return 0;
+        else
+            return -2;
+    }
+
+    return 0;
 }
 
 

@@ -22,6 +22,7 @@ public:
     int CMDRipper(char *CMD_LineBuffer);
     int CMDFilter();
     int CMDParser();
+    int CMDParamChecker();
 
 public:
     string m_str_CmdType;          // CMD类型
