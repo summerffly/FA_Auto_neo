@@ -1562,12 +1562,33 @@ void CFAitfX::ModifyLine(const string str_Type, const string str_Key,\
 }
 
 /**************************************************/
-//   删除行
+//   修改行 Value
 /**************************************************/
-void CFAitfX::DeleteLine(const string str_Type, const string str_Key,\
-                         const unsigned int uni_LineIndex)
+void CFAitfX::ModifyLineValue(const string str_Type, const string str_Key,\
+                              const unsigned int uni_LineIndex, const int int_LineValue)
 {
-    GetPtrFM(str_Type, str_Key)->DeleteLine(uni_LineIndex);
+    GetPtrFM(str_Type, str_Key)->ModifyLineValue(uni_LineIndex, int_LineValue);
+}
+
+/**************************************************/
+//   修改行 Content
+/**************************************************/
+void CFAitfX::ModifyLineContent(const string str_Type, const string str_Key,\
+                                const unsigned int uni_LineIndex, const string str_LineContent)
+{
+    GetPtrFM(str_Type, str_Key)->ModifyLineContent(uni_LineIndex, str_LineContent.c_str());
+}
+
+/**************************************************/
+//   复制行
+/**************************************************/
+void CFAitfX::CopyLine(const string str_Type, const string str_Key,\
+                       const unsigned int uni_LineIndex, const unsigned int uni_LineIndexNew)
+{
+    int int_LineValue = GetPtrFM(str_Type, str_Key)->GetLineValue(uni_LineIndex);
+    string str_LineContent = GetPtrFM(str_Type, str_Key)->GetLineContent(uni_LineIndex);
+
+    GetPtrFM(str_Type, str_Key)->InsertLine(uni_LineIndexNew, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
 }
 
 /**************************************************/
@@ -1587,6 +1608,15 @@ void CFAitfX::MoveLine(const string str_Type, const string str_Key,\
         GetPtrFM(str_Type, str_Key)->InsertLine(uni_LineIndexNew, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
     else
         return;
+}
+
+/**************************************************/
+//   删除行
+/**************************************************/
+void CFAitfX::DeleteLine(const string str_Type, const string str_Key,\
+                         const unsigned int uni_LineIndex)
+{
+    GetPtrFM(str_Type, str_Key)->DeleteLine(uni_LineIndex);
 }
 
 void CFAitfX::SyncAllFile()

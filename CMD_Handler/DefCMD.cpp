@@ -66,10 +66,16 @@ string TAIL = "tail";
 /**************************************************/
 
 string PRINT = "print";
+
 string INSERT = "insert";
 string MODIFY = "modify";
-string DELETE = "delete";
+string COPY = "copy";
 string MOVE = "move";
+string DELETE = "delete";
+
+string BLANK = "blank";
+string VALUE = "value";
+string CONTENT = "content";
 
 /**************************************************/
 //   文件命令

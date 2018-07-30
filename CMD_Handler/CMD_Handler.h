@@ -74,11 +74,14 @@ public:
 	static void OnCmdPrintSubMonth(CMD_Packet srt_CMD);
 	static void OnCmdPrintTitle(CMD_Packet srt_CMD);
 
-	static void OnCmdInsertBlankLine(CMD_Packet srt_CMD);
 	static void OnCmdInsertLine(CMD_Packet srt_CMD);
+	static void OnCmdInsertBlankLine(CMD_Packet srt_CMD);
 	static void OnCmdModifyLine(CMD_Packet srt_CMD);
-	static void OnCmdDeleteLine(CMD_Packet srt_CMD);
+	static void OnCmdModifyLineValue(CMD_Packet srt_CMD);
+	static void OnCmdModifyLineContent(CMD_Packet srt_CMD);
+	static void OnCmdCopyLine(CMD_Packet srt_CMD);
 	static void OnCmdMoveLine(CMD_Packet srt_CMD);
+	static void OnCmdDeleteLine(CMD_Packet srt_CMD);
 
 	static void OnCmdAppendMonth(CMD_Packet srt_CMD);
 

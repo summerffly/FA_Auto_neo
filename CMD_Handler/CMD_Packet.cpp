@@ -319,10 +319,12 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_INSERT_LINE;
         else if((str_CmdPro_A == MODIFY) && (int_ParamType == 3))
             m_str_CmdType = X_CMD_TYPE_MODIFY_LINE;
-        else if((str_CmdPro_A == DELETE) && (int_ParamType == 3))
-            m_str_CmdType = X_CMD_TYPE_DELETE_LINE;
+        else if((str_CmdPro_A == COPY) && (int_ParamType == 3))
+            m_str_CmdType = X_CMD_TYPE_COPY_LINE;
         else if((str_CmdPro_A == MOVE) && (int_ParamType == 3))
             m_str_CmdType = X_CMD_TYPE_MOVE_LINE;
+        else if((str_CmdPro_A == DELETE) && (int_ParamType == 3))
+            m_str_CmdType = X_CMD_TYPE_DELETE_LINE;
         else
             return -4;   // ERROR: 未定义的CmdType
     }
@@ -350,6 +352,12 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_PRINT_MONTH;
         else if((str_CmdPro_A == APPEND) && (str_CmdPro_B == MONTH))
             m_str_CmdType = X_CMD_TYPE_APPEND_MONTH;
+        else if((str_CmdPro_A == INSERT) && (str_CmdPro_B == BLANK))
+            m_str_CmdType = X_CMD_TYPE_INSERT_BLANK_LINE;
+        else if((str_CmdPro_A == MODIFY) && (str_CmdPro_B == VALUE))
+            m_str_CmdType = X_CMD_TYPE_MODIFY_LINE_VALUE;
+        else if((str_CmdPro_A == MODIFY) && (str_CmdPro_B == CONTENT))
+            m_str_CmdType = X_CMD_TYPE_MODIFY_LINE_CONTENT;
         else
             return -4;   // ERROR: 未定义的CmdType
     }

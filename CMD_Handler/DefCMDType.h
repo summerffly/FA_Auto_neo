@@ -41,11 +41,14 @@
 #define  X_CMD_TYPE_PRINT_SUBMONTH    ("PrintSubMonth")
 #define  X_CMD_TYPE_PRINT_TITLE       ("PrintTitle")
 
-#define  X_CMD_TYPE_INSERT_BLANK_LINE    ("InsertBlankLine")
-#define  X_CMD_TYPE_INSERT_LINE          ("InsertLine")
-#define  X_CMD_TYPE_MODIFY_LINE          ("ModifyLine")
-#define  X_CMD_TYPE_DELETE_LINE          ("DeleteLine")
-#define  X_CMD_TYPE_MOVE_LINE            ("MoveLine")
+#define  X_CMD_TYPE_INSERT_LINE           ("InsertLine")
+#define  X_CMD_TYPE_INSERT_BLANK_LINE     ("InsertBlankLine")
+#define  X_CMD_TYPE_MODIFY_LINE           ("ModifyLine")
+#define  X_CMD_TYPE_MODIFY_LINE_VALUE     ("ModifyLineValue")
+#define  X_CMD_TYPE_MODIFY_LINE_CONTENT   ("ModifyLineContent")
+#define  X_CMD_TYPE_COPY_LINE             ("CopyLine")
+#define  X_CMD_TYPE_MOVE_LINE             ("MoveLine")
+#define  X_CMD_TYPE_DELETE_LINE           ("DeleteLine")
 
 #define  X_CMD_TYPE_APPEND_MONTH    ("AppendMonth")
 

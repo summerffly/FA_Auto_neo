@@ -69,10 +69,16 @@ extern string TAIL;
 /**************************************************/
 
 extern string PRINT;
+
 extern string INSERT;
 extern string MODIFY;
-extern string DELETE;
+extern string COPY;
 extern string MOVE;
+extern string DELETE;
+
+extern string BLANK;
+extern string VALUE;
+extern string CONTENT;
 
 /**************************************************/
 //   文件命令

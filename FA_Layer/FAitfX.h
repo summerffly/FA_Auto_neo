@@ -115,10 +115,16 @@ public:
                     const unsigned int uni_LineIndex, const int int_LineValue, const string str_LineContent);
     void ModifyLine(const string str_Type, const string str_Key,\
                     const unsigned int uni_LineIndex, const int int_LineValue, const string str_LineContent);
-    void DeleteLine(const string str_Type, const string str_Key,\
-                    const unsigned int uni_LineIndex);
+    void ModifyLineValue(const string str_Type, const string str_Key,\
+                         const unsigned int uni_LineIndex, const int int_LineValue);
+    void ModifyLineContent(const string str_Type, const string str_Key,\
+                           const unsigned int uni_LineIndex, const string str_LineContent);
+    void CopyLine(const string str_Type, const string str_Key,\
+                  const unsigned int uni_LineIndex, const unsigned int uni_LineIndexNew);
     void MoveLine(const string str_Type, const string str_Key,\
                   const unsigned int uni_LineIndex, const unsigned int uni_LineIndexNew);
+    void DeleteLine(const string str_Type, const string str_Key,\
+                    const unsigned int uni_LineIndex);
 
     /****************************************/
     //   文件读写区
