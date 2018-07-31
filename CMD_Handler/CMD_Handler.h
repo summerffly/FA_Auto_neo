@@ -56,6 +56,7 @@ public:
 
 	static void OnCmdCheckSubMonth(CMD_Packet srt_CMD);
 	static void OnCmdUpdateSubMonth(CMD_Packet srt_CMD);
+	static void OnCmdShowSubMonth(CMD_Packet srt_CMD);
 
 	static void OnCmdCheckTitle(CMD_Packet srt_CMD);
 	static void OnCmdUpdateTitle(CMD_Packet srt_CMD);

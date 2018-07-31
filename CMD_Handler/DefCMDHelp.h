@@ -24,8 +24,10 @@ string  CMD_HELP_PATCH_MODIFY_LIFE = "SRC = " + WEIXIN;
 //string  HELP_CMD_TYPE_UPDATE_MONTH   ("UpdateMonth")
 //string  HELP_CMD_TYPE_SHOW_MONTH     ("ShowMonth")
 
-//string  HELP_CMD_TYPE_CHECK_SUBMONTH    ("CheckSubMonth")
-//string  HELP_CMD_TYPE_UPDATE_SUBMONTH   ("UpdateSubMonth")
+string  CMD_HELP_CHECK_SUBMONTH  = CHECK + " -sm SM";
+string  CMD_HELP_PATCH_CHECK_SUBMONTH = "SM = " + ALL + "/" + DGTLER + "/" + BOOKS + "/" + KEEP + "/" + TB + "/" + SA;
+string  CMD_HELP_UPDATE_SUBMONTH  = UPDATE + " -sm SM";
+string  CMD_HELP_SHOW_SUBMONTH  = SHOW + " -sm SM";
 
 //string  HELP_CMD_TYPE_CHECK_TITLE    ("CheckTitle")
 //string  HELP_CMD_TYPE_UPDATE_TITLE   ("UpdateTitle")
@@ -42,7 +44,7 @@ string  CMD_HELP_FORECAST = FORECAST + " -sp MONTH -ip SALARY_PATCH";
 
 string  CMD_HELP_PRINT_MONTH    = PRINT + " " + MONTH + " -m MONTH";
 string  CMD_HELP_PRINT_SUBMONTH = PRINT + " -sm SM -m MONTH";
-string  CMD_HELP_PATCH_PRINT_SUBMONTH = "SM = " + DGTLER + "/" + BOOKS + "/" + KEEP + "/" + TB + "/" + SA;
+string  CMD_HELP_PATCH_PRINT_SUBMONTH = "SM = " + ALL + "/" + DGTLER + "/" + BOOKS + "/" + KEEP + "/" + TB + "/" + SA;
 string  CMD_HELP_PRINT_TITLE    = PRINT + " -tt TT";
 string  CMD_HELP_PATCH_PRINT_TITLE = "TT = " + DK + "/" + NS + "/" + TRAVEL + "/" + LOTTERY;
 

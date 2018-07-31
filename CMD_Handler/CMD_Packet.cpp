@@ -266,6 +266,12 @@ int CMD_Packet::CMDParser()
     if(m_int_CmdProNum == 3)
         str_CmdPro_C = m_vec_Cmd.at(2);
 
+    if(str_CmdPro_A == TEST)
+    {
+        m_str_CmdType = X_CMD_TYPE_TEST;
+        return 0;
+    }
+
     if((m_int_CmdProNum == 1) && (int_ParamType == 0))
     {
         if(str_CmdPro_A == CHECK)
@@ -292,8 +298,6 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_BACKUP;
         else if(str_CmdPro_A == HELP)
             m_str_CmdType = X_CMD_TYPE_HELP;
-        else if(str_CmdPro_A == TEST)
-            m_str_CmdType = X_CMD_TYPE_TEST;
         else if(str_CmdPro_A == CANCEL)
             m_str_CmdType = X_CMD_TYPE_CANCEL;
         else if(str_CmdPro_A == EXIT)
@@ -307,6 +311,8 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_CHECK_SUBMONTH;
         else if((str_CmdPro_A == UPDATE) && (int_ParamType == 1))
             m_str_CmdType = X_CMD_TYPE_UPDATE_SUBMONTH;
+        else if((str_CmdPro_A == SHOW) && (int_ParamType == 1))
+            m_str_CmdType = X_CMD_TYPE_SHOW_SUBMONTH;
         else if((str_CmdPro_A == CHECK) && (int_ParamType == 2))
             m_str_CmdType = X_CMD_TYPE_CHECK_TITLE;
         else if((str_CmdPro_A == UPDATE) && (int_ParamType == 2))
@@ -385,6 +391,8 @@ int CMD_Packet::CMDParamChecker()
         else if(TB == m_str_ParamSubMonth)
             return 0;
         else if(SA == m_str_ParamSubMonth)
+            return 0;
+        else if(ALL == m_str_ParamSubMonth)
             return 0;
         else
             return -1;

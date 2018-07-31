@@ -46,9 +46,12 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 
 	X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_MONTH, "", "", OnCmdShowMonth)
 
-	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_SUBMONTH, "", "", OnCmdCheckSubMonth)
+	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_SUBMONTH, CMD_HELP_CHECK_SUBMONTH, \
+        CMD_HELP_PATCH_CHECK_SUBMONTH, OnCmdCheckSubMonth)
 
-	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_SUBMONTH, "", "", OnCmdUpdateSubMonth)
+	X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_SUBMONTH, CMD_HELP_UPDATE_SUBMONTH, "", OnCmdUpdateSubMonth)
+
+    X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_SUBMONTH, CMD_HELP_SHOW_SUBMONTH, "", OnCmdShowSubMonth)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_TITLE, "", "", OnCmdCheckTitle)
 
@@ -370,6 +373,8 @@ string CCMDHandler::CMD_SMTranslate(const string str_SubMonthKey)
         str_TranslateKey = "TB";
     else if(str_SubMonthKey == SA)
         str_TranslateKey = "sa";
+    else if(str_SubMonthKey == ALL)
+        str_TranslateKey = "all";
     else
         str_TranslateKey = "ERROR";
 
@@ -505,6 +510,19 @@ void CCMDHandler::OnCmdUpdateSubMonth(CMD_Packet srt_CMD)
     ms_ptr_FAitfX->UpdateMonthSurplus(srt_CMD.m_str_ParamMonth, false);
     ms_ptr_FAitfX->SyncMonthSurplus(srt_CMD.m_str_ParamMonth);
     ms_ptr_ASitfX->UpdateSum(0);
+}
+
+void CCMDHandler::OnCmdShowSubMonth(CMD_Packet srt_CMD)
+{
+    if( srt_CMD.m_str_ParamSubMonth == ALL )
+    {
+        ms_ptr_ASitfX->ShowSubMonthTraversal(srt_CMD.m_str_ParamMonth);
+    }
+    else
+    {
+        string str_SubMonthKey = CMD_SMTranslate(srt_CMD.m_str_ParamSubMonth);
+        ms_ptr_FAitfX->ShowSubMonth(str_SubMonthKey, srt_CMD.m_str_ParamMonth, 4);
+    }
 }
 
 void CCMDHandler::OnCmdCheckTitle(CMD_Packet srt_CMD)
@@ -761,13 +779,8 @@ void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
     cout << "***          BEGIN OF TEST           ***" << endl;
     cout << "****************************************" << endl;
 
-    cout << ms_str_FM_Type << endl;
-    cout << ms_str_FM_Key << endl;
-
-    if(ms_bol_PR_Valid)
-        cout << "true" << endl;
-    else
-        cout << "false" << endl;
+    string str_SubMonthKey = CMD_SMTranslate(srt_CMD.m_str_ParamSubMonth);
+    ms_ptr_FAitfX->ShowSubMonth(str_SubMonthKey, srt_CMD.m_str_ParamMonth, srt_CMD.m_int_ResParam);
 
     cout << "****************************************" << endl;
     cout << "***           END OF TEST            ***" << endl;

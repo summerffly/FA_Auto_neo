@@ -99,7 +99,9 @@ public:
     void ShowMonthSurplus(const string str_SelMonth, int int_OFlag);
     void ShowLife(const string str_SelMonth, int int_OFlag);
     void ShowRoom(const string str_SelMonth, int int_OFlag);
-    void ShowSubMonth(const string str_SelMonth, int int_OFlag);
+    void ShowSM(const string str_SelMonth, int int_OFlag);
+
+    int ShowSubMonth(const string str_SubMonthKey, const string str_SelMonth, int int_OFlag);
 
     /****************************************/
     //   操作区

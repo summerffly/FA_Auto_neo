@@ -1333,7 +1333,7 @@ void CFAitfX::ShowRoom(const string str_SelMonth, int int_OFlag)
 //   OFlag == 3 >>> NONE (预留)
 //   OFlag == 4 >>> 完整显示模式
 /**************************************************/
-void CFAitfX::ShowSubMonth(const string str_SelMonth, int int_OFlag)
+void CFAitfX::ShowSM(const string str_SelMonth, int int_OFlag)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
@@ -1368,6 +1368,55 @@ void CFAitfX::ShowSubMonth(const string str_SelMonth, int int_OFlag)
         cout << str_SelMonth << "月/CSM支出: " << CTool::TransOutFormat(int_TotalSMExpense) << endl;
         cout << "----------------------------------------" << endl;
     }
+}
+
+/**************************************************/
+//   展示 SubMonth 支出
+//   OFlag == 1 >>> 嵌入显示模式
+//   OFlag == 2 >>> NONE (预留)
+//   OFlag == 3 >>> NONE (预留)
+//   OFlag == 4 >>> 完整显示模式
+/**************************************************/
+int CFAitfX::ShowSubMonth(const string str_SubMonthKey, const string str_SelMonth, int int_OFlag)
+{
+    if(int_OFlag > 0)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << endl;
+    }
+
+    string str_RangeTop = str_SubMonthKey + ".M" + str_SelMonth;
+    string str_RangeBottom = str_SubMonthKey + ".M" + CTool::GenerateNextMonth(str_SelMonth);
+
+    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
+    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
+
+    for(int i=uni_RangeTop+3; i<uni_RangeBottom-1; i++)
+    {
+        cout << GetPtrSubMonthFM(str_SubMonthKey)->GetLineContent(i);
+        cout << ": ";
+        cout << GetPtrSubMonthFM(str_SubMonthKey)->GetLineValue(i);
+        cout << endl;
+    }
+
+    int int_TotalSMExpense = GetPtrSubMonthFM(str_SubMonthKey)->GetLineValue(uni_RangeTop+1);
+
+    if( int_OFlag == 1 )
+    {
+        cout << endl;
+        cout << "--> " << str_SelMonth << "月/" << str_SubMonthKey << "支出: " << CTool::TransOutFormat(int_TotalSMExpense) << endl;
+    }
+
+    if( int_OFlag == 4 )
+    {
+        cout << endl;
+        cout << "--> " << str_SelMonth << "月/" << str_SubMonthKey << "支出: " << CTool::TransOutFormat(int_TotalSMExpense) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+
+    return int_TotalSMExpense;
 }
 
 /**************************************************/

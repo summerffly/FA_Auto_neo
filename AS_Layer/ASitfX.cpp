@@ -108,7 +108,7 @@ void CASitfX::ShowFA()
 
     ptr_FAitfX->ShowLife(ptr_ScriptRipper->GetCurrentMonth(), 1);
     ptr_FAitfX->ShowRoom(ptr_ScriptRipper->GetCurrentMonth(), 3);
-    ptr_FAitfX->ShowSubMonth(ptr_ScriptRipper->GetCurrentMonth(), 2);
+    ptr_FAitfX->ShowSM(ptr_ScriptRipper->GetCurrentMonth(), 2);
     ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), 2);
     ptr_FAitfX->LoadSum(1);
     ptr_FAitfX->SummarizeCAF(1);
@@ -307,7 +307,7 @@ void CASitfX::ShowMonth(const string str_SelMonth)
 
     ptr_FAitfX->ShowLife(str_SelMonth, 1);
     ptr_FAitfX->ShowRoom(str_SelMonth, 2);
-    ptr_FAitfX->ShowSubMonth(str_SelMonth, 2);
+    ptr_FAitfX->ShowSM(str_SelMonth, 2);
     ptr_FAitfX->ShowMonthSurplus(str_SelMonth, 2);
 
     cout << "----------------------------------------" << endl;
@@ -447,6 +447,33 @@ void CASitfX::AnalysisMonthTrend(const string str_MonthKey)
     ptr_FAitfX->DrawMonthTrendVector(vec_stc_TrendInfo, str_MonthKey);
 
     cout << endl;
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
+//   展示 全部月度.M
+/**************************************************/
+void CASitfX::ShowSubMonthTraversal(const string str_SelMonth)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    int int_TotalSMExpense = 0;
+
+    vector<string> vec_str_SubMonth;
+    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+
+    vector<string>::iterator itr_SubMonth;
+    for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
+    {
+        int_TotalSMExpense += ptr_FAitfX->ShowSubMonth(*itr_SubMonth, str_SelMonth, 1);
+    }
+
+    cout << "----------------------------------------" << endl;
+    cout << endl;
+    cout << "****************************************" << endl;
+    cout << "--> " << str_SelMonth << "月/CSM总支出: " << CTool::TransOutFormat(int_TotalSMExpense) << endl;
+    cout << "****************************************" << endl;
     cout << "----------------------------------------" << endl;
 }
 

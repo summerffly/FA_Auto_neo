@@ -23,6 +23,7 @@
 
 #define  X_CMD_TYPE_CHECK_SUBMONTH    ("CheckSubMonth")
 #define  X_CMD_TYPE_UPDATE_SUBMONTH   ("UpdateSubMonth")
+#define  X_CMD_TYPE_SHOW_SUBMONTH     ("ShowSubMonth")
 
 #define  X_CMD_TYPE_CHECK_TITLE    ("CheckTitle")
 #define  X_CMD_TYPE_UPDATE_TITLE   ("UpdateTitle")
