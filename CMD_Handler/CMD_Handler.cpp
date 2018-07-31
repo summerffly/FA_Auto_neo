@@ -10,7 +10,6 @@
 #include "./../X_Frame/DefLib.h"
 #include "./../X_Frame/X_Tool.h"
 
-
 CScriptRipper* CCMDHandler::ms_ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 CFAitfX* CCMDHandler::ms_ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 CASitfX* CCMDHandler::ms_ptr_ASitfX = Singleton<CASitfX>::GetInstance();
@@ -259,6 +258,23 @@ void CCMDHandler::CMD_Init()
 
 void CCMDHandler::CMD_PrintRecode(CMD_Packet srt_CMD)
 {
+    string str_LineOperation_CMD[] = {X_CMD_TYPE_INSERT_LINE,
+                                      X_CMD_TYPE_INSERT_BLANK_LINE,
+                                      X_CMD_TYPE_MODIFY_LINE,
+                                      X_CMD_TYPE_MODIFY_LINE_VALUE,
+                                      X_CMD_TYPE_MODIFY_LINE_CONTENT,
+                                      X_CMD_TYPE_COPY_LINE,
+                                      X_CMD_TYPE_MOVE_LINE,
+                                      X_CMD_TYPE_DELETE_LINE};
+
+    int int_LO_length = sizeof(str_LineOperation_CMD)/sizeof(str_LineOperation_CMD[0]);
+
+    for(int i = 0; i < int_LO_length; i++)
+    {
+        if(str_LineOperation_CMD[i] == srt_CMD.m_str_CmdType)
+            return;
+    }
+
     if(X_CMD_TYPE_PRINT_SUM == srt_CMD.m_str_CmdType)
     {
         ms_str_FM_Type = "SUM";
@@ -286,42 +302,6 @@ void CCMDHandler::CMD_PrintRecode(CMD_Packet srt_CMD)
         ms_str_FM_Key = srt_CMD.m_str_ParamTitle;
         ms_str_FM_Month = srt_CMD.m_str_ParamMonth;
         ms_bol_PR_Valid = true;
-    }
-    else if(X_CMD_TYPE_INSERT_LINE == srt_CMD.m_str_CmdType)
-    {
-        return;
-    }
-    else if(X_CMD_TYPE_INSERT_BLANK_LINE == srt_CMD.m_str_CmdType)
-    {
-        return;
-    }
-    else if(X_CMD_TYPE_MODIFY_LINE == srt_CMD.m_str_CmdType)
-    {
-        return;
-    }
-    else if(X_CMD_TYPE_MODIFY_LINE_VALUE == srt_CMD.m_str_CmdType)
-    {
-        return;
-    }
-    else if(X_CMD_TYPE_MODIFY_LINE_CONTENT == srt_CMD.m_str_CmdType)
-    {
-        return;
-    }
-    else if(X_CMD_TYPE_COPY_LINE == srt_CMD.m_str_CmdType)
-    {
-        return;
-    }
-    else if(X_CMD_TYPE_MOVE_LINE == srt_CMD.m_str_CmdType)
-    {
-        return;
-    }
-    else if(X_CMD_TYPE_DELETE_LINE == srt_CMD.m_str_CmdType)
-    {
-        return;
-    }
-    else if(X_CMD_TYPE_TEST == srt_CMD.m_str_CmdType)
-    {
-        return;
     }
     else
     {
@@ -352,6 +332,8 @@ void CCMDHandler::CMD_PrintRecovery()
         string str_TitleKey = CMD_TTTranslate(ms_str_FM_Key);
         ms_ptr_FAitfX->PrintTitle(str_TitleKey, true);
     }
+    else
+        return;
 }
 
 /**************************************************/

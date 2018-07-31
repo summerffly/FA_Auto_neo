@@ -370,6 +370,7 @@ int CMD_Packet::CMDParser()
     else if(m_int_CmdProNum == 3)
     {
         // Reserved CMD Pro
+        return -4;   // ERROR: 未定义的CmdType
     }
 
     return 0;   // CORRECT
