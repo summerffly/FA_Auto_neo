@@ -51,8 +51,6 @@ string  CMD_HELP_PATCH_PRINT_TITLE = "TT = " + DK + "/" + NS + "/" + TRAVEL + "/
 string  CMD_HELP_INSERT_LINE = INSERT + " -l LINE -ip VALUE -sp CONTENT";
 string  CMD_HELP_INSERT_BLANK_LINE = INSERT + " " + BLANK + " -l LINE";
 string  CMD_HELP_MODIFY_LINE = MODIFY + " -l LINE -ip VALUE -sp CONTENT";
-string  CMD_HELP_MODIFY_VALUE_LINE = MODIFY + " " + VALUE + " -l LINE -ip VALUE";
-string  CMD_HELP_MODIFY_CONTENT_LINE = MODIFY + " " + CONTENT + " -l LINE -sp CONTENT";
 string  CMD_HELP_COPY_LINE   = COPY + " -l LINE -ip NEWLINE";
 string  CMD_HELP_MOVE_LINE   = MOVE + " -l LINE -ip NEWLINE";
 string  CMD_HELP_DELETE_LINE = DELETE + " -l LINE";

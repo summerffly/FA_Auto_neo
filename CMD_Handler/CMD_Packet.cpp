@@ -157,9 +157,10 @@ int CMD_Packet::CMDFilter()
 int CMD_Packet::CMDParser()
 {
     m_int_CmdProNum = m_int_CmdNum;
-    vector<string>::iterator itr_Cmd;
+
     int int_ParamType = 0;
 
+    vector<string>::iterator itr_Cmd;
     itr_Cmd = m_vec_Cmd.end();
     if((*(--itr_Cmd)) == CANCEL)
     {
@@ -360,10 +361,6 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_APPEND_MONTH;
         else if((str_CmdPro_A == INSERT) && (str_CmdPro_B == BLANK))
             m_str_CmdType = X_CMD_TYPE_INSERT_BLANK_LINE;
-        else if((str_CmdPro_A == MODIFY) && (str_CmdPro_B == VALUE))
-            m_str_CmdType = X_CMD_TYPE_MODIFY_LINE_VALUE;
-        else if((str_CmdPro_A == MODIFY) && (str_CmdPro_B == CONTENT))
-            m_str_CmdType = X_CMD_TYPE_MODIFY_LINE_CONTENT;
         else
             return -4;   // ERROR: 未定义的CmdType
     }

@@ -46,8 +46,6 @@
 #define  X_CMD_TYPE_INSERT_LINE           ("InsertLine")
 #define  X_CMD_TYPE_INSERT_BLANK_LINE     ("InsertBlankLine")
 #define  X_CMD_TYPE_MODIFY_LINE           ("ModifyLine")
-#define  X_CMD_TYPE_MODIFY_LINE_VALUE     ("ModifyLineValue")
-#define  X_CMD_TYPE_MODIFY_LINE_CONTENT   ("ModifyLineContent")
 #define  X_CMD_TYPE_COPY_LINE             ("CopyLine")
 #define  X_CMD_TYPE_MOVE_LINE             ("MoveLine")
 #define  X_CMD_TYPE_DELETE_LINE           ("DeleteLine")

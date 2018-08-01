@@ -74,8 +74,6 @@ string MOVE = "move";
 string DELETE = "delete";
 
 string BLANK = "blank";
-string VALUE = "value";
-string CONTENT = "content";
 
 /**************************************************/
 //   文件命令

@@ -83,10 +83,6 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_MODIFY_LINE, CMD_HELP_MODIFY_LINE, "", OnCmdModifyLine)
 
-    X_ON_CMD_TYPE(X_CMD_TYPE_MODIFY_LINE_VALUE, CMD_HELP_MODIFY_VALUE_LINE, "", OnCmdModifyLineValue)
-
-    X_ON_CMD_TYPE(X_CMD_TYPE_MODIFY_LINE_CONTENT, CMD_HELP_MODIFY_CONTENT_LINE, "", OnCmdModifyLineContent)
-
     X_ON_CMD_TYPE(X_CMD_TYPE_COPY_LINE, CMD_HELP_COPY_LINE, "", OnCmdCopyLine)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_MOVE_LINE, CMD_HELP_MOVE_LINE, "", OnCmdMoveLine)
@@ -261,8 +257,6 @@ void CCMDHandler::CMD_PrintRecode(CMD_Packet srt_CMD)
     string str_LineOperation_CMD[] = {X_CMD_TYPE_INSERT_LINE,
                                       X_CMD_TYPE_INSERT_BLANK_LINE,
                                       X_CMD_TYPE_MODIFY_LINE,
-                                      X_CMD_TYPE_MODIFY_LINE_VALUE,
-                                      X_CMD_TYPE_MODIFY_LINE_CONTENT,
                                       X_CMD_TYPE_COPY_LINE,
                                       X_CMD_TYPE_MOVE_LINE,
                                       X_CMD_TYPE_DELETE_LINE};
@@ -656,37 +650,32 @@ void CCMDHandler::OnCmdModifyLine(CMD_Packet srt_CMD)
 {
     if(ms_bol_PR_Valid)
     {
-        ms_ptr_FAitfX->ModifyLine(ms_str_FM_Type, ms_str_FM_Key, srt_CMD.m_int_ParamLine,\
-                                    srt_CMD.m_int_ResParam, srt_CMD.m_str_ResParam);
+        if((srt_CMD.m_int_ResParam == 0) && (srt_CMD.m_str_ResParam == ""))
+        {
+            CTool::MassageOutFotmat("Modify Param Invalid", '!');
+            return;
+        }
+        else if(srt_CMD.m_str_ResParam == "")
+        {
+            ms_ptr_FAitfX->ModifyLineValue(ms_str_FM_Type, ms_str_FM_Key,
+                                           srt_CMD.m_int_ParamLine, srt_CMD.m_int_ResParam);
+        }
+        else if(srt_CMD.m_int_ResParam == 0)
+        {
+            ms_ptr_FAitfX->ModifyLineContent(ms_str_FM_Type, ms_str_FM_Key,
+                                             srt_CMD.m_int_ParamLine, srt_CMD.m_str_ResParam);
+        }
+        else
+        {
+            ms_ptr_FAitfX->ModifyLine(ms_str_FM_Type, ms_str_FM_Key, srt_CMD.m_int_ParamLine,\
+                                      srt_CMD.m_int_ResParam, srt_CMD.m_str_ResParam);
+        }
     }
     else
-        CTool::MassageOutFotmat("Print File Missing", '!');
-
-    CMD_PrintRecovery();
-}
-
-void CCMDHandler::OnCmdModifyLineValue(CMD_Packet srt_CMD)
-{
-    if(ms_bol_PR_Valid)
     {
-        ms_ptr_FAitfX->ModifyLineValue(ms_str_FM_Type, ms_str_FM_Key,
-                                       srt_CMD.m_int_ParamLine, srt_CMD.m_int_ResParam);
-    }
-    else
         CTool::MassageOutFotmat("Print File Missing", '!');
-
-    CMD_PrintRecovery();
-}
-
-void CCMDHandler::OnCmdModifyLineContent(CMD_Packet srt_CMD)
-{
-    if(ms_bol_PR_Valid)
-    {
-        ms_ptr_FAitfX->ModifyLineContent(ms_str_FM_Type, ms_str_FM_Key,
-                                         srt_CMD.m_int_ParamLine, srt_CMD.m_str_ResParam);
+        return;
     }
-    else
-        CTool::MassageOutFotmat("Print File Missing", '!');
 
     CMD_PrintRecovery();
 }

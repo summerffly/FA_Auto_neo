@@ -77,8 +77,6 @@ extern string MOVE;
 extern string DELETE;
 
 extern string BLANK;
-extern string VALUE;
-extern string CONTENT;
 
 /**************************************************/
 //   文件命令
