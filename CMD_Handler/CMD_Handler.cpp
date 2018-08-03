@@ -56,16 +56,17 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_TITLE, "", "", OnCmdUpdateTitle)
 
-    X_ON_CMD_TYPE(X_CMD_TYPE_TRANSFER, "", "", OnCmdTransfer)
+    X_ON_CMD_TYPE(X_CMD_TYPE_TRANSFER, CMD_HELP_TRANSFER, "", OnCmdTransfer)
 
-    X_ON_CMD_TYPE(X_CMD_TYPE_LOTTERY, "", "", OnCmdLottery)
+    X_ON_CMD_TYPE(X_CMD_TYPE_LOTTERY, CMD_HELP_LOTTERY, "", OnCmdLottery)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_ANALYSIS_TREND, CMD_HELP_ANALYSIS_TREND, \
         CMD_HELP_PATCH_ANALYSIS_TREND, OnCmdAnalysisTrend)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_ANALYSIS_PROPORTION, "", "", OnCmdAnalysisProportion)
 
-    X_ON_CMD_TYPE(X_CMD_TYPE_SUMMARIZE, "", "", OnCmdSummarize)
+    X_ON_CMD_TYPE(X_CMD_TYPE_SUMMARIZE, CMD_HELP_SUMMARIZE, \
+        CMD_HELP_PATCH_SUMMARIZE, OnCmdSummarize)
 
 	X_ON_CMD_TYPE(X_CMD_TYPE_FORECAST, CMD_HELP_FORECAST, "", OnCmdForecast)
 
@@ -579,11 +580,15 @@ void CCMDHandler::OnCmdSummarize(CMD_Packet srt_CMD)
     }
     else if( srt_CMD.m_str_ResParam == TITLE )
     {
-        ms_ptr_FAitfX->SummarizeTitle(1);
+        ms_ptr_FAitfX->SummarizeTitle(2);
     }
     else if( srt_CMD.m_str_ResParam == TAIL )
     {
-        ms_ptr_FAitfX->SummarizeTail(1);
+        ms_ptr_FAitfX->SummarizeTail(2);
+    }
+    else
+    {
+        CTool::MassageOutFotmat("Invalid Summarize Param", '!');
     }
 }
 

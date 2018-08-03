@@ -32,14 +32,15 @@ string  CMD_HELP_SHOW_SUBMONTH  = SHOW + " -sm SM";
 //string  HELP_CMD_TYPE_CHECK_TITLE    ("CheckTitle")
 //string  HELP_CMD_TYPE_UPDATE_TITLE   ("UpdateTitle")
 
-//string  CMD_HELP_TRANSFER    ("Transfer")
-//string  CMD_HELP_LOTTERY     ("Lottery")
+string  CMD_HELP_TRANSFER = TRANSFER + " -f VALUE";
+string  CMD_HELP_LOTTERY = LOTTERY + " -f VALUE -d DATE";
 
 string  CMD_HELP_ANALYSIS_TREND = ANALYSIS + " " + TREND + " -sp TO";
 string  CMD_HELP_PATCH_ANALYSIS_TREND = "TO = " + EXPENSE + "/" + LIFE + "/" + ROOM + "/" + CONSUMPTION;
 //string  HELP_CMD_TYPE_ANALYSIS_PROPORTION    ("AnalysisProportion")
 
-//string  HELP_CMD_TYPE_SUMMARIZE    ("Summarize")
+string  CMD_HELP_SUMMARIZE = SUMMARIZE + " -sp TAR";
+string  CMD_HELP_PATCH_SUMMARIZE = "TAR = " + MONTH + "/" + TITLE + "/" + TAIL;
 string  CMD_HELP_FORECAST = FORECAST + " -sp MONTH -ip SALARY_PATCH";
 
 string  CMD_HELP_PRINT_MONTH    = PRINT + " " + MONTH + " -m MONTH";

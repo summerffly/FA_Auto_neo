@@ -167,6 +167,13 @@ void CFAitfX::SummarizeTitle(int int_OFlag)
         cout << "----------------------------------------" << endl;
     }
 
+    if(int_OFlag == 2)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### Title累计统计 ###" << endl;
+        cout << endl;
+    }
+
     vector<string>::iterator itr_Title;
     for(itr_Title = vec_str_Title.begin(); itr_Title != vec_str_Title.end(); itr_Title++)
     {
@@ -177,7 +184,7 @@ void CFAitfX::SummarizeTitle(int int_OFlag)
         int int_TitleCount = m_ptr_FM_SUM->GetLineValue(uni_TitleLine+1);
         int_TitleSum += int_TitleCount;
 
-        if(int_OFlag == 1)
+        if(int_OFlag > 1)
         {
             cout << *itr_Title << ": " << CTool::TransOutFormat(int_TitleCount) << endl;
         }
@@ -187,10 +194,7 @@ void CFAitfX::SummarizeTitle(int int_OFlag)
 
     if(int_OFlag == 2)
     {
-        cout << "----------------------------------------" << endl;
-        cout << "### Title累计统计 ###" << endl;
         cout << endl;
-
         cout << "Title累计支出: " << CTool::TransOutFormat(m_int_TitleSum) << endl;
         cout << "----------------------------------------" << endl;
     }
@@ -216,6 +220,13 @@ void CFAitfX::SummarizeTail(int int_OFlag)
         cout << "----------------------------------------" << endl;
     }
 
+    if(int_OFlag == 2)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### Tail累计统计 ###" << endl;
+        cout << endl;
+    }
+
     vector<string>::iterator itr_Tail;
     for(itr_Tail = vec_str_Tail.begin(); itr_Tail != vec_str_Tail.end(); itr_Tail++)
     {
@@ -226,7 +237,7 @@ void CFAitfX::SummarizeTail(int int_OFlag)
         int int_TailCount = m_ptr_FM_SUM->GetLineValue(uni_TailLine);
         int_TailSum += int_TailCount;
 
-        if(int_OFlag == 1)
+        if(int_OFlag > 1)
         {
             cout << *itr_Tail << ": " << CTool::TransOutFormat(int_TailCount) << endl;
         }
@@ -236,10 +247,7 @@ void CFAitfX::SummarizeTail(int int_OFlag)
 
     if(int_OFlag == 2)
     {
-        cout << "----------------------------------------" << endl;
-        cout << "### Tail累计统计 ###" << endl;
         cout << endl;
-
         cout << "Tail累计收支: " << CTool::TransOutFormat(m_int_TailSum) << endl;
         cout << "----------------------------------------" << endl;
     }
