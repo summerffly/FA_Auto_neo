@@ -1428,6 +1428,18 @@ int CFAitfX::ShowSubMonth(const string str_SubMonthKey, const string str_SelMont
 }
 
 /**************************************************/
+//   展示 Title 支出
+//   OFlag == 1 >>> 原始显示模式
+//   OFlag == 2 >>> Tag显示模式
+//   OFlag == 3 >>> NONE (预留)
+//   OFlag == 4 >>> NONE (预留)
+/**************************************************/
+int CFAitfX::ShowTitle(const string str_TitleKey, const int int_OFlag)
+{
+    return 0;
+}
+
+/**************************************************/
 //   Print Sum
 /**************************************************/
 void CFAitfX::PrintSum(bool bol_NumFlag)

@@ -22,6 +22,7 @@ regex RE_eof("^---$");
 regex REP_HeadTitle("^(# )(.{1,})$");
 regex REP_SubTitle("^(## )(.{1,})$");
 regex REP_MonthTitle("^(## )(.{1,})(\\.M\\d{2})$");
+regex REP_TTTag("^(### )(.{1,})$");
 
 regex REP_Blank("^$");
 regex REP_Delimiter("^(```)$");

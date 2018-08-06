@@ -23,16 +23,17 @@
 #define LTYPE_HEADTITLE     1   // 总标题
 #define LTYPE_SUBTITLE      2   // 单项标题
 #define LTYPE_MONTHTITLE    3   // 月度标题
+#define LTYPE_TTTAG         4   // 分项Tag
 
-#define LTYPE_BLANK         6   // 空行
-#define LTYPE_DELIMITER     7   // 分隔线
-#define LTYPE_TIMESTAMP     8   // 更新时间戳
-#define LTYPE_EOF           9   // 结束线
+#define LTYPE_BLANK         11   // 空行
+#define LTYPE_DELIMITER     12   // 分隔线
+#define LTYPE_TIMESTAMP     13   // 更新时间戳
+#define LTYPE_EOF           14   // 结束线
 
-#define LTYPE_FBIRC_AGGR        11   // 总金额
-#define LTYPE_FBIRC_TITLESUM    12   // 单项金额
-#define LTYPE_FBIRC_MONTHSUM    13   // 月度金额
-#define LTYPE_FBIRC_LINEUINT    14   // 单行金额
+#define LTYPE_FBIRC_AGGR        21   // 总金额
+#define LTYPE_FBIRC_TITLESUM    22   // 单项金额
+#define LTYPE_FBIRC_MONTHSUM    23   // 月度金额
+#define LTYPE_FBIRC_LINEUINT    24   // 单行金额
 
 
 #endif

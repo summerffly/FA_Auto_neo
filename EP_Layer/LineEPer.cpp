@@ -85,6 +85,16 @@ int CLineEPer::LineParser()
 
             break;
         }
+        else if( regex_match(m_str_FullLine, str_Match, REP_TTTag) )
+        {
+            m_uni_LineType = LTYPE_TTTAG;
+            m_bol_LineValuePM = true;
+            m_uni_LineValueABS = 0;
+            m_int_LineValue = 0;
+            m_str_LineContent = m_str_FullLine;
+
+            break;
+        }
         else if( regex_match(m_str_FullLine, str_Match, REP_Blank) )
         {
             m_uni_LineType = LTYPE_BLANK;

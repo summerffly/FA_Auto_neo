@@ -26,6 +26,7 @@ extern regex RE_eof;
 extern regex REP_HeadTitle;
 extern regex REP_SubTitle;
 extern regex REP_MonthTitle;
+extern regex REP_TTTag;
 
 extern regex REP_Blank;
 extern regex REP_Delimiter;
