@@ -1434,9 +1434,76 @@ int CFAitfX::ShowSubMonth(const string str_SubMonthKey, const string str_SelMont
 //   OFlag == 3 >>> NONE (预留)
 //   OFlag == 4 >>> NONE (预留)
 /**************************************************/
-int CFAitfX::ShowTitle(const string str_TitleKey, const int int_OFlag)
+void CFAitfX::ShowTitle(const string str_TitleKey, const int int_OFlag)
 {
-    return 0;
+    string str_RangeTop("");
+    string str_RangeBottom("## Total");
+
+    unsigned int uni_RangeTop = 1;
+    GetPtrTitleFM(str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = GetPtrTitleFM(str_TitleKey)->GetSearchLineIndex(1);
+
+    cout << "----------------------------------------" << endl;
+
+    if( int_OFlag == 1 )
+    {
+
+        for(int i=uni_RangeTop+2; i<uni_RangeBottom-1; i++)
+        {
+            if(LTYPE_FBIRC_LINEUINT == GetPtrTitleFM(str_TitleKey)->GetLineType(i))
+            {
+                cout << GetPtrTitleFM(str_TitleKey)->GetLineContent(i);
+                cout << ": ";
+                cout << CTool::TransOutFormat(GetPtrTitleFM(str_TitleKey)->GetLineValue(i));
+                cout << endl;
+            }
+            else if(LTYPE_TTTAG == GetPtrTitleFM(str_TitleKey)->GetLineType(i))
+            {
+                cout << GetPtrTitleFM(str_TitleKey)->GetFullLine(i);
+                cout << " ----------";
+                cout << endl;
+            }
+            else if(LTYPE_BLANK == GetPtrTitleFM(str_TitleKey)->GetLineType(i))
+            {
+                cout << endl;
+            }
+        }
+    }
+    else if( int_OFlag == 2 )
+    {
+        string str_TagContainer("");
+        int int_TagBlockValue = 0;
+
+        for(int i=uni_RangeTop+2; i<=uni_RangeBottom; i++)
+        {
+            if(LTYPE_TTTAG == GetPtrTitleFM(str_TitleKey)->GetLineType(i))
+            {
+                str_TagContainer = GetPtrTitleFM(str_TitleKey)->GetFullLine(i);
+            }
+            else if(LTYPE_BLANK == GetPtrTitleFM(str_TitleKey)->GetLineType(i))
+            {
+                if(str_TagContainer != "")
+                {
+                    cout << str_TagContainer << ": " << int_TagBlockValue << endl;
+                }
+
+                str_TagContainer = "";
+                int_TagBlockValue = 0;
+
+                continue;
+            }
+            else if(LTYPE_FBIRC_LINEUINT == GetPtrTitleFM(str_TitleKey)->GetLineType(i))
+            {
+                int_TagBlockValue += GetPtrTitleFM(str_TitleKey)->GetLineValue(i);
+            }
+        }
+    }
+
+    int int_TotalTTExpense = GetPtrTitleFM(str_TitleKey)->GetLineValue(uni_RangeBottom+2);
+    
+    cout << "----------------------------------------" << endl;
+    cout << "--> " << str_TitleKey << "/总支出: " << CTool::TransOutFormat(int_TotalTTExpense) << endl;
+    cout << "----------------------------------------" << endl;
 }
 
 /**************************************************/

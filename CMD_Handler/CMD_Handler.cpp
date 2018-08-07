@@ -56,6 +56,8 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_TITLE, "", "", OnCmdUpdateTitle)
 
+    X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_TITLE, "", "", OnCmdShowTitle)
+
     X_ON_CMD_TYPE(X_CMD_TYPE_TRANSFER, CMD_HELP_TRANSFER, "", OnCmdTransfer)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_LOTTERY, CMD_HELP_LOTTERY, "", OnCmdLottery)
@@ -514,6 +516,16 @@ void CCMDHandler::OnCmdUpdateTitle(CMD_Packet srt_CMD)
     ms_ptr_FAitfX->UpdateTitleExpense(str_TitleKey, true);
 
     ms_ptr_ASitfX->UpdateSum(0);
+}
+
+void CCMDHandler::OnCmdShowTitle(CMD_Packet srt_CMD)
+{
+    string str_TitleKey = CMD_TTTranslate(srt_CMD.m_str_ParamTitle);
+
+    if( srt_CMD.m_str_ResParam == TAG )
+        ms_ptr_FAitfX->ShowTitle(str_TitleKey, 2);
+    else
+        ms_ptr_FAitfX->ShowTitle(str_TitleKey, 1);
 }
 
 void CCMDHandler::OnCmdTransfer(CMD_Packet srt_CMD)

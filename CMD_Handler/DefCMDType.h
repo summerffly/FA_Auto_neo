@@ -27,7 +27,7 @@
 
 #define  X_CMD_TYPE_CHECK_TITLE    ("CheckTitle")
 #define  X_CMD_TYPE_UPDATE_TITLE   ("UpdateTitle")
-#define  X_CMD_TYPE_Show_TITLE     ("ShowTitle")
+#define  X_CMD_TYPE_SHOW_TITLE     ("ShowTitle")
 
 #define  X_CMD_TYPE_TRANSFER    ("Transfer")
 #define  X_CMD_TYPE_LOTTERY     ("Lottery")

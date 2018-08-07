@@ -60,6 +60,7 @@ public:
 
 	static void OnCmdCheckTitle(CMD_Packet srt_CMD);
 	static void OnCmdUpdateTitle(CMD_Packet srt_CMD);
+	static void OnCmdShowTitle(CMD_Packet srt_CMD);
 
 	static void OnCmdTransfer(CMD_Packet srt_CMD);
 	static void OnCmdLottery(CMD_Packet srt_CMD);

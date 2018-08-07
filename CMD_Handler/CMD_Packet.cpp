@@ -318,6 +318,8 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_CHECK_TITLE;
         else if((str_CmdPro_A == UPDATE) && (int_ParamType == 2))
             m_str_CmdType = X_CMD_TYPE_UPDATE_TITLE;
+        else if((str_CmdPro_A == SHOW) && (int_ParamType == 2))
+            m_str_CmdType = X_CMD_TYPE_SHOW_TITLE;
         else if((str_CmdPro_A == PRINT) && (int_ParamType == 1))
             m_str_CmdType = X_CMD_TYPE_PRINT_SUBMONTH;
         else if((str_CmdPro_A == PRINT) && (int_ParamType == 2))

@@ -102,7 +102,7 @@ public:
     void ShowSM(const string str_SelMonth, int int_OFlag);
 
     int ShowSubMonth(const string str_SubMonthKey, const string str_SelMonth, int int_OFlag);
-    int ShowTitle(const string str_TitleKey, const int int_OFlag);
+    void ShowTitle(const string str_TitleKey, const int int_OFlag);
 
     /****************************************/
     //   操作区

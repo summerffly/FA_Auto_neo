@@ -38,6 +38,7 @@ string DK = "dk";
 string NS = "ns";
 string TRAVEL = "travel";
 string LOTTERY = "lottery";
+string TAG = "tag";
 
 string ZHIFUBAO = "zf";
 string WEIXIN = "wc";
