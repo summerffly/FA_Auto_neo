@@ -114,7 +114,7 @@ void CFAitfX::SummarizeMonth(int int_OFlag)
     vector<string>::iterator itr_Month;
     for(itr_Month = vec_str_MonthRange.begin(); itr_Month != vec_str_MonthRange.end(); itr_Month++)
     {
-        str_MonthKey = "## life." + *itr_Month;
+        str_MonthKey = "## life.M" + *itr_Month;
         m_ptr_FM_SUM->SearchLineKey(str_MonthKey.c_str());
         uni_MonthLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
 
@@ -184,7 +184,7 @@ void CFAitfX::SummarizeTitle(int int_OFlag)
         int int_TitleCount = m_ptr_FM_SUM->GetLineValue(uni_TitleLine+1);
         int_TitleSum += int_TitleCount;
 
-        if(int_OFlag > 1)
+        if(int_OFlag > 0)
         {
             cout << *itr_Title << ": " << CTool::TransOutFormat(int_TitleCount) << endl;
         }
@@ -237,7 +237,7 @@ void CFAitfX::SummarizeTail(int int_OFlag)
         int int_TailCount = m_ptr_FM_SUM->GetLineValue(uni_TailLine);
         int_TailSum += int_TailCount;
 
-        if(int_OFlag > 1)
+        if(int_OFlag > 0)
         {
             cout << *itr_Tail << ": " << CTool::TransOutFormat(int_TailCount) << endl;
         }

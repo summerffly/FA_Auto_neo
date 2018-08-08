@@ -495,7 +495,7 @@ void CCMDHandler::OnCmdShowSubMonth(CMD_Packet srt_CMD)
 {
     if( srt_CMD.m_str_ParamSubMonth == ALL )
     {
-        ms_ptr_ASitfX->ShowSubMonthTraversal(srt_CMD.m_str_ParamMonth);
+        ms_ptr_ASitfX->ShowAllSubMonth(srt_CMD.m_str_ParamMonth);
     }
     else
     {
@@ -623,12 +623,26 @@ void CCMDHandler::OnCmdPrintSubMonth(CMD_Packet srt_CMD)
 {
     if( srt_CMD.m_str_ParamSubMonth == ALL )
     {
-        ms_ptr_ASitfX->PrintSubMonthTraversal(srt_CMD.m_str_ParamMonth, false);
+        if(srt_CMD.m_str_ResParam == TRAVERSAL)
+        {
+            CTool::MassageOutFotmat("Error SM-Param Combo", '!');
+            return;
+        }
+        else
+            ms_ptr_ASitfX->PrintAllSubMonth(srt_CMD.m_str_ParamMonth, false);
     }
     else
     {
-        string str_SubMonthKey = CMD_SMTranslate(srt_CMD.m_str_ParamSubMonth);
-        ms_ptr_FAitfX->PrintSubMonth(str_SubMonthKey, srt_CMD.m_str_ParamMonth, true, true);
+        if(srt_CMD.m_str_ResParam == TRAVERSAL)
+        {
+            string str_SubMonthKey = CMD_SMTranslate(srt_CMD.m_str_ParamSubMonth);
+            ms_ptr_ASitfX->PrintSubMonthTraversal(str_SubMonthKey, true);
+        }
+        else
+        {
+            string str_SubMonthKey = CMD_SMTranslate(srt_CMD.m_str_ParamSubMonth);
+            ms_ptr_FAitfX->PrintSubMonth(str_SubMonthKey, srt_CMD.m_str_ParamMonth, true, true);
+        }
     }
 }
 

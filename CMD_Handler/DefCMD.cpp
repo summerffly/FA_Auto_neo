@@ -75,6 +75,7 @@ string MOVE = "move";
 string DELETE = "delete";
 
 string BLANK = "blank";
+string TRAVERSAL = "tv";
 
 /**************************************************/
 //   文件命令

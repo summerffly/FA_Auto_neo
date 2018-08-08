@@ -201,8 +201,8 @@ void CScriptRipper::SubMonthRipper()
 /**************************************************/
 void CScriptRipper::MonthRangeGenerator()
 {
-    string str_OriginMonth = "M" + m_str_OriginMonth;
-    string str_CurrentMonth = "M" + m_str_CurrentMonth;
+    string str_OriginMonth = m_str_OriginMonth;
+    string str_CurrentMonth = m_str_CurrentMonth;
 
     m_vec_str_Month.push_back(str_OriginMonth);
 
@@ -218,7 +218,7 @@ void CScriptRipper::MonthRangeGenerator()
         while( uni_MonthCounter > 0 )
         {
             str_InsertMonth = CTool::GenerateNextMonth(str_InsertMonth);
-            m_vec_str_Month.push_back("M" + str_InsertMonth);
+            m_vec_str_Month.push_back(str_InsertMonth);
             uni_MonthCounter--;
         }
 
@@ -232,18 +232,18 @@ void CScriptRipper::MonthRangeGenerator()
         while( uni_MonthCounter > 0 )
         {
             str_InsertMonth = CTool::GenerateNextMonth(str_InsertMonth);
-            m_vec_str_Month.push_back("M" + str_InsertMonth);
+            m_vec_str_Month.push_back(str_InsertMonth);
             uni_MonthCounter--;
         }
 
         uni_MonthCounter = m_uni_CurrentMonth;
         str_InsertMonth = "01";
-        m_vec_str_Month.push_back("M" + str_InsertMonth);
+        m_vec_str_Month.push_back(str_InsertMonth);
 
         while( uni_MonthCounter > 1 )
         {
             str_InsertMonth = CTool::GenerateNextMonth(str_InsertMonth);
-            m_vec_str_Month.push_back("M" + str_InsertMonth);
+            m_vec_str_Month.push_back(str_InsertMonth);
             uni_MonthCounter--;
         }
 

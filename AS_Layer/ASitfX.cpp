@@ -453,7 +453,7 @@ void CASitfX::AnalysisMonthTrend(const string str_MonthKey)
 /**************************************************/
 //   展示 全部月度.M
 /**************************************************/
-void CASitfX::ShowSubMonthTraversal(const string str_SelMonth)
+void CASitfX::ShowAllSubMonth(const string str_SelMonth)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
@@ -480,7 +480,7 @@ void CASitfX::ShowSubMonthTraversal(const string str_SelMonth)
 /**************************************************/
 //   展示.md 全部月度.M
 /**************************************************/
-void CASitfX::PrintSubMonthTraversal(const string str_SelMonth, bool bol_NumFlag)
+void CASitfX::PrintAllSubMonth(const string str_SelMonth, bool bol_NumFlag)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
@@ -496,6 +496,30 @@ void CASitfX::PrintSubMonthTraversal(const string str_SelMonth, bool bol_NumFlag
     for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
     {
         ptr_FAitfX->PrintSubMonth(*itr_SubMonth, str_SelMonth, bol_NumFlag, false);
+    }
+
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
+//   展示.md 遍历月度.M
+/**************************************************/
+void CASitfX::PrintSubMonthTraversal(const string str_SubMonthKey, bool bol_NumFlag)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    cout << "----------------------------------------" << endl;
+    cout << "### 遍历 月度.M 展示.md ###" << endl;
+    cout << endl;
+
+    vector<string> vec_str_Month;
+    ptr_ScriptRipper->MonthRangeDuplicator(vec_str_Month);
+
+    vector<string>::iterator itr_Month;
+    for(itr_Month = vec_str_Month.begin(); itr_Month != vec_str_Month.end(); itr_Month++)
+    {
+        ptr_FAitfX->PrintSubMonth(str_SubMonthKey, *itr_Month, bol_NumFlag, false);
     }
 
     cout << "----------------------------------------" << endl;
