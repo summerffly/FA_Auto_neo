@@ -363,6 +363,8 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_APPEND_MONTH;
         else if((str_CmdPro_A == INSERT) && (str_CmdPro_B == BLANK))
             m_str_CmdType = X_CMD_TYPE_INSERT_BLANK_LINE;
+        else if((str_CmdPro_A == CHECK) && (str_CmdPro_B == SYNC))
+            m_str_CmdType = X_CMD_TYPE_CHECK_SYNC;
         else
             return -4;   // ERROR: 未定义的CmdType
     }

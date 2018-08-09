@@ -94,6 +94,8 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_APPEND_MONTH, CMD_HELP_APPEND_MONTH, "", OnCmdAppendMonth)
 
+    X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_SYNC, "", "", OnCmdCheckSync)
+
 	X_ON_CMD_TYPE(X_CMD_TYPE_SYNC, "", "", OnCmdSync)
 
 	X_ON_CMD_TYPE(X_CMD_TYPE_WRITE, "", "", OnCmdWrite)
@@ -754,6 +756,11 @@ void CCMDHandler::OnCmdAppendMonth(CMD_Packet srt_CMD)
     ms_ptr_ASitfX->AppendNextMonth(srt_CMD.m_str_ResParam);
 }
 
+void CCMDHandler::OnCmdCheckSync(CMD_Packet srt_CMD)
+{
+    ms_ptr_FAitfX->CheckSyncAllFile();
+}
+
 void CCMDHandler::OnCmdSync(CMD_Packet srt_CMD)
 {
 	ms_ptr_FAitfX->SyncAllFile();
@@ -762,6 +769,7 @@ void CCMDHandler::OnCmdSync(CMD_Packet srt_CMD)
 void CCMDHandler::OnCmdWrite(CMD_Packet srt_CMD)
 {
 	ms_ptr_FAitfX->WriteAllFile();
+    ms_ptr_FAitfX->CheckSyncAllFile();
 }
 
 void CCMDHandler::OnCmdBackup(CMD_Packet srt_CMD)
@@ -781,7 +789,7 @@ void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
     cout << "***          BEGIN OF TEST           ***" << endl;
     cout << "****************************************" << endl;
 
-    ms_ptr_FAitfX->CheckAllFile();
+    //ms_ptr_FAitfX->CheckAllFile();
 
     cout << "****************************************" << endl;
     cout << "***           END OF TEST            ***" << endl;

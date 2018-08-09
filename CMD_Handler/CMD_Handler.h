@@ -85,6 +85,7 @@ public:
 
 	static void OnCmdAppendMonth(CMD_Packet srt_CMD);
 
+	static void OnCmdCheckSync(CMD_Packet srt_CMD);
 	static void OnCmdSync(CMD_Packet srt_CMD);
 	static void OnCmdWrite(CMD_Packet srt_CMD);
 	static void OnCmdBackup(CMD_Packet srt_CMD);

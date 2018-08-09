@@ -132,7 +132,7 @@ public:
     /****************************************/
     //   文件读写区
     /****************************************/
-    void CheckAllFile();
+    void CheckSyncAllFile();
     void SyncAllFile();
     void WriteAllFile();
     void BackUpAllFile(const string str_BackUpPath);

@@ -1767,7 +1767,7 @@ void CFAitfX::DeleteLine(const string str_Type, const string str_Key,\
     GetPtrFM(str_Type, str_Key)->DeleteLine(uni_LineIndex);
 }
 
-void CFAitfX::CheckAllFile()
+void CFAitfX::CheckSyncAllFile()
 {
     for(int i=0; i<m_uni_FM_aszie; i++)
     {
