@@ -1,4 +1,5 @@
 
+
 //------------------------------//
 //   Coded by 番茄
 //   @summer studio
@@ -189,6 +190,110 @@ int CFileOPer::FileReader(const char *cha_FullFileName)
     return 0;
 }
 
+int CFileOPer::FileComparer()
+{
+    string str_FullFileName = m_str_FilePath + m_str_FileName;
+    char *cha_FullFileName = new char[MAX_FULLFILENAME];
+    strcpy(cha_FullFileName, str_FullFileName.c_str());
+
+    ifstream ifile(cha_FullFileName);
+
+    if(ifile.is_open() == 0)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!          Read File Error         !!!" << endl;
+        cout << "----------------------------------------" << endl;
+        return -1;
+    }
+
+    char cha_Buffer[MAX_LINE_CHAR];
+    char cha_Line[MAX_LINE_CHAR];
+    unsigned int uni_BufferLength = 0;
+    int int_RetCmp = 0;
+    int int_LineNum = 1;
+
+    while(!ifile.eof())
+    {
+        if(int_LineNum > m_int_LineNum)
+        {
+            int_RetCmp = 0;
+            break;
+        }
+
+        ifile.getline(cha_Buffer, MAX_LINE_CHAR);
+        strcpy(cha_Line, m_vec_Line.at(int_LineNum).c_str());
+        uni_BufferLength = strlen(cha_Buffer);
+
+        int_RetCmp = strncmp(cha_Line,cha_Buffer,uni_BufferLength);
+
+        if(int_RetCmp == 0)
+        {
+            int_LineNum++;
+            continue;
+        }
+        else
+        {
+            int_RetCmp = -1;
+            break;
+        }
+    }
+    
+    ifile.close();
+
+    delete []cha_FullFileName;
+
+    return int_RetCmp;
+}
+
+int CFileOPer::FileComparer(const char *cha_FullFileName)
+{
+    ifstream ifile(cha_FullFileName);
+
+    if(ifile.is_open() == 0)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "!!!          Read File Error         !!!" << endl;
+        cout << "----------------------------------------" << endl;
+        return -1;
+    }
+
+    char cha_Buffer[MAX_LINE_CHAR];
+    char cha_Line[MAX_LINE_CHAR];
+    unsigned int uni_BufferLength = 0;
+    int int_RetCmp = 0;
+    int int_LineNum = 1;
+
+    while(!ifile.eof())
+    {
+        if(int_LineNum > m_int_LineNum)
+        {
+            int_RetCmp = 0;
+            break;
+        }
+
+        ifile.getline(cha_Buffer, MAX_LINE_CHAR);
+        strcpy(cha_Line, m_vec_Line.at(int_LineNum).c_str());
+        uni_BufferLength = strlen(cha_Buffer);
+
+        int_RetCmp = strncmp(cha_Line,cha_Buffer,uni_BufferLength);
+
+        if(int_RetCmp == 0)
+        {
+            int_LineNum++;
+            continue;
+        }
+        else
+        {
+            int_RetCmp = -1;
+            break;
+        }
+    }
+    
+    ifile.close();
+
+    return int_RetCmp;
+}
+
 int CFileOPer::FileWriter()
 {
     string str_FullFileName = m_str_FilePath + m_str_FileName;
@@ -204,7 +309,7 @@ int CFileOPer::FileWriter()
         cout << "----------------------------------------" << endl;
         return -1;
     }
-        
+    
     for(int i = 1; i <= m_int_LineNum; i++)
     {
         ofile << m_vec_Line.at(i).c_str() << endl;

@@ -40,6 +40,18 @@ CFAitfX::CFAitfX()
     m_ptr_FM_tt_travel = new CFileManager("./travel.md");
     m_ptr_FM_tt_lottery = new CFileManager("./lottery.md");
     m_ptr_FM_NULL = NULL;
+
+    m_ptr_FM_array[0] = m_ptr_FM_SUM;
+    m_ptr_FM_array[1] = m_ptr_FM_life;
+    m_ptr_FM_array[2] = m_ptr_FM_sm_DGtler;
+    m_ptr_FM_array[3] = m_ptr_FM_sm_Books;
+    m_ptr_FM_array[4] = m_ptr_FM_sm_KEEP;
+    m_ptr_FM_array[5] = m_ptr_FM_sm_TB;
+    m_ptr_FM_array[6] = m_ptr_FM_sm_sa;
+    m_ptr_FM_array[7] = m_ptr_FM_tt_DK;
+    m_ptr_FM_array[8] = m_ptr_FM_tt_NS;
+    m_ptr_FM_array[9] = m_ptr_FM_tt_travel;
+    m_ptr_FM_array[10] = m_ptr_FM_tt_lottery;
 }
 
 /**************************************************/
@@ -1755,8 +1767,30 @@ void CFAitfX::DeleteLine(const string str_Type, const string str_Key,\
     GetPtrFM(str_Type, str_Key)->DeleteLine(uni_LineIndex);
 }
 
+void CFAitfX::CheckAllFile()
+{
+    for(int i=0; i<m_uni_FM_aszie; i++)
+    {
+        if(0 != m_ptr_FM_array[i]->FileComparer())
+        {
+            string str_ErrorMsg = m_ptr_FM_array[i]->GetFileName();
+            str_ErrorMsg += " NOT Sync";
+            CTool::MassageOutFotmat(str_ErrorMsg, '!');
+            return;
+        }
+    }
+
+    CTool::MassageOutFotmat("All File Sync", '*');
+}
+
 void CFAitfX::SyncAllFile()
 {
+    for(int i=0; i<m_uni_FM_aszie; i++)
+    {
+        m_ptr_FM_array[i]->SyncFile();
+    }
+
+    /*
     m_ptr_FM_SUM->SyncFile();
     m_ptr_FM_life->SyncFile();
     m_ptr_FM_sm_DGtler->SyncFile();
@@ -1768,48 +1802,24 @@ void CFAitfX::SyncAllFile()
     m_ptr_FM_tt_NS->SyncFile();
     m_ptr_FM_tt_travel->SyncFile();
     m_ptr_FM_tt_lottery->SyncFile();
+    */
 }
 
 void CFAitfX::WriteAllFile()
 {
-    m_ptr_FM_SUM->UpdateTimeStamp();
-    m_ptr_FM_life->UpdateTimeStamp();
-    m_ptr_FM_sm_DGtler->UpdateTimeStamp();
-    m_ptr_FM_sm_Books->UpdateTimeStamp();
-    m_ptr_FM_sm_KEEP->UpdateTimeStamp();
-    m_ptr_FM_sm_TB->UpdateTimeStamp();
-    m_ptr_FM_sm_sa->UpdateTimeStamp();
-    m_ptr_FM_tt_DK->UpdateTimeStamp();
-    m_ptr_FM_tt_NS->UpdateTimeStamp();
-    m_ptr_FM_tt_travel->UpdateTimeStamp();
-    m_ptr_FM_tt_lottery->UpdateTimeStamp();
-
-    m_ptr_FM_SUM->FileWriter();
-    m_ptr_FM_life->FileWriter();
-    m_ptr_FM_sm_DGtler->FileWriter();
-    m_ptr_FM_sm_Books->FileWriter();
-    m_ptr_FM_sm_KEEP->FileWriter();
-    m_ptr_FM_sm_TB->FileWriter();
-    m_ptr_FM_sm_sa->FileWriter();
-    m_ptr_FM_tt_DK->FileWriter();
-    m_ptr_FM_tt_NS->FileWriter();
-    m_ptr_FM_tt_travel->FileWriter();
-    m_ptr_FM_tt_lottery->FileWriter();
+    for(int i=0; i<m_uni_FM_aszie; i++)
+    {
+        m_ptr_FM_array[i]->UpdateTimeStamp();
+        m_ptr_FM_array[i]->FileWriter();
+    }
 }
 
 void CFAitfX::BackUpAllFile(const string str_BackUpPath)
 {
-    m_ptr_FM_SUM->BackUpFile(str_BackUpPath);
-    m_ptr_FM_life->BackUpFile(str_BackUpPath);
-    m_ptr_FM_sm_DGtler->BackUpFile(str_BackUpPath);
-    m_ptr_FM_sm_Books->BackUpFile(str_BackUpPath);
-    m_ptr_FM_sm_KEEP->BackUpFile(str_BackUpPath);
-    m_ptr_FM_sm_TB->BackUpFile(str_BackUpPath);
-    m_ptr_FM_sm_sa->BackUpFile(str_BackUpPath);
-    m_ptr_FM_tt_DK->BackUpFile(str_BackUpPath);
-    m_ptr_FM_tt_NS->BackUpFile(str_BackUpPath);
-    m_ptr_FM_tt_travel->BackUpFile(str_BackUpPath);
-    m_ptr_FM_tt_lottery->BackUpFile(str_BackUpPath);
+    for(int i=0; i<m_uni_FM_aszie; i++)
+    {
+        m_ptr_FM_array[i]->BackUpFile(str_BackUpPath);
+    }
 }
 
 CFileManager *CFAitfX::GetPtrFM(const string str_Type, const string str_Key)

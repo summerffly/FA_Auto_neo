@@ -59,6 +59,16 @@ int CFileManager::GetLineNum()
     return m_int_LineNum;
 }
 
+int CFileManager::FileComparer()
+{
+    return m_cls_FileOPer.FileComparer();
+}
+
+int CFileManager::FileComparer(const char *cha_FullFileName)
+{
+    return m_cls_FileOPer.FileComparer(cha_FullFileName);
+}
+
 int CFileManager::FileWriter()
 {
     return m_cls_FileOPer.FileWriter();
@@ -74,6 +84,11 @@ int CFileManager::BackUpFile(const string str_BackUpPath)
     string str_FullFileName = str_BackUpPath;
     str_FullFileName += m_str_FileName;
     return m_cls_FileOPer.FileWriter(str_FullFileName.c_str());
+}
+
+string CFileManager::GetFileName()
+{
+    return m_str_FileName;
 }
 
 unsigned int CFileManager::GetLineType(const int int_LineIndex)

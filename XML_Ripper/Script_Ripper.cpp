@@ -256,7 +256,7 @@ void CScriptRipper::MonthRangeGenerator()
 /**************************************************/
 bool CScriptRipper::IsIncludeMonthRange(const string str_SelMonth)
 {
-    string str_JudgeMonth("M" + str_SelMonth);
+    string str_JudgeMonth(str_SelMonth);
 
     vector<string>::iterator itr_Month;
     for(itr_Month = m_vec_str_Month.begin(); itr_Month != m_vec_str_Month.end(); itr_Month++)

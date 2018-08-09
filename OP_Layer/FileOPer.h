@@ -36,6 +36,8 @@ public:
 
     int FileReader();
     int FileReader(const char *cha_FullFileName);
+    int FileComparer();
+    int FileComparer(const char *cha_FullFileName);
     int FileWriter();
     int FileWriter(const char *cha_FullFileName);
 

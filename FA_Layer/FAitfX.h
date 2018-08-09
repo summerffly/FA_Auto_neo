@@ -132,6 +132,7 @@ public:
     /****************************************/
     //   文件读写区
     /****************************************/
+    void CheckAllFile();
     void SyncAllFile();
     void WriteAllFile();
     void BackUpAllFile(const string str_BackUpPath);
@@ -174,6 +175,9 @@ private:
     CFileManager *m_ptr_FM_tt_travel;
     CFileManager *m_ptr_FM_tt_lottery;
     CFileManager *m_ptr_FM_NULL;
+
+    static const unsigned int m_uni_FM_aszie = 11;
+    CFileManager *m_ptr_FM_array[m_uni_FM_aszie];
 };
 
 //------------------------------//

@@ -27,9 +27,13 @@ public:
     /****************************************/
     //   .md文件直接操作区
     /****************************************/
+    int FileComparer();
+    int FileComparer(const char *cha_FullFileName);
     int FileWriter();
     int FileWriter(const char *cha_FullFileName);
     int BackUpFile(const string str_BackUpPath);
+
+    string GetFileName();
 
     /****************************************/
     //   行直接操作区

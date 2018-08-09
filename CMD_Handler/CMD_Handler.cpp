@@ -781,8 +781,7 @@ void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
     cout << "***          BEGIN OF TEST           ***" << endl;
     cout << "****************************************" << endl;
 
-    string str_SubMonthKey = CMD_SMTranslate(srt_CMD.m_str_ParamSubMonth);
-    ms_ptr_FAitfX->ShowSubMonth(str_SubMonthKey, srt_CMD.m_str_ParamMonth, srt_CMD.m_int_ResParam);
+    ms_ptr_FAitfX->CheckAllFile();
 
     cout << "****************************************" << endl;
     cout << "***           END OF TEST            ***" << endl;
