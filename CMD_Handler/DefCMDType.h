@@ -52,10 +52,10 @@
 
 #define  X_CMD_TYPE_APPEND_MONTH    ("AppendMonth")
 
-#define  X_CMD_TYPE_CHECK_SYNC    ("CheckSync")
-#define  X_CMD_TYPE_SYNC          ("Sync")
-#define  X_CMD_TYPE_WRITE         ("Write")
-#define  X_CMD_TYPE_BACKUP        ("Backup")
+#define  X_CMD_TYPE_CHECK_EQUAL    ("CheckEqual")
+#define  X_CMD_TYPE_SYNC           ("Sync")
+#define  X_CMD_TYPE_WRITE          ("Write")
+#define  X_CMD_TYPE_BACKUP         ("Backup")
 
 #define  X_CMD_TYPE_HELP    ("Help")
 #define  X_CMD_TYPE_TEST    ("Test")

@@ -1767,7 +1767,7 @@ void CFAitfX::DeleteLine(const string str_Type, const string str_Key,\
     GetPtrFM(str_Type, str_Key)->DeleteLine(uni_LineIndex);
 }
 
-void CFAitfX::CheckSyncAllFile()
+void CFAitfX::CheckEqualAllFile()
 {
     for(int i=0; i<m_uni_FM_aszie; i++)
     {
@@ -1780,7 +1780,25 @@ void CFAitfX::CheckSyncAllFile()
         }
     }
 
-    CTool::MassageOutFotmat("All File Sync", '*');
+    CTool::MassageOutFotmat("All Local File Equal", '*');
+}
+
+void CFAitfX::CheckEqualAllFile(const string str_Path)
+{
+    for(int i=0; i<m_uni_FM_aszie; i++)
+    {
+        string str_BakupFile = str_Path + m_ptr_FM_array[i]->GetFileName();
+
+        if(0 != m_ptr_FM_array[i]->FileComparer(str_BakupFile.c_str()))
+        {
+            string str_ErrorMsg = m_ptr_FM_array[i]->GetFileName();
+            str_ErrorMsg += " NOT Sync";
+            CTool::MassageOutFotmat(str_ErrorMsg, '!');
+            return;
+        }
+    }
+
+    CTool::MassageOutFotmat("All Back-Up File Equal", '*');
 }
 
 void CFAitfX::SyncAllFile()

@@ -132,7 +132,8 @@ public:
     /****************************************/
     //   文件读写区
     /****************************************/
-    void CheckSyncAllFile();
+    void CheckEqualAllFile();
+    void CheckEqualAllFile(const string str_Path);   // 函数重载
     void SyncAllFile();
     void WriteAllFile();
     void BackUpAllFile(const string str_BackUpPath);
