@@ -1767,6 +1767,21 @@ void CFAitfX::DeleteLine(const string str_Type, const string str_Key,\
     GetPtrFM(str_Type, str_Key)->DeleteLine(uni_LineIndex);
 }
 
+void CFAitfX::CheckTimeStamp()
+{
+    cout << "----------------------------------------" << endl;
+
+    for(int i=0; i<m_uni_FM_aszie; i++)
+    {
+        string str_TimeMsg = m_ptr_FM_array[i]->GetTimeStamp();
+        str_TimeMsg += " : ";
+        str_TimeMsg += m_ptr_FM_array[i]->GetFileName();
+        cout << str_TimeMsg << endl;
+    }
+    
+    cout << "----------------------------------------" << endl;
+}
+
 void CFAitfX::CheckEqualAllFile()
 {
     for(int i=0; i<m_uni_FM_aszie; i++)
@@ -1807,20 +1822,6 @@ void CFAitfX::SyncAllFile()
     {
         m_ptr_FM_array[i]->SyncFile();
     }
-
-    /*
-    m_ptr_FM_SUM->SyncFile();
-    m_ptr_FM_life->SyncFile();
-    m_ptr_FM_sm_DGtler->SyncFile();
-    m_ptr_FM_sm_Books->SyncFile();
-    m_ptr_FM_sm_KEEP->SyncFile();
-    m_ptr_FM_sm_TB->SyncFile();
-    m_ptr_FM_sm_sa->SyncFile();
-    m_ptr_FM_tt_DK->SyncFile();
-    m_ptr_FM_tt_NS->SyncFile();
-    m_ptr_FM_tt_travel->SyncFile();
-    m_ptr_FM_tt_lottery->SyncFile();
-    */
 }
 
 void CFAitfX::WriteAllFile()

@@ -253,7 +253,8 @@ void CFileManager::UpdateTimeStamp()
 
         char *cha_TimeStamp = new char[40];
 
-        sprintf(cha_TimeStamp, "*Update Time : %s*", CTool::TimeOut().c_str());
+        //sprintf(cha_TimeStamp, "*Update Time : %s*", CTool::TimeOut().c_str());
+        sprintf(cha_TimeStamp, "%s", CTool::TimeOut().c_str());
         m_vec_cls_Line.at(m_int_LineNum-i).SetLineContent(cha_TimeStamp);
         m_cls_FileOPer.ModifyLine((m_int_LineNum-i), m_vec_cls_Line.at(m_int_LineNum-i).GetFullLine());
 
@@ -261,6 +262,20 @@ void CFileManager::UpdateTimeStamp()
 
         break;
     }
+}
+
+string CFileManager::GetTimeStamp()
+{
+    for(int i=1; i <= m_int_LineNum; i++)
+    {
+        if( LTYPE_TIMESTAMP == m_vec_cls_Line.at(i).GetLineType() )
+        {
+            return m_vec_cls_Line.at(i).GetLineContent();
+        }
+    }
+
+    string str_Ret = "TIME ERROR";
+    return str_Ret;
 }
 
 int CFileManager::CountRange(const unsigned int uni_RangeBeginIndex, const unsigned int uni_RangeEndIndex)

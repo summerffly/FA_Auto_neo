@@ -121,7 +121,7 @@ int CLineEPer::LineParser()
             m_bol_LineValuePM = true;
             m_uni_LineValueABS = 0;
             m_int_LineValue = 0;
-            m_str_LineContent = m_str_FullLine;
+            m_str_LineContent = str_Match[4];
 
             break;
         }
@@ -381,7 +381,9 @@ void CLineEPer::UpdateFullLine()
         case(LTYPE_TIMESTAMP):
             {
                 m_str_FullLine.clear();
+                m_str_FullLine += "*Update Time : ";
                 m_str_FullLine += m_str_LineContent;
+                m_str_FullLine += "*";
                 m_bol_LineValuePM = true;
             }
             break;

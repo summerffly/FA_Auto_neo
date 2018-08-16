@@ -86,10 +86,11 @@ extern string TRAVERSAL;
 
 extern string APPEND;
 
+extern string TIME;
+extern string EQUAL;
 extern string SYNC;
 extern string WRITE;
 extern string BACKUP;
-extern string EQUAL;
 
 extern string HELP;
 extern string TEST;

@@ -94,6 +94,8 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_APPEND_MONTH, CMD_HELP_APPEND_MONTH, "", OnCmdAppendMonth)
 
+    X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_TIME, "", "", OnCmdCheckTime)
+
     X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_EQUAL, "", "", OnCmdCheckEqual)
 
 	X_ON_CMD_TYPE(X_CMD_TYPE_SYNC, "", "", OnCmdSync)
@@ -756,6 +758,11 @@ void CCMDHandler::OnCmdAppendMonth(CMD_Packet srt_CMD)
     ms_ptr_ASitfX->AppendNextMonth(srt_CMD.m_str_ResParam);
 }
 
+void CCMDHandler::OnCmdCheckTime(CMD_Packet srt_CMD)
+{
+    ms_ptr_FAitfX->CheckTimeStamp();
+}
+
 void CCMDHandler::OnCmdCheckEqual(CMD_Packet srt_CMD)
 {
     ms_ptr_FAitfX->CheckEqualAllFile();
@@ -792,7 +799,7 @@ void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
     cout << "***          BEGIN OF TEST           ***" << endl;
     cout << "****************************************" << endl;
 
-    //ms_ptr_FAitfX->CheckAllFile();
+    //ms_ptr_FAitfX->CheckTimeStamp();
 
     cout << "****************************************" << endl;
     cout << "***           END OF TEST            ***" << endl;

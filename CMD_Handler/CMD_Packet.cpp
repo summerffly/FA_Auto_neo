@@ -365,6 +365,8 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_INSERT_BLANK_LINE;
         else if((str_CmdPro_A == CHECK) && (str_CmdPro_B == EQUAL))
             m_str_CmdType = X_CMD_TYPE_CHECK_EQUAL;
+        else if((str_CmdPro_A == CHECK) && (str_CmdPro_B == TIME))
+            m_str_CmdType = X_CMD_TYPE_CHECK_TIME;
         else
             return -4;   // ERROR: 未定义的CmdType
     }

@@ -132,6 +132,7 @@ public:
     /****************************************/
     //   文件读写区
     /****************************************/
+    void CheckTimeStamp();
     void CheckEqualAllFile();
     void CheckEqualAllFile(const string str_Path);   // 函数重载
     void SyncAllFile();

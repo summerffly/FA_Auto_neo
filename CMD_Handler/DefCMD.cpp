@@ -83,10 +83,11 @@ string TRAVERSAL = "tv";
 
 string APPEND = "append";
 
+string TIME = "time";
+string EQUAL = "equal";
 string SYNC = "sync";
 string WRITE = "write";
 string BACKUP = "bakup";
-string EQUAL = "equal";
 
 string HELP = "help";
 string TEST = "test";
