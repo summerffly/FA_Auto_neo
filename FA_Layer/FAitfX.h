@@ -89,7 +89,9 @@ public:
     unsigned int GetMonthTrendVectorMax(const vector<TREND_INFO> vec_stc_TrendInfo);
     void DrawMonthTrendVector(const vector<TREND_INFO> vec_stc_TrendInfo, const string str_MonthKey);
 
+    unsigned int GenerateMonthVector(vector<UNIT_INFO> &vec_stc_UnitInfoo, const string str_SelMonth);
     void AnalysisMonthProportion(const string str_SelMonth);
+    void CompareMonth(const string str_SelMonth, const string str_CmpMonth);
 
     void ForecastFutureSum(const string str_SelMonth, const int int_MonthPatch);
 

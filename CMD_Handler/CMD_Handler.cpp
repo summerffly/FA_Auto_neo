@@ -799,7 +799,7 @@ void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
     cout << "***          BEGIN OF TEST           ***" << endl;
     cout << "****************************************" << endl;
 
-    //ms_ptr_FAitfX->CheckTimeStamp();
+    //ms_ptr_FAitfX->CompareMonth("08", "06");
 
     cout << "****************************************" << endl;
     cout << "***           END OF TEST            ***" << endl;

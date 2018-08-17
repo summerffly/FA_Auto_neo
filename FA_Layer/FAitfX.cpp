@@ -1083,9 +1083,9 @@ void CFAitfX::DrawMonthTrendVector(const vector<TREND_INFO> vec_stc_TrendInfo, c
 }
 
 /**************************************************/
-//   分析 月度支出占比
+//   生成 月度支出Vector
 /**************************************************/
-void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
+unsigned int CFAitfX::GenerateMonthVector(vector<UNIT_INFO> &vec_stc_UnitInfo, const string str_SelMonth)
 {
     string str_RangeTop = "## life.M" + str_SelMonth;
     string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
@@ -1093,15 +1093,13 @@ void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
     if( 0 == m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str()) )
     {
         CTool::MassageOutFotmat("Error Month Input", '!');
-        return;
+        return -1;
     }
     unsigned int uni_RangeTop = m_ptr_FM_life->GetSearchLineIndex(1) + 4;
     m_ptr_FM_life->SearchLineKey(str_RangeBottom.c_str());
     unsigned int uni_RangeBottom = m_ptr_FM_life->GetSearchLineIndex(1) - 1;
 
     // 建构 vector
-    unsigned int uni_MonthExpenseABS = m_ptr_FM_life->GetLineValueABS(uni_RangeTop-2);
-    vector<UNIT_INFO> vec_stc_UnitInfo;
     UNIT_INFO stc_UnitInfo;
 
     for(int i=uni_RangeTop; i<=uni_RangeBottom; i++)
@@ -1114,6 +1112,20 @@ void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
             vec_stc_UnitInfo.push_back(stc_UnitInfo);
         }
     }
+
+    return uni_RangeTop;
+}
+
+/**************************************************/
+//   分析 月度支出占比
+/**************************************************/
+void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
+{
+    // 建构 vector
+    vector<UNIT_INFO> vec_stc_UnitInfo;
+    unsigned int uni_RangeTop = GenerateMonthVector(vec_stc_UnitInfo, str_SelMonth);
+    // tips 番茄@20180817 - 默认房租为最大支出项
+    unsigned int uni_MonthExpenseABS = m_ptr_FM_life->GetLineValueABS(uni_RangeTop-2);
 
     // 获取 vector最大值
     unsigned int uni_PPSize = vec_stc_UnitInfo.size();
@@ -1150,6 +1162,121 @@ void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
     }
 
     cout << endl;
+    cout << "----------------------------------------" << endl;
+}
+
+/**************************************************/
+//   比较 月度支出
+/**************************************************/
+void CFAitfX::CompareMonth(const string str_SelMonth, const string str_CmpMonth)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
+    // 建构 Sel_vector
+    vector<UNIT_INFO> vec_stc_SelUnitInfo;
+    GenerateMonthVector(vec_stc_SelUnitInfo, str_SelMonth);
+
+    // 建构 Cmp_vector
+    vector<UNIT_INFO> vec_stc_CmpUnitInfo;
+    GenerateMonthVector(vec_stc_CmpUnitInfo, str_CmpMonth);
+
+    // 构建 analysis_vector
+    vector<string> vec_str_Room;
+    ptr_ScriptRipper->RoomDuplicator(vec_str_Room);
+
+    vector<string> vec_str_SubMonth;
+    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+
+    vector<string> vec_str_StdMonth;
+    vec_str_StdMonth.push_back("生活费");
+    vec_str_StdMonth.insert(vec_str_StdMonth.end(), vec_str_Room.begin(), vec_str_Room.end());
+    vec_str_StdMonth.push_back("蚂蚁还款");   // tips 番茄@20180817 - 之后需要删除
+    vec_str_StdMonth.insert(vec_str_StdMonth.end(), vec_str_SubMonth.begin(), vec_str_SubMonth.end());
+
+    // ...
+    cout << "----------------------------------------" << endl;
+    cout << "### 月度对比分析 ###" << endl;
+    cout << endl;
+
+    vector<string>::iterator itr_StdMonth;
+    for(itr_StdMonth = vec_str_StdMonth.begin(); itr_StdMonth != vec_str_StdMonth.end(); itr_StdMonth++)
+    {
+        unsigned int uni_SelUnitValueABS = 0;
+        vector<UNIT_INFO>::iterator itr_SelUnitInfo;
+        for(itr_SelUnitInfo = vec_stc_SelUnitInfo.begin(); itr_SelUnitInfo != vec_stc_SelUnitInfo.end(); itr_SelUnitInfo++)
+        {
+            string::size_type idx;
+            idx = (itr_SelUnitInfo->str_UnitContent).find(*itr_StdMonth);
+            if(idx != string::npos)
+            {
+                uni_SelUnitValueABS = itr_SelUnitInfo->uni_UnitValueABS;
+                break;
+            }
+        }
+
+        unsigned int uni_CmpUnitValueABS = 0;
+        vector<UNIT_INFO>::iterator itr_CmpUnitInfo;
+        for(itr_CmpUnitInfo = vec_stc_CmpUnitInfo.begin(); itr_CmpUnitInfo != vec_stc_CmpUnitInfo.end(); itr_CmpUnitInfo++)
+        {
+            string::size_type idx;
+            idx = (itr_CmpUnitInfo->str_UnitContent).find(*itr_StdMonth);
+            if(idx != string::npos)
+            {
+                uni_CmpUnitValueABS = itr_CmpUnitInfo->uni_UnitValueABS;
+                break;
+            }
+        }
+
+        unsigned int uni_SelScalde = 0;
+        unsigned int uni_CmpScalde = 0;
+
+        double dob_CmpRate = 0.0;
+        if(uni_CmpUnitValueABS != 0)
+            dob_CmpRate = ((double)uni_SelUnitValueABS - (double)uni_CmpUnitValueABS)/(double)uni_CmpUnitValueABS;
+        else
+            dob_CmpRate = 1.0;
+
+        if(uni_SelUnitValueABS > uni_CmpUnitValueABS)
+        {
+            uni_SelScalde = 40;
+            uni_CmpScalde = 40 / (1+dob_CmpRate);
+
+            if(dob_CmpRate == 1.0)
+                uni_CmpScalde = 0;
+        }
+        else if(uni_SelUnitValueABS < uni_CmpUnitValueABS)
+        {
+            uni_SelScalde = (1+dob_CmpRate) * 40;
+            uni_CmpScalde = 40;
+        }
+        else
+        {
+            uni_SelScalde = 35;
+            uni_CmpScalde = 35;
+        }
+
+
+        cout << "----- " << *itr_StdMonth << " -----" << endl;
+
+        cout << str_CmpMonth << "月: ";
+        for(int i=1; i<=uni_CmpScalde; i++)
+        {
+            cout << "█";
+        }
+        cout << " " << uni_CmpUnitValueABS << endl;
+
+        cout << str_SelMonth << "月: ";
+        for(int j=1; j<=uni_SelScalde; j++)
+        {
+            cout << "█";
+        }
+        cout << " " << uni_SelUnitValueABS << " (";
+        printf("%.1f", (dob_CmpRate*100));
+        cout << "%)" << endl;
+
+        cout << endl;
+    }
+
     cout << "----------------------------------------" << endl;
 }
 
