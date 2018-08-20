@@ -52,6 +52,7 @@ extern string JINGDONG;
 /**************************************************/
 
 extern string ANALYSIS;
+extern string COMPARE;
 extern string SUMMARIZE;
 extern string FORECAST;
 

@@ -67,6 +67,7 @@ public:
 
 	static void OnCmdAnalysisTrend(CMD_Packet srt_CMD);
 	static void OnCmdAnalysisProportion(CMD_Packet srt_CMD);
+	static void OnCmdCompareMonth(CMD_Packet srt_CMD);
 
 	static void OnCmdSummarize(CMD_Packet srt_CMD);
 	static void OnCmdForecast(CMD_Packet srt_CMD);

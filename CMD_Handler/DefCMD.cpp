@@ -49,6 +49,7 @@ string JINGDONG = "jd";
 /**************************************************/
 
 string ANALYSIS = "as";
+string COMPARE = "cmp";
 string SUMMARIZE = "sz";
 string FORECAST = "ff";
 

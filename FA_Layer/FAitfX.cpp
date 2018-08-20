@@ -1271,6 +1271,8 @@ void CFAitfX::CompareMonth(const string str_SelMonth, const string str_CmpMonth)
             cout << "█";
         }
         cout << " " << uni_SelUnitValueABS << " (";
+        if(dob_CmpRate>0)
+            cout << "+";
         printf("%.1f", (dob_CmpRate*100));
         cout << "%)" << endl;
 
@@ -1962,6 +1964,8 @@ void CFAitfX::WriteAllFile()
 
 void CFAitfX::BackUpAllFile(const string str_BackUpPath)
 {
+    cout << "Bakup-Path: " << endl;
+    cout << " " << str_BackUpPath << endl;
     for(int i=0; i<m_uni_FM_aszie; i++)
     {
         m_ptr_FM_array[i]->BackUpFile(str_BackUpPath);

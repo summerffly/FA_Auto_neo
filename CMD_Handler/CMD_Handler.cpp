@@ -67,6 +67,8 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_ANALYSIS_PROPORTION, "", "", OnCmdAnalysisProportion)
 
+    X_ON_CMD_TYPE(X_CMD_TYPE_COMPARE_MONTH, "", "", OnCmdCompareMonth)
+
     X_ON_CMD_TYPE(X_CMD_TYPE_SUMMARIZE, CMD_HELP_SUMMARIZE, \
         CMD_HELP_PATCH_SUMMARIZE, OnCmdSummarize)
 
@@ -588,6 +590,11 @@ void CCMDHandler::OnCmdAnalysisProportion(CMD_Packet srt_CMD)
     ms_ptr_FAitfX->AnalysisMonthProportion(srt_CMD.m_str_ParamMonth);
 }
 
+void CCMDHandler::OnCmdCompareMonth(CMD_Packet srt_CMD)
+{
+    ms_ptr_FAitfX->CompareMonth(srt_CMD.m_str_ParamMonth, srt_CMD.m_str_ResParam);
+}
+
 void CCMDHandler::OnCmdSummarize(CMD_Packet srt_CMD)
 {
     if( srt_CMD.m_str_ResParam == MONTH )
@@ -782,9 +789,9 @@ void CCMDHandler::OnCmdWrite(CMD_Packet srt_CMD)
 void CCMDHandler::OnCmdBackup(CMD_Packet srt_CMD)
 {
 	ms_ptr_FAitfX->BackUpAllFile("./FA_SZ.bak/");
-    ms_ptr_FAitfX->BackUpAllFile("./../Hacker/FA_Auto_X/X_Executable/");
-
     ms_ptr_FAitfX->CheckEqualAllFile("./FA_SZ.bak/");
+
+    ms_ptr_FAitfX->BackUpAllFile("./../Hacker/FA_Auto_X/X_Executable/");
     ms_ptr_FAitfX->CheckEqualAllFile("./../Hacker/FA_Auto_X/X_Executable/");
 }
 

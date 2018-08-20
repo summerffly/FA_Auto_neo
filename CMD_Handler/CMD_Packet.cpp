@@ -287,6 +287,8 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_TRANSFER;
         else if(str_CmdPro_A == LOTTERY)
             m_str_CmdType = X_CMD_TYPE_LOTTERY;
+        else if(str_CmdPro_A == COMPARE)
+            m_str_CmdType = X_CMD_TYPE_COMPARE_MONTH;
         else if(str_CmdPro_A == SUMMARIZE)
             m_str_CmdType = X_CMD_TYPE_SUMMARIZE;
         else if(str_CmdPro_A == FORECAST)

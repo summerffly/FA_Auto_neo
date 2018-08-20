@@ -34,6 +34,7 @@
 
 #define  X_CMD_TYPE_ANALYSIS_TREND         ("AnalysisTrend")
 #define  X_CMD_TYPE_ANALYSIS_PROPORTION    ("AnalysisProportion")
+#define  X_CMD_TYPE_COMPARE_MONTH          ("CompareMonth")
 
 #define  X_CMD_TYPE_SUMMARIZE    ("Summarize")
 #define  X_CMD_TYPE_FORECAST     ("Forecast")
