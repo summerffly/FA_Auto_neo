@@ -406,7 +406,7 @@ bool CLineEPer::IsContainKey(const char *cha_Key)
     string pattern_key = cha_Key;
     regex RE_key(pattern_key);
 
-    if( regex_search(m_str_LineContent, str_Match, RE_key) )
+    if( regex_search(m_str_FullLine, str_Match, RE_key) )
     {
         return true;
     }

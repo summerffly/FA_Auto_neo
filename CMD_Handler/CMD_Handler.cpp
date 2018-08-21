@@ -379,6 +379,8 @@ string CCMDHandler::CMD_TTTranslate(const string str_TitleKey)
         str_TranslateKey = "DK";
     else if(str_TitleKey == NS)
         str_TranslateKey = "NS";
+    else if(str_TitleKey == NR)
+        str_TranslateKey = "NR411";
     else if(str_TitleKey == TRAVEL)
         str_TranslateKey = "travel";
     else if(str_TitleKey == LOTTERY)

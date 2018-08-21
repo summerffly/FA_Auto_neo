@@ -39,6 +39,7 @@ extern string SA;
 extern string TITLE;
 extern string DK;
 extern string NS;
+extern string NR;
 extern string TRAVEL;
 extern string LOTTERY;
 extern string TAG;

@@ -410,6 +410,8 @@ int CMD_Packet::CMDParamChecker()
             return 0;
         else if(NS == m_str_ParamTitle)
             return 0;
+        else if(NR == m_str_ParamTitle)
+            return 0;
         else if(TRAVEL == m_str_ParamTitle)
             return 0;
         else if(LOTTERY == m_str_ParamTitle)

@@ -37,6 +37,7 @@ CFAitfX::CFAitfX()
     m_ptr_FM_sm_sa = new CFileManager("./sa.M.md");
     m_ptr_FM_tt_DK = new CFileManager("./DK.md");
     m_ptr_FM_tt_NS = new CFileManager("./NS.md");
+    m_ptr_FM_tt_NR = new CFileManager("./NR411.md");
     m_ptr_FM_tt_travel = new CFileManager("./travel.md");
     m_ptr_FM_tt_lottery = new CFileManager("./lottery.md");
     m_ptr_FM_NULL = NULL;
@@ -50,8 +51,9 @@ CFAitfX::CFAitfX()
     m_ptr_FM_array[6] = m_ptr_FM_sm_sa;
     m_ptr_FM_array[7] = m_ptr_FM_tt_DK;
     m_ptr_FM_array[8] = m_ptr_FM_tt_NS;
-    m_ptr_FM_array[9] = m_ptr_FM_tt_travel;
-    m_ptr_FM_array[10] = m_ptr_FM_tt_lottery;
+    m_ptr_FM_array[9] = m_ptr_FM_tt_NR;
+    m_ptr_FM_array[10] = m_ptr_FM_tt_travel;
+    m_ptr_FM_array[11] = m_ptr_FM_tt_lottery;
 }
 
 /**************************************************/
@@ -1992,6 +1994,8 @@ CFileManager *CFAitfX::GetPtrFM(const string str_Type, const string str_Key)
         return m_ptr_FM_tt_DK;
     else if( (str_Type == "TT") && (str_Key == NS) )
         return m_ptr_FM_tt_NS;
+    else if( (str_Type == "TT") && (str_Key == NR) )
+        return m_ptr_FM_tt_NR;
     else if( (str_Type == "TT") && (str_Key == TRAVEL) )
         return m_ptr_FM_tt_travel;
     else if( (str_Type == "TT") && (str_Key == LOTTERY) )
@@ -2000,7 +2004,7 @@ CFileManager *CFAitfX::GetPtrFM(const string str_Type, const string str_Key)
     {
         CTool::MassageOutFotmat("Key Error", '!');
         return m_ptr_FM_NULL;
-    } 
+    }
 }
 
 CFileManager *CFAitfX::GetPtrSubMonthFM(const string str_SubMonthKey)
@@ -2028,6 +2032,8 @@ CFileManager *CFAitfX::GetPtrTitleFM(const string str_TitleKey)
         return m_ptr_FM_tt_DK;
     else if(str_TitleKey == "NS")
         return m_ptr_FM_tt_NS;
+    else if(str_TitleKey == "NR411")
+        return m_ptr_FM_tt_NR;
     else if(str_TitleKey == "travel")
         return m_ptr_FM_tt_travel;
     else if(str_TitleKey == "lottery")

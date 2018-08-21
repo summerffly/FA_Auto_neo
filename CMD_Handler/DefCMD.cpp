@@ -36,6 +36,7 @@ string SA = "sa";
 string TITLE = "tt";
 string DK = "dk";
 string NS = "ns";
+string NR = "nr";
 string TRAVEL = "travel";
 string LOTTERY = "lottery";
 string TAG = "tag";
