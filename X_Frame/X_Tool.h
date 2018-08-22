@@ -11,6 +11,7 @@
 #include <sys/time.h>
 #include <string>
 #include <iostream>
+#include <regex>
 
 using namespace std;
 
@@ -49,6 +50,8 @@ public:
     static string TransOutFormat(const int int_Value);
     static void MassageOutFotmat(const string str_Message, const char cha_Flag);
     static string TimeOut();
+
+    static bool ParseNumber(const string str_Input, int& int_RetNum);
 
 public:
     static void TagTimeBait();

@@ -744,7 +744,13 @@ void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
     cout << "***          BEGIN OF TEST           ***" << endl;
     cout << "****************************************" << endl;
 
-    //ms_ptr_FAitfX->CompareMonth("08", "06");
+    int int_RetNum = 0;
+    bool bol_Ret = false;
+
+    bol_Ret = CTool::ParseNumber(srt_CMD.m_str_ResParam, int_RetNum);
+
+    cout << bol_Ret << endl;
+    cout << int_RetNum << endl;
 
     cout << "****************************************" << endl;
     cout << "***           END OF TEST            ***" << endl;

@@ -200,7 +200,7 @@ void CFAitfX::SummarizeTitle(int int_OFlag)
 
         if(int_OFlag > 0)
         {
-            cout << CMD_TTTranslate(*itr_Title) << ": " << CTool::TransOutFormat(int_TitleCount) << endl;
+            cout << *itr_Title << ": " << CTool::TransOutFormat(int_TitleCount) << endl;
         }
     }
 
@@ -1164,6 +1164,15 @@ void CFAitfX::CompareMonth(const string str_SelMonth, const string str_CmpMonth)
 
     vector<string> vec_str_SubMonth;
     ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+
+    vector<string> vec_str_TransSubMonth;
+    vec_str_TransSubMonth.clear();
+    for(int i = 0; i < vec_str_SubMonth.size(); i++)
+    {
+        string str_SMTranslate = CMD_SMTranslate(vec_str_SubMonth[i]);
+        vec_str_TransSubMonth.push_back(str_SMTranslate);
+    }
+    vec_str_SubMonth.swap(vec_str_TransSubMonth);
 
     vector<string> vec_str_StdMonth;
     vec_str_StdMonth.push_back("生活费");

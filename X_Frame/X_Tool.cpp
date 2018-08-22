@@ -35,6 +35,7 @@ int CTool::CheckFilesExist()
     int_RetFC += access("./sa.M.md", 0);
     int_RetFC += access("./DK.md", 0);
     int_RetFC += access("./NS.md", 0);
+    int_RetFC += access("./NR411.md", 0);
     int_RetFC += access("./travel.md", 0);
     int_RetFC += access("./lottery.md", 0);
 
@@ -355,6 +356,41 @@ string CTool::TimeOut()
     delete []cha_TimeStampSec;
     
     return str_TimeOut;
+}
+
+bool CTool::ParseNumber(const string str_Input, int& int_RetNum)
+{
+    smatch str_Match;
+    regex REP_Number("^(\\+|-?)(\\d+)$");
+
+    string str_NumPM("");
+    string str_NumBody("");
+    int int_NumPM = 1;
+    int int_NumBody = 0;
+
+    if( regex_match(str_Input, str_Match, REP_Number) )
+    {
+        str_NumPM = str_Match[1];
+        str_NumBody = str_Match[2];
+
+        if("" == str_NumPM)
+            int_NumPM = 1;
+        else if('+' == str_NumPM.at(0))
+            int_NumPM = 1;
+        else if('-' == str_NumPM.at(0))
+            int_NumPM = -1;
+
+        int_NumBody = atoi(str_NumBody.c_str());
+
+        int_RetNum = int_NumBody * int_NumPM;
+
+        return true;
+    }
+    else
+    {
+        int_RetNum = 0;
+        return false;
+    }
 }
 
 void CTool::TagTimeBait()
