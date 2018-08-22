@@ -582,26 +582,20 @@ void CFAitfX::SyncMonthSurplus(const string str_SelMonth)
 /**************************************************/
 int CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag)
 {
-    if(GetPtrSubMonthFM(str_SubMonthKey)->GetFullLine(1).compare("# Financial Allocation of SUMMARY") == 0)
-    {
-        CTool::MassageOutFotmat("SubMonth KeyWord Error", '!');
-        return -9;
-    }
-
-    string str_RangeTop = str_SubMonthKey + ".M" + str_SelMonth;
-    string str_RangeBottom = str_SubMonthKey + ".M" + CTool::GenerateNextMonth(str_SelMonth);
+    string str_RangeTop = CMD_SMTranslate(str_SubMonthKey) + ".M" + str_SelMonth;
+    string str_RangeBottom = CMD_SMTranslate(str_SubMonthKey) + ".M" + CTool::GenerateNextMonth(str_SelMonth);
 
     m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
     unsigned int uni_lifeLine = m_ptr_FM_life->GetSearchLineIndex(1);
 
-    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
-    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
+    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
+    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
 
     int int_LMSubMonthExpenseEX = m_ptr_FM_life->GetLineValue(uni_lifeLine);
-    int int_SubMonthExpenseEX = GetPtrSubMonthFM(str_SubMonthKey)->GetLineValue(uni_RangeTop+1);
-    int int_SubMonthExpenseCK = GetPtrSubMonthFM(str_SubMonthKey)->CountRangeType(uni_RangeTop+2, uni_RangeBottom-1,\
+    int int_SubMonthExpenseEX = GetPtrFM("SM", str_SubMonthKey)->GetLineValue(uni_RangeTop+1);
+    int int_SubMonthExpenseCK = GetPtrFM("SM", str_SubMonthKey)->CountRangeType(uni_RangeTop+2, uni_RangeBottom-1,\
                                        LTYPE_FBIRC_LINEUINT);
 
     if( bol_OFlag )
@@ -633,29 +627,23 @@ int CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str
 /**************************************************/
 void CFAitfX::UpdateSubMonthExpense(const string str_SubMonthKey, const string str_SelMonth, bool bol_OFlag)
 {
-    if(GetPtrSubMonthFM(str_SubMonthKey)->GetFullLine(1).compare("# Financial Allocation of SUMMARY") == 0)
-    {
-        CTool::MassageOutFotmat("SubMonth KeyWord Error", '!');
-        return;
-    }
-
-    string str_RangeTop = str_SubMonthKey + ".M" + str_SelMonth;
-    string str_RangeBottom = str_SubMonthKey + ".M" + CTool::GenerateNextMonth(str_SelMonth);
+    string str_RangeTop = CMD_SMTranslate(str_SubMonthKey) + ".M" + str_SelMonth;
+    string str_RangeBottom = CMD_SMTranslate(str_SubMonthKey) + ".M" + CTool::GenerateNextMonth(str_SelMonth);
 
     m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
     unsigned int uni_lifeLine = m_ptr_FM_life->GetSearchLineIndex(1);
 
-    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
-    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
+    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
+    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
 
-    int int_SubMonthExpense = GetPtrSubMonthFM(str_SubMonthKey)->GetLineValue(uni_RangeTop+1);
-    int int_SubMonthExpenseUD = GetPtrSubMonthFM(str_SubMonthKey)->CountRangeType(uni_RangeTop+2, uni_RangeBottom-1,\
+    int int_SubMonthExpense = GetPtrFM("SM", str_SubMonthKey)->GetLineValue(uni_RangeTop+1);
+    int int_SubMonthExpenseUD = GetPtrFM("SM", str_SubMonthKey)->CountRangeType(uni_RangeTop+2, uni_RangeBottom-1,\
                                             LTYPE_FBIRC_LINEUINT);
     
     m_ptr_FM_life->ModifyLineValue(uni_lifeLine, int_SubMonthExpenseUD);
-    GetPtrSubMonthFM(str_SubMonthKey)->ModifyLineValue(uni_RangeTop+1, int_SubMonthExpenseUD);
+    GetPtrFM("SM", str_SubMonthKey)->ModifyLineValue(uni_RangeTop+1, int_SubMonthExpenseUD);
 
     if( bol_OFlag )
     {
@@ -668,30 +656,24 @@ void CFAitfX::UpdateSubMonthExpense(const string str_SubMonthKey, const string s
 }
 
 /**************************************************/
-//   校验 Tt分项 月度支出
+//   校验 Tt分项 支出
 /**************************************************/
 int CFAitfX::CheckTitleExpense(const string str_TitleKey, bool bol_OFlag)
 {
-    if(GetPtrTitleFM(str_TitleKey)->GetFullLine(1).compare("# Financial Allocation of SUMMARY") == 0)
-    {
-        CTool::MassageOutFotmat("Title KeyWord Error", '!');
-        return -9;
-    }
-
-    string str_RangeTop = "## " + str_TitleKey;
+    string str_RangeTop = "## " + CMD_TTTranslate(str_TitleKey);
     string str_RangeBottom("## Total");
 
     m_ptr_FM_SUM->SearchLineKey(str_RangeTop.c_str());
     unsigned int uni_AFLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
 
     unsigned int uni_RangeTop = 2;
-    GetPtrTitleFM(str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrTitleFM(str_TitleKey)->GetSearchLineIndex(1);
+    GetPtrFM("TT", str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = GetPtrFM("TT", str_TitleKey)->GetSearchLineIndex(1);
 
     int int_AFTitleExpenseEX = m_ptr_FM_SUM->GetLineValue(uni_AFLine+1);
 
-    int int_TitleExpenseEX = GetPtrTitleFM(str_TitleKey)->GetLineValue(uni_RangeBottom+2);
-    int int_TitleExpenseCK = GetPtrTitleFM(str_TitleKey)->CountRangeType(uni_RangeTop, uni_RangeBottom-1,\
+    int int_TitleExpenseEX = GetPtrFM("TT", str_TitleKey)->GetLineValue(uni_RangeBottom+2);
+    int int_TitleExpenseCK = GetPtrFM("TT", str_TitleKey)->CountRangeType(uni_RangeTop, uni_RangeBottom-1,\
                                        LTYPE_FBIRC_LINEUINT);
 
     if( bol_OFlag )
@@ -719,31 +701,25 @@ int CFAitfX::CheckTitleExpense(const string str_TitleKey, bool bol_OFlag)
 }
 
 /**************************************************/
-//   更新 Tt分项 月度支出
+//   更新 Tt分项 支出
 /**************************************************/
 void CFAitfX::UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag)
 {
-    if(GetPtrTitleFM(str_TitleKey)->GetFullLine(1).compare("# Financial Allocation of SUMMARY") == 0)
-    {
-        CTool::MassageOutFotmat("Title KeyWord Error", '!');
-        return;
-    }
-
-    string str_RangeTop = "## " + str_TitleKey;
+    string str_RangeTop = "## " + CMD_TTTranslate(str_TitleKey);
     string str_RangeBottom("## Total");
 
     m_ptr_FM_SUM->SearchLineKey(str_RangeTop.c_str());
     unsigned int uni_AFLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
 
     unsigned int uni_RangeTop = 2;
-    GetPtrTitleFM(str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrTitleFM(str_TitleKey)->GetSearchLineIndex(1);
+    GetPtrFM("TT", str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = GetPtrFM("TT", str_TitleKey)->GetSearchLineIndex(1);
 
-    int int_TitleExpense = GetPtrTitleFM(str_TitleKey)->GetLineValue(uni_RangeBottom+2);
-    int int_TitleExpenseUD = GetPtrTitleFM(str_TitleKey)->CountRangeType(uni_RangeTop, uni_RangeBottom-1,\
+    int int_TitleExpense = GetPtrFM("TT", str_TitleKey)->GetLineValue(uni_RangeBottom+2);
+    int int_TitleExpenseUD = GetPtrFM("TT", str_TitleKey)->CountRangeType(uni_RangeTop, uni_RangeBottom-1,\
                                       LTYPE_FBIRC_LINEUINT);
 
-    GetPtrTitleFM(str_TitleKey)->ModifyLineValue(uni_RangeBottom+2, int_TitleExpenseUD);
+    GetPtrFM("TT", str_TitleKey)->ModifyLineValue(uni_RangeBottom+2, int_TitleExpenseUD);
     m_ptr_FM_SUM->ModifyLineValue(uni_AFLine+1, int_TitleExpenseUD);
 
     if( bol_OFlag )
@@ -909,18 +885,18 @@ void CFAitfX::AddScriptMonth(const string str_SelMonth)
 void CFAitfX::AddScriptSubMonth(const string str_SubMonthKey, const string str_SelMonth)
 {
     string str_SMTitle = string("## ");
-    str_SMTitle += str_SubMonthKey;
+    str_SMTitle += CMD_SMTranslate(str_SubMonthKey);
     str_SMTitle += ".M";
     str_SMTitle += str_SelMonth;
 
-    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey("---");
-    unsigned int uni_SMLine = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
+    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey("---");
+    unsigned int uni_SMLine = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
 
-    GetPtrSubMonthFM(str_SubMonthKey)->InsertBlankLine(uni_SMLine-4);
-    GetPtrSubMonthFM(str_SubMonthKey)->InsertLine(uni_SMLine-3, LTYPE_MONTHTITLE, 0, str_SMTitle);
-    GetPtrSubMonthFM(str_SubMonthKey)->InsertLine(uni_SMLine-2, LTYPE_FBIRC_TITLESUM, 0, "");
-    GetPtrSubMonthFM(str_SubMonthKey)->InsertBlankLine(uni_SMLine-1);
-    GetPtrSubMonthFM(str_SubMonthKey)->InsertLine(uni_SMLine, LTYPE_FBIRC_LINEUINT, 0, "~");
+    GetPtrFM("SM", str_SubMonthKey)->InsertBlankLine(uni_SMLine-4);
+    GetPtrFM("SM", str_SubMonthKey)->InsertLine(uni_SMLine-3, LTYPE_MONTHTITLE, 0, str_SMTitle);
+    GetPtrFM("SM", str_SubMonthKey)->InsertLine(uni_SMLine-2, LTYPE_FBIRC_TITLESUM, 0, "");
+    GetPtrFM("SM", str_SubMonthKey)->InsertBlankLine(uni_SMLine-1);
+    GetPtrFM("SM", str_SubMonthKey)->InsertLine(uni_SMLine, LTYPE_FBIRC_LINEUINT, 0, "~");
 }
 
 /**************************************************/
@@ -1536,23 +1512,23 @@ int CFAitfX::ShowSubMonth(const string str_SubMonthKey, const string str_SelMont
         cout << endl;
     }
 
-    string str_RangeTop = str_SubMonthKey + ".M" + str_SelMonth;
-    string str_RangeBottom = str_SubMonthKey + ".M" + CTool::GenerateNextMonth(str_SelMonth);
+    string str_RangeTop = CMD_SMTranslate(str_SubMonthKey) + ".M" + str_SelMonth;
+    string str_RangeBottom = CMD_SMTranslate(str_SubMonthKey) + ".M" + CTool::GenerateNextMonth(str_SelMonth);
 
-    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
-    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
+    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
+    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
 
     for(int i=uni_RangeTop+3; i<uni_RangeBottom-1; i++)
     {
-        cout << GetPtrSubMonthFM(str_SubMonthKey)->GetLineContent(i);
+        cout << GetPtrFM("SM", str_SubMonthKey)->GetLineContent(i);
         cout << ": ";
-        cout << GetPtrSubMonthFM(str_SubMonthKey)->GetLineValue(i);
+        cout << GetPtrFM("SM", str_SubMonthKey)->GetLineValue(i);
         cout << endl;
     }
 
-    int int_TotalSMExpense = GetPtrSubMonthFM(str_SubMonthKey)->GetLineValue(uni_RangeTop+1);
+    int int_TotalSMExpense = GetPtrFM("SM", str_SubMonthKey)->GetLineValue(uni_RangeTop+1);
 
     if( int_OFlag == 1 )
     {
@@ -1583,8 +1559,8 @@ void CFAitfX::ShowTitle(const string str_TitleKey, const int int_OFlag)
     string str_RangeBottom("## Total");
 
     unsigned int uni_RangeTop = 1;
-    GetPtrTitleFM(str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrTitleFM(str_TitleKey)->GetSearchLineIndex(1);
+    GetPtrFM("TT", str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = GetPtrFM("TT", str_TitleKey)->GetSearchLineIndex(1);
 
     cout << "----------------------------------------" << endl;
 
@@ -1593,20 +1569,20 @@ void CFAitfX::ShowTitle(const string str_TitleKey, const int int_OFlag)
 
         for(int i=uni_RangeTop+2; i<uni_RangeBottom-1; i++)
         {
-            if(LTYPE_FBIRC_LINEUINT == GetPtrTitleFM(str_TitleKey)->GetLineType(i))
+            if(LTYPE_FBIRC_LINEUINT == GetPtrFM("TT", str_TitleKey)->GetLineType(i))
             {
-                cout << GetPtrTitleFM(str_TitleKey)->GetLineContent(i);
+                cout << GetPtrFM("TT", str_TitleKey)->GetLineContent(i);
                 cout << ": ";
-                cout << CTool::TransOutFormat(GetPtrTitleFM(str_TitleKey)->GetLineValue(i));
+                cout << CTool::TransOutFormat(GetPtrFM("TT", str_TitleKey)->GetLineValue(i));
                 cout << endl;
             }
-            else if(LTYPE_TTTAG == GetPtrTitleFM(str_TitleKey)->GetLineType(i))
+            else if(LTYPE_TTTAG == GetPtrFM("TT", str_TitleKey)->GetLineType(i))
             {
-                cout << GetPtrTitleFM(str_TitleKey)->GetFullLine(i);
+                cout << GetPtrFM("TT", str_TitleKey)->GetFullLine(i);
                 cout << " ----------";
                 cout << endl;
             }
-            else if(LTYPE_BLANK == GetPtrTitleFM(str_TitleKey)->GetLineType(i))
+            else if(LTYPE_BLANK == GetPtrFM("TT", str_TitleKey)->GetLineType(i))
             {
                 cout << endl;
             }
@@ -1619,11 +1595,11 @@ void CFAitfX::ShowTitle(const string str_TitleKey, const int int_OFlag)
 
         for(int i=uni_RangeTop+2; i<=uni_RangeBottom; i++)
         {
-            if(LTYPE_TTTAG == GetPtrTitleFM(str_TitleKey)->GetLineType(i))
+            if(LTYPE_TTTAG == GetPtrFM("TT", str_TitleKey)->GetLineType(i))
             {
-                str_TagContainer = GetPtrTitleFM(str_TitleKey)->GetFullLine(i);
+                str_TagContainer = GetPtrFM("TT", str_TitleKey)->GetFullLine(i);
             }
-            else if(LTYPE_BLANK == GetPtrTitleFM(str_TitleKey)->GetLineType(i))
+            else if(LTYPE_BLANK == GetPtrFM("TT", str_TitleKey)->GetLineType(i))
             {
                 if(str_TagContainer != "")
                 {
@@ -1635,14 +1611,14 @@ void CFAitfX::ShowTitle(const string str_TitleKey, const int int_OFlag)
 
                 continue;
             }
-            else if(LTYPE_FBIRC_LINEUINT == GetPtrTitleFM(str_TitleKey)->GetLineType(i))
+            else if(LTYPE_FBIRC_LINEUINT == GetPtrFM("TT", str_TitleKey)->GetLineType(i))
             {
-                int_TagBlockValue += GetPtrTitleFM(str_TitleKey)->GetLineValue(i);
+                int_TagBlockValue += GetPtrFM("TT", str_TitleKey)->GetLineValue(i);
             }
         }
     }
 
-    int int_TotalTTExpense = GetPtrTitleFM(str_TitleKey)->GetLineValue(uni_RangeBottom+2);
+    int int_TotalTTExpense = GetPtrFM("TT", str_TitleKey)->GetLineValue(uni_RangeBottom+2);
     
     cout << "----------------------------------------" << endl;
     cout << "--> " << str_TitleKey << "/总支出: " << CTool::TransOutFormat(int_TotalTTExpense) << endl;
@@ -1736,13 +1712,13 @@ void CFAitfX::PrintMonth(const string str_SelMonth, bool bol_NumFlag)
 /**************************************************/
 void CFAitfX::PrintSubMonth(const string str_SubMonthKey, const string str_SelMonth, bool bol_NumFlag, bool bol_ShowFlag)
 {
-    string str_RangeTop = str_SubMonthKey + ".M" + str_SelMonth;
-    string str_RangeBottom = str_SubMonthKey + ".M" + CTool::GenerateNextMonth(str_SelMonth);
+    string str_RangeTop = CMD_SMTranslate(str_SubMonthKey) + ".M" + str_SelMonth;
+    string str_RangeBottom = CMD_SMTranslate(str_SubMonthKey) + ".M" + CTool::GenerateNextMonth(str_SelMonth);
 
-    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
-    GetPtrSubMonthFM(str_SubMonthKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrSubMonthFM(str_SubMonthKey)->GetSearchLineIndex(1);
+    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
+    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
 
     if( bol_ShowFlag )
     {
@@ -1755,14 +1731,14 @@ void CFAitfX::PrintSubMonth(const string str_SubMonthKey, const string str_SelMo
     {
         for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
         {
-            cout << "【" << i << "】" << GetPtrSubMonthFM(str_SubMonthKey)->GetFullLine(i) << endl;
+            cout << "【" << i << "】" << GetPtrFM("SM", str_SubMonthKey)->GetFullLine(i) << endl;
         }
     }
     else
     {           
         for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
         {
-            cout << GetPtrSubMonthFM(str_SubMonthKey)->GetFullLine(i) << endl;
+            cout << GetPtrFM("SM", str_SubMonthKey)->GetFullLine(i) << endl;
         }
     }
 
@@ -1781,8 +1757,8 @@ void CFAitfX::PrintTitle(const string str_TitleKey, bool bol_NumFlag)
     string str_RangeBottom = "Update Time";
 
     unsigned int uni_RangeTop = 1;
-    GetPtrTitleFM(str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrTitleFM(str_TitleKey)->GetSearchLineIndex(1)-1;
+    GetPtrFM("TT", str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
+    unsigned int uni_RangeBottom = GetPtrFM("TT", str_TitleKey)->GetSearchLineIndex(1)-1;
 
     if( bol_NumFlag )
     {
@@ -1792,7 +1768,7 @@ void CFAitfX::PrintTitle(const string str_TitleKey, bool bol_NumFlag)
 
         for(int i=uni_RangeTop; i<uni_RangeBottom; i++)
         {
-            cout << "【" << i << "】" << GetPtrTitleFM(str_TitleKey)->GetFullLine(i) << endl;
+            cout << "【" << i << "】" << GetPtrFM("TT", str_TitleKey)->GetFullLine(i) << endl;
         }
 
         cout << "----------------------------------------" << endl;
@@ -2007,42 +1983,44 @@ CFileManager *CFAitfX::GetPtrFM(const string str_Type, const string str_Key)
     }
 }
 
-CFileManager *CFAitfX::GetPtrSubMonthFM(const string str_SubMonthKey)
+string CFAitfX::CMD_SMTranslate(const string str_SubMonthKey)
 {
-    if(str_SubMonthKey == "DGtler")
-        return m_ptr_FM_sm_DGtler;
-    else if(str_SubMonthKey == "Books")
-        return m_ptr_FM_sm_Books;
-    else if(str_SubMonthKey == "KEEP")
-        return m_ptr_FM_sm_KEEP;
-    else if(str_SubMonthKey == "TB")
-        return m_ptr_FM_sm_TB;
-    else if(str_SubMonthKey == "sa")
-        return m_ptr_FM_sm_sa;
+    string str_TranslateKey("");
+
+    if(str_SubMonthKey == DGTLER)
+        str_TranslateKey = "DGtler";
+    else if(str_SubMonthKey == BOOKS)
+        str_TranslateKey = "Books";
+    else if(str_SubMonthKey == KEEP)
+        str_TranslateKey = "KEEP";
+    else if(str_SubMonthKey == TB)
+        str_TranslateKey = "TB";
+    else if(str_SubMonthKey == SA)
+        str_TranslateKey = "sa";
     else
-    {
-        CTool::MassageOutFotmat("SubMonthKey Error", '!');
-        return m_ptr_FM_NULL;
-    } 
+        str_TranslateKey = "ERROR";
+
+    return str_TranslateKey;
 }
 
-CFileManager *CFAitfX::GetPtrTitleFM(const string str_TitleKey)
+string CFAitfX::CMD_TTTranslate(const string str_TitleKey)
 {
-    if(str_TitleKey == "DK")
-        return m_ptr_FM_tt_DK;
-    else if(str_TitleKey == "NS")
-        return m_ptr_FM_tt_NS;
-    else if(str_TitleKey == "NR411")
-        return m_ptr_FM_tt_NR;
-    else if(str_TitleKey == "travel")
-        return m_ptr_FM_tt_travel;
-    else if(str_TitleKey == "lottery")
-        return m_ptr_FM_tt_lottery;
+    string str_TranslateKey("");
+
+    if(str_TitleKey == DK)
+        str_TranslateKey = "DK";
+    else if(str_TitleKey == NS)
+        str_TranslateKey = "NS";
+    else if(str_TitleKey == NR)
+        str_TranslateKey = "NR411";
+    else if(str_TitleKey == TRAVEL)
+        str_TranslateKey = "travel";
+    else if(str_TitleKey == LOTTERY)
+        str_TranslateKey = "lottery";
     else
-    {
-        CTool::MassageOutFotmat("TitleKey Error", '!');
-        return m_ptr_FM_NULL;
-    }
+        str_TranslateKey = "ERROR";
+
+    return str_TranslateKey;
 }
 
 

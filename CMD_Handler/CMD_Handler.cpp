@@ -327,68 +327,14 @@ void CCMDHandler::CMD_PrintRecovery()
     }
     else if(ms_str_FM_Type == "SM")
     {
-        string str_SubMonthKey = CMD_SMTranslate(ms_str_FM_Key);
-        ms_ptr_FAitfX->PrintSubMonth(str_SubMonthKey, ms_str_FM_Month, true, true);
+        ms_ptr_FAitfX->PrintSubMonth(ms_str_FM_Key, ms_str_FM_Month, true, true);
     }
     else if(ms_str_FM_Type == "TT")
     {
-        string str_TitleKey = CMD_TTTranslate(ms_str_FM_Key);
-        ms_ptr_FAitfX->PrintTitle(str_TitleKey, true);
+        ms_ptr_FAitfX->PrintTitle(ms_str_FM_Key, true);
     }
     else
         return;
-}
-
-/**************************************************/
-//   CMDHandler 接受全小写CMD，便于输入
-//   FAitfX 接受区分大小写Key，直接查找.md
-//   需要Translate做中间转换
-/**************************************************/
-string CCMDHandler::CMD_SMTranslate(const string str_SubMonthKey)
-{
-    string str_TranslateKey("");
-
-    if(str_SubMonthKey == DGTLER)
-        str_TranslateKey = "DGtler";
-    else if(str_SubMonthKey == BOOKS)
-        str_TranslateKey = "Books";
-    else if(str_SubMonthKey == KEEP)
-        str_TranslateKey = "KEEP";
-    else if(str_SubMonthKey == TB)
-        str_TranslateKey = "TB";
-    else if(str_SubMonthKey == SA)
-        str_TranslateKey = "sa";
-    else if(str_SubMonthKey == ALL)
-        str_TranslateKey = "all";
-    else
-        str_TranslateKey = "ERROR";
-
-    return str_TranslateKey;
-}
-
-/**************************************************/
-//   CMDHandler 接受全小写CMD，便于输入
-//   FAitfX 接受区分大小写Key，直接查找.md
-//   需要Translate做中间转换
-/**************************************************/
-string CCMDHandler::CMD_TTTranslate(const string str_TitleKey)
-{
-    string str_TranslateKey("");
-
-    if(str_TitleKey == DK)
-        str_TranslateKey = "DK";
-    else if(str_TitleKey == NS)
-        str_TranslateKey = "NS";
-    else if(str_TitleKey == NR)
-        str_TranslateKey = "NR411";
-    else if(str_TitleKey == TRAVEL)
-        str_TranslateKey = "travel";
-    else if(str_TitleKey == LOTTERY)
-        str_TranslateKey = "lottery";
-    else
-        str_TranslateKey = "ERROR";
-
-    return str_TranslateKey;
 }
 
 void CCMDHandler::CMD_Help()
@@ -485,14 +431,12 @@ void CCMDHandler::OnCmdShowMonth(CMD_Packet srt_CMD)
 
 void CCMDHandler::OnCmdCheckSubMonth(CMD_Packet srt_CMD)
 {
-    string str_SubMonthKey = CMD_SMTranslate(srt_CMD.m_str_ParamSubMonth);
-    ms_ptr_FAitfX->CheckSubMonthExpense(str_SubMonthKey, srt_CMD.m_str_ParamMonth, true);
+    ms_ptr_FAitfX->CheckSubMonthExpense(srt_CMD.m_str_ParamSubMonth, srt_CMD.m_str_ParamMonth, true);
 }
 
 void CCMDHandler::OnCmdUpdateSubMonth(CMD_Packet srt_CMD)
 {
-    string str_SubMonthKey = CMD_SMTranslate(srt_CMD.m_str_ParamSubMonth);
-    ms_ptr_FAitfX->UpdateSubMonthExpense(str_SubMonthKey, srt_CMD.m_str_ParamMonth, true);
+    ms_ptr_FAitfX->UpdateSubMonthExpense(srt_CMD.m_str_ParamSubMonth, srt_CMD.m_str_ParamMonth, true);
 
     ms_ptr_FAitfX->UpdateMonthSurplus(srt_CMD.m_str_ParamMonth, false);
     ms_ptr_FAitfX->SyncMonthSurplus(srt_CMD.m_str_ParamMonth);
@@ -507,33 +451,28 @@ void CCMDHandler::OnCmdShowSubMonth(CMD_Packet srt_CMD)
     }
     else
     {
-        string str_SubMonthKey = CMD_SMTranslate(srt_CMD.m_str_ParamSubMonth);
-        ms_ptr_FAitfX->ShowSubMonth(str_SubMonthKey, srt_CMD.m_str_ParamMonth, 4);
+        ms_ptr_FAitfX->ShowSubMonth(srt_CMD.m_str_ParamSubMonth, srt_CMD.m_str_ParamMonth, 4);
     }
 }
 
 void CCMDHandler::OnCmdCheckTitle(CMD_Packet srt_CMD)
 {
-    string str_TitleKey = CMD_TTTranslate(srt_CMD.m_str_ParamTitle);
-    ms_ptr_FAitfX->CheckTitleExpense(str_TitleKey, true);
+    ms_ptr_FAitfX->CheckTitleExpense(srt_CMD.m_str_ParamTitle, true);
 }
 
 void CCMDHandler::OnCmdUpdateTitle(CMD_Packet srt_CMD)
 {
-    string str_TitleKey = CMD_TTTranslate(srt_CMD.m_str_ParamTitle);
-    ms_ptr_FAitfX->UpdateTitleExpense(str_TitleKey, true);
+    ms_ptr_FAitfX->UpdateTitleExpense(srt_CMD.m_str_ParamTitle, true);
 
     ms_ptr_ASitfX->UpdateSum(0);
 }
 
 void CCMDHandler::OnCmdShowTitle(CMD_Packet srt_CMD)
 {
-    string str_TitleKey = CMD_TTTranslate(srt_CMD.m_str_ParamTitle);
-
     if( srt_CMD.m_str_ResParam == TAG )
-        ms_ptr_FAitfX->ShowTitle(str_TitleKey, 2);
+        ms_ptr_FAitfX->ShowTitle(srt_CMD.m_str_ParamTitle, 2);
     else
-        ms_ptr_FAitfX->ShowTitle(str_TitleKey, 1);
+        ms_ptr_FAitfX->ShowTitle(srt_CMD.m_str_ParamTitle, 1);
 }
 
 void CCMDHandler::OnCmdTransfer(CMD_Packet srt_CMD)
@@ -648,21 +587,18 @@ void CCMDHandler::OnCmdPrintSubMonth(CMD_Packet srt_CMD)
     {
         if(srt_CMD.m_str_ResParam == TRAVERSAL)
         {
-            string str_SubMonthKey = CMD_SMTranslate(srt_CMD.m_str_ParamSubMonth);
-            ms_ptr_ASitfX->PrintSubMonthTraversal(str_SubMonthKey, true);
+            ms_ptr_ASitfX->PrintSubMonthTraversal(srt_CMD.m_str_ParamSubMonth, true);
         }
         else
         {
-            string str_SubMonthKey = CMD_SMTranslate(srt_CMD.m_str_ParamSubMonth);
-            ms_ptr_FAitfX->PrintSubMonth(str_SubMonthKey, srt_CMD.m_str_ParamMonth, true, true);
+            ms_ptr_FAitfX->PrintSubMonth(srt_CMD.m_str_ParamSubMonth, srt_CMD.m_str_ParamMonth, true, true);
         }
     }
 }
 
 void CCMDHandler::OnCmdPrintTitle(CMD_Packet srt_CMD)
 {
-    string str_TitleKey = CMD_TTTranslate(srt_CMD.m_str_ParamTitle);
-    ms_ptr_FAitfX->PrintTitle(str_TitleKey, true);
+    ms_ptr_FAitfX->PrintTitle(srt_CMD.m_str_ParamTitle, true);
 }
 
 void CCMDHandler::OnCmdInsertLine(CMD_Packet srt_CMD)

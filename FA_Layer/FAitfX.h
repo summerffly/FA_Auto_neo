@@ -145,8 +145,9 @@ public:
     //   Ptr
     /****************************************/
     CFileManager *GetPtrFM(const string str_Type, const string str_Key);
-    CFileManager *GetPtrSubMonthFM(const string str_SubMonthKey);
-    CFileManager *GetPtrTitleFM(const string str_TitleKey);
+    
+    string CMD_SMTranslate(const string str_SubMonthKey);
+    string CMD_TTTranslate(const string str_TitleKey);
 
 /****************************************/
 //   SUM成员
