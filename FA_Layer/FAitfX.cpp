@@ -200,7 +200,7 @@ void CFAitfX::SummarizeTitle(int int_OFlag)
 
         if(int_OFlag > 0)
         {
-            cout << *itr_Title << ": " << CTool::TransOutFormat(int_TitleCount) << endl;
+            cout << CMD_TTTranslate(*itr_Title) << ": " << CTool::TransOutFormat(int_TitleCount) << endl;
         }
     }
 
@@ -601,7 +601,7 @@ int CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str
     if( bol_OFlag )
     {
         cout << "----------------------------------------" << endl;
-        cout << "### " << str_SelMonth << "月/" << str_SubMonthKey << "支出 ###" << endl;
+        cout << "### " << str_SelMonth << "月/" << CMD_SMTranslate(str_SubMonthKey) << "支出 ###" << endl;
         cout << "life.M_读取值: " << CTool::TransOutFormat(int_LMSubMonthExpenseEX) << endl;
         cout << "sub.M_读取值: " << CTool::TransOutFormat(int_SubMonthExpenseEX) << endl;
         cout << "sub.M_校验值: " << CTool::TransOutFormat(int_SubMonthExpenseCK) << endl;
@@ -648,7 +648,7 @@ void CFAitfX::UpdateSubMonthExpense(const string str_SubMonthKey, const string s
     if( bol_OFlag )
     {
         cout << "----------------------------------------" << endl;
-        cout << "### " << str_SelMonth << "月/" << str_SubMonthKey << "支出 ###" << endl;
+        cout << "### " << str_SelMonth << "月/" << CMD_SMTranslate(str_SubMonthKey) << "支出 ###" << endl;
         cout << "sub.M_初始值: " << CTool::TransOutFormat(int_SubMonthExpense) << endl;
         cout << "sub.M_更新值: " << CTool::TransOutFormat(int_SubMonthExpenseUD) << endl;
         cout << "----------------------------------------" << endl;
@@ -679,7 +679,7 @@ int CFAitfX::CheckTitleExpense(const string str_TitleKey, bool bol_OFlag)
     if( bol_OFlag )
     {
         cout << "----------------------------------------" << endl;
-        cout << "### " << str_TitleKey << "/支出 ###" << endl;
+        cout << "### " << CMD_TTTranslate(str_TitleKey) << "/支出 ###" << endl;
         cout << "AF_读取值: " << CTool::TransOutFormat(int_AFTitleExpenseEX) << endl;
         cout << "Tt_读取值: " << CTool::TransOutFormat(int_TitleExpenseEX) << endl;
         cout << "Tt_校验值: " << CTool::TransOutFormat(int_TitleExpenseCK) << endl;
@@ -725,7 +725,7 @@ void CFAitfX::UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag)
     if( bol_OFlag )
     {
         cout << "----------------------------------------" << endl;
-        cout << "### " << str_TitleKey << "/支出 ###" << endl;
+        cout << "### " << CMD_TTTranslate(str_TitleKey) << "/支出 ###" << endl;
         cout << "Tt_初始值: " << CTool::TransOutFormat(int_TitleExpense) << endl;
         cout << "Tt_更新值: " << CTool::TransOutFormat(int_TitleExpenseUD) << endl;
         cout << "----------------------------------------" << endl;
@@ -874,7 +874,7 @@ void CFAitfX::AddScriptMonth(const string str_SelMonth)
     vector<string>::iterator itr_SubMonth;
     for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
     {
-        string str_lifeSM = *itr_SubMonth + ".M" + str_SelMonth;
+        string str_lifeSM = CMD_SMTranslate(*itr_SubMonth) + ".M" + str_SelMonth;
         m_ptr_FM_life->InsertLine(uni_InsertLine++, LTYPE_FBIRC_LINEUINT, 0, str_lifeSM);
     }
 }
@@ -1476,12 +1476,12 @@ void CFAitfX::ShowSM(const string str_SelMonth, int int_OFlag)
     vector<string>::iterator itr_SubMonth;
     for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
     {
-        string str_SMItem = *itr_SubMonth + ".M" + str_SelMonth;
+        string str_SMItem = CMD_SMTranslate(*itr_SubMonth) + ".M" + str_SelMonth;
         m_ptr_FM_life->SearchLineKey(str_SMItem.c_str());
         unsigned int uni_SMLine = m_ptr_FM_life->GetSearchLineIndex(1);
         int int_SMExpense = m_ptr_FM_life->GetLineValue(uni_SMLine);
         int_TotalSMExpense += int_SMExpense;
-        cout << str_SelMonth << "月/" << *itr_SubMonth << ": " << CTool::TransOutFormat(int_SMExpense) << endl;
+        cout << str_SelMonth << "月/" << CMD_SMTranslate(*itr_SubMonth) << ": " << CTool::TransOutFormat(int_SMExpense) << endl;
     }
 
     if( int_OFlag == 2 )
@@ -1533,13 +1533,13 @@ int CFAitfX::ShowSubMonth(const string str_SubMonthKey, const string str_SelMont
     if( int_OFlag == 1 )
     {
         cout << endl;
-        cout << "--> " << str_SelMonth << "月/" << str_SubMonthKey << "支出: " << CTool::TransOutFormat(int_TotalSMExpense) << endl;
+        cout << "--> " << str_SelMonth << "月/" << CMD_SMTranslate(str_SubMonthKey) << "支出: " << CTool::TransOutFormat(int_TotalSMExpense) << endl;
     }
 
     if( int_OFlag == 4 )
     {
         cout << endl;
-        cout << "--> " << str_SelMonth << "月/" << str_SubMonthKey << "支出: " << CTool::TransOutFormat(int_TotalSMExpense) << endl;
+        cout << "--> " << str_SelMonth << "月/" << CMD_SMTranslate(str_SubMonthKey) << "支出: " << CTool::TransOutFormat(int_TotalSMExpense) << endl;
         cout << "----------------------------------------" << endl;
     }
 
@@ -1621,7 +1621,7 @@ void CFAitfX::ShowTitle(const string str_TitleKey, const int int_OFlag)
     int int_TotalTTExpense = GetPtrFM("TT", str_TitleKey)->GetLineValue(uni_RangeBottom+2);
     
     cout << "----------------------------------------" << endl;
-    cout << "--> " << str_TitleKey << "/总支出: " << CTool::TransOutFormat(int_TotalTTExpense) << endl;
+    cout << "--> " << CMD_TTTranslate(str_TitleKey) << "/总支出: " << CTool::TransOutFormat(int_TotalTTExpense) << endl;
     cout << "----------------------------------------" << endl;
 }
 
