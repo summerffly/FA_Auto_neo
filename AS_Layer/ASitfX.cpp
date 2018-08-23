@@ -150,7 +150,7 @@ int CASitfX::CheckSum(int int_OFlag)
         cout << "读取值: " << CTool::TransOutFormat(int_CurrentSum) << endl;
         cout << "校验值: " << CTool::TransOutFormat(int_CurrentSumCK) << endl;
         cout << "----------------------------------------" << endl;
-        cout << "### 支配财富 ###" << endl;
+        cout << "### 可支配财富 ###" << endl;
         cout << "读取值: " << CTool::TransOutFormat(int_CAFSum) << endl;
         cout << "校验值: " << CTool::TransOutFormat(int_CAFSumCK) << endl;
         cout << "----------------------------------------" << endl;
@@ -207,7 +207,7 @@ void CASitfX::UpdateSum(int int_OFlag)
         cout << "读取值: " << CTool::TransOutFormat(int_CurrentSum) << endl;
         cout << "更新值: " << CTool::TransOutFormat(int_CurrentSumUD) << endl;
         cout << "----------------------------------------" << endl;
-        cout << "### 支配财富 ###" << endl;
+        cout << "### 可支配财富 ###" << endl;
         cout << "读取值: " << CTool::TransOutFormat(int_CAFSum) << endl;
         cout << "更新值: " << CTool::TransOutFormat(int_CAFSumUD) << endl;
         cout << "----------------------------------------" << endl;

@@ -19,6 +19,7 @@ CFAitfX::CFAitfX()
 {
     m_int_OriginSum = 0;
     m_int_CurrentSum = 0;
+    m_int_CAFSum = 0;
 
     m_int_MonthSalarySum = 0;
     m_int_MonthExpenseSum = 0;
@@ -26,7 +27,6 @@ CFAitfX::CFAitfX()
 
     m_int_TitleSum = 0;
     m_int_TailSum = 0;
-    m_int_CAFSum = 0;
 
     m_ptr_FM_SUM = new CFileManager("./FA_SUM.md");
     m_ptr_FM_life = new CFileManager("./life.M.md");
@@ -73,7 +73,7 @@ CFAitfX::~CFAitfX()
 /**************************************************/
 
 /**************************************************/
-//   读取 初始&当前Sum
+//   读取 初始&当前&可支配 Sum
 /**************************************************/
 void CFAitfX::LoadSum(int int_OFlag)
 {
@@ -81,6 +81,7 @@ void CFAitfX::LoadSum(int int_OFlag)
 
     string str_OriginSum = ptr_ScriptRipper->GetOriginSum();
     string str_CurrentSum = ptr_ScriptRipper->GetCurrentSum();
+    string str_CAFSum = ptr_ScriptRipper->GetCAFSum();
 
     unsigned int uni_SumLine = 0;
 
@@ -91,6 +92,10 @@ void CFAitfX::LoadSum(int int_OFlag)
     m_ptr_FM_SUM->SearchLineKey(str_CurrentSum.c_str());
     uni_SumLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
     m_int_CurrentSum = m_ptr_FM_SUM->GetLineValue(uni_SumLine);
+
+    m_ptr_FM_SUM->SearchLineKey(str_CAFSum.c_str());
+    uni_SumLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
+    m_int_CAFSum = m_ptr_FM_SUM->GetLineValue(uni_SumLine);
 
     if(int_OFlag == 1)
     {
@@ -274,8 +279,6 @@ void CFAitfX::SummarizeCAF(int int_OFlag)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
-    int int_CAFSum = 0;
-
     vector<string> vec_str_CAF;
     ptr_ScriptRipper->CAFDuplicator(vec_str_CAF);
 
@@ -285,7 +288,7 @@ void CFAitfX::SummarizeCAF(int int_OFlag)
     if(int_OFlag == 1)
     {
         cout << "----------------------------------------" << endl;
-        cout << "--> 支配财富: " << CTool::TransOutFormat(m_int_CAFSum) << endl;
+        cout << "--> 可支配财富: " << CTool::TransOutFormat(m_int_CAFSum) << endl;
     }
 
     vector<string>::iterator itr_CAF;
@@ -296,15 +299,12 @@ void CFAitfX::SummarizeCAF(int int_OFlag)
         uni_CAFLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
 
         int int_CAFCount = m_ptr_FM_SUM->GetLineValue(uni_CAFLine);
-        int_CAFSum += int_CAFCount;
 
         if(int_OFlag == 1)
         {
             cout << *itr_CAF << ": " << CTool::TransOutFormat(int_CAFCount) << endl;
         }
     }
-
-    m_int_CAFSum = int_CAFSum;
 
     if(int_OFlag == 2)
     {
@@ -338,13 +338,20 @@ void CFAitfX::UpdateCAF(const int int_CAFSum)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
-    vector<string> vec_str_CAF;
-    ptr_ScriptRipper->CAFDuplicator(vec_str_CAF);
-
     string str_CAFKey;
     unsigned int uni_CAFLine = 0;
     int int_CAFCount = 0;
     int int_CAFSumRest = int_CAFSum;
+
+    // 修改 CAF Sum
+    string str_CAFSum = ptr_ScriptRipper->GetCAFSum();
+    m_ptr_FM_SUM->SearchLineKey(str_CAFSum.c_str());
+    uni_CAFLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
+    m_ptr_FM_SUM->ModifyLineValue(uni_CAFLine, int_CAFSum);
+
+    // 修改 CAF 子项
+    vector<string> vec_str_CAF;
+    ptr_ScriptRipper->CAFDuplicator(vec_str_CAF);
 
     vector<string>::iterator itr_CAF;
     for(itr_CAF = vec_str_CAF.begin(); itr_CAF != vec_str_CAF.end(); itr_CAF++)
@@ -355,7 +362,7 @@ void CFAitfX::UpdateCAF(const int int_CAFSum)
         int_CAFCount = m_ptr_FM_SUM->GetLineValue(uni_CAFLine);
         int_CAFSumRest -= int_CAFCount;
     }
-    int_CAFSumRest += int_CAFCount;   // tips 番茄@20189604 - 补加最后项
+    int_CAFSumRest += int_CAFCount;   // tips 番茄@20180823 - 补加最后项
 
     m_ptr_FM_SUM->ModifyLineValue(uni_CAFLine, int_CAFSumRest);
 }

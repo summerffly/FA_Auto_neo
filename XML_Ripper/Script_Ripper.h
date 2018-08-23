@@ -51,6 +51,7 @@ public:
     string GetPreviousMonth();
     string GetOriginSum();
     string GetCurrentSum();
+    string GetCAFSum();
 
     unsigned int GetMonthSalary();
 
@@ -85,6 +86,7 @@ private:
 
     string m_str_OriginSum;
     string m_str_CurrentSum;
+    string m_str_CAFSum;
 
     unsigned int m_uni_TitleNum;
     unsigned int m_uni_TitleDeepNum;

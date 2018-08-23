@@ -19,6 +19,10 @@ m_cls_XMLRipper(cha_xmlPath)
 
     m_str_Version = "";
 
+    m_str_OriginSum = "";
+    m_str_CurrentSum = "";
+    //m_str_CAFSum = "";
+
     m_str_OriginMonth = "";
     m_str_CurrentMonth = "";
     m_str_PreviousMonth = "";
@@ -29,6 +33,7 @@ m_cls_XMLRipper(cha_xmlPath)
     m_uni_MonthSalary = 0;
 
     m_vec_str_Title.clear();
+    m_vec_str_Room.clear();
     m_vec_str_SubMonth.clear();
     m_vec_str_Tail.clear();
     m_vec_str_CAF.clear();
@@ -95,6 +100,7 @@ void CScriptRipper::SumRipper()
 {
     m_str_OriginSum = m_cls_XMLRipper.GetL2NodeAttr_UNI("FA_SUM", "OriginSum", "content");
     m_str_CurrentSum = m_cls_XMLRipper.GetL2NodeAttr_UNI("FA_SUM", "CurrentSum", "content");
+    m_str_CAFSum = m_cls_XMLRipper.GetL2NodeAttr_UNI("FA_SUM", "CAFSum", "content");
 }
 
 /**************************************************/
@@ -188,7 +194,7 @@ void CScriptRipper::SubMonthRipper()
     string str_Temp;
     for(int i=1; i<=m_uni_SubMonthNum; i++)
     {
-        str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_SubMonth", "SMItem", i,"item");
+        str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_SubMonth", "SMItem", i, "item");
         m_vec_str_SubMonth.push_back(str_Temp);
     }
 }
@@ -316,6 +322,14 @@ string CScriptRipper::GetOriginSum()
 string CScriptRipper::GetCurrentSum()
 {
     return m_str_CurrentSum;
+}
+
+/**************************************************/
+//   获取 CAFSum
+/**************************************************/
+string CScriptRipper::GetCAFSum()
+{
+    return m_str_CAFSum;
 }
 
 /**************************************************/

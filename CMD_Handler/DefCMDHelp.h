@@ -29,8 +29,10 @@ string  CMD_HELP_PATCH_CHECK_SUBMONTH = "SM = " + ALL + "/" + DGTLER + "/" + BOO
 string  CMD_HELP_UPDATE_SUBMONTH  = UPDATE + " -sm SM";
 string  CMD_HELP_SHOW_SUBMONTH  = SHOW + " -sm SM";
 
-//string  HELP_CMD_TYPE_CHECK_TITLE    ("CheckTitle")
-//string  HELP_CMD_TYPE_UPDATE_TITLE   ("UpdateTitle")
+string  CMD_HELP_CHECK_TITLE = CHECK + " -tt TT";
+string  CMD_HELP_PATCH_CHECK_TITLE = "TT = " + DK + "/" + NS + "/" + NR + "/" + TRAVEL + "/" + LOTTERY;
+string  CMD_HELP_UPDATE_TITLE = UPDATE + " -tt TT";
+string  CMD_HELP_SHOW_TITLE = SHOW + " -tt TT -sp tag";
 
 string  CMD_HELP_TRANSFER = TRANSFER + " -f VALUE";
 string  CMD_HELP_LOTTERY = LOTTERY + " -f VALUE -d DATE";

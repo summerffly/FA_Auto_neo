@@ -155,6 +155,7 @@ public:
 private:
     int m_int_OriginSum;
     int m_int_CurrentSum;
+    int m_int_CAFSum;
 
     int m_int_MonthSalarySum;
     int m_int_MonthExpenseSum;
@@ -162,7 +163,6 @@ private:
 
     int m_int_TitleSum;
     int m_int_TailSum;
-    int m_int_CAFSum;
 
 /****************************************/
 //   FM成员
