@@ -42,115 +42,61 @@ int CTool::CheckFilesExist()
     return int_RetFC;
 }
 
+bool CTool::ParseMonth(const string str_Input)
+{
+    smatch str_Match;
+    regex REP_Month("^(\\d{2})$");
+
+    if( regex_match(str_Input, str_Match, REP_Month) )
+    {
+        string str_Month = str_Match[1];
+        int int_Month = atoi(str_Month.c_str());
+
+        if((int_Month>0) && (int_Month<=12))
+            return true;
+        else
+            return false;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+string CTool::GenerateMonth(const int int_Month)
+{
+    char *cha_Month = new char[3];
+
+    if(int_Month < 10)
+        sprintf(cha_Month, "0%d", int_Month);
+    else
+        sprintf(cha_Month, "%d", int_Month);
+
+    delete []cha_Month;
+    string str_Month(cha_Month);
+
+    return str_Month;
+}
+
 string CTool::GenerateNextMonth(const string str_CurMonth)
 {
     string str_NextMonth = string("");
     unsigned int uni_CurMonth = atoi(str_CurMonth.c_str());
 
-    if((uni_CurMonth == 0) || (uni_CurMonth > 12))
+    if( !ParseMonth(str_CurMonth) )
     {
-        cout << "----------------------------------------" << endl;
-        cout << "!!!        Invalid Month Input       !!!" << endl;
-        cout << "----------------------------------------" << endl;
+        MassageOutFotmat("Invalid Month Input", '!');
         return str_NextMonth;
     }
 
     switch(uni_CurMonth)
     {
-        case 1:
-            str_NextMonth += "02";
-            break;
-        case 2:
-            str_NextMonth += "03";
-            break;
-        case 3:
-            str_NextMonth += "04";
-            break;
-        case 4:
-            str_NextMonth += "05";
-            break;
-        case 5:
-            str_NextMonth += "06";
-            break;
-        case 6:
-            str_NextMonth += "07";
-            break;
-        case 7:
-            str_NextMonth += "08";
-            break;
-        case 8:
-            str_NextMonth += "09";
-            break;
-        case 9:
-            str_NextMonth += "10";
-            break;
-        case 10:
-            str_NextMonth += "11";
-            break;
-        case 11:
-            str_NextMonth += "12";
-            break;
         case 12:
             str_NextMonth += "01";
             break;
         default:
-            break;
-    }
-
-    return str_NextMonth;
-}
-
-string CTool::GenerateNextMonth(const int int_CurMonth)
-{
-    string str_NextMonth = string("");
-
-    if((int_CurMonth <= 0) || (int_CurMonth > 12))
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "!!!        Invalid Month Input       !!!" << endl;
-        cout << "----------------------------------------" << endl;
-        return str_NextMonth;
-    }
-
-    switch(int_CurMonth)
-    {
-        case 1:
-            str_NextMonth += "02";
-            break;
-        case 2:
-            str_NextMonth += "03";
-            break;
-        case 3:
-            str_NextMonth += "04";
-            break;
-        case 4:
-            str_NextMonth += "05";
-            break;
-        case 5:
-            str_NextMonth += "06";
-            break;
-        case 6:
-            str_NextMonth += "07";
-            break;
-        case 7:
-            str_NextMonth += "08";
-            break;
-        case 8:
-            str_NextMonth += "09";
-            break;
-        case 9:
-            str_NextMonth += "10";
-            break;
-        case 10:
-            str_NextMonth += "11";
-            break;
-        case 11:
-            str_NextMonth += "12";
-            break;
-        case 12:
-            str_NextMonth += "01";
-            break;
-        default:
+            int int_NextMonth = uni_CurMonth+1;
+            str_NextMonth += GenerateMonth(int_NextMonth);
             break;
     }
 
@@ -162,11 +108,9 @@ string CTool::GeneratePreMonth(const string str_CurMonth)
     string str_NextMonth = string("");
     unsigned int uni_CurMonth = atoi(str_CurMonth.c_str());
 
-    if((uni_CurMonth == 0) || (uni_CurMonth > 12))
+    if( !ParseMonth(str_CurMonth) )
     {
-        cout << "----------------------------------------" << endl;
-        cout << "!!!        Invalid Month Input       !!!" << endl;
-        cout << "----------------------------------------" << endl;
+        MassageOutFotmat("Invalid Month Input", '!');
         return str_NextMonth;
     }
 
@@ -175,97 +119,9 @@ string CTool::GeneratePreMonth(const string str_CurMonth)
         case 1:
             str_NextMonth += "12";
             break;
-        case 2:
-            str_NextMonth += "01";
-            break;
-        case 3:
-            str_NextMonth += "02";
-            break;
-        case 4:
-            str_NextMonth += "03";
-            break;
-        case 5:
-            str_NextMonth += "04";
-            break;
-        case 6:
-            str_NextMonth += "05";
-            break;
-        case 7:
-            str_NextMonth += "06";
-            break;
-        case 8:
-            str_NextMonth += "07";
-            break;
-        case 9:
-            str_NextMonth += "08";
-            break;
-        case 10:
-            str_NextMonth += "09";
-            break;
-        case 11:
-            str_NextMonth += "10";
-            break;
-        case 12:
-            str_NextMonth += "11";
-            break;
         default:
-            break;
-    }
-
-    return str_NextMonth;
-}
-
-string CTool::GeneratePreMonth(const int int_CurMonth)
-{
-    string str_NextMonth = string("");
-
-    if((int_CurMonth <= 0) || (int_CurMonth > 12))
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "!!!        Invalid Month Input       !!!" << endl;
-        cout << "----------------------------------------" << endl;
-        return str_NextMonth;
-    }
-
-    switch(int_CurMonth)
-    {
-        case 1:
-            str_NextMonth += "12";
-            break;
-        case 2:
-            str_NextMonth += "01";
-            break;
-        case 3:
-            str_NextMonth += "02";
-            break;
-        case 4:
-            str_NextMonth += "03";
-            break;
-        case 5:
-            str_NextMonth += "04";
-            break;
-        case 6:
-            str_NextMonth += "05";
-            break;
-        case 7:
-            str_NextMonth += "06";
-            break;
-        case 8:
-            str_NextMonth += "07";
-            break;
-        case 9:
-            str_NextMonth += "08";
-            break;
-        case 10:
-            str_NextMonth += "09";
-            break;
-        case 11:
-            str_NextMonth += "10";
-            break;
-        case 12:
-            str_NextMonth += "11";
-            break;
-        default:
+            int int_NextMonth = uni_CurMonth-1;
+            str_NextMonth += GenerateMonth(int_NextMonth);
             break;
     }
 
@@ -391,6 +247,18 @@ bool CTool::ParseNumber(const string str_Input, int& int_RetNum)
         int_RetNum = 0;
         return false;
     }
+}
+
+bool CTool::ParseContainKey(const string str_Main, const string str_Key)
+{
+    smatch str_Match;
+    // tips 番茄@20180824 - 不区分大小写
+    regex RE_key(str_Key, regex_constants::icase);
+
+    if( regex_search(str_Main, str_Match, RE_key) )
+        return true;
+    else
+        return false;
 }
 
 void CTool::TagTimeBait()

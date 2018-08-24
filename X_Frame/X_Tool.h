@@ -16,22 +16,6 @@
 using namespace std;
 
 
-typedef enum
-{
-    Jan = 1,
-    Feb,
-    Mar,
-    Apr,
-    May,
-    Jun,
-    Jul,
-    Aug,
-    Sep,
-    Oct,
-    Nov,
-    Dec
-}ENUM_MOMTH;
-
 class CTool
 {
 public:
@@ -40,18 +24,18 @@ public:
 
     static int CheckFilesExist();
 
+    static bool ParseMonth(const string str_Input);
+    static string GenerateMonth(const int int_Month);
     static string GenerateNextMonth(const string str_CurMonth);
-    static string GenerateNextMonth(const int int_CurMonth);
     static string GeneratePreMonth(const string str_CurMonth);
-    static string GeneratePreMonth(const int int_CurMonth);
-
     static unsigned int CountMonth(const string str_OriMonth, const string str_CurMonth);
     
     static string TransOutFormat(const int int_Value);
     static void MassageOutFotmat(const string str_Message, const char cha_Flag);
     static string TimeOut();
-
+    
     static bool ParseNumber(const string str_Input, int& int_RetNum);
+    static bool ParseContainKey(const string str_Main, const string str_Key);
 
 public:
     static void TagTimeBait();

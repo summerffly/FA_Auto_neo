@@ -35,6 +35,7 @@ public:
 	static void CMD_PrintRecovery();
 
 	static void CMD_Help();
+	static void CMD_Help(const string str_HelpKey);
 
 public:
 	static void OnCmdCheckFA(CMD_Packet srt_CMD);

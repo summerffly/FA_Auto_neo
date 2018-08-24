@@ -374,6 +374,44 @@ void CCMDHandler::CMD_Help()
     cout << "****************************************" << endl;
 }
 
+void CCMDHandler::CMD_Help(const string str_HelpKey)
+{
+    cout << "****************************************" << endl;
+    cout << "***          BEGIN OF HELP           ***" << endl;
+    cout << "****************************************" << endl;
+
+    for(int i=0; ;i++)
+    {
+        if("EndOfCmdMap" == CmdTypeEntries[i].str_CmdType)
+        {
+            break;
+        }
+        else
+        {
+            if("" != CmdTypeEntries[i].str_CmdHelp)
+            {
+                if( !CTool::ParseContainKey(CmdTypeEntries[i].str_CmdType, str_HelpKey) )
+                    if( !CTool::ParseContainKey(CmdTypeEntries[i].str_CmdHelp, str_HelpKey) )
+                        continue;
+
+                cout << "*** " <<CmdTypeEntries[i].str_CmdType << " ***" << endl;
+                cout << ">>> " << CmdTypeEntries[i].str_CmdHelp << endl;
+
+                if("" != CmdTypeEntries[i].str_CmdHelpPatch)
+                    cout << ">>> " << CmdTypeEntries[i].str_CmdHelpPatch << endl;
+
+                cout << endl;
+            }
+
+            continue;
+        }
+    }
+
+    cout << "****************************************" << endl;
+    cout << "***            END OF HELP           ***" << endl;
+    cout << "****************************************" << endl;
+}
+
 void CCMDHandler::OnCmdCheckFA(CMD_Packet srt_CMD)
 {
 	ms_ptr_ASitfX->CheckFA();
@@ -738,7 +776,10 @@ void CCMDHandler::OnCmdBackup(CMD_Packet srt_CMD)
 
 void CCMDHandler::OnCmdHelp(CMD_Packet srt_CMD)
 {
-    CCMDHandler::CMD_Help();
+    if("" == srt_CMD.m_str_ResParam)
+        CCMDHandler::CMD_Help();
+    else
+        CCMDHandler::CMD_Help(srt_CMD.m_str_ResParam);
 }
 
 void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
@@ -747,13 +788,7 @@ void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
     cout << "***          BEGIN OF TEST           ***" << endl;
     cout << "****************************************" << endl;
 
-    int int_RetNum = 0;
-    bool bol_Ret = false;
-
-    bol_Ret = CTool::ParseNumber(srt_CMD.m_str_ResParam, int_RetNum);
-
-    cout << bol_Ret << endl;
-    cout << int_RetNum << endl;
+    cout << CTool::GeneratePreMonth(srt_CMD.m_str_ResParam) << endl;
 
     cout << "****************************************" << endl;
     cout << "***           END OF TEST            ***" << endl;
