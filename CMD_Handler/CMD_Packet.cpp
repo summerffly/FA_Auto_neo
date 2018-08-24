@@ -281,8 +281,6 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_UPDATE_FA;
         else if(str_CmdPro_A == SHOW)
             m_str_CmdType = X_CMD_TYPE_SHOW_FA;
-        else if(str_CmdPro_A == MODIFY_LIFE)
-            m_str_CmdType = X_CMD_TYPE_MODIFY_LIFE;
         else if(str_CmdPro_A == TRANSFER)
             m_str_CmdType = X_CMD_TYPE_TRANSFER;
         else if(str_CmdPro_A == LOTTERY)
@@ -347,6 +345,10 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_UPDATE_SUM;
         else if((str_CmdPro_A == SHOW) && (str_CmdPro_B == SUM))
             m_str_CmdType = X_CMD_TYPE_SHOW_SUM;
+        else if((str_CmdPro_A == MODIFY_LIFE) && CTool::ParseNumber(str_CmdPro_B, m_int_ParamValue))
+        {
+            m_str_CmdType = X_CMD_TYPE_MODIFY_LIFE;
+        }
         else if((str_CmdPro_A == CHECK) && (str_CmdPro_B == MONTH))
             m_str_CmdType = X_CMD_TYPE_CHECK_MONTH;
         else if((str_CmdPro_A == UPDATE) && (str_CmdPro_B == MONTH))

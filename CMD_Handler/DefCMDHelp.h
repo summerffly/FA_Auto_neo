@@ -17,7 +17,7 @@ string  CMD_HELP_CHECK_SUM  = CHECK + " " + SUM;
 string  CMD_HELP_UPDATE_SUM = UPDATE + " " + SUM;
 string  CMD_HELP_SHOW_SUM   = SHOW + " " + SUM;
 
-string  CMD_HELP_MODIFY_LIFE = MODIFY_LIFE + " -f VALUE -sp SRC";
+string  CMD_HELP_MODIFY_LIFE = MODIFY_LIFE + " VALUE -sp SRC";
 string  CMD_HELP_PATCH_MODIFY_LIFE = "SRC = " + WEIXIN;
 
 string  CMD_HELP_CHECK_MONTH  = CHECK + " " + MONTH + " -m MONTH";
@@ -39,12 +39,14 @@ string  CMD_HELP_LOTTERY = LOTTERY + " -f VALUE -d DATE";
 
 string  CMD_HELP_ANALYSIS_TREND = ANALYSIS + " " + TREND + " -sp TO";
 string  CMD_HELP_PATCH_ANALYSIS_TREND = "TO = " + EXPENSE + "/" + LIFE + "/" + ROOM + "/" + CONSUMPTION;
-//string  HELP_CMD_TYPE_ANALYSIS_PROPORTION    ("AnalysisProportion")
+string  CMD_HELP_ANALYSIS_PROPORTION = ANALYSIS + " " + PROPORTION + " -m MONTH";
+string  CMD_HELP_COMPARE_MONTH = COMPARE + " -m MONTH -sp MONTH";
 
 string  CMD_HELP_SUMMARIZE = SUMMARIZE + " -sp TAR";
 string  CMD_HELP_PATCH_SUMMARIZE = "TAR = " + MONTH + "/" + TITLE + "/" + TAIL;
 string  CMD_HELP_FORECAST = FORECAST + " -sp MONTH -ip SALARY_PATCH";
 
+string  CMD_HELP_PRINT_SUM    = PRINT + " " + SUM;
 string  CMD_HELP_PRINT_MONTH    = PRINT + " " + MONTH + " -m MONTH";
 string  CMD_HELP_PRINT_SUBMONTH = PRINT + " -sm SM -m MONTH -sp " + TRAVERSAL;
 string  CMD_HELP_PATCH_PRINT_SUBMONTH = "SM = " + ALL + "/" + DGTLER + "/" + BOOKS + "/" + KEEP + "/" + TB + "/" + SA;
@@ -60,15 +62,16 @@ string  CMD_HELP_DELETE_LINE = DELETE + " -l LINE";
 
 string  CMD_HELP_APPEND_MONTH = APPEND + " " + MONTH + " -sp MONTH";
 
-//string  HELP_CMD_TYPE_SYNC        ("Sync")
-//string  HELP_CMD_TYPE_WRITE       ("Write")
-//string  HELP_CMD_TYPE_BACKUP      ("Backup")
+string  CMD_HELP_CHECK_TIME  = CHECK + " " + TIME;
+string  CMD_HELP_CHECK_EQUAL = CHECK + " " + EQUAL;
+string  CMD_HELP_SYNC   = SYNC;
+string  CMD_HELP_WRITE  = WRITE;
+string  CMD_HELP_BACKUP = BACKUP;
 
-//string  HELP_CMD_TYPE_HELP    ("Help")
-//string  HELP_CMD_TYPE_TEST    ("Test")
+string  CMD_HELP_HELP = HELP;
 
-//string  HELP_CMD_TYPE_CANCEL      ("Cancel")
-//string  HELP_CMD_TYPE_EXIT        ("Exit")
+string  CMD_HELP_CANCEL = CANCEL;
+string  CMD_HELP_EXIT   = EXIT;
 
 
 //------------------------------//

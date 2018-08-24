@@ -60,6 +60,7 @@
 #define  X_CMD_TYPE_BACKUP         ("Backup")
 
 #define  X_CMD_TYPE_HELP    ("Help")
+
 #define  X_CMD_TYPE_TEST    ("Test")
 
 #define  X_CMD_TYPE_CANCEL      ("Cancel")
