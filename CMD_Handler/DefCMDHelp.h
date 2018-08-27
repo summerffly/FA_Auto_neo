@@ -62,8 +62,8 @@ string  CMD_HELP_DELETE_LINE = DELETE + " -l LINE";
 
 string  CMD_HELP_APPEND_MONTH = APPEND + " " + MONTH + " -sp MONTH";
 
-string  CMD_HELP_CHECK_TIME  = CHECK + " " + TIME;
-string  CMD_HELP_CHECK_EQUAL = CHECK + " " + EQUAL;
+string  CMD_HELP_CHECK_FILE = FILECHECK;
+string  CMD_HELP_CHECK_TIME = CHECK + " " + TIME;
 string  CMD_HELP_SYNC   = SYNC;
 string  CMD_HELP_WRITE  = WRITE;
 string  CMD_HELP_BACKUP = BACKUP;

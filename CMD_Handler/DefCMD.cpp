@@ -85,11 +85,11 @@ string TRAVERSAL = "tv";
 
 string APPEND = "append";
 
-string TIME = "time";
-string EQUAL = "equal";
+string FILECHECK = "fcheck";
 string SYNC = "sync";
 string WRITE = "write";
 string BACKUP = "bakup";
+string TIME = "time";
 
 string HELP = "help";
 string TEST = "test";

@@ -46,7 +46,7 @@ void CASitfX::CheckFA()
     {
         if( 0 != ptr_FAitfX->CheckTitleExpense(*itr_TitleDeep, false) )
         {
-            string str_Message = *itr_TitleDeep + " NOT Pass Check";
+            string str_Message = CMD_TTTranslate(*itr_TitleDeep) + " NOT Pass Check";
             CTool::MassageOutFotmat(str_Message, '!');
             return;
         }
@@ -248,7 +248,7 @@ int CASitfX::CheckMonth(const string str_SelMonth, int int_OFlag)
     {
         if( 0 != ptr_FAitfX->CheckSubMonthExpense(*itr_SubMonth, str_SelMonth, false) )
         {
-            string str_Message = "M" + str_SelMonth + "." + *itr_SubMonth + " NOT Pass Check";
+            string str_Message = CMD_SMTranslate(*itr_SubMonth) + "." + "M" + str_SelMonth + " NOT Pass Check";
             CTool::MassageOutFotmat(str_Message, '!');
             return -1;
         }
@@ -409,11 +409,11 @@ void CASitfX::AnalysisMonthTrend_CSM()
     {
         if(itr_SubMonth == vec_str_SubMonth.begin())
         {
-            ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, *itr_SubMonth);
+            ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, CMD_SMTranslate(*itr_SubMonth));
             continue;
         }
 
-        ptr_FAitfX->AppendMonthTrendVector(vec_stc_TrendInfo, *itr_SubMonth);
+        ptr_FAitfX->AppendMonthTrendVector(vec_stc_TrendInfo, CMD_SMTranslate(*itr_SubMonth));
     }
 
     // 绘制 趋势Vector

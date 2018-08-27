@@ -162,6 +162,7 @@ void CFAitfX::SummarizeMonth(int int_OFlag)
         cout << "Month累计收入: " << CTool::TransOutFormat(m_int_MonthSalarySum) << endl;
         cout << "Month累计支出: " << CTool::TransOutFormat(m_int_MonthExpenseSum) << endl;
         cout << "Month累计结余: " << CTool::TransOutFormat(m_int_MonthSurplusSum) << endl;
+        cout << endl;
         cout << "----------------------------------------" << endl;
     }
 }
@@ -214,7 +215,7 @@ void CFAitfX::SummarizeTitle(int int_OFlag)
     if(int_OFlag == 2)
     {
         cout << endl;
-        cout << "Title累计支出: " << CTool::TransOutFormat(m_int_TitleSum) << endl;
+        cout << "--> Title累计支出: " << CTool::TransOutFormat(m_int_TitleSum) << endl;
         cout << "----------------------------------------" << endl;
     }
 }
@@ -267,7 +268,7 @@ void CFAitfX::SummarizeTail(int int_OFlag)
     if(int_OFlag == 2)
     {
         cout << endl;
-        cout << "Tail累计收支: " << CTool::TransOutFormat(m_int_TailSum) << endl;
+        cout << "--> Tail累计收支: " << CTool::TransOutFormat(m_int_TailSum) << endl;
         cout << "----------------------------------------" << endl;
     }
 }
@@ -312,7 +313,7 @@ void CFAitfX::SummarizeCAF(int int_OFlag)
         cout << "### CAF累计统计 ###" << endl;
         cout << endl;
 
-        cout << "CAF累计收支: " << CTool::TransOutFormat(m_int_CAFSum) << endl;
+        cout << "--> CAF累计收支: " << CTool::TransOutFormat(m_int_CAFSum) << endl;
         cout << "----------------------------------------" << endl;
     }
 }
@@ -1999,7 +2000,7 @@ CFileManager *CFAitfX::GetPtrFM(const string str_Type, const string str_Key)
     }
 }
 
-string CFAitfX::CMD_SMTranslate(const string str_SubMonthKey)
+string CMD_SMTranslate(const string str_SubMonthKey)
 {
     string str_TranslateKey("");
 
@@ -2019,7 +2020,7 @@ string CFAitfX::CMD_SMTranslate(const string str_SubMonthKey)
     return str_TranslateKey;
 }
 
-string CFAitfX::CMD_TTTranslate(const string str_TitleKey)
+string CMD_TTTranslate(const string str_TitleKey)
 {
     string str_TranslateKey("");
 

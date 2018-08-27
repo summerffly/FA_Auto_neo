@@ -53,8 +53,8 @@
 
 #define  X_CMD_TYPE_APPEND_MONTH    ("AppendMonth")
 
+#define  X_CMD_TYPE_CHECK_FILE     ("CheckFile")
 #define  X_CMD_TYPE_CHECK_TIME     ("CheckTime")
-#define  X_CMD_TYPE_CHECK_EQUAL    ("CheckEqual")
 #define  X_CMD_TYPE_SYNC           ("Sync")
 #define  X_CMD_TYPE_WRITE          ("Write")
 #define  X_CMD_TYPE_BACKUP         ("Backup")

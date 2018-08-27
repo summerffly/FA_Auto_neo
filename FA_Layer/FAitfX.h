@@ -145,9 +145,6 @@ public:
     //   Ptr
     /****************************************/
     CFileManager *GetPtrFM(const string str_Type, const string str_Key);
-    
-    string CMD_SMTranslate(const string str_SubMonthKey);
-    string CMD_TTTranslate(const string str_TitleKey);
 
 /****************************************/
 //   SUM成员
@@ -185,6 +182,10 @@ private:
     static const unsigned int m_uni_FM_aszie = 12;
     CFileManager *m_ptr_FM_array[m_uni_FM_aszie];
 };
+
+
+string CMD_SMTranslate(const string str_SubMonthKey);
+string CMD_TTTranslate(const string str_TitleKey);
 
 //------------------------------//
 //   River flows in summer
