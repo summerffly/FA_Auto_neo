@@ -165,12 +165,14 @@ int CFileManager::SearchRangeLineKey(const char *cha_Key, const unsigned int uni
 
 unsigned int CFileManager::GetSearchLineIndex(const unsigned int uni_VecIndex)
 {
-    if( uni_VecIndex > m_vec_uni_LineIndex.size())
+    if(0 == m_vec_uni_LineIndex.size())
     {
-        cout << "----------------------------------------" << endl;
-        cout << "!!!      Over Search Vector Size     !!!" << endl;
-        cout << "----------------------------------------" << endl;
-
+        CTool::MassageOutFotmat("No Search Line Found", '!');
+        return 0;
+    }
+    else if(uni_VecIndex > m_vec_uni_LineIndex.size())
+    {
+        CTool::MassageOutFotmat("Over Search Size", '!');
         return 0;
     }
     else
@@ -181,18 +183,72 @@ unsigned int CFileManager::GetSearchLineIndex(const unsigned int uni_VecIndex)
 
 string CFileManager::GetSearchFullLine(const unsigned int uni_VecIndex)
 {
-    if( uni_VecIndex > m_vec_uni_LineIndex.size())
+    if(0 == m_vec_uni_LineIndex.size())
     {
-        cout << "----------------------------------------" << endl;
-        cout << "!!!      Over Search Vector Size     !!!" << endl;
-        cout << "----------------------------------------" << endl;
-
+        CTool::MassageOutFotmat("No Search Line Found", '!');
+        return "ERROR";
+    }
+    else if(uni_VecIndex > m_vec_uni_LineIndex.size())
+    {
+        CTool::MassageOutFotmat("Over Search Size", '!');
         return "ERROR";
     }
     else
     {
         return m_vec_cls_Line.at(m_vec_uni_LineIndex.at(uni_VecIndex - 1)).GetFullLine();
     }
+}
+
+unsigned int CFileManager::GetUniqueSearchLineIndex(const char *cha_Key)
+{
+    m_vec_uni_LineIndex.clear();
+
+    for(int i=1; i <= m_int_LineNum; i++)
+    {
+        if( m_vec_cls_Line.at(i).IsContainKey(cha_Key) )
+        {
+            m_vec_uni_LineIndex.push_back(i);
+        }
+    }
+
+    if(0 == m_vec_uni_LineIndex.size())
+    {
+        CTool::MassageOutFotmat("No Search Line Found", '!');
+        return 0;
+    }
+    else if(m_vec_uni_LineIndex.size() > 1)
+    {
+        CTool::MassageOutFotmat("Multi Search Line Found", '!');
+        return 0;
+    }
+
+    return m_vec_uni_LineIndex.at(0);
+}
+
+int CFileManager::GetUniqueSearchLineValue(const char *cha_Key)
+{
+    m_vec_uni_LineIndex.clear();
+
+    for(int i=1; i <= m_int_LineNum; i++)
+    {
+        if( m_vec_cls_Line.at(i).IsContainKey(cha_Key) )
+        {
+            m_vec_uni_LineIndex.push_back(i);
+        }
+    }
+
+    if(0 == m_vec_uni_LineIndex.size())
+    {
+        CTool::MassageOutFotmat("No Search Line Found", '!');
+        return 0;
+    }
+    else if(m_vec_uni_LineIndex.size() > 1)
+    {
+        CTool::MassageOutFotmat("Multi Search Line Found", '!');
+        return 0;
+    }
+
+    return m_vec_cls_Line.at(m_vec_uni_LineIndex.at(0)).GetLineValue();
 }
 
 void CFileManager::InsertLine(const unsigned int uni_VecIndex, const unsigned int uni_LineType,\
@@ -242,6 +298,34 @@ void CFileManager::DeleteLine(const unsigned int uni_VecIndex)
     m_cls_FileOPer.DeleteLine(uni_VecIndex);
 }
 
+int CFileManager::CountRange(const unsigned int uni_RangeBeginIndex, const unsigned int uni_RangeEndIndex)
+{
+    int int_Counter = 0;
+
+    for(int i = uni_RangeBeginIndex; i <= uni_RangeEndIndex; i++)
+    {
+        int_Counter += m_vec_cls_Line.at(i).GetLineValue();
+    }
+
+    return int_Counter;
+}
+
+int CFileManager::CountRangeType(const unsigned int uni_RangeBeginIndex, const unsigned int uni_RangeEndIndex,\
+                                 unsigned int uni_LineType)
+{
+    int int_Counter = 0;
+
+    for(int i = uni_RangeBeginIndex; i <= uni_RangeEndIndex; i++)
+    {
+        if( m_vec_cls_Line.at(i).GetLineType() == uni_LineType )
+        {
+            int_Counter += m_vec_cls_Line.at(i).GetLineValue();
+        }
+    }
+
+    return int_Counter;
+}
+
 void CFileManager::UpdateTimeStamp()
 {
     for(int i = 0 ;i < m_int_LineNum ;i++)
@@ -276,34 +360,6 @@ string CFileManager::GetTimeStamp()
 
     string str_Ret = "TIME ERROR";
     return str_Ret;
-}
-
-int CFileManager::CountRange(const unsigned int uni_RangeBeginIndex, const unsigned int uni_RangeEndIndex)
-{
-    int int_Counter = 0;
-
-    for(int i = uni_RangeBeginIndex; i <= uni_RangeEndIndex; i++)
-    {
-        int_Counter += m_vec_cls_Line.at(i).GetLineValue();
-    }
-
-    return int_Counter;
-}
-
-int CFileManager::CountRangeType(const unsigned int uni_RangeBeginIndex, const unsigned int uni_RangeEndIndex,\
-                                 unsigned int uni_LineType)
-{
-    int int_Counter = 0;
-
-    for(int i = uni_RangeBeginIndex; i <= uni_RangeEndIndex; i++)
-    {
-        if( m_vec_cls_Line.at(i).GetLineType() == uni_LineType )
-        {
-            int_Counter += m_vec_cls_Line.at(i).GetLineValue();
-        }
-    }
-
-    return int_Counter;
 }
 
 //------------------------------//

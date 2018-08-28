@@ -25,18 +25,17 @@ public:
     int GetLineNum();
 
     /****************************************/
-    //   .md文件直接操作区
+    //   文件 操作区
     /****************************************/
     int FileComparer();
     int FileComparer(const char *cha_FullFileName);
     int FileWriter();
     int FileWriter(const char *cha_FullFileName);
     int BackUpFile(const string str_BackUpPath);
-
     string GetFileName();
 
     /****************************************/
-    //   行直接操作区
+    //   查询 操作区
     /****************************************/
     unsigned int GetLineType(const int int_LineIndex);
     int GetLineValue(const int int_LineIndex);
@@ -45,7 +44,7 @@ public:
     string GetFullLine(const int int_LineIndex);
 
     /****************************************/
-    //   搜索操作区
+    //   搜索 操作区
     /****************************************/
     int SearchLineKey(const char *cha_Key);
     int SearchFirstLineKey(const char *cha_Key);
@@ -54,8 +53,11 @@ public:
     unsigned int GetSearchLineIndex(const unsigned int uni_VecIndex);
     string GetSearchFullLine(const unsigned int uni_VecIndex);
 
+    unsigned int GetUniqueSearchLineIndex(const char *cha_Key);
+    int GetUniqueSearchLineValue(const char *cha_Key);
+
     /****************************************/
-    //   同步修改操作区
+    //   修改 操作区
     /****************************************/
     void InsertLine(const unsigned int uni_VecIndex, const unsigned int uni_LineType,\
                     const int int_LineValue, const string str_LineContent);
@@ -64,15 +66,18 @@ public:
     void ModifyLineContent(const unsigned int uni_VecIndex, const char *cha_LineContent);
     void DeleteLine(const unsigned int uni_VecIndex);
     
-    void UpdateTimeStamp();
-    string GetTimeStamp();
-
     /****************************************/
-    //   计算操作区
+    //   计算 操作区
     /****************************************/
     int CountRange(const unsigned int uni_RangeBeginIndex, const unsigned int uni_RangeEndIndex);
     int CountRangeType(const unsigned int uni_RangeBeginIndex, const unsigned int uni_RangeEndIndex,\
                        unsigned int uni_LineType);
+
+    /****************************************/
+    //   TimeStamp 操作区
+    /****************************************/
+    void UpdateTimeStamp();
+    string GetTimeStamp();
 
 private:
     string m_str_FilePath;                      // .md文件路径
