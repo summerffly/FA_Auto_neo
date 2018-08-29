@@ -301,8 +301,7 @@ void CFAitfX::UpdateCurrentSum(const int int_CurrentSum)
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
     string str_CurrentSum = ptr_ScriptRipper->GetCurrentSum();
-    m_ptr_FM_SUM->SearchLineKey(str_CurrentSum.c_str());
-    unsigned int uni_SumLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
+    unsigned int uni_SumLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_CurrentSum.c_str());
     m_ptr_FM_SUM->ModifyLineValue(uni_SumLine, int_CurrentSum);
 }
 
@@ -321,8 +320,7 @@ void CFAitfX::UpdateCAF(const int int_CAFSum)
 
     // 修改 CAF Sum
     string str_CAFSum = ptr_ScriptRipper->GetCAFSum();
-    m_ptr_FM_SUM->SearchLineKey(str_CAFSum.c_str());
-    uni_CAFLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
+    uni_CAFLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_CAFSum.c_str());
     m_ptr_FM_SUM->ModifyLineValue(uni_CAFLine, int_CAFSum);
 
     // 修改 CAF 子项
@@ -333,9 +331,7 @@ void CFAitfX::UpdateCAF(const int int_CAFSum)
     for(itr_CAF = vec_str_CAF.begin(); itr_CAF != vec_str_CAF.end(); itr_CAF++)
     {
         str_CAFKey = *itr_CAF;
-        m_ptr_FM_SUM->SearchLineKey(str_CAFKey.c_str());
-        uni_CAFLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
-        int_CAFCount = m_ptr_FM_SUM->GetLineValue(uni_CAFLine);
+        int_CAFCount = m_ptr_FM_SUM->GetUniqueSearchLineValue(str_CAFKey.c_str());
         int_CAFSumRest -= int_CAFCount;
     }
     int_CAFSumRest += int_CAFCount;   // tips 番茄@20180823 - 补加最后项
@@ -353,10 +349,8 @@ int CFAitfX::CheckMonthExpense(const string str_SelMonth, bool bol_OFlag)
     string str_RangeBottom("## life.M");
     str_RangeBottom += CTool::GenerateNextMonth(str_SelMonth);
 
-    m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = m_ptr_FM_life->GetSearchLineIndex(1);
-    m_ptr_FM_life->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = m_ptr_FM_life->GetSearchLineIndex(1);
+    unsigned int uni_RangeTop = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+    unsigned int uni_RangeBottom = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
 
     int int_MonthExpenseEX = m_ptr_FM_life->GetLineValue(uni_RangeTop+2);
     int int_MonthExpenseCK = m_ptr_FM_life->CountRangeType(uni_RangeTop+4, uni_RangeBottom-1, LTYPE_FBIRC_LINEUINT);
@@ -388,13 +382,9 @@ int CFAitfX::CheckMonthSurplus(const string str_SelMonth, bool bol_OFlag)
     string str_RangeTop = "## life.M" + str_SelMonth;
     string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
 
-    m_ptr_FM_SUM->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_AFLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
-
-    m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = m_ptr_FM_life->GetSearchLineIndex(1);
-    m_ptr_FM_life->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = m_ptr_FM_life->GetSearchLineIndex(1);
+    unsigned int uni_AFLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+    unsigned int uni_RangeBottom = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
 
     unsigned int uni_AFMonthSalaryEX = m_ptr_FM_SUM->GetLineValue(uni_AFLine+1);
     int int_AFMonthExpenseEX = m_ptr_FM_SUM->GetLineValue(uni_AFLine+2);
@@ -454,10 +444,8 @@ void CFAitfX::UpdateMonthSurplus(const string str_SelMonth, bool bol_OFlag)
     string str_RangeTop = "## life.M" + str_SelMonth;
     string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
 
-    m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = m_ptr_FM_life->GetSearchLineIndex(1);
-    m_ptr_FM_life->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = m_ptr_FM_life->GetSearchLineIndex(1);
+    unsigned int uni_RangeTop = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+    unsigned int uni_RangeBottom = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
 
     unsigned int uni_MonthSalaryEX = m_ptr_FM_life->GetLineValue(uni_RangeTop+1);
     int int_MonthExpenseEX = m_ptr_FM_life->GetLineValue(uni_RangeTop+2);
@@ -492,10 +480,9 @@ void CFAitfX::ModifyMonthSurplus(const string str_SelMonth, const string str_Mon
     string str_RangeTop = "## life.M" + str_SelMonth;
     string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
 
-    m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = m_ptr_FM_life->GetSearchLineIndex(1);
-    m_ptr_FM_life->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = m_ptr_FM_life->GetSearchLineIndex(1);
+    unsigned int uni_RangeTop = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+    unsigned int uni_RangeBottom = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
+
     m_ptr_FM_life->SearchRangeLineKey(str_MonthKey.c_str(), uni_RangeTop, uni_RangeBottom);
     unsigned int uni_KeyLine = m_ptr_FM_life->GetSearchLineIndex(1);
 
@@ -543,11 +530,8 @@ void CFAitfX::SyncMonthSurplus(const string str_SelMonth)
 {
     string str_SelMonthFL = "## life.M" + str_SelMonth;
 
-    m_ptr_FM_life->SearchLineKey(str_SelMonthFL.c_str());
-    unsigned int uni_SelMonth = m_ptr_FM_life->GetSearchLineIndex(1);
-
-    m_ptr_FM_SUM->SearchLineKey(str_SelMonthFL.c_str());
-    unsigned int uni_AFSelMonth = m_ptr_FM_SUM->GetSearchLineIndex(1);
+    unsigned int uni_SelMonth = m_ptr_FM_life->GetUniqueSearchLineIndex(str_SelMonthFL.c_str());
+    unsigned int uni_AFSelMonth = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_SelMonthFL.c_str());
 
     // 读取 life.M 月度收支
     unsigned int uni_MonthSalary = m_ptr_FM_life->GetLineValue(uni_SelMonth+1);
@@ -568,13 +552,9 @@ int CFAitfX::CheckSubMonthExpense(const string str_SubMonthKey, const string str
     string str_RangeTop = CMD_SMTranslate(str_SubMonthKey) + ".M" + str_SelMonth;
     string str_RangeBottom = CMD_SMTranslate(str_SubMonthKey) + ".M" + CTool::GenerateNextMonth(str_SelMonth);
 
-    m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_lifeLine = m_ptr_FM_life->GetSearchLineIndex(1);
-
-    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
-    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
+    unsigned int uni_lifeLine = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = GetPtrFM("SM", str_SubMonthKey)->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+    unsigned int uni_RangeBottom = GetPtrFM("SM", str_SubMonthKey)->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
 
     int int_LMSubMonthExpenseEX = m_ptr_FM_life->GetLineValue(uni_lifeLine);
     int int_SubMonthExpenseEX = GetPtrFM("SM", str_SubMonthKey)->GetLineValue(uni_RangeTop+1);
@@ -613,13 +593,9 @@ void CFAitfX::UpdateSubMonthExpense(const string str_SubMonthKey, const string s
     string str_RangeTop = CMD_SMTranslate(str_SubMonthKey) + ".M" + str_SelMonth;
     string str_RangeBottom = CMD_SMTranslate(str_SubMonthKey) + ".M" + CTool::GenerateNextMonth(str_SelMonth);
 
-    m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_lifeLine = m_ptr_FM_life->GetSearchLineIndex(1);
-
-    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
-    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
+    unsigned int uni_lifeLine = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = GetPtrFM("SM", str_SubMonthKey)->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+    unsigned int uni_RangeBottom = GetPtrFM("SM", str_SubMonthKey)->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
 
     int int_SubMonthExpense = GetPtrFM("SM", str_SubMonthKey)->GetLineValue(uni_RangeTop+1);
     int int_SubMonthExpenseUD = GetPtrFM("SM", str_SubMonthKey)->CountRangeType(uni_RangeTop+2, uni_RangeBottom-1,\
@@ -646,12 +622,9 @@ int CFAitfX::CheckTitleExpense(const string str_TitleKey, bool bol_OFlag)
     string str_RangeTop = "## " + CMD_TTTranslate(str_TitleKey);
     string str_RangeBottom("## Total");
 
-    m_ptr_FM_SUM->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_AFLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
-
+    unsigned int uni_AFLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_RangeTop.c_str());
     unsigned int uni_RangeTop = 2;
-    GetPtrFM("TT", str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrFM("TT", str_TitleKey)->GetSearchLineIndex(1);
+    unsigned int uni_RangeBottom = GetPtrFM("TT", str_TitleKey)->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
 
     int int_AFTitleExpenseEX = m_ptr_FM_SUM->GetLineValue(uni_AFLine+1);
 
@@ -691,12 +664,9 @@ void CFAitfX::UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag)
     string str_RangeTop = "## " + CMD_TTTranslate(str_TitleKey);
     string str_RangeBottom("## Total");
 
-    m_ptr_FM_SUM->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_AFLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
-
+    unsigned int uni_AFLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_RangeTop.c_str());
     unsigned int uni_RangeTop = 2;
-    GetPtrFM("TT", str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrFM("TT", str_TitleKey)->GetSearchLineIndex(1);
+    unsigned int uni_RangeBottom = GetPtrFM("TT", str_TitleKey)->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
 
     int int_TitleExpense = GetPtrFM("TT", str_TitleKey)->GetLineValue(uni_RangeBottom+2);
     int int_TitleExpenseUD = GetPtrFM("TT", str_TitleKey)->CountRangeType(uni_RangeTop, uni_RangeBottom-1,\
@@ -721,12 +691,9 @@ void CFAitfX::AppendLottery(const bool bol_LineFlag, const unsigned int uni_Line
     string str_LotteryTop("## lottery");
     string str_LotteryBottom("## Total");
 
-    m_ptr_FM_SUM->SearchLineKey(str_LotteryTop.c_str());
-    unsigned int uni_AFLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
-
+    unsigned int uni_AFLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_LotteryTop.c_str());
     unsigned int uni_LotteryTop = 2;
-    m_ptr_FM_tt_lottery->SearchLineKey(str_LotteryBottom.c_str());
-    unsigned int uni_LotteryBottom = m_ptr_FM_tt_lottery->GetSearchLineIndex(1);
+    unsigned int uni_LotteryBottom = m_ptr_FM_tt_lottery->GetUniqueSearchLineIndex(str_LotteryBottom.c_str());
 
     int int_LotterySurplus = m_ptr_FM_tt_lottery->GetLineValue(uni_LotteryBottom+2);
 
@@ -770,12 +737,10 @@ void CFAitfX::AppendLottery(const bool bol_LineFlag, const unsigned int uni_Line
 void CFAitfX::TransferBalance(const string str_FirstKey, const string str_SecondKey,
                               const bool bol_TransferFlag, const unsigned int uni_BalanceValueABS)
 {
-    m_ptr_FM_SUM->SearchLineKey(str_FirstKey.c_str());
-    unsigned int uni_FirstLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
+    unsigned int uni_FirstLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_FirstKey.c_str());
     int int_FirstValue = m_ptr_FM_SUM->GetLineValue(uni_FirstLine);
 
-    m_ptr_FM_SUM->SearchLineKey(str_SecondKey.c_str());
-    unsigned int uni_SecondLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
+    unsigned int uni_SecondLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_SecondKey.c_str());
     int int_SecondValue = m_ptr_FM_SUM->GetLineValue(uni_SecondLine);
 
     // bol_TransferFlag为true >>> First++ Second--
@@ -802,8 +767,7 @@ void CFAitfX::AddScriptSum(const string str_SelMonth)
     string str_SUMMonthExpense = str_SelMonth + "月支出";
     string str_SUMMonthRest = str_SelMonth + "月结余";
 
-    m_ptr_FM_SUM->SearchLineKey("## Summary");
-    unsigned int uni_SUMLine = m_ptr_FM_SUM->GetSearchLineIndex(1);
+    unsigned int uni_SUMLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex("## Summary");
 
     m_ptr_FM_SUM->InsertBlankLine(uni_SUMLine-1);
     m_ptr_FM_SUM->InsertLine(uni_SUMLine, LTYPE_MONTHTITLE, 0, str_SUMMonthTitle);
@@ -824,8 +788,7 @@ void CFAitfX::AddScriptMonth(const string str_SelMonth)
     string str_lifeMonthExpense = CTool::GenerateNextMonth(str_SelMonth) + "月支出";
     string str_lifeMonthRest = CTool::GenerateNextMonth(str_SelMonth) + "月结余";
 
-    m_ptr_FM_life->SearchLineKey("---");
-    unsigned int uni_lifeLine = m_ptr_FM_life->GetSearchLineIndex(1);
+    unsigned int uni_lifeLine = m_ptr_FM_life->GetUniqueSearchLineIndex("---");
     unsigned int uni_InsertLine = uni_lifeLine-4;
 
     m_ptr_FM_life->InsertBlankLine(uni_InsertLine++);
@@ -872,8 +835,7 @@ void CFAitfX::AddScriptSubMonth(const string str_SubMonthKey, const string str_S
     str_SMTitle += ".M";
     str_SMTitle += str_SelMonth;
 
-    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey("---");
-    unsigned int uni_SMLine = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
+    unsigned int uni_SMLine = GetPtrFM("SM", str_SubMonthKey)->GetUniqueSearchLineIndex("---");
 
     GetPtrFM("SM", str_SubMonthKey)->InsertBlankLine(uni_SMLine-4);
     GetPtrFM("SM", str_SubMonthKey)->InsertLine(uni_SMLine-3, LTYPE_MONTHTITLE, 0, str_SMTitle);
@@ -900,10 +862,8 @@ void CFAitfX::GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, co
         string str_RangeTop = "## life.M" + str_TrendMonth;
         string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_TrendMonth);
 
-        m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
-        unsigned int uni_RangeTop = m_ptr_FM_life->GetSearchLineIndex(1);
-        m_ptr_FM_life->SearchLineKey(str_RangeBottom.c_str());
-        unsigned int uni_RangeBottom = m_ptr_FM_life->GetSearchLineIndex(1);
+        unsigned int uni_RangeTop = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+        unsigned int uni_RangeBottom = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
 
         if( m_ptr_FM_life->SearchRangeLineKey(str_MonthKey.c_str(), uni_RangeTop, uni_RangeBottom) )
         {
@@ -945,10 +905,8 @@ void CFAitfX::AppendMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, cons
         string str_RangeTop = "## life.M" + str_TrendMonth;
         string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_TrendMonth);
 
-        m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
-        unsigned int uni_RangeTop = m_ptr_FM_life->GetSearchLineIndex(1);
-        m_ptr_FM_life->SearchLineKey(str_RangeBottom.c_str());
-        unsigned int uni_RangeBottom = m_ptr_FM_life->GetSearchLineIndex(1);
+        unsigned int uni_RangeTop = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+        unsigned int uni_RangeBottom = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
 
         if( m_ptr_FM_life->SearchRangeLineKey(str_MonthKey.c_str(), uni_RangeTop, uni_RangeBottom) )
         {
@@ -1321,12 +1279,7 @@ void CFAitfX::ForecastFutureSum(const string str_SelMonth, const int int_MonthPa
 void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_OFlag)
 {
     string str_RangeTop = "## life.M" + str_SelMonth;
-    //string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
-
-    m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = m_ptr_FM_life->GetSearchLineIndex(1);
-    //m_ptr_FM_life->SearchLineKey(str_RangeBottom.c_str());
-    //unsigned int uni_RangeBottom = m_ptr_FM_life->GetSearchLineIndex(1);
+    unsigned int uni_RangeTop = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeTop.c_str());
 
     unsigned int uni_MonthSalary = m_ptr_FM_life->GetLineValue(uni_RangeTop+1);
     int int_MonthExpense = m_ptr_FM_life->GetLineValue(uni_RangeTop+2);
@@ -1378,9 +1331,7 @@ void CFAitfX::ShowLife(const string str_SelMonth, int int_OFlag)
     }
 
     string str_LifeItem = str_SelMonth + "月_生活费";
-    m_ptr_FM_life->SearchLineKey(str_LifeItem.c_str());
-    unsigned int uni_LifeLine = m_ptr_FM_life->GetSearchLineIndex(1);
-    int int_LifeExpense = m_ptr_FM_life->GetLineValue(uni_LifeLine);
+    int int_LifeExpense = m_ptr_FM_life->GetUniqueSearchLineValue(str_LifeItem.c_str());
 
     if( int_OFlag > 0 )
     {
@@ -1417,9 +1368,7 @@ void CFAitfX::ShowRoom(const string str_SelMonth, int int_OFlag)
     for(itr_Room = vec_str_Room.begin(); itr_Room != vec_str_Room.end(); itr_Room++)
     {
         string str_RMItem = str_SelMonth + "月_" + *itr_Room;
-        m_ptr_FM_life->SearchLineKey(str_RMItem.c_str());
-        unsigned int uni_RMLine = m_ptr_FM_life->GetSearchLineIndex(1);
-        int int_RMExpense = m_ptr_FM_life->GetLineValue(uni_RMLine);
+        int int_RMExpense = m_ptr_FM_life->GetUniqueSearchLineValue(str_RMItem.c_str());
         int_TotalRMExpense += int_RMExpense;
         if( (int_OFlag > 0) && (int_OFlag != 3) )
         {
@@ -1469,9 +1418,7 @@ void CFAitfX::ShowSM(const string str_SelMonth, int int_OFlag)
     for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
     {
         string str_SMItem = CMD_SMTranslate(*itr_SubMonth) + ".M" + str_SelMonth;
-        m_ptr_FM_life->SearchLineKey(str_SMItem.c_str());
-        unsigned int uni_SMLine = m_ptr_FM_life->GetSearchLineIndex(1);
-        int int_SMExpense = m_ptr_FM_life->GetLineValue(uni_SMLine);
+        int int_SMExpense = m_ptr_FM_life->GetUniqueSearchLineValue(str_SMItem.c_str());
         int_TotalSMExpense += int_SMExpense;
         cout << str_SelMonth << "月/" << CMD_SMTranslate(*itr_SubMonth) << ": " << CTool::TransOutFormat(int_SMExpense) << endl;
     }
