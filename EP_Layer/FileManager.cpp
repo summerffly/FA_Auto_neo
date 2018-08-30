@@ -251,6 +251,34 @@ int CFileManager::GetUniqueSearchLineValue(const char *cha_Key)
     return m_vec_cls_Line.at(m_vec_uni_LineIndex.at(0)).GetLineValue();
 }
 
+void CFileManager::ModifyUniqueSearchLineValue(const char *cha_Key, const int int_LineValue)
+{
+    m_vec_uni_LineIndex.clear();
+
+    for(int i=1; i <= m_int_LineNum; i++)
+    {
+        if( m_vec_cls_Line.at(i).IsContainKey(cha_Key) )
+        {
+            m_vec_uni_LineIndex.push_back(i);
+        }
+    }
+
+    if(0 == m_vec_uni_LineIndex.size())
+    {
+        CTool::MassageOutFotmat("No Search Line Found", '!');
+        return;
+    }
+    else if(m_vec_uni_LineIndex.size() > 1)
+    {
+        CTool::MassageOutFotmat("Multi Search Line Found", '!');
+        return;
+    }
+
+    unsigned int uni_VecIndex = m_vec_uni_LineIndex.at(0);
+    m_vec_cls_Line.at(uni_VecIndex).SetLineValue(int_LineValue);
+    m_cls_FileOPer.ModifyLine(uni_VecIndex, m_vec_cls_Line.at(uni_VecIndex).GetFullLine());
+}
+
 void CFileManager::InsertLine(const unsigned int uni_VecIndex, const unsigned int uni_LineType,\
                               const int int_LineValue, const string str_LineContent)
 {

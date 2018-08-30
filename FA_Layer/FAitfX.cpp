@@ -301,27 +301,22 @@ void CFAitfX::UpdateCurrentSum(const int int_CurrentSum)
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
     string str_CurrentSum = ptr_ScriptRipper->GetCurrentSum();
-    unsigned int uni_SumLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_CurrentSum.c_str());
-    m_ptr_FM_SUM->ModifyLineValue(uni_SumLine, int_CurrentSum);
+    m_ptr_FM_SUM->ModifyUniqueSearchLineValue(str_CurrentSum.c_str(), int_CurrentSum);
 }
 
 /**************************************************/
 //   更新 CAF
-//   默认逻辑最后项扣费
+//   默认逻辑最后项扣费 - 目前是余额宝
 /**************************************************/
 void CFAitfX::UpdateCAF(const int int_CAFSum)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
-    string str_CAFKey;
-    unsigned int uni_CAFLine = 0;
-    int int_CAFCount = 0;
     int int_CAFSumRest = int_CAFSum;
 
     // 修改 CAF Sum
     string str_CAFSum = ptr_ScriptRipper->GetCAFSum();
-    uni_CAFLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_CAFSum.c_str());
-    m_ptr_FM_SUM->ModifyLineValue(uni_CAFLine, int_CAFSum);
+    m_ptr_FM_SUM->ModifyUniqueSearchLineValue(str_CAFSum.c_str(), int_CAFSum);
 
     // 修改 CAF 子项
     vector<string> vec_str_CAF;
@@ -330,13 +325,17 @@ void CFAitfX::UpdateCAF(const int int_CAFSum)
     vector<string>::iterator itr_CAF;
     for(itr_CAF = vec_str_CAF.begin(); itr_CAF != vec_str_CAF.end(); itr_CAF++)
     {
-        str_CAFKey = *itr_CAF;
-        int_CAFCount = m_ptr_FM_SUM->GetUniqueSearchLineValue(str_CAFKey.c_str());
+        string str_CAFKey = *itr_CAF;
+        int int_CAFCount = m_ptr_FM_SUM->GetUniqueSearchLineValue(str_CAFKey.c_str());
         int_CAFSumRest -= int_CAFCount;
-    }
-    int_CAFSumRest += int_CAFCount;   // tips 番茄@20180823 - 补加最后项
 
-    m_ptr_FM_SUM->ModifyLineValue(uni_CAFLine, int_CAFSumRest);
+        if((itr_CAF+1) == vec_str_CAF.end())
+        {
+            int_CAFSumRest += int_CAFCount;   // tips 番茄@20180823 - 补加最后项
+            m_ptr_FM_SUM->ModifyUniqueSearchLineValue(str_CAFKey.c_str(), int_CAFSumRest);
+            return;
+        }
+    }
 }
 
 /**************************************************/
@@ -1235,8 +1234,7 @@ void CFAitfX::ForecastFutureSum(const string str_SelMonth, const int int_MonthPa
         str_SurveyMonth = CTool::GeneratePreMonth(str_SurveyMonth);
         
         string str_SurveyMonthTop = "## life.M" + str_SurveyMonth;
-        m_ptr_FM_life->SearchLineKey(str_SurveyMonthTop.c_str());
-        unsigned int uni_SurveyMonthTop = m_ptr_FM_life->GetSearchLineIndex(1);
+        unsigned int uni_SurveyMonthTop = m_ptr_FM_life->GetUniqueSearchLineIndex(str_SurveyMonthTop.c_str());
 
         int_SurveySum += m_ptr_FM_life->GetLineValue(uni_SurveyMonthTop+2);
         int_SurveyCounter++;
@@ -1454,10 +1452,8 @@ int CFAitfX::ShowSubMonth(const string str_SubMonthKey, const string str_SelMont
     string str_RangeTop = CMD_SMTranslate(str_SubMonthKey) + ".M" + str_SelMonth;
     string str_RangeBottom = CMD_SMTranslate(str_SubMonthKey) + ".M" + CTool::GenerateNextMonth(str_SelMonth);
 
-    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
-    GetPtrFM("SM", str_SubMonthKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrFM("SM", str_SubMonthKey)->GetSearchLineIndex(1);
+    unsigned int uni_RangeTop = GetPtrFM("SM", str_SubMonthKey)->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+    unsigned int uni_RangeBottom = GetPtrFM("SM", str_SubMonthKey)->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
 
     for(int i=uni_RangeTop+3; i<uni_RangeBottom-1; i++)
     {
@@ -1498,8 +1494,7 @@ void CFAitfX::ShowTitle(const string str_TitleKey, const int int_OFlag)
     string str_RangeBottom("## Total");
 
     unsigned int uni_RangeTop = 1;
-    GetPtrFM("TT", str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrFM("TT", str_TitleKey)->GetSearchLineIndex(1);
+    unsigned int uni_RangeBottom = GetPtrFM("TT", str_TitleKey)->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
 
     cout << "----------------------------------------" << endl;
 
@@ -1572,10 +1567,8 @@ void CFAitfX::PrintSum(bool bol_NumFlag)
     string str_RangeTop = "# Financial Allocation of SUMMARY";
     string str_RangeBottom = "---";
 
-    m_ptr_FM_SUM->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = m_ptr_FM_SUM->GetSearchLineIndex(1);
-    m_ptr_FM_SUM->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = m_ptr_FM_SUM->GetSearchLineIndex(1) - 3;
+    unsigned int uni_RangeTop = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+    unsigned int uni_RangeBottom = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_RangeBottom.c_str()) - 3;
 
     if( bol_NumFlag )
     {
@@ -1613,10 +1606,8 @@ void CFAitfX::PrintMonth(const string str_SelMonth, bool bol_NumFlag)
     string str_RangeTop = "## life.M" + str_SelMonth;
     string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_SelMonth);
 
-    m_ptr_FM_life->SearchLineKey(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = m_ptr_FM_life->GetSearchLineIndex(1);
-    m_ptr_FM_life->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = m_ptr_FM_life->GetSearchLineIndex(1);
+    unsigned int uni_RangeTop = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+    unsigned int uni_RangeBottom = m_ptr_FM_life->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
 
     if( bol_NumFlag )
     {
@@ -1690,12 +1681,10 @@ void CFAitfX::PrintSubMonth(const string str_SubMonthKey, const string str_SelMo
 /**************************************************/
 void CFAitfX::PrintTitle(const string str_TitleKey, bool bol_NumFlag)
 {
-    //string str_RangeTop;
     string str_RangeBottom = "Update Time";
 
     unsigned int uni_RangeTop = 1;
-    GetPtrFM("TT", str_TitleKey)->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = GetPtrFM("TT", str_TitleKey)->GetSearchLineIndex(1)-1;
+    unsigned int uni_RangeBottom = GetPtrFM("TT", str_TitleKey)->GetUniqueSearchLineIndex(str_RangeBottom.c_str())-1;
 
     if( bol_NumFlag )
     {

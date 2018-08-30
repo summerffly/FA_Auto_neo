@@ -55,6 +55,7 @@ public:
 
     unsigned int GetUniqueSearchLineIndex(const char *cha_Key);
     int GetUniqueSearchLineValue(const char *cha_Key);
+    void ModifyUniqueSearchLineValue(const char *cha_Key, const int int_LineValue);
 
     /****************************************/
     //   修改 操作区
