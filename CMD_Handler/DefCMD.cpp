@@ -85,7 +85,7 @@ string TRAVERSAL = "tv";
 
 string APPEND = "append";
 
-string FILECHECK = "fcheck";
+string FFILE = "file";
 string SYNC = "sync";
 string WRITE = "write";
 string BACKUP = "bakup";

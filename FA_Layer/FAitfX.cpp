@@ -1868,8 +1868,6 @@ void CFAitfX::WriteAllFile()
 
 void CFAitfX::BackUpAllFile(const string str_BackUpPath)
 {
-    cout << "Bakup-Path: " << endl;
-    cout << " " << str_BackUpPath << endl;
     for(int i=0; i<m_uni_FM_aszie; i++)
     {
         m_ptr_FM_array[i]->BackUpFile(str_BackUpPath);

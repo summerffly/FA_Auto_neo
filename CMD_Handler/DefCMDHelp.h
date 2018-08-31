@@ -34,7 +34,7 @@ string  CMD_HELP_PATCH_CHECK_TITLE = "TT = " + DK + "/" + NS + "/" + NR + "/" + 
 string  CMD_HELP_UPDATE_TITLE = UPDATE + " -tt TT";
 string  CMD_HELP_SHOW_TITLE = SHOW + " -tt TT -sp tag";
 
-string  CMD_HELP_TRANSFER = TRANSFER + " -f VALUE";
+string  CMD_HELP_TRANSFER = TRANSFER + " VALUE";
 string  CMD_HELP_LOTTERY = LOTTERY + " -f VALUE -d DATE";
 
 string  CMD_HELP_ANALYSIS_TREND = ANALYSIS + " " + TREND + " -sp TO";
@@ -62,7 +62,7 @@ string  CMD_HELP_DELETE_LINE = DELETE + " -l LINE";
 
 string  CMD_HELP_APPEND_MONTH = APPEND + " " + MONTH + " -sp MONTH";
 
-string  CMD_HELP_CHECK_FILE = FILECHECK;
+string  CMD_HELP_CHECK_FILE = CHECK + " " + FFILE;
 string  CMD_HELP_CHECK_TIME = CHECK + " " + TIME;
 string  CMD_HELP_SYNC   = SYNC;
 string  CMD_HELP_WRITE  = WRITE;

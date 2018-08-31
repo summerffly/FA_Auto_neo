@@ -88,7 +88,7 @@ extern string TRAVERSAL;
 
 extern string APPEND;
 
-extern string FILECHECK;
+extern string FFILE;
 extern string SYNC;
 extern string WRITE;
 extern string BACKUP;

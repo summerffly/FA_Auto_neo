@@ -292,8 +292,6 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_SUMMARIZE;
         else if(str_CmdPro_A == FORECAST)
             m_str_CmdType = X_CMD_TYPE_FORECAST;
-        else if(str_CmdPro_A == FILECHECK)
-            m_str_CmdType = X_CMD_TYPE_CHECK_FILE;
         else if(str_CmdPro_A == SYNC)
             m_str_CmdType = X_CMD_TYPE_SYNC;
         else if(str_CmdPro_A == WRITE)
@@ -374,6 +372,8 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_APPEND_MONTH;
         else if((str_CmdPro_A == INSERT) && (str_CmdPro_B == BLANK))
             m_str_CmdType = X_CMD_TYPE_INSERT_BLANK_LINE;
+        else if((str_CmdPro_A == CHECK) && (str_CmdPro_B == FFILE))
+            m_str_CmdType = X_CMD_TYPE_CHECK_FILE;
         else if((str_CmdPro_A == CHECK) && (str_CmdPro_B == TIME))
             m_str_CmdType = X_CMD_TYPE_CHECK_TIME;
         else
