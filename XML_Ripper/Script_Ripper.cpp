@@ -50,6 +50,7 @@ m_cls_XMLRipper(cha_xmlPath)
     CAFRipper();
     RoomRipper();
     SubMonthRipper();
+    BakupPathRipper();
 
     MonthRangeGenerator();
 }
@@ -196,6 +197,22 @@ void CScriptRipper::SubMonthRipper()
     {
         str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_SubMonth", "SMItem", i, "item");
         m_vec_str_SubMonth.push_back(str_Temp);
+    }
+}
+
+/**************************************************/
+//   读取&解析 BakupPath
+/**************************************************/
+void CScriptRipper::BakupPathRipper()
+{
+    string str_BakupPathNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_BakupPath", "num");
+    m_uni_BakupPathNum = atoi(str_BakupPathNum.c_str());
+
+    string str_Temp;
+    for(int i=1; i<=m_uni_BakupPathNum; i++)
+    {
+        str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_BakupPath", "BakupPath", i, "path");
+        m_vec_str_BakupPath.push_back(str_Temp);
     }
 }
 
@@ -435,6 +452,20 @@ void CScriptRipper::SubMonthDuplicator(vector<string> &vec_str_Dest)
     for(itr_SubMonth = m_vec_str_SubMonth.begin(); itr_SubMonth != m_vec_str_SubMonth.end(); itr_SubMonth++)
     {
         vec_str_Dest.push_back(*itr_SubMonth);
+    }
+}
+
+/**************************************************/
+//   拷贝 BakupPath
+/**************************************************/
+void CScriptRipper::BakupPathDuplicator(vector<string> &vec_str_Dest)
+{
+    vec_str_Dest.clear();
+
+    vector<string>::iterator itr_BakupPath;
+    for(itr_BakupPath = m_vec_str_BakupPath.begin(); itr_BakupPath != m_vec_str_BakupPath.end(); itr_BakupPath++)
+    {
+        vec_str_Dest.push_back(*itr_BakupPath);
     }
 }
 

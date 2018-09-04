@@ -38,6 +38,7 @@ public:
     void CAFRipper();
     void RoomRipper();
     void SubMonthRipper();
+    void BakupPathRipper();
 
     void MonthRangeGenerator();
     bool IsIncludeMonthRange(const string str_SelMonth);
@@ -62,6 +63,7 @@ public:
     void CAFDuplicator(vector<string> &vec_str_Dest);
     void RoomDuplicator(vector<string> &vec_str_Dest);
     void SubMonthDuplicator(vector<string> &vec_str_Dest);
+    void BakupPathDuplicator(vector<string> &vec_str_Dest);
 
     /****************************************/
     //   修改 Script
@@ -94,12 +96,14 @@ private:
     unsigned int m_uni_CAFNum;
     unsigned int m_uni_RoomNum;
     unsigned int m_uni_SubMonthNum;
+    unsigned int m_uni_BakupPathNum;
     vector<string> m_vec_str_Title;
     vector<string> m_vec_str_TitleDeep;
     vector<string> m_vec_str_Tail;
     vector<string> m_vec_str_CAF;
     vector<string> m_vec_str_Room;
     vector<string> m_vec_str_SubMonth;
+    vector<string> m_vec_str_BakupPath;
 };
 
 

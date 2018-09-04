@@ -747,11 +747,15 @@ void CCMDHandler::OnCmdCheckFile(CMD_Packet srt_CMD)
 {
     ms_ptr_FAitfX->CheckEqualAllFile();
 
-    cout << "Check-Path: " << "/FA_SZ.bak/" << endl;
-    ms_ptr_FAitfX->CheckEqualAllFile("./FA_SZ.bak/");
+    vector<string> vec_str_BakupPath;
+    ms_ptr_ScriptRipper->BakupPathDuplicator(vec_str_BakupPath);
 
-    cout << "Check-Path: " << "/X_Executable/" << endl;
-    ms_ptr_FAitfX->CheckEqualAllFile("./../Hacker/FA_Auto_X/X_Executable/");
+    vector<string>::iterator itr_BakupPath;
+    for(itr_BakupPath = vec_str_BakupPath.begin(); itr_BakupPath != vec_str_BakupPath.end(); itr_BakupPath++)
+    {
+        cout << "Check-Path: " << *itr_BakupPath << endl;
+        ms_ptr_FAitfX->CheckEqualAllFile(*itr_BakupPath);
+    }
 }
 
 void CCMDHandler::OnCmdCheckTime(CMD_Packet srt_CMD)
@@ -772,13 +776,16 @@ void CCMDHandler::OnCmdWrite(CMD_Packet srt_CMD)
 
 void CCMDHandler::OnCmdBackup(CMD_Packet srt_CMD)
 {
-    cout << "BackUp-Path: " << "/FA_SZ.bak/" << endl;
-	ms_ptr_FAitfX->BackUpAllFile("./FA_SZ.bak/");
-    ms_ptr_FAitfX->CheckEqualAllFile("./FA_SZ.bak/");
+    vector<string> vec_str_BakupPath;
+    ms_ptr_ScriptRipper->BakupPathDuplicator(vec_str_BakupPath);
 
-    cout << "BackUp-Path: " << "/X_Executable/" << endl;
-    ms_ptr_FAitfX->BackUpAllFile("./../Hacker/FA_Auto_X/X_Executable/");
-    ms_ptr_FAitfX->CheckEqualAllFile("./../Hacker/FA_Auto_X/X_Executable/");
+    vector<string>::iterator itr_BakupPath;
+    for(itr_BakupPath = vec_str_BakupPath.begin(); itr_BakupPath != vec_str_BakupPath.end(); itr_BakupPath++)
+    {        
+        cout << "BackUp-Path: " << *itr_BakupPath << endl;
+        ms_ptr_FAitfX->BackUpAllFile(*itr_BakupPath);
+        ms_ptr_FAitfX->CheckEqualAllFile(*itr_BakupPath);
+    }
 }
 
 void CCMDHandler::OnCmdHelp(CMD_Packet srt_CMD)
