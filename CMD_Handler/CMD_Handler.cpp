@@ -249,7 +249,7 @@ void CCMDHandler::CMD_Init()
     cout << "***                                  ***" << endl;
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
-    cout << "***         Version: " << ms_ptr_ScriptRipper->GetVersion() << "          ***" << endl;
+    cout << "***         Version: " << ms_ptr_ScriptRipper->GetVersion() << "_LTU       ***" << endl;
     cout << "***                                  ***" << endl;
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
