@@ -38,6 +38,7 @@ public:
     void CAFRipper();
     void RoomRipper();
     void SubMonthRipper();
+    void FileRipper();
     void BakupPathRipper();
 
     void MonthRangeGenerator();
@@ -63,6 +64,7 @@ public:
     void CAFDuplicator(vector<string> &vec_str_Dest);
     void RoomDuplicator(vector<string> &vec_str_Dest);
     void SubMonthDuplicator(vector<string> &vec_str_Dest);
+    void FileDuplicator(vector<string> &vec_str_Dest);
     void BakupPathDuplicator(vector<string> &vec_str_Dest);
 
     /****************************************/
@@ -96,6 +98,7 @@ private:
     unsigned int m_uni_CAFNum;
     unsigned int m_uni_RoomNum;
     unsigned int m_uni_SubMonthNum;
+    unsigned int m_uni_FileNum;
     unsigned int m_uni_BakupPathNum;
     vector<string> m_vec_str_Title;
     vector<string> m_vec_str_TitleDeep;
@@ -103,6 +106,7 @@ private:
     vector<string> m_vec_str_CAF;
     vector<string> m_vec_str_Room;
     vector<string> m_vec_str_SubMonth;
+    vector<string> m_vec_str_File;
     vector<string> m_vec_str_BakupPath;
 };
 

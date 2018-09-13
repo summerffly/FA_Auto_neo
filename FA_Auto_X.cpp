@@ -19,7 +19,12 @@ int main(int argc, char **argv, char *env[])
     //***********************************//
     //### 检查.md文件存在
     //***********************************//
-    if(0 != CTool::CheckFilesExist())
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
+    vector<string> vec_str_File;
+    ptr_ScriptRipper->FileDuplicator(vec_str_File);
+
+    if(0 != CTool::CheckFilesExist(vec_str_File))
     {
         CTool::MassageOutFotmat("File Missing", 'X');
         return -1;

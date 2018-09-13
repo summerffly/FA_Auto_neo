@@ -22,7 +22,7 @@ public:
     CTool();
     ~CTool();
 
-    static int CheckFilesExist();
+    static int CheckFilesExist(vector<string> vec_str_FilePath);
 
     static bool ParseMonth(const string str_Input);
     static string GenerateMonth(const int int_Month);

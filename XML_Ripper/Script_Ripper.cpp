@@ -32,13 +32,17 @@ m_cls_XMLRipper(cha_xmlPath)
 
     m_uni_MonthSalary = 0;
 
+    m_vec_str_Month.clear();
+
     m_vec_str_Title.clear();
+    m_vec_str_TitleDeep.clear();
     m_vec_str_Room.clear();
     m_vec_str_SubMonth.clear();
     m_vec_str_Tail.clear();
     m_vec_str_CAF.clear();
 
-    m_vec_str_Month.clear();
+    m_vec_str_File.clear();
+    m_vec_str_BakupPath.clear();
 
     VersionRipper();
     MonthRipper();
@@ -50,6 +54,7 @@ m_cls_XMLRipper(cha_xmlPath)
     CAFRipper();
     RoomRipper();
     SubMonthRipper();
+    FileRipper();
     BakupPathRipper();
 
     MonthRangeGenerator();
@@ -197,6 +202,22 @@ void CScriptRipper::SubMonthRipper()
     {
         str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_SubMonth", "SMItem", i, "item");
         m_vec_str_SubMonth.push_back(str_Temp);
+    }
+}
+
+/**************************************************/
+//   读取&解析 File
+/**************************************************/
+void CScriptRipper::FileRipper()
+{
+    string str_FileNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_File", "num");
+    m_uni_FileNum = atoi(str_FileNum.c_str());
+
+    string str_Temp;
+    for(int i=1; i<=m_uni_FileNum; i++)
+    {
+        str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_File", "File", i, "file");
+        m_vec_str_File.push_back(str_Temp);
     }
 }
 
@@ -452,6 +473,20 @@ void CScriptRipper::SubMonthDuplicator(vector<string> &vec_str_Dest)
     for(itr_SubMonth = m_vec_str_SubMonth.begin(); itr_SubMonth != m_vec_str_SubMonth.end(); itr_SubMonth++)
     {
         vec_str_Dest.push_back(*itr_SubMonth);
+    }
+}
+
+/**************************************************/
+//   拷贝 File
+/**************************************************/
+void CScriptRipper::FileDuplicator(vector<string> &vec_str_Dest)
+{
+    vec_str_Dest.clear();
+
+    vector<string>::iterator itr_FilePath;
+    for(itr_FilePath = m_vec_str_File.begin(); itr_FilePath != m_vec_str_File.end(); itr_FilePath++)
+    {
+        vec_str_Dest.push_back(*itr_FilePath);
     }
 }
 
