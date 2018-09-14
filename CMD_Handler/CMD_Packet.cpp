@@ -393,38 +393,39 @@ int CMD_Packet::CMDParser()
 /**************************************************/
 int CMD_Packet::CMDParamChecker()
 {
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
     if("" != m_str_ParamSubMonth)
     {
-        if(DGTLER == m_str_ParamSubMonth)
+        if(ALL == m_str_ParamSubMonth)
             return 0;
-        else if(BOOKS == m_str_ParamSubMonth)
-            return 0;
-        else if(KEEP == m_str_ParamSubMonth)
-            return 0;
-        else if(TB == m_str_ParamSubMonth)
-            return 0;
-        else if(SA == m_str_ParamSubMonth)
-            return 0;
-        else if(ALL == m_str_ParamSubMonth)
-            return 0;
-        else
-            return -1;
+
+        vector<string> vec_str_SubMonth;
+        ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+
+        vector<string>::iterator itr_SubMonth;
+        for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
+        {
+            if(*itr_SubMonth == m_str_ParamSubMonth)
+                return 0;
+        }
+
+        return -1;
     }
 
     if("" != m_str_ParamTitle)
     {
-        if(DK == m_str_ParamTitle)
-            return 0;
-        else if(NS == m_str_ParamTitle)
-            return 0;
-        else if(NR == m_str_ParamTitle)
-            return 0;
-        else if(TRAVEL == m_str_ParamTitle)
-            return 0;
-        else if(LOTTERY == m_str_ParamTitle)
-            return 0;
-        else
-            return -2;
+        vector<string> vec_str_TitleDeep;
+        ptr_ScriptRipper->TitleDeepDuplicator(vec_str_TitleDeep);
+
+        vector<string>::iterator itr_TitleDeep;
+        for(itr_TitleDeep = vec_str_TitleDeep.begin(); itr_TitleDeep != vec_str_TitleDeep.end(); itr_TitleDeep++)
+        {
+            if(*itr_TitleDeep == m_str_ParamTitle)
+                return 0;
+        }
+
+        return -2;
     }
 
     return 0;

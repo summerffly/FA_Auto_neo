@@ -44,7 +44,7 @@ extern string TRAVEL;
 extern string LOTTERY;
 extern string TAG;
 
-extern string ZHIFUBAO;
+extern string ALIBABA;
 extern string WEIXIN;
 extern string JINGDONG;
 

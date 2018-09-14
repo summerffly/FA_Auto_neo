@@ -198,12 +198,12 @@ void CCMDHandler::CMD_Loop()
         int int_RetParamChecker = xCmdPacket.CMDParamChecker();
         if(-1 == int_RetParamChecker)
         {
-            CTool::MassageOutFotmat("SM-Error Param", '!');
+            CTool::MassageOutFotmat("SM-Param Error", '!');
             continue;
         }
         else if(-2 == int_RetParamChecker)
         {
-            CTool::MassageOutFotmat("TT-Error Param", '!');
+            CTool::MassageOutFotmat("TT-Param Error", '!');
             continue;
         }
 
@@ -450,7 +450,7 @@ void CCMDHandler::OnCmdModifyLife(CMD_Packet srt_CMD)
 
     if( srt_CMD.m_str_ResParam == WEIXIN )
     {
-        ms_ptr_FAitfX->TransferBalance("零钱通", "余额宝", false, srt_CMD.m_int_ParamValue);
+        ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", false, srt_CMD.m_int_ParamValue);
     }
 }
 
@@ -519,11 +519,11 @@ void CCMDHandler::OnCmdTransfer(CMD_Packet srt_CMD)
 {
     if(srt_CMD.m_int_ParamValue > 0)
     {
-        ms_ptr_FAitfX->TransferBalance("零钱通", "余额宝", true, srt_CMD.m_int_ParamValue);
+        ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", true, srt_CMD.m_int_ParamValue);
     }
     else
     {
-        ms_ptr_FAitfX->TransferBalance("零钱通", "余额宝", false, (-1)*srt_CMD.m_int_ParamValue);
+        ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", false, (-1)*srt_CMD.m_int_ParamValue);
     }
 }
 
@@ -531,12 +531,12 @@ void CCMDHandler::OnCmdLottery(CMD_Packet srt_CMD)
 {
     if(srt_CMD.m_int_ParamValue > 0)
     {
-        ms_ptr_FAitfX->TransferBalance("零钱通", "余额宝", true, srt_CMD.m_int_ParamValue);
+        ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", true, srt_CMD.m_int_ParamValue);
         ms_ptr_FAitfX->AppendLottery(true, srt_CMD.m_int_ParamValue, srt_CMD.m_str_ParamDate);
     }
     else
     {
-        ms_ptr_FAitfX->TransferBalance("零钱通", "余额宝", false, (-1)*srt_CMD.m_int_ParamValue);
+        ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", false, (-1)*srt_CMD.m_int_ParamValue);
         ms_ptr_FAitfX->AppendLottery(false, (-1)*srt_CMD.m_int_ParamValue, srt_CMD.m_str_ParamDate);
     }
     ms_ptr_ASitfX->UpdateSum(0);

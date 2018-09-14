@@ -41,7 +41,7 @@ string TRAVEL = "travel";
 string LOTTERY = "lottery";
 string TAG = "tag";
 
-string ZHIFUBAO = "zf";
+string ALIBABA = "ali";
 string WEIXIN = "wc";
 string JINGDONG = "jd";
 
