@@ -270,11 +270,13 @@ void CFAitfX::SummarizeCAF(int int_OFlag)
         cout << "--> 可支配财富: " << CTool::TransOutFormat(m_int_CAFSum) << endl;
     }
 
+    int int_CAFSum = 0;
     vector<string>::iterator itr_CAF;
     for(itr_CAF = vec_str_CAF.begin(); itr_CAF != vec_str_CAF.end(); itr_CAF++)
     {
         string str_CAFKey = *itr_CAF;
         int int_CAFCount = m_ptr_FM_SUM->GetUniqueSearchLineValue(str_CAFKey.c_str());
+        int_CAFSum += int_CAFCount;
 
         if(int_OFlag == 1)
         {
@@ -282,15 +284,7 @@ void CFAitfX::SummarizeCAF(int int_OFlag)
         }
     }
 
-    if(int_OFlag == 2)
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "### CAF累计统计 ###" << endl;
-        cout << endl;
-
-        cout << "--> CAF累计收支: " << CTool::TransOutFormat(m_int_CAFSum) << endl;
-        cout << "----------------------------------------" << endl;
-    }
+    m_int_CAFSum = int_CAFSum;   // add 番茄@20180917 - 需要验证是否有副作用
 }
 
 /**************************************************/
