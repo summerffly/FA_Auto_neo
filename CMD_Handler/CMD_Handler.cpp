@@ -59,7 +59,7 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_TITLE, CMD_HELP_SHOW_TITLE, "", OnCmdShowTitle)
 
-    X_ON_CMD_TYPE(X_CMD_TYPE_TRANSFER, CMD_HELP_TRANSFER, "", OnCmdTransfer)
+    X_ON_CMD_TYPE(X_CMD_TYPE_TRANSFER, CMD_HELP_TRANSFER, CMD_HELP_PATCH_TRANSFER, OnCmdTransfer)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_LOTTERY, CMD_HELP_LOTTERY, "", OnCmdLottery)
 
@@ -450,7 +450,7 @@ void CCMDHandler::OnCmdModifyLife(CMD_Packet srt_CMD)
 
     if( srt_CMD.m_str_ResParam == WEIXIN )
     {
-        ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", false, srt_CMD.m_int_ParamValue);
+        ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", (-1)*srt_CMD.m_int_ParamValue);
     }
 }
 
@@ -517,26 +517,30 @@ void CCMDHandler::OnCmdShowTitle(CMD_Packet srt_CMD)
 
 void CCMDHandler::OnCmdTransfer(CMD_Packet srt_CMD)
 {
-    if(srt_CMD.m_int_ParamValue > 0)
+    if( srt_CMD.m_str_ResParam == WEIXIN )
     {
-        ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", true, srt_CMD.m_int_ParamValue);
+        ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", srt_CMD.m_int_ParamValue);
+    }
+    else if( srt_CMD.m_str_ResParam == JINGDONG )
+    {
+        ms_ptr_FAitfX->TransferBalance("京东-小金库", "阿里-余额宝", srt_CMD.m_int_ParamValue);
     }
     else
     {
-        ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", false, (-1)*srt_CMD.m_int_ParamValue);
+        CTool::MassageOutFotmat("SRC Error", '!');
     }
 }
 
 void CCMDHandler::OnCmdLottery(CMD_Packet srt_CMD)
 {
+    ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", srt_CMD.m_int_ParamValue);
+
     if(srt_CMD.m_int_ParamValue > 0)
     {
-        ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", true, srt_CMD.m_int_ParamValue);
         ms_ptr_FAitfX->AppendLottery(true, srt_CMD.m_int_ParamValue, srt_CMD.m_str_ParamDate);
     }
     else
     {
-        ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", false, (-1)*srt_CMD.m_int_ParamValue);
         ms_ptr_FAitfX->AppendLottery(false, (-1)*srt_CMD.m_int_ParamValue, srt_CMD.m_str_ParamDate);
     }
     ms_ptr_ASitfX->UpdateSum(0);
@@ -753,7 +757,6 @@ void CCMDHandler::OnCmdCheckFile(CMD_Packet srt_CMD)
     vector<string>::iterator itr_BakupPath;
     for(itr_BakupPath = vec_str_BakupPath.begin(); itr_BakupPath != vec_str_BakupPath.end(); itr_BakupPath++)
     {
-        cout << "Check-Path: " << *itr_BakupPath << endl;
         ms_ptr_FAitfX->CheckEqualAllFile(*itr_BakupPath);
     }
 }
@@ -782,7 +785,6 @@ void CCMDHandler::OnCmdBackup(CMD_Packet srt_CMD)
     vector<string>::iterator itr_BakupPath;
     for(itr_BakupPath = vec_str_BakupPath.begin(); itr_BakupPath != vec_str_BakupPath.end(); itr_BakupPath++)
     {        
-        cout << "BackUp-Path: " << *itr_BakupPath << endl;
         ms_ptr_FAitfX->BackUpAllFile(*itr_BakupPath);
         ms_ptr_FAitfX->CheckEqualAllFile(*itr_BakupPath);
     }

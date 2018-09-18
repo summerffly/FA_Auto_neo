@@ -42,7 +42,7 @@ string LOTTERY = "lottery";
 string TAG = "tag";
 
 string ALIBABA = "ali";
-string WEIXIN = "wc";
+string WEIXIN = "wx";
 string JINGDONG = "jd";
 
 /**************************************************/

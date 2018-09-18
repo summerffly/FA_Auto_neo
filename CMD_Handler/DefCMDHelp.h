@@ -34,7 +34,8 @@ string  CMD_HELP_PATCH_CHECK_TITLE = "TT = " + DK + "/" + NS + "/" + NR + "/" + 
 string  CMD_HELP_UPDATE_TITLE = UPDATE + " -tt TT";
 string  CMD_HELP_SHOW_TITLE = SHOW + " -tt TT -sp tag";
 
-string  CMD_HELP_TRANSFER = TRANSFER + " VALUE";
+string  CMD_HELP_TRANSFER = TRANSFER + " VALUE -sp SRC";
+string  CMD_HELP_PATCH_TRANSFER = "SRC = " + WEIXIN + "/" + JINGDONG;
 string  CMD_HELP_LOTTERY = LOTTERY + " -f VALUE -d DATE";
 
 string  CMD_HELP_ANALYSIS_TREND = ANALYSIS + " " + TREND + " -sp TO";

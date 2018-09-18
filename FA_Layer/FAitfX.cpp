@@ -727,8 +727,11 @@ void CFAitfX::AppendLottery(const bool bol_LineFlag, const unsigned int uni_Line
     cout << "----------------------------------------" << endl;
 }
 
+/**************************************************/
+//   默认从 str_FirstKey 进行操作
+/**************************************************/
 void CFAitfX::TransferBalance(const string str_FirstKey, const string str_SecondKey,
-                              const bool bol_TransferFlag, const unsigned int uni_BalanceValueABS)
+                              const int int_BalanceValue)
 {
     unsigned int uni_FirstLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_FirstKey.c_str());
     int int_FirstValue = m_ptr_FM_SUM->GetLineValue(uni_FirstLine);
@@ -736,18 +739,8 @@ void CFAitfX::TransferBalance(const string str_FirstKey, const string str_Second
     unsigned int uni_SecondLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_SecondKey.c_str());
     int int_SecondValue = m_ptr_FM_SUM->GetLineValue(uni_SecondLine);
 
-    // bol_TransferFlag为true >>> First++ Second--
-    if( bol_TransferFlag == true )
-    {
-        m_ptr_FM_SUM->ModifyLineValue(uni_FirstLine, int_FirstValue + uni_BalanceValueABS);
-        m_ptr_FM_SUM->ModifyLineValue(uni_SecondLine, int_SecondValue - uni_BalanceValueABS);
-    }
-    // bol_TransferFlag为false >>> First-- Second++
-    else
-    {
-        m_ptr_FM_SUM->ModifyLineValue(uni_FirstLine, int_FirstValue - uni_BalanceValueABS);
-        m_ptr_FM_SUM->ModifyLineValue(uni_SecondLine, int_SecondValue + uni_BalanceValueABS);
-    }
+    m_ptr_FM_SUM->ModifyLineValue(uni_FirstLine, int_FirstValue + int_BalanceValue);
+    m_ptr_FM_SUM->ModifyLineValue(uni_SecondLine, int_SecondValue - int_BalanceValue);
 }
 
 /**************************************************/
@@ -1816,13 +1809,13 @@ void CFAitfX::CheckEqualAllFile()
         if(0 != m_ptr_FM_array[i]->FileComparer())
         {
             string str_ErrorMsg = m_ptr_FM_array[i]->GetFileName();
-            str_ErrorMsg += " NOT Sync";
+            str_ErrorMsg += " NOT EQUAL";
             CTool::MassageOutFotmat(str_ErrorMsg, '!');
             return;
         }
     }
 
-    CTool::MassageOutFotmat("All Local File Equal", '*');
+    CTool::MassageOutFotmat("All File EQUAL", '*');
 }
 
 void CFAitfX::CheckEqualAllFile(const string str_Path)
@@ -1834,13 +1827,13 @@ void CFAitfX::CheckEqualAllFile(const string str_Path)
         if(0 != m_ptr_FM_array[i]->FileComparer(str_BakupFile.c_str()))
         {
             string str_ErrorMsg = m_ptr_FM_array[i]->GetFileName();
-            str_ErrorMsg += " NOT Sync";
+            str_ErrorMsg += " NOT EQUAL";
             CTool::MassageOutFotmat(str_ErrorMsg, '!');
             return;
         }
     }
 
-    CTool::MassageOutFotmat("All Back-Up File Equal", '*');
+    CTool::MassageOutFotmat("All Bakup File EQUAL", '*');
 }
 
 void CFAitfX::SyncAllFile()

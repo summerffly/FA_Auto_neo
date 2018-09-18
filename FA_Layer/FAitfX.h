@@ -76,7 +76,7 @@ public:
     //   综合操作区
     /****************************************/
     void TransferBalance(const string str_FirstKey, const string str_SecondKey,
-                         const bool bol_TransferFlag, const unsigned int uni_BalanceValueABS);
+                         const int int_BalanceValue);
     void AddScriptSum(const string str_SelMonth);
     void AddScriptMonth(const string str_SelMonth);
     void AddScriptSubMonth(const string str_SubMonthKey, const string str_SelMonth);
