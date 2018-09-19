@@ -350,6 +350,7 @@ void CFAitfX::UpdateCAF(const int int_CAFSum)
     // 修改 CAF Sum
     string str_CAFSum = ptr_ScriptRipper->GetCAFSum();
     m_ptr_FM_SUM->ModifyUniqueSearchLineValue(str_CAFSum.c_str(), int_CAFSum);
+    m_int_CAFSum = int_CAFSum;
 
     // 修改 CAF 子项
     vector<string> vec_str_CAF;
