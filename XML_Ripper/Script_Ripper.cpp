@@ -36,8 +36,10 @@ m_cls_XMLRipper(cha_xmlPath)
 
     m_vec_str_Title.clear();
     m_vec_str_TitleDeep.clear();
+    m_map_TitleDeep.clear();
     m_vec_str_Room.clear();
     m_vec_str_SubMonth.clear();
+    m_map_SubMonth.clear();
     m_vec_str_Tail.clear();
     m_vec_str_CAF.clear();
 
@@ -134,10 +136,13 @@ void CScriptRipper::TitleDeepRipper()
     m_uni_TitleDeepNum = atoi(str_TitleDeepNum.c_str());
 
     string str_Temp;
+    string str_TempKey;
     for(int i=1; i<=m_uni_TitleDeepNum; i++)
     {
-        str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_TitleDeep", "TitleItem", i,"item");
+        str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_TitleDeep", "TitleItem", i,"cmd");
         m_vec_str_TitleDeep.push_back(str_Temp);
+        str_TempKey = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_TitleDeep", "TitleItem", i,"key");
+        m_map_TitleDeep.insert(make_pair(str_Temp,str_TempKey));
     }
 }
 
@@ -164,6 +169,9 @@ void CScriptRipper::CAFRipper()
 {
     string str_CAFNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_CAF", "num");
     m_uni_CAFNum = atoi(str_CAFNum.c_str());
+
+    string str_CAFIndex = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_CAF", "index");
+    m_uni_CAFIndex = atoi(str_CAFIndex.c_str());
 
     string str_Temp;
     for(int i=1; i<=m_uni_CAFNum; i++)
@@ -198,10 +206,13 @@ void CScriptRipper::SubMonthRipper()
     m_uni_SubMonthNum = atoi(str_SubMonthNum.c_str());
 
     string str_Temp;
+    string str_TempKey;
     for(int i=1; i<=m_uni_SubMonthNum; i++)
     {
-        str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_SubMonth", "SMItem", i, "item");
+        str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_SubMonth", "SMItem", i, "cmd");
         m_vec_str_SubMonth.push_back(str_Temp);
+        str_TempKey = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_SubMonth", "SMItem", i, "key");
+        m_map_SubMonth.insert(make_pair(str_Temp,str_TempKey));
     }
 }
 
@@ -371,6 +382,14 @@ string CScriptRipper::GetCAFSum()
 }
 
 /**************************************************/
+//   获取 CAFSum
+/**************************************************/
+int CScriptRipper::GetCAFIndex()
+{
+    return m_uni_CAFIndex;
+}
+
+/**************************************************/
 //   获取 MonthSalary
 /**************************************************/
 unsigned int CScriptRipper::GetMonthSalary()
@@ -502,6 +521,34 @@ void CScriptRipper::BakupPathDuplicator(vector<string> &vec_str_Dest)
     {
         vec_str_Dest.push_back(*itr_BakupPath);
     }
+}
+
+string CScriptRipper::TitleTranslater(const string str_TitleCMD)
+{
+    string str_TranslateKey("");
+
+    map<string, string>::iterator itr_Title;
+    itr_Title = m_map_TitleDeep.find(str_TitleCMD);
+    if(itr_Title != m_map_TitleDeep.end())
+        str_TranslateKey = itr_Title->second;
+    else
+        str_TranslateKey = "ERROR";
+
+    return str_TranslateKey;
+}
+
+string CScriptRipper::SubMonthTranslater(const string str_SubMonthCMD)
+{
+    string str_TranslateKey("");
+
+    map<string, string>::iterator itr_SubMonth;
+    itr_SubMonth = m_map_SubMonth.find(str_SubMonthCMD);
+    if(itr_SubMonth != m_map_SubMonth.end())
+        str_TranslateKey = itr_SubMonth->second;
+    else
+        str_TranslateKey = "ERROR";
+
+    return str_TranslateKey;
 }
 
 /**************************************************/

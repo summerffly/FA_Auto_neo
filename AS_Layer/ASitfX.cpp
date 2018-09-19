@@ -58,9 +58,17 @@ void CASitfX::CheckFA()
         return;
     }
 
+    // Check CAF
+    if(0 != ptr_FAitfX->CheckCAF())
+    {
+        CTool::MassageOutFotmat("CAF Allocation Error", '!');
+        return;
+    }
+
     if( 0 != CheckSum(0) )
     {
         CTool::MassageOutFotmat("FA_SUM NOT Pass Check", '!');
+        return;
     }
     else
     {
@@ -68,6 +76,7 @@ void CASitfX::CheckFA()
         cout << "###   FA全系统校验Pass :)   ###" << endl;
         cout << "当前财富: " << CTool::TransOutFormat(ptr_FAitfX->m_int_CurrentSum) << endl;
         cout << "----------------------------------------" << endl;
+        return;
     }
 }
 

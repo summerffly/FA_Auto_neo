@@ -9,6 +9,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <map>
 #include "./../X_Frame/X_Tool.h"
 #include "./../X_Frame/Singleton.h"
 #include "XML_Ripper.h"
@@ -54,6 +55,7 @@ public:
     string GetOriginSum();
     string GetCurrentSum();
     string GetCAFSum();
+    int GetCAFIndex();
 
     unsigned int GetMonthSalary();
 
@@ -66,6 +68,9 @@ public:
     void SubMonthDuplicator(vector<string> &vec_str_Dest);
     void FileDuplicator(vector<string> &vec_str_Dest);
     void BakupPathDuplicator(vector<string> &vec_str_Dest);
+
+    string TitleTranslater(const string str_TitleCMD);
+    string SubMonthTranslater(const string str_SubMonthCMD);
 
     /****************************************/
     //   修改 Script
@@ -96,16 +101,19 @@ private:
     unsigned int m_uni_TitleDeepNum;
     unsigned int m_uni_TailNum;
     unsigned int m_uni_CAFNum;
+    unsigned int m_uni_CAFIndex;
     unsigned int m_uni_RoomNum;
     unsigned int m_uni_SubMonthNum;
     unsigned int m_uni_FileNum;
     unsigned int m_uni_BakupPathNum;
     vector<string> m_vec_str_Title;
     vector<string> m_vec_str_TitleDeep;
+    map<string, string> m_map_TitleDeep;
     vector<string> m_vec_str_Tail;
     vector<string> m_vec_str_CAF;
     vector<string> m_vec_str_Room;
     vector<string> m_vec_str_SubMonth;
+    map<string, string> m_map_SubMonth;
     vector<string> m_vec_str_File;
     vector<string> m_vec_str_BakupPath;
 };

@@ -28,6 +28,7 @@ CFAitfX::CFAitfX()
     m_int_TitleSum = 0;
     m_int_TailSum = 0;
 
+    // tips 番茄@20180919 - 扩展添加点2/3
     m_ptr_FM_SUM = new CFileManager("./FA_SUM.md");
     m_ptr_FM_life = new CFileManager("./life.M.md");
     m_ptr_FM_sm_DGtler = new CFileManager("./DGtler.M.md");
@@ -259,6 +260,12 @@ void CFAitfX::SummarizeTail(int int_OFlag)
 /**************************************************/
 void CFAitfX::SummarizeCAF(int int_OFlag)
 {
+    if(0 != CheckCAF())
+    {
+        CTool::MassageOutFotmat("CAF Allocation Error", '!');
+        return;
+    }
+
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
     vector<string> vec_str_CAF;
@@ -283,8 +290,6 @@ void CFAitfX::SummarizeCAF(int int_OFlag)
             cout << *itr_CAF << ": " << CTool::TransOutFormat(int_CAFCount) << endl;
         }
     }
-
-    m_int_CAFSum = int_CAFSum;   // add 番茄@20180917 - 需要验证是否有副作用
 }
 
 /**************************************************/
@@ -299,14 +304,48 @@ void CFAitfX::UpdateCurrentSum(const int int_CurrentSum)
 }
 
 /**************************************************/
-//   更新 CAF
-//   默认逻辑最后项扣费 - 目前是余额宝
+//   检查 CAF
 /**************************************************/
-void CFAitfX::UpdateCAF(const int int_CAFSum)
+int CFAitfX::CheckCAF()
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
-    int int_CAFSumRest = int_CAFSum;
+    vector<string> vec_str_CAF;
+    ptr_ScriptRipper->CAFDuplicator(vec_str_CAF);
+
+    int int_CAFSum = 0;
+    vector<string>::iterator itr_CAF;
+    for(itr_CAF = vec_str_CAF.begin(); itr_CAF != vec_str_CAF.end(); itr_CAF++)
+    {
+        string str_CAFKey = *itr_CAF;
+        int int_CAFCount = m_ptr_FM_SUM->GetUniqueSearchLineValue(str_CAFKey.c_str());
+        int_CAFSum += int_CAFCount;
+    }
+
+    if( int_CAFSum == m_int_CAFSum )
+    {
+        return 0;   // 0 >>> CAF读取值 == 校验值
+    }
+    else
+    {
+        return -1;   // -1 >>> CAF读取值 != 校验值
+    }
+}
+
+/**************************************************/
+//   更新 CAF
+/**************************************************/
+void CFAitfX::UpdateCAF(const int int_CAFSum)
+{
+    if(0 != CheckCAF())
+    {
+        CTool::MassageOutFotmat("CAF Allocation Error", '!');
+        return;
+    }
+
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
+    int int_CAFDelta = int_CAFSum - m_int_CAFSum;
 
     // 修改 CAF Sum
     string str_CAFSum = ptr_ScriptRipper->GetCAFSum();
@@ -315,21 +354,13 @@ void CFAitfX::UpdateCAF(const int int_CAFSum)
     // 修改 CAF 子项
     vector<string> vec_str_CAF;
     ptr_ScriptRipper->CAFDuplicator(vec_str_CAF);
+    vector<string>::iterator itr_CAF = vec_str_CAF.begin();
+    itr_CAF += ptr_ScriptRipper->GetCAFIndex() -1;
 
-    vector<string>::iterator itr_CAF;
-    for(itr_CAF = vec_str_CAF.begin(); itr_CAF != vec_str_CAF.end(); itr_CAF++)
-    {
-        string str_CAFKey = *itr_CAF;
-        int int_CAFCount = m_ptr_FM_SUM->GetUniqueSearchLineValue(str_CAFKey.c_str());
-        int_CAFSumRest -= int_CAFCount;
-
-        if((itr_CAF+1) == vec_str_CAF.end())
-        {
-            int_CAFSumRest += int_CAFCount;   // tips 番茄@20180823 - 补加最后项
-            m_ptr_FM_SUM->ModifyUniqueSearchLineValue(str_CAFKey.c_str(), int_CAFSumRest);
-            return;
-        }
-    }
+    string str_CAFKey = *itr_CAF;
+    int int_CAFCount = m_ptr_FM_SUM->GetUniqueSearchLineValue(str_CAFKey.c_str());
+    int_CAFCount += int_CAFDelta;
+    m_ptr_FM_SUM->ModifyUniqueSearchLineValue(str_CAFKey.c_str(), int_CAFCount);
 }
 
 /**************************************************/
@@ -1861,6 +1892,7 @@ void CFAitfX::BackUpAllFile(const string str_BackUpPath)
     }
 }
 
+// tips 番茄@20180919 - 扩展添加点3/3
 CFileManager *CFAitfX::GetPtrFM(const string str_Type, const string str_Key)
 {
     if(str_Type == "SUM")
@@ -1896,42 +1928,14 @@ CFileManager *CFAitfX::GetPtrFM(const string str_Type, const string str_Key)
 
 string CMD_SMTranslate(const string str_SubMonthKey)
 {
-    string str_TranslateKey("");
-
-    if(str_SubMonthKey == DGTLER)
-        str_TranslateKey = "DGtler";
-    else if(str_SubMonthKey == BOOKS)
-        str_TranslateKey = "Books";
-    else if(str_SubMonthKey == KEEP)
-        str_TranslateKey = "KEEP";
-    else if(str_SubMonthKey == TB)
-        str_TranslateKey = "TB";
-    else if(str_SubMonthKey == SA)
-        str_TranslateKey = "sa";
-    else
-        str_TranslateKey = "ERROR";
-
-    return str_TranslateKey;
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    return ptr_ScriptRipper->SubMonthTranslater(str_SubMonthKey);
 }
 
 string CMD_TTTranslate(const string str_TitleKey)
 {
-    string str_TranslateKey("");
-
-    if(str_TitleKey == DK)
-        str_TranslateKey = "DK";
-    else if(str_TitleKey == NS)
-        str_TranslateKey = "NS";
-    else if(str_TitleKey == NR)
-        str_TranslateKey = "NR411";
-    else if(str_TitleKey == TRAVEL)
-        str_TranslateKey = "travel";
-    else if(str_TitleKey == LOTTERY)
-        str_TranslateKey = "lottery";
-    else
-        str_TranslateKey = "ERROR";
-
-    return str_TranslateKey;
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    return ptr_ScriptRipper->TitleTranslater(str_TitleKey);
 }
 
 

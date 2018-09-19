@@ -46,6 +46,8 @@ public:
     void SummarizeCAF(int int_OFlag);
 
     void UpdateCurrentSum(const int int_CurrentSum);
+
+    int CheckCAF();
     void UpdateCAF(const int int_CAFSum);
 
     /****************************************/
@@ -164,6 +166,7 @@ private:
 /****************************************/
 //   FM成员
 /****************************************/
+// tips 番茄@20180919 - 扩展添加点1/3
 private:    
     CFileManager *m_ptr_FM_SUM;
     CFileManager *m_ptr_FM_life;
