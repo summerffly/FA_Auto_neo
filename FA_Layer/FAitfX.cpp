@@ -200,7 +200,11 @@ void CFAitfX::SummarizeTitle(int int_OFlag)
 
     m_int_TitleSum = int_TitleSum;
 
-    if(int_OFlag == 2)
+    if(int_OFlag == 1)
+    {
+        cout << "--> Title累计支出: " << CTool::TransOutFormat(m_int_TitleSum) << endl;
+    }
+    else if(int_OFlag == 2)
     {
         cout << endl;
         cout << "--> Title累计支出: " << CTool::TransOutFormat(m_int_TitleSum) << endl;
