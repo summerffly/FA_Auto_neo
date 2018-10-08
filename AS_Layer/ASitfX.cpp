@@ -267,7 +267,7 @@ int CASitfX::CheckMonth(const string str_SelMonth, int int_OFlag)
     if( 0 != ptr_FAitfX->CheckMonthSurplus(str_SelMonth, false) )
     {
         string str_Message = "Month " + str_SelMonth + " NOT Pass Check";
-        CTool::MassageOutFotmat("Month NOT Pass Check", '!');
+        CTool::MassageOutFotmat(str_Message, '!');
         return -2;
     }
 
@@ -277,6 +277,32 @@ int CASitfX::CheckMonth(const string str_SelMonth, int int_OFlag)
     }
 
     return 0;
+}
+
+/**************************************************/
+//   遍历校验 Month收支
+/**************************************************/
+void CASitfX::CheckMonthTraversal()
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    int int_CRet = 0;
+
+    vector<string> vec_str_Month;
+    ptr_ScriptRipper->MonthRangeDuplicator(vec_str_Month);
+
+    vector<string>::iterator itr_Month;
+    for(itr_Month = vec_str_Month.begin(); itr_Month != vec_str_Month.end(); itr_Month++)
+    {
+        if( 0 != CheckMonth(*itr_Month, 0) )
+            int_CRet++;
+    }
+
+    if( 0 == int_CRet )
+    {
+        CTool::MassageOutFotmat("Every Month Pass Check :)", '#');
+    }
 }
 
 /**************************************************/

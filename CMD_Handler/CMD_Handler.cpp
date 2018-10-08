@@ -456,7 +456,14 @@ void CCMDHandler::OnCmdModifyLife(CMD_Packet srt_CMD)
 
 void CCMDHandler::OnCmdCheckMonth(CMD_Packet srt_CMD)
 {
-    ms_ptr_ASitfX->CheckMonth(srt_CMD.m_str_ParamMonth, 1);
+    if(srt_CMD.m_str_ResParam == TRAVERSAL)
+    {
+        ms_ptr_ASitfX->CheckMonthTraversal();
+    }
+    else
+    {
+        ms_ptr_ASitfX->CheckMonth(srt_CMD.m_str_ParamMonth, 1);
+    }
 }
 
 void CCMDHandler::OnCmdUpdateMonth(CMD_Packet srt_CMD)

@@ -42,6 +42,7 @@ public:
     //   Month
     /****************************************/
     int CheckMonth(const string str_SelMonth, int int_OFlag);
+    void CheckMonthTraversal();
     void UpdateMonth(const string str_SelMonth, int int_OFlag);
     void ShowMonth(const string str_SelMonth);
 

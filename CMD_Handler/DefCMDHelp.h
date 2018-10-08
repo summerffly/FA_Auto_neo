@@ -20,7 +20,7 @@ string  CMD_HELP_SHOW_SUM   = SHOW + " " + SUM;
 string  CMD_HELP_MODIFY_LIFE = MODIFY_LIFE + " VALUE -sp SRC";
 string  CMD_HELP_PATCH_MODIFY_LIFE = "SRC = " + WEIXIN;
 
-string  CMD_HELP_CHECK_MONTH  = CHECK + " " + MONTH + " -m MONTH";
+string  CMD_HELP_CHECK_MONTH  = CHECK + " " + MONTH + " -m MONTH -sp " + TRAVERSAL;
 string  CMD_HELP_UPDATE_MONTH = UPDATE + " " + MONTH;
 string  CMD_HELP_SHOW_MONTH   = SHOW + " " + MONTH;
 
