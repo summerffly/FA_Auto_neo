@@ -532,6 +532,10 @@ void CCMDHandler::OnCmdTransfer(CMD_Packet srt_CMD)
     {
         ms_ptr_FAitfX->TransferBalance("京东-小金库", "阿里-余额宝", srt_CMD.m_int_ParamValue);
     }
+    else if( srt_CMD.m_str_ResParam.empty() )
+    {
+        ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", srt_CMD.m_int_ParamValue);
+    }
     else
     {
         CTool::MassageOutFotmat("SRC Error", '!');
