@@ -468,8 +468,16 @@ void CCMDHandler::OnCmdCheckMonth(CMD_Packet srt_CMD)
 
 void CCMDHandler::OnCmdUpdateMonth(CMD_Packet srt_CMD)
 {
-    ms_ptr_ASitfX->UpdateMonth(srt_CMD.m_str_ParamMonth, 1);
-    ms_ptr_ASitfX->UpdateSum(0);
+    if(srt_CMD.m_str_ResParam == TRAVERSAL)
+    {
+        ms_ptr_ASitfX->UpdateMonthTraversal();
+        ms_ptr_ASitfX->UpdateSum(0);
+    }
+    else
+    {
+        ms_ptr_ASitfX->UpdateMonth(srt_CMD.m_str_ParamMonth, 1);
+        ms_ptr_ASitfX->UpdateSum(0);
+    }
 }
 
 void CCMDHandler::OnCmdShowMonth(CMD_Packet srt_CMD)

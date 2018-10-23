@@ -334,6 +334,37 @@ void CASitfX::UpdateMonth(const string str_SelMonth, int int_OFlag)
 }
 
 /**************************************************/
+//   遍历更新 Month收支
+/**************************************************/
+void CASitfX::UpdateMonthTraversal()
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
+
+    vector<string> vec_str_Month;
+    ptr_ScriptRipper->MonthRangeDuplicator(vec_str_Month);
+
+    vector<string> vec_str_SubMonth;
+    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+
+    vector<string>::iterator itr_Month;
+    for(itr_Month = vec_str_Month.begin(); itr_Month != vec_str_Month.end(); itr_Month++)
+    {
+        vector<string>::iterator itr_SubMonth;
+        for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
+        {
+            ptr_FAitfX->UpdateSubMonthExpense(*itr_SubMonth, *itr_Month, false);
+        }
+
+        // Update Month
+        ptr_FAitfX->UpdateMonthSurplus(*itr_Month, false);
+        ptr_FAitfX->SyncMonthSurplus(*itr_Month);
+    }
+
+    CTool::MassageOutFotmat("Every Month Updated :)", '#');
+}
+
+/**************************************************/
 //   展示 Month收支
 /**************************************************/
 void CASitfX::ShowMonth(const string str_SelMonth)
