@@ -387,7 +387,9 @@ void CASitfX::AnalysisMonthTrend_EXP()
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
     vector<TREND_INFO> vec_stc_TrendInfo;
-    ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, "月支出");
+    unsigned int uni_TrendSum = 0;
+
+    uni_TrendSum = ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, "月支出");
 
     // 绘制 趋势Vector
     cout << "----------------------------------------" << endl;
@@ -396,6 +398,8 @@ void CASitfX::AnalysisMonthTrend_EXP()
 
     ptr_FAitfX->DrawMonthTrendVector(vec_stc_TrendInfo, "EXP");
 
+    cout << endl;
+    cout << "--> 月度EXP 累计支出: -" << uni_TrendSum << endl;
     cout << endl;
     cout << "----------------------------------------" << endl;
 }
@@ -408,7 +412,9 @@ void CASitfX::AnalysisMonthTrend_LIFE()
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
     vector<TREND_INFO> vec_stc_TrendInfo;
-    ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, "生活费");
+    unsigned int uni_TrendSum = 0;
+
+    uni_TrendSum = ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, "生活费");
 
     // 绘制 趋势Vector
     cout << "----------------------------------------" << endl;
@@ -417,6 +423,8 @@ void CASitfX::AnalysisMonthTrend_LIFE()
 
     ptr_FAitfX->DrawMonthTrendVector(vec_stc_TrendInfo, "LIFE");
 
+    cout << endl;
+    cout << "--> 月度LIFE 累计支出: -" << uni_TrendSum << endl;
     cout << endl;
     cout << "----------------------------------------" << endl;
 }
@@ -430,6 +438,7 @@ void CASitfX::AnalysisMonthTrend_ROOM()
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
     vector<TREND_INFO> vec_stc_TrendInfo;
+    unsigned int uni_TrendSum = 0;
 
     vector<string> vec_str_Room;
     ptr_ScriptRipper->RoomDuplicator(vec_str_Room);
@@ -439,11 +448,11 @@ void CASitfX::AnalysisMonthTrend_ROOM()
     {
         if(itr_Room == vec_str_Room.begin())
         {
-            ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, *itr_Room);
+            uni_TrendSum += ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, *itr_Room);
             continue;
         }
 
-        ptr_FAitfX->AppendMonthTrendVector(vec_stc_TrendInfo, *itr_Room);
+        uni_TrendSum += ptr_FAitfX->AppendMonthTrendVector(vec_stc_TrendInfo, *itr_Room);
     }
 
     // 绘制 趋势Vector
@@ -453,6 +462,8 @@ void CASitfX::AnalysisMonthTrend_ROOM()
 
     ptr_FAitfX->DrawMonthTrendVector(vec_stc_TrendInfo, "ROOM");
 
+    cout << endl;
+    cout << "--> ROOM 累计支出: -" << uni_TrendSum << endl;
     cout << endl;
     cout << "----------------------------------------" << endl;
 }
@@ -466,6 +477,7 @@ void CASitfX::AnalysisMonthTrend_CSM()
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
     vector<TREND_INFO> vec_stc_TrendInfo;
+    unsigned int uni_TrendSum = 0;
 
     vector<string> vec_str_SubMonth;
     ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
@@ -475,11 +487,11 @@ void CASitfX::AnalysisMonthTrend_CSM()
     {
         if(itr_SubMonth == vec_str_SubMonth.begin())
         {
-            ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, CMD_SMTranslate(*itr_SubMonth));
+            uni_TrendSum += ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, CMD_SMTranslate(*itr_SubMonth));
             continue;
         }
 
-        ptr_FAitfX->AppendMonthTrendVector(vec_stc_TrendInfo, CMD_SMTranslate(*itr_SubMonth));
+        uni_TrendSum += ptr_FAitfX->AppendMonthTrendVector(vec_stc_TrendInfo, CMD_SMTranslate(*itr_SubMonth));
     }
 
     // 绘制 趋势Vector
@@ -489,6 +501,8 @@ void CASitfX::AnalysisMonthTrend_CSM()
 
     ptr_FAitfX->DrawMonthTrendVector(vec_stc_TrendInfo, "CSM");
 
+    cout << endl;
+    cout << "--> CSM 累计支出: -" << uni_TrendSum << endl;
     cout << endl;
     cout << "----------------------------------------" << endl;
 }
@@ -501,9 +515,10 @@ void CASitfX::AnalysisMonthTrend(const string str_MonthKey)
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
     vector<TREND_INFO> vec_stc_TrendInfo;
+    unsigned int uni_TrendSum = 0;
 
     // 建构 趋势Vector
-    ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, str_MonthKey);
+    uni_TrendSum = ptr_FAitfX->GenerateMonthTrendVector(vec_stc_TrendInfo, str_MonthKey);
 
     // 绘制 趋势Vector
     cout << "----------------------------------------" << endl;
@@ -512,6 +527,8 @@ void CASitfX::AnalysisMonthTrend(const string str_MonthKey)
 
     ptr_FAitfX->DrawMonthTrendVector(vec_stc_TrendInfo, str_MonthKey);
 
+    cout << endl;
+    cout << "--> " << str_MonthKey << " 累计支出: -" << uni_TrendSum << endl;
     cout << endl;
     cout << "----------------------------------------" << endl;
 }

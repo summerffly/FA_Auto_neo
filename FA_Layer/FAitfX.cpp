@@ -869,11 +869,12 @@ void CFAitfX::AddScriptSubMonth(const string str_SubMonthKey, const string str_S
 /**************************************************/
 //   生成 月度趋势Vector
 /**************************************************/
-void CFAitfX::GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey)
+unsigned int CFAitfX::GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
     
     unsigned int uni_TrendIndex = 0;
+    unsigned int uni_TrendSum = 0;
     TREND_INFO stc_TrendInfo;
 
     string str_TrendMonth = ptr_ScriptRipper->GetOriginMonth();
@@ -893,6 +894,7 @@ void CFAitfX::GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, co
 
             stc_TrendInfo.str_TrendMonth = str_TrendMonth;
             stc_TrendInfo.uni_TrendValueABS = m_ptr_FM_life->GetLineValueABS(uni_TrendIndex);
+            uni_TrendSum += m_ptr_FM_life->GetLineValueABS(uni_TrendIndex);
 
             vec_stc_TrendInfo.push_back(stc_TrendInfo);
         }
@@ -906,17 +908,20 @@ void CFAitfX::GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, co
 
         str_TrendMonth = CTool::GenerateNextMonth(str_TrendMonth);
     }
+
+    return uni_TrendSum;
 }
 
 /**************************************************/
 //   附加 月度趋势Vector
 /**************************************************/
-void CFAitfX::AppendMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey)
+unsigned int CFAitfX::AppendMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey)
 {
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
     unsigned int uni_TrendIndex = 0;
     unsigned int uni_VecIndex = 0;
+    unsigned int uni_TrendSum = 0;
     TREND_INFO stc_TrendInfo;
 
     string str_TrendMonth = ptr_ScriptRipper->GetOriginMonth();
@@ -934,11 +939,14 @@ void CFAitfX::AppendMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, cons
         {
             uni_TrendIndex = m_ptr_FM_life->GetSearchLineIndex(1);
             vec_stc_TrendInfo.at(uni_VecIndex).uni_TrendValueABS += m_ptr_FM_life->GetLineValueABS(uni_TrendIndex);
+            uni_TrendSum += m_ptr_FM_life->GetLineValueABS(uni_TrendIndex);
         }
 
         str_TrendMonth = CTool::GenerateNextMonth(str_TrendMonth);
         uni_VecIndex++;
     }
+
+    return uni_TrendSum;
 }
 
 /**************************************************/
