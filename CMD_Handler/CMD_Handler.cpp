@@ -603,7 +603,7 @@ void CCMDHandler::OnCmdSummarize(CMD_Packet srt_CMD)
 {
     if( srt_CMD.m_str_ResParam == MONTH )
     {
-        ms_ptr_FAitfX->SummarizeMonth(2);
+        ms_ptr_FAitfX->SummarizeMonthCLS(2);
     }
     else if( srt_CMD.m_str_ResParam == TITLE )
     {

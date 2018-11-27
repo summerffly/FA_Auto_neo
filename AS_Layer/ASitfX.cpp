@@ -231,8 +231,9 @@ void CASitfX::ShowSum()
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
     ptr_FAitfX->SummarizeTitle(1);
+    ptr_FAitfX->SummarizeMonthCLS(1);
     ptr_FAitfX->SummarizeTail(1);
-    ptr_FAitfX->SummarizeMonth(1);
+
 
     ptr_FAitfX->LoadSum(1);
     ptr_FAitfX->SummarizeCAF(1);

@@ -199,6 +199,32 @@ string CFileManager::GetSearchFullLine(const unsigned int uni_VecIndex)
     }
 }
 
+int CFileManager::GetSearchLineValueSum(const char *cha_Key)
+{
+    m_vec_uni_LineIndex.clear();
+
+    int int_ValueSum = 0;
+
+    for(int i=1; i <= m_int_LineNum; i++)
+    {
+        if( m_vec_cls_Line.at(i).IsContainKey(cha_Key) )
+        {
+            m_vec_uni_LineIndex.push_back(i);
+            int_ValueSum += m_vec_cls_Line.at(i).GetLineValue();
+        }
+    }
+
+    if(0 == m_vec_uni_LineIndex.size())
+    {
+        string str_Msg(cha_Key);
+        str_Msg += ":No Search Line Found";
+        CTool::MassageOutFotmat(str_Msg, '!');
+        return 0;
+    }
+
+    return int_ValueSum;
+}
+
 unsigned int CFileManager::GetUniqueSearchLineIndex(const char *cha_Key)
 {
     m_vec_uni_LineIndex.clear();

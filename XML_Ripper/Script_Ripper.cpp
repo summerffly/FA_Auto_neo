@@ -390,6 +390,14 @@ int CScriptRipper::GetCAFIndex()
 }
 
 /**************************************************/
+//   获取 SubMonthNum
+/**************************************************/
+int CScriptRipper::GetSubMonthNum()
+{
+    return m_uni_SubMonthNum;
+}
+
+/**************************************************/
 //   获取 MonthSalary
 /**************************************************/
 unsigned int CScriptRipper::GetMonthSalary()

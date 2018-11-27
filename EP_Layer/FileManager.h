@@ -50,8 +50,11 @@ public:
     int SearchFirstLineKey(const char *cha_Key);
     int SearchRangeLineKey(const char *cha_Key, const unsigned int uni_RangeBeginIndex,\
                            const unsigned int uni_RangeEndIndex);
+
     unsigned int GetSearchLineIndex(const unsigned int uni_VecIndex);
     string GetSearchFullLine(const unsigned int uni_VecIndex);
+
+    int GetSearchLineValueSum(const char *cha_Key);
 
     unsigned int GetUniqueSearchLineIndex(const char *cha_Key);
     int GetUniqueSearchLineValue(const char *cha_Key);

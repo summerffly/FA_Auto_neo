@@ -56,6 +56,7 @@ public:
     string GetCurrentSum();
     string GetCAFSum();
     int GetCAFIndex();
+    int GetSubMonthNum();
 
     unsigned int GetMonthSalary();
 

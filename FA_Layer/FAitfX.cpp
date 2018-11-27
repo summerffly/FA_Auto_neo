@@ -158,6 +158,91 @@ void CFAitfX::SummarizeMonth(int int_OFlag)
 }
 
 /**************************************************/
+//   汇总 Month 分类累计收支
+/**************************************************/
+void CFAitfX::SummarizeMonthCLS(int int_OFlag)
+{
+    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+
+    /********** Get Month Sum **********/
+    m_int_MonthSalarySum = m_ptr_FM_SUM->GetSearchLineValueSum("月薪资");
+    m_int_MonthExpenseSum = m_ptr_FM_SUM->GetSearchLineValueSum("月支出");
+    m_int_MonthSurplusSum = m_ptr_FM_SUM->GetSearchLineValueSum("月结余");
+
+    /********** Get Life & Room Sum **********/
+    int int_MonthLifeSum = m_ptr_FM_life->GetSearchLineValueSum("生活费");
+    int int_MonthRoomSum = m_ptr_FM_life->GetSearchLineValueSum("房租");
+    int_MonthRoomSum += m_ptr_FM_life->GetSearchLineValueSum("水电费");
+    int_MonthRoomSum += m_ptr_FM_life->GetSearchLineValueSum("网络费");
+
+    /********** Get SM Sum **********/
+    vector<string> vec_str_SubMonth;
+    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+
+    unsigned int uni_SubMonthNum = ptr_ScriptRipper->GetSubMonthNum();
+
+    int *ptr_int_SMSum = new int[uni_SubMonthNum];
+    int int_SMindex = 0;
+
+    vector<string>::iterator itr_SubMonth;
+    for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
+    {
+        string str_SubMonth = CMD_SMTranslate(*itr_SubMonth);
+        *(ptr_int_SMSum+int_SMindex) = m_ptr_FM_life->GetSearchLineValueSum(str_SubMonth.c_str());
+        int_SMindex++;
+    }
+
+    if(int_OFlag == 1)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "--> Month累计收入: " << CTool::TransOutFormat(m_int_MonthSalarySum) << endl;
+        cout << "Life累计支出: " << CTool::TransOutFormat(int_MonthLifeSum) << endl;
+        cout << "Room累计支出: " << CTool::TransOutFormat(int_MonthRoomSum) << endl;
+
+        int_SMindex = 0;
+        for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
+        {
+            string str_SubMonth = CMD_SMTranslate(*itr_SubMonth);
+            cout << str_SubMonth << "累计支出: " << CTool::TransOutFormat(*(ptr_int_SMSum+int_SMindex)) << endl;
+            int_SMindex++;
+        }
+
+        cout << "--> Month累计支出: " << CTool::TransOutFormat(m_int_MonthExpenseSum) << endl;
+        cout << "--> Month累计结余: " << CTool::TransOutFormat(m_int_MonthSurplusSum) << endl;
+    }
+
+    if(int_OFlag == 2)
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### Month累计收支统计 ###" << endl;
+        cout << endl;
+
+        cout << "--> Month累计收入: " << CTool::TransOutFormat(m_int_MonthSalarySum) << endl;
+        cout << endl;
+
+        cout << "Life累计支出: " << CTool::TransOutFormat(int_MonthLifeSum) << endl;
+        cout << "Room累计支出: " << CTool::TransOutFormat(int_MonthRoomSum) << endl;
+        cout << endl;
+
+        int_SMindex = 0;
+        for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
+        {
+            string str_SubMonth = CMD_SMTranslate(*itr_SubMonth);
+            cout << str_SubMonth << "累计支出: " << CTool::TransOutFormat(*(ptr_int_SMSum+int_SMindex)) << endl;
+            int_SMindex++;
+        }
+        cout << endl;
+
+        cout << "--> Month累计支出: " << CTool::TransOutFormat(m_int_MonthExpenseSum) << endl;
+        cout << "--> Month累计结余: " << CTool::TransOutFormat(m_int_MonthSurplusSum) << endl;
+        cout << endl;
+        cout << "----------------------------------------" << endl;
+    }
+
+    delete[] ptr_int_SMSum;
+}
+
+/**************************************************/
 //   汇总 Title累计收支
 /**************************************************/
 void CFAitfX::SummarizeTitle(int int_OFlag)
@@ -1279,7 +1364,7 @@ void CFAitfX::ForecastFutureSum(const string str_SelMonth, const int int_MonthPa
     int int_MonthSalary = ptr_ScriptRipper->GetMonthSalary();
     int int_MonthSurplus = int_MonthSalary + int_AverageMonthExpense;
     int int_MonthCounter = CTool::CountMonth(ptr_ScriptRipper->GetCurrentMonth(), str_SelMonth);
-    int_MonthCounter--;   // tips 番茄@20180706 - 检查为什么CountMonth需要+1
+    int_MonthCounter--;
 
     int int_FutureSum = m_int_CurrentSum + (int_MonthSurplus * int_MonthCounter);
     int_FutureSum += int_MonthSalary * int_MonthPatch;

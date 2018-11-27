@@ -41,6 +41,7 @@ public:
     /****************************************/
     void LoadSum(int int_OFlag);
     void SummarizeMonth(int int_OFlag);
+    void SummarizeMonthCLS(int int_OFlag);
     void SummarizeTitle(int int_OFlag);
     void SummarizeTail(int int_OFlag);
     void SummarizeCAF(int int_OFlag);
