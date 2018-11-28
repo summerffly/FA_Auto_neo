@@ -34,6 +34,7 @@
 #define LTYPE_FBIRC_TITLESUM    22   // 单项金额
 #define LTYPE_FBIRC_MONTHSUM    23   // 月度金额
 #define LTYPE_FBIRC_LINEUINT    24   // 单行金额
+#define LTYPE_FBIRC_RATEOI      25   // ROI
 
 
 #endif

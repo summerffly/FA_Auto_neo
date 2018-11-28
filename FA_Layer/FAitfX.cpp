@@ -799,6 +799,144 @@ void CFAitfX::UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag)
     }
 }
 
+/**************************************************/
+//   校验 Tt分项 Lottery
+/**************************************************/
+int CFAitfX::CheckLottery(bool bol_OFlag)
+{
+    /********** Init Index ********************/
+
+    string str_RangeTop("## lottery");
+    string str_RangeBottom("## Total");
+
+    unsigned int uni_AFLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = 2;
+    unsigned int uni_RangeBottom = m_ptr_FM_tt_lottery->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
+
+    /********** EX ********************/
+
+    int int_AFLotteryEX = m_ptr_FM_SUM->GetLineValue(uni_AFLine+1);
+
+    int int_LotteryInvestEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+2);
+    int int_LotteryRewardEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+3);
+    int int_LotteryRevenueEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+4);
+    int int_LotteryROIEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+5);
+
+    /********** CK ********************/
+
+    int int_LotteryInvestCK = 0;
+    int int_LotteryRewardCK = 0;
+    int int_LotteryRevenueCK = 0;
+    int int_LotteryROICK  = 0;
+
+    for(int i = uni_RangeTop; i <= uni_RangeBottom-1; i++)
+    {
+        int int_LotteryLineValue = m_ptr_FM_tt_lottery->GetLineValue(i);
+
+        if( int_LotteryLineValue < 0 )
+        {
+            int_LotteryInvestCK += int_LotteryLineValue;
+            int_LotteryRevenueCK += int_LotteryLineValue;
+        }
+        else if ( int_LotteryLineValue > 0 )
+        {
+            int_LotteryRewardCK += int_LotteryLineValue;
+            int_LotteryRevenueCK += int_LotteryLineValue;
+        }
+    }
+
+    int_LotteryROICK = int_LotteryRevenueCK * 100 / int_LotteryInvestCK;
+
+    /********** Output ********************/
+
+    if( bol_OFlag )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### lottery ROI ###" << endl;
+        cout << "AF_读取值: " << CTool::TransOutFormat(int_AFLotteryEX) << endl;
+        cout << "lottery_读取值: " << CTool::TransOutFormat(int_LotteryRevenueEX) << endl;
+        cout << "lottery_校验值: " << CTool::TransOutFormat(int_LotteryRevenueCK) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+
+    /********** Return ********************/
+
+    if( int_LotteryRevenueEX != int_LotteryRevenueCK )
+    {
+        return -1;
+    }
+    else if( int_AFLotteryEX != int_LotteryRevenueCK )
+    {
+        return -2;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+/**************************************************/
+//   更新 Tt分项 Lottery
+/**************************************************/
+void CFAitfX::UpdateLottery(bool bol_OFlag)
+{
+    /********** Init Index **********/
+
+    string str_RangeTop("## lottery");
+    string str_RangeBottom("## Total");
+
+    unsigned int uni_AFLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+    unsigned int uni_RangeTop = 2;
+    unsigned int uni_RangeBottom = m_ptr_FM_tt_lottery->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
+
+    /********** UD **********/
+    int int_LotteryInvestUD = 0;
+    int int_LotteryRewardUD = 0;
+    int int_LotteryRevenueUD = 0;
+
+    for(int i = uni_RangeTop; i <= uni_RangeBottom-1; i++)
+    {
+        int int_LotteryLineValue = m_ptr_FM_tt_lottery->GetLineValue(i);
+
+        if( int_LotteryLineValue < 0 )
+        {
+            int_LotteryInvestUD += int_LotteryLineValue;
+            int_LotteryRevenueUD += int_LotteryLineValue;
+        }
+        else if ( int_LotteryLineValue > 0 )
+        {
+            int_LotteryRewardUD += int_LotteryLineValue;
+            int_LotteryRevenueUD += int_LotteryLineValue;
+        }
+    }
+
+    int int_LotteryROIUD = int_LotteryRevenueUD * 100 / (int_LotteryInvestUD * (-1));
+
+    /********** Line Modify ********************/
+
+    m_ptr_FM_tt_lottery->ModifyLineValue(uni_RangeBottom+2, int_LotteryInvestUD);
+    m_ptr_FM_tt_lottery->ModifyLineValue(uni_RangeBottom+3, int_LotteryRewardUD);
+    m_ptr_FM_tt_lottery->ModifyLineValue(uni_RangeBottom+4, int_LotteryRevenueUD);
+    m_ptr_FM_tt_lottery->ModifyLineValue(uni_RangeBottom+5, int_LotteryROIUD);
+    m_ptr_FM_SUM->ModifyLineValue(uni_AFLine+1, int_LotteryRevenueUD);
+
+    /********** Output ********************/
+
+    if( bol_OFlag )
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "### lottery ROI ###" << endl;
+        cout << "lottery投资更新值: " << CTool::TransOutFormat(int_LotteryInvestUD) << endl;
+        cout << "lottery回报更新值: " << CTool::TransOutFormat(int_LotteryRewardUD) << endl;
+        cout << "lottery收益更新值: " << CTool::TransOutFormat(int_LotteryRevenueUD) << endl;
+        cout << "lottery ROI更新值: " << CTool::TransOutFormat(int_LotteryROIUD) << "%" << endl;
+        cout << "----------------------------------------" << endl;
+    }
+}
+
+/**************************************************/
+//   附加 Tt分项 Lottery
+/**************************************************/
 void CFAitfX::AppendLottery(const bool bol_LineFlag, const unsigned int uni_LineValueABS,\
                             const string str_LineDate)
 {

@@ -513,13 +513,28 @@ void CCMDHandler::OnCmdShowSubMonth(CMD_Packet srt_CMD)
 
 void CCMDHandler::OnCmdCheckTitle(CMD_Packet srt_CMD)
 {
-    ms_ptr_FAitfX->CheckTitleExpense(srt_CMD.m_str_ParamTitle, true);
+    if(srt_CMD.m_str_ParamTitle == LOTTERY)
+    {
+        ms_ptr_FAitfX->CheckLottery(true);
+    }
+    else
+    {
+        ms_ptr_FAitfX->CheckTitleExpense(srt_CMD.m_str_ParamTitle, true);
+    }
 }
 
 void CCMDHandler::OnCmdUpdateTitle(CMD_Packet srt_CMD)
 {
-    ms_ptr_FAitfX->UpdateTitleExpense(srt_CMD.m_str_ParamTitle, true);
-    ms_ptr_ASitfX->UpdateSum(0);
+    if(srt_CMD.m_str_ParamTitle == LOTTERY)
+    {
+        ms_ptr_FAitfX->UpdateLottery(true);
+        ms_ptr_ASitfX->UpdateSum(0);
+    }
+    else
+    {
+        ms_ptr_FAitfX->UpdateTitleExpense(srt_CMD.m_str_ParamTitle, true);
+        ms_ptr_ASitfX->UpdateSum(0);
+    }
 }
 
 void CCMDHandler::OnCmdShowTitle(CMD_Packet srt_CMD)

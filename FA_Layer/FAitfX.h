@@ -72,6 +72,9 @@ public:
     /****************************************/
     int CheckTitleExpense(const string str_TitleKey, bool bol_OFlag);
     void UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag);
+
+    int CheckLottery(bool bol_OFlag);
+    void UpdateLottery(bool bol_OFlag);
     void AppendLottery(const bool bol_LineFlag, const unsigned int int_LineValueABS,\
                        const string str_LineDate);
 

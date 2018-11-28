@@ -177,6 +177,16 @@ int CLineEPer::LineParser()
 
             break;
         }
+        else if( regex_match(m_str_FullLine, str_Match, REP_FBric_RateOI) )
+        {
+            m_uni_LineType = LTYPE_FBIRC_RATEOI;
+            ValuePMParser(str_Match[3]);
+            string str_ValueTemp = str_Match[4];
+            m_uni_LineValueABS = atoi(str_ValueTemp.c_str());
+            m_str_LineContent = str_Match[1];
+
+            break;
+        }
         else
         {
             cout << "----------------------------------------" << endl;
@@ -369,6 +379,20 @@ void CLineEPer::UpdateFullLine()
                 m_str_FullLine += cha_ValueABS;
                 m_str_FullLine += "` ";
                 m_str_FullLine += m_str_LineContent;
+            }
+            break;
+        case(LTYPE_FBIRC_RATEOI):
+            {
+                m_str_FullLine.clear();
+                m_str_FullLine += m_str_LineContent;
+                m_str_FullLine += " : ";
+                if(m_bol_LineValuePM)
+                    m_str_FullLine += "+";
+                else
+                    m_str_FullLine += "-";
+                sprintf(cha_ValueABS, "%d", m_uni_LineValueABS);
+                m_str_FullLine += cha_ValueABS;
+                m_str_FullLine += "%";
             }
             break;
         case(LTYPE_BLANK):
