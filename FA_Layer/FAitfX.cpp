@@ -1806,11 +1806,28 @@ void CFAitfX::ShowTitle(const string str_TitleKey, const int int_OFlag)
         }
     }
 
-    int int_TotalTTExpense = GetPtrFM("TT", str_TitleKey)->GetLineValue(uni_RangeBottom+2);
+    if( str_TitleKey != LOTTERY )
+    {
+        int int_TotalTTExpense = GetPtrFM("TT", str_TitleKey)->GetLineValue(uni_RangeBottom+2);
     
-    cout << "----------------------------------------" << endl;
-    cout << "--> " << CMD_TTTranslate(str_TitleKey) << "/总支出: " << CTool::TransOutFormat(int_TotalTTExpense) << endl;
-    cout << "----------------------------------------" << endl;
+        cout << "----------------------------------------" << endl;
+        cout << "--> " << CMD_TTTranslate(str_TitleKey) << "/总支出: " << CTool::TransOutFormat(int_TotalTTExpense) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+    else
+    {
+        int int_LotteryInvestEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+2);
+        int int_LotteryRewardEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+3);
+        int int_LotteryRevenueEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+4);
+        int int_LotteryROIEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+5);
+
+        cout << "----------------------------------------" << endl;
+        cout << "--> lottery投资: " << CTool::TransOutFormat(int_LotteryInvestEX) << endl;
+        cout << "--> lottery回报: " << CTool::TransOutFormat(int_LotteryRewardEX) << endl;
+        cout << "--> lottery收益: " << CTool::TransOutFormat(int_LotteryRevenueEX) << endl;
+        cout << "--> lottery ROI: " << CTool::TransOutFormat(int_LotteryROIEX) << "%" << endl;
+        cout << "----------------------------------------" << endl;
+    }
 }
 
 /**************************************************/
