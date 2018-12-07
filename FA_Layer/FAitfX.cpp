@@ -918,7 +918,14 @@ void CFAitfX::UpdateLottery(bool bol_OFlag)
     m_ptr_FM_tt_lottery->ModifyLineValue(uni_RangeBottom+3, int_LotteryRewardUD);
     m_ptr_FM_tt_lottery->ModifyLineValue(uni_RangeBottom+4, int_LotteryRevenueUD);
     m_ptr_FM_tt_lottery->ModifyLineValue(uni_RangeBottom+5, int_LotteryROIUD);
+
+    /********** Transfer Balance ********************/
+
+    int int_AFLotteryRevenueOrigin = m_ptr_FM_SUM->GetLineValue(uni_AFLine+1);
+    int int_AFLotteryRevenueDelta = int_LotteryRevenueUD - int_AFLotteryRevenueOrigin;
+
     m_ptr_FM_SUM->ModifyLineValue(uni_AFLine+1, int_LotteryRevenueUD);
+    TransferBalance("微信-零钱通", "阿里-余额宝", int_AFLotteryRevenueDelta);
 
     /********** Output ********************/
 
@@ -966,12 +973,12 @@ void CFAitfX::AppendLottery(const bool bol_LineFlag, const unsigned int uni_Line
     m_ptr_FM_tt_lottery->InsertLine(uni_LotteryBottom-1, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
 
     // tips 番茄@20171212 - 注意计算总支出的时候要增加一行
-    int int_LotterySurplusAP = m_ptr_FM_tt_lottery->CountRangeType(uni_LotteryTop, uni_LotteryBottom,\
+    //int int_LotterySurplusAP = m_ptr_FM_tt_lottery->CountRangeType(uni_LotteryTop, uni_LotteryBottom,\
                                                                   LTYPE_FBIRC_LINEUINT);
 
     // tips 番茄@20171212 - 注意计算总支出的时候要增加一行
-    m_ptr_FM_tt_lottery->ModifyLineValue(uni_LotteryBottom+3, int_LotterySurplusAP);
-    m_ptr_FM_SUM->ModifyLineValue(uni_AFLine+1, int_LotterySurplusAP);
+    //m_ptr_FM_tt_lottery->ModifyLineValue(uni_LotteryBottom+3, int_LotterySurplusAP);
+    //m_ptr_FM_SUM->ModifyLineValue(uni_AFLine+1, int_LotterySurplusAP);
 
     // tips 番茄@20171225 - 在支出前，增加一行空行
     if(!bol_LineFlag)
@@ -979,11 +986,13 @@ void CFAitfX::AppendLottery(const bool bol_LineFlag, const unsigned int uni_Line
         m_ptr_FM_tt_lottery->InsertBlankLine(uni_LotteryBottom-1);
     }
 
+    /*
     cout << "----------------------------------------" << endl;
     cout << "### lottery ###" << endl;
     cout << "lottery_初始值: " << CTool::TransOutFormat(int_LotterySurplus) << endl;
     cout << "lottery_更新值: " << CTool::TransOutFormat(int_LotterySurplusAP) << endl;
     cout << "----------------------------------------" << endl;
+    */
 }
 
 /**************************************************/

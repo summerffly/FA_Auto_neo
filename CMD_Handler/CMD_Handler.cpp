@@ -567,7 +567,7 @@ void CCMDHandler::OnCmdTransfer(CMD_Packet srt_CMD)
 
 void CCMDHandler::OnCmdLottery(CMD_Packet srt_CMD)
 {
-    ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", srt_CMD.m_int_ParamValue);
+    //ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", srt_CMD.m_int_ParamValue);
 
     if(srt_CMD.m_int_ParamValue > 0)
     {
@@ -577,6 +577,7 @@ void CCMDHandler::OnCmdLottery(CMD_Packet srt_CMD)
     {
         ms_ptr_FAitfX->AppendLottery(false, (-1)*srt_CMD.m_int_ParamValue, srt_CMD.m_str_ParamDate);
     }
+    ms_ptr_FAitfX->UpdateLottery(true);
     ms_ptr_ASitfX->UpdateSum(0);
 }
 
