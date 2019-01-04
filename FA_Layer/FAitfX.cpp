@@ -41,6 +41,7 @@ CFAitfX::CFAitfX()
     m_ptr_FM_tt_NR = new CFileManager("./NR411.md");
     m_ptr_FM_tt_travel = new CFileManager("./travel.md");
     m_ptr_FM_tt_lottery = new CFileManager("./lottery.md");
+    m_ptr_FM_tt_BOX = new CFileManager("./BOX.md");
     m_ptr_FM_NULL = NULL;
 
     m_ptr_FM_array[0] = m_ptr_FM_SUM;
@@ -55,6 +56,7 @@ CFAitfX::CFAitfX()
     m_ptr_FM_array[9] = m_ptr_FM_tt_NR;
     m_ptr_FM_array[10] = m_ptr_FM_tt_travel;
     m_ptr_FM_array[11] = m_ptr_FM_tt_lottery;
+    m_ptr_FM_array[12] = m_ptr_FM_tt_BOX;
 }
 
 /**************************************************/
@@ -1788,29 +1790,43 @@ void CFAitfX::ShowTitle(const string str_TitleKey, const int int_OFlag)
     else if( int_OFlag == 2 )
     {
         string str_TagContainer("");
-        int int_TagBlockValue = 0;
+        unsigned int uni_LastTagLine = uni_RangeTop+1;
 
-        for(int i=uni_RangeTop+2; i<=uni_RangeBottom; i++)
+        for(int i=uni_RangeTop+1; i<=uni_RangeBottom; i++)
         {
-            if(LTYPE_TTTAG == GetPtrFM("TT", str_TitleKey)->GetLineType(i))
+            if(i == uni_RangeBottom)
             {
-                str_TagContainer = GetPtrFM("TT", str_TitleKey)->GetFullLine(i);
-            }
-            else if(LTYPE_BLANK == GetPtrFM("TT", str_TitleKey)->GetLineType(i))
-            {
-                if(str_TagContainer != "")
+                if(uni_RangeTop+1 == uni_LastTagLine)
+                    continue;
+                else
                 {
-                    cout << str_TagContainer << ": " << int_TagBlockValue << endl;
+                    int int_TagBlockValue = GetPtrFM("TT", str_TitleKey)->CountRangeType(uni_LastTagLine+1, i-1, LTYPE_FBIRC_LINEUINT);
+                    if(str_TagContainer != "")
+                    {
+                        cout << str_TagContainer << ": " << int_TagBlockValue << endl;
+                    }
                 }
-
-                str_TagContainer = "";
-                int_TagBlockValue = 0;
-
-                continue;
             }
-            else if(LTYPE_FBIRC_LINEUINT == GetPtrFM("TT", str_TitleKey)->GetLineType(i))
+            else if(LTYPE_TTTAG == GetPtrFM("TT", str_TitleKey)->GetLineType(i))
             {
-                int_TagBlockValue += GetPtrFM("TT", str_TitleKey)->GetLineValue(i);
+                if(uni_RangeTop+1 == uni_LastTagLine)
+                {
+                    uni_LastTagLine = i;
+                    str_TagContainer = GetPtrFM("TT", str_TitleKey)->GetFullLine(i);
+
+                    continue;
+                }
+                else
+                {
+                    int int_TagBlockValue = GetPtrFM("TT", str_TitleKey)->CountRangeType(uni_LastTagLine+1, i-1, LTYPE_FBIRC_LINEUINT);
+                    if(str_TagContainer != "")
+                    {
+                        cout << str_TagContainer << ": " << int_TagBlockValue << endl;
+                    }
+
+                    uni_LastTagLine = i;
+                    str_TagContainer = GetPtrFM("TT", str_TitleKey)->GetFullLine(i);
+                }
             }
         }
     }
@@ -2181,6 +2197,8 @@ CFileManager *CFAitfX::GetPtrFM(const string str_Type, const string str_Key)
         return m_ptr_FM_tt_travel;
     else if( (str_Type == "TT") && (str_Key == LOTTERY) )
         return m_ptr_FM_tt_lottery;
+    else if( (str_Type == "TT") && (str_Key == BOX) )
+        return m_ptr_FM_tt_BOX;
     else
     {
         CTool::MassageOutFotmat("Key Error", '!');

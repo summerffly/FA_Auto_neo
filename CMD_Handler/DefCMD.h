@@ -42,6 +42,7 @@ extern string NS;
 extern string NR;
 extern string TRAVEL;
 extern string LOTTERY;
+extern string BOX;
 extern string TAG;
 
 extern string ALIBABA;

@@ -39,6 +39,7 @@ string NS = "ns";
 string NR = "nr";
 string TRAVEL = "travel";
 string LOTTERY = "lottery";
+string BOX = "box";
 string TAG = "tag";
 
 string ALIBABA = "ali";
