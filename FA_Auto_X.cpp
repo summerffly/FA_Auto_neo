@@ -19,6 +19,7 @@ int main(int argc, char **argv, char *env[])
     //***********************************//
     //### 检查.md文件存在
     //***********************************//
+
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
     vector<string> vec_str_File;
@@ -33,13 +34,22 @@ int main(int argc, char **argv, char *env[])
     //***********************************//
     //### 初始化
     //***********************************//
+
+    CTool::ms_str_OriginMonth = ptr_ScriptRipper->GetOriginMonth();
+    CTool::ms_str_CurrentMonth = ptr_ScriptRipper->GetCurrentMonth();
+
     CCMDHandler *ptr_CMDHandler = Singleton<CCMDHandler>::GetInstance();
     ptr_CMDHandler->CMD_Init();
 
     //***********************************//
-    //### 开始CMD命令循环
+    //### 开始 CMD 命令循环
     //***********************************//
+
     ptr_CMDHandler->CMD_Loop();
+
+    //***********************************//
+    //### 结束 CMD 命令循环
+    //***********************************//
 
     return 0;
 }

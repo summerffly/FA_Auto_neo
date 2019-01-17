@@ -12,6 +12,10 @@ using namespace std;
 struct timeval CTool::m_tvl_begin;
 struct timeval CTool::m_tvl_end;
 
+string CTool::ms_str_OriginMonth;
+string CTool::ms_str_CurrentMonth;
+
+
 CTool::CTool()
 {
     // Do Nothing
@@ -39,7 +43,7 @@ int CTool::CheckFilesExist(vector<string> vec_str_FilePath)
 bool CTool::ParseMonth(const string str_Input)
 {
     smatch str_Match;
-    regex REP_Month("^(\\d{2})$");
+    regex REP_Month("^(\\d{2})(n*)$");
 
     if( regex_match(str_Input, str_Match, REP_Month) )
     {
@@ -72,10 +76,13 @@ string CTool::GenerateMonth(const int int_Month)
     return str_Month;
 }
 
+/**************************************************/
+//   生成 Next Month
+//   最大月度支持到 (24-1) 个月
+/**************************************************/
 string CTool::GenerateNextMonth(const string str_CurMonth)
 {
     string str_NextMonth = string("");
-    unsigned int uni_CurMonth = atoi(str_CurMonth.c_str());
 
     if( !ParseMonth(str_CurMonth) )
     {
@@ -83,52 +90,129 @@ string CTool::GenerateNextMonth(const string str_CurMonth)
         return str_NextMonth;
     }
 
-    switch(uni_CurMonth)
+    smatch str_Match;
+    regex REP_Month("^(\\d{2})(n*)$");
+
+    if( regex_match(str_CurMonth, str_Match, REP_Month) )
     {
-        case 12:
-            str_NextMonth += "01";
-            break;
-        default:
-            int int_NextMonth = uni_CurMonth+1;
-            str_NextMonth += GenerateMonth(int_NextMonth);
-            break;
+        string str_Month = str_Match[1];
+        string str_nFlag = str_Match[2];
+
+        unsigned int uni_CurMonth = atoi(str_CurMonth.c_str());
+
+        switch(uni_CurMonth)
+        {
+            case 12:
+                str_NextMonth += "01";
+                break;
+            default:
+                int int_NextMonth = uni_CurMonth+1;
+                str_NextMonth += GenerateMonth(int_NextMonth);
+                break;
+        }
+
+        if( str_nFlag == "n" )
+        {
+            str_NextMonth += "n";
+        }
+
+        if( str_NextMonth == ms_str_OriginMonth )
+        {
+            str_NextMonth += "n";
+        }
+    }
+    else
+    {
+        MassageOutFotmat("Invalid Month Input", '!');
+        return str_NextMonth;
     }
 
     return str_NextMonth;
 }
 
+/**************************************************/
+//   生成 Pre Month
+//   最大月度支持到 (24-1) 个月
+/**************************************************/
 string CTool::GeneratePreMonth(const string str_CurMonth)
 {
-    string str_NextMonth = string("");
-    unsigned int uni_CurMonth = atoi(str_CurMonth.c_str());
+    string str_PreMonth = string("");
 
     if( !ParseMonth(str_CurMonth) )
     {
         MassageOutFotmat("Invalid Month Input", '!');
-        return str_NextMonth;
+        return str_PreMonth;
     }
 
-    switch(uni_CurMonth)
+    smatch str_Match;
+    regex REP_Month("^(\\d{2})(n*)$");
+
+    if( regex_match(str_CurMonth, str_Match, REP_Month) )
     {
-        case 1:
-            str_NextMonth += "12";
-            break;
-        default:
-            int int_NextMonth = uni_CurMonth-1;
-            str_NextMonth += GenerateMonth(int_NextMonth);
-            break;
+        string str_Month = str_Match[1];
+        string str_nFlag = str_Match[2];
+
+        unsigned int uni_CurMonth = atoi(str_CurMonth.c_str());
+
+        switch(uni_CurMonth)
+        {
+            case 1:
+                str_PreMonth += "12";
+                break;
+            default:
+                int int_PreMonth = uni_CurMonth-1;
+                str_PreMonth += GenerateMonth(int_PreMonth);
+                break;
+        }
+
+        string str_nOriginMonth = ms_str_OriginMonth + "n";
+        if( str_CurMonth == str_nOriginMonth )
+        {
+            return str_PreMonth;
+        }
+
+        if( str_nFlag == "n" )
+        {
+            str_PreMonth += "n";
+        }
+    }
+    else
+    {
+        MassageOutFotmat("Invalid Month Input", '!');
+        return str_PreMonth;
     }
 
-    return str_NextMonth;
+    return str_PreMonth;
 }
 
+/**************************************************/
+//   Month Counter
+//   最大月度支持到 (24-1) 个月
+/**************************************************/
 unsigned int CTool::CountMonth(const string str_OriMonth, const string str_CurMonth)
 {
+    smatch str_OriMatch;
+    smatch str_CurMatch;
+
+    string str_nOriFlag;
+    string str_nCurFlag;
+
+    regex REP_Month("^(\\d{2})(n*)$");
+
+    if( regex_match(str_OriMonth, str_OriMatch, REP_Month) )
+        str_nOriFlag = str_OriMatch[2];
+
+    if( regex_match(str_CurMonth, str_CurMatch, REP_Month) )
+        str_nCurFlag = str_OriMatch[2];
+
     int int_MonthCounter = 0;
     
     int_MonthCounter = atoi(str_CurMonth.c_str()) - atoi(str_OriMonth.c_str()) + 1;
 
     if(int_MonthCounter<0)
+        int_MonthCounter += 12;
+
+    if( (str_nCurFlag == "n") && (str_nOriFlag != "n") )
         int_MonthCounter += 12;
 
     return (unsigned int)int_MonthCounter;

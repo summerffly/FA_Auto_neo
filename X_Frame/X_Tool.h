@@ -24,6 +24,9 @@ public:
 
     static int CheckFilesExist(vector<string> vec_str_FilePath);
 
+    /****************************************/
+    //   Month 操作区
+    /****************************************/
     static bool ParseMonth(const string str_Input);
     static string GenerateMonth(const int int_Month);
     static string GenerateNextMonth(const string str_CurMonth);
@@ -40,6 +43,10 @@ public:
 public:
     static void TagTimeBait();
     static double ShowTimeGap();
+
+public:
+    static string ms_str_OriginMonth;
+    static string ms_str_CurrentMonth;
 
 private:
     static struct timeval m_tvl_begin;
