@@ -40,6 +40,10 @@ int CTool::CheckFilesExist(vector<string> vec_str_FilePath)
     return int_RetFC;
 }
 
+/**************************************************/
+//   Month 格式校验
+//   最大月度支持到 24 个月
+/**************************************************/
 bool CTool::ParseMonth(const string str_Input)
 {
     smatch str_Match;
@@ -61,6 +65,9 @@ bool CTool::ParseMonth(const string str_Input)
     }
 }
 
+/**************************************************/
+//   Month 数串转换生成
+/**************************************************/
 string CTool::GenerateMonth(const int int_Month)
 {
     char *cha_Month = new char[3];

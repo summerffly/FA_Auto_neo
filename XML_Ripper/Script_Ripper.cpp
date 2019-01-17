@@ -59,7 +59,7 @@ m_cls_XMLRipper(cha_xmlPath)
     FileRipper();
     BakupPathRipper();
 
-    MonthRangeGenerator();
+    //MonthRangeGenerator();
 }
 
 /**************************************************/
@@ -250,21 +250,42 @@ void CScriptRipper::BakupPathRipper()
 
 /**************************************************/
 //   生成 Month Range
-//   只能用于生成12个月内的情况
+//   最大月度支持到 (24-1) 个月
+//   支持 单月度 计算
 //   2017.03 ~ 2017.03 >>> 可行
-//   2017.03 ~ 2018.03 >>> 不可行
 /**************************************************/
 void CScriptRipper::MonthRangeGenerator()
 {
     string str_OriginMonth = m_str_OriginMonth;
     string str_CurrentMonth = m_str_CurrentMonth;
 
+    string str_InsertMonth = str_OriginMonth;
     m_vec_str_Month.push_back(str_OriginMonth);
 
-    if( m_uni_OriginMonth == m_uni_CurrentMonth )
+    if( (m_str_OriginMonth == m_str_CurrentMonth) && (m_str_OriginMonth.length() == m_str_CurrentMonth.length()) )
     {
         return;
     }
+    else
+    {
+        bool bol_StrCmpFlag = false;
+        bool bol_StrLengthFlag = false;
+
+        do{
+            str_InsertMonth = CTool::GenerateNextMonth(str_InsertMonth);
+            m_vec_str_Month.push_back(str_InsertMonth);
+
+            bol_StrCmpFlag = (str_InsertMonth == m_str_CurrentMonth);
+            bol_StrLengthFlag = (str_InsertMonth.length() == m_str_CurrentMonth.length());
+
+            //cout << str_InsertMonth << endl;
+
+        }while( !bol_StrCmpFlag || !bol_StrLengthFlag );
+
+        return;
+    }
+
+    /*
     else if( m_uni_OriginMonth < m_uni_CurrentMonth )
     {
         unsigned int uni_MonthCounter = m_uni_CurrentMonth - m_uni_OriginMonth;
@@ -304,6 +325,7 @@ void CScriptRipper::MonthRangeGenerator()
 
         return;
     }
+    */
 }
 
 /**************************************************/

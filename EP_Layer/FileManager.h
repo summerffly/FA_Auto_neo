@@ -57,7 +57,9 @@ public:
     int GetSearchLineValueSum(const char *cha_Key);
 
     unsigned int GetUniqueSearchLineIndex(const char *cha_Key);
+    unsigned int GetFirstSearchLineIndex(const char *cha_Key);
     int GetUniqueSearchLineValue(const char *cha_Key);
+    int GetFirstSearchLineValue(const char *cha_Key);
     void ModifyUniqueSearchLineValue(const char *cha_Key, const int int_LineValue);
 
     /****************************************/
