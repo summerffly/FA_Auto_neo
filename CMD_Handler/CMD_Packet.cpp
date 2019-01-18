@@ -360,6 +360,10 @@ int CMD_Packet::CMDParser()
             m_str_CmdType = X_CMD_TYPE_UPDATE_MONTH;
         else if((str_CmdPro_A == SHOW) && (str_CmdPro_B == MONTH))
             m_str_CmdType = X_CMD_TYPE_SHOW_MONTH;
+        else if((str_CmdPro_A == CHECK) && (str_CmdPro_B == EXMONTH))
+            m_str_CmdType = X_CMD_TYPE_CHECK_EXMONTH;
+        else if((str_CmdPro_A == UPDATE) && (str_CmdPro_B == EXMONTH))
+            m_str_CmdType = X_CMD_TYPE_UPDATE_EXMONTH;
         else if((str_CmdPro_A == ANALYSIS) && (str_CmdPro_B == TREND))
             m_str_CmdType = X_CMD_TYPE_ANALYSIS_TREND;
         else if((str_CmdPro_A == ANALYSIS) && (str_CmdPro_B == PROPORTION))

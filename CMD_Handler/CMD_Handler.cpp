@@ -45,6 +45,10 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 
 	X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_MONTH, CMD_HELP_SHOW_MONTH, "", OnCmdShowMonth)
 
+    X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_EXMONTH, CMD_HELP_CHECK_EXMONTH, "", OnCmdCheckExMonth)
+
+    X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_EXMONTH, CMD_HELP_UPDATE_EXMONTH, "", OnCmdUpdateExMonth)
+
 	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_SUBMONTH, CMD_HELP_CHECK_SUBMONTH, \
         CMD_HELP_PATCH_CHECK_SUBMONTH, OnCmdCheckSubMonth)
 
@@ -485,6 +489,17 @@ void CCMDHandler::OnCmdShowMonth(CMD_Packet srt_CMD)
     ms_ptr_ASitfX->ShowMonth(srt_CMD.m_str_ParamMonth);
 }
 
+void CCMDHandler::OnCmdCheckExMonth(CMD_Packet srt_CMD)
+{
+    ms_ptr_ASitfX->CheckMonth(ms_ptr_ScriptRipper->GetPreviousMonth(), 1);
+}
+
+void CCMDHandler::OnCmdUpdateExMonth(CMD_Packet srt_CMD)
+{
+    ms_ptr_ASitfX->UpdateMonth(ms_ptr_ScriptRipper->GetPreviousMonth(), 1);
+    ms_ptr_ASitfX->UpdateSum(0);
+}
+
 void CCMDHandler::OnCmdCheckSubMonth(CMD_Packet srt_CMD)
 {
     ms_ptr_FAitfX->CheckSubMonthExpense(srt_CMD.m_str_ParamSubMonth, srt_CMD.m_str_ParamMonth, true);
@@ -840,6 +855,7 @@ void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
     cout << "****************************************" << endl;
 
     cout << CTool::GeneratePreMonth(srt_CMD.m_str_ResParam) << endl;
+    cout << CTool::GenerateNextMonth(srt_CMD.m_str_ResParam) << endl;
 
     cout << "****************************************" << endl;
     cout << "***           END OF TEST            ***" << endl;

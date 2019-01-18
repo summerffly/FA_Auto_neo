@@ -23,6 +23,8 @@ string  CMD_HELP_PATCH_MODIFY_LIFE = "SRC = " + WEIXIN;
 string  CMD_HELP_CHECK_MONTH  = CHECK + " " + MONTH + " -m MONTH -sp " + TRAVERSAL;
 string  CMD_HELP_UPDATE_MONTH = UPDATE + " " + MONTH + " -m MONTH -sp " + TRAVERSAL;
 string  CMD_HELP_SHOW_MONTH   = SHOW + " " + MONTH;
+string  CMD_HELP_CHECK_EXMONTH  = CHECK + " " + EXMONTH;
+string  CMD_HELP_UPDATE_EXMONTH = UPDATE + " " + EXMONTH;
 
 string  CMD_HELP_CHECK_SUBMONTH  = CHECK + " -sm SM";
 string  CMD_HELP_PATCH_CHECK_SUBMONTH = "SM = " + ALL + "/" + DGTLER + "/" + BOOKS + "/" + KEEP + "/" + TB + "/" + SA;

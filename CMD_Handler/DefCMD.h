@@ -28,6 +28,7 @@ extern string SUM;
 extern string SURPLUS;
 
 extern string MONTH;
+extern string EXMONTH;
 
 extern string SUBMONTH;
 extern string DGTLER;

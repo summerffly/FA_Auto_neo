@@ -25,6 +25,7 @@ string SUM = "sum";
 string SURPLUS = "surplus";
 
 string MONTH = "month";
+string EXMONTH = "exmonth";
 
 string SUBMONTH = "sm";
 string DGTLER = "dgtler";
