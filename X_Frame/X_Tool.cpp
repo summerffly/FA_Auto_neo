@@ -68,7 +68,7 @@ bool CTool::ParseMonth(const string str_Input)
 /**************************************************/
 //   Month 数串转换生成
 /**************************************************/
-string CTool::GenerateMonth(const int int_Month)
+string CTool::GenerateMonthString(const int int_Month)
 {
     char *cha_Month = new char[3];
 
@@ -84,8 +84,32 @@ string CTool::GenerateMonth(const int int_Month)
 }
 
 /**************************************************/
+//   Month 串数转换生成
+/**************************************************/
+int CTool::GenerateMonthInt(const string str_Month)
+{
+    smatch str_Match;
+    regex REP_Month("^(\\d{2})(n*)$");
+
+    if( regex_match(str_Month, str_Match, REP_Month) )
+    {
+        string str_Month = str_Match[1];
+        int int_Month = atoi(str_Month.c_str());
+
+        if((int_Month>0) && (int_Month<=12))
+            return int_Month;
+        else
+            return 0;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+/**************************************************/
 //   生成 Next Month
-//   最大月度支持到 (24-1) 个月
+//   最大月度支持到 24 个月
 /**************************************************/
 string CTool::GenerateNextMonth(const string str_CurMonth)
 {
@@ -114,7 +138,7 @@ string CTool::GenerateNextMonth(const string str_CurMonth)
                 break;
             default:
                 int int_NextMonth = uni_CurMonth+1;
-                str_NextMonth += GenerateMonth(int_NextMonth);
+                str_NextMonth += GenerateMonthString(int_NextMonth);
                 break;
         }
 
@@ -139,7 +163,7 @@ string CTool::GenerateNextMonth(const string str_CurMonth)
 
 /**************************************************/
 //   生成 Pre Month
-//   最大月度支持到 (24-1) 个月
+//   最大月度支持到 24 个月
 /**************************************************/
 string CTool::GeneratePreMonth(const string str_CurMonth)
 {
@@ -168,7 +192,7 @@ string CTool::GeneratePreMonth(const string str_CurMonth)
                 break;
             default:
                 int int_PreMonth = uni_CurMonth-1;
-                str_PreMonth += GenerateMonth(int_PreMonth);
+                str_PreMonth += GenerateMonthString(int_PreMonth);
                 break;
         }
 
@@ -344,6 +368,27 @@ bool CTool::ParseContainKey(const string str_Main, const string str_Key)
         return true;
     else
         return false;
+}
+
+bool CTool::CompareString(const string str_CmpA, const string str_CmpB)
+{
+    if( str_CmpA.length() != str_CmpB.length() )
+        return false;
+
+    if( str_CmpA == str_CmpB )
+        return true;
+    else
+        return false;
+}
+
+void CTool::SetOriginMonth(const string str_OriginMonth)
+{
+    ms_str_OriginMonth = str_OriginMonth;
+}
+
+void CTool::SetCurrentMonth(const string str_CurrentMonth)
+{
+    ms_str_CurrentMonth = str_CurrentMonth;
 }
 
 void CTool::TagTimeBait()

@@ -42,6 +42,9 @@ public:
     void FileRipper();
     void BakupPathRipper();
 
+    /****************************************/
+    //   Month 操作区
+    /****************************************/
     void MonthRangeGenerator();
     bool IsIncludeMonthRange(const string str_SelMonth);
 
@@ -57,7 +60,6 @@ public:
     string GetCAFSum();
     int GetCAFIndex();
     int GetSubMonthNum();
-
     unsigned int GetMonthSalary();
 
     void MonthRangeDuplicator(vector<string> &vec_str_DestMonth);
@@ -70,6 +72,9 @@ public:
     void FileDuplicator(vector<string> &vec_str_Dest);
     void BakupPathDuplicator(vector<string> &vec_str_Dest);
 
+    /****************************************/
+    //   CMD Translater
+    /****************************************/
     string TitleTranslater(const string str_TitleCMD);
     string SubMonthTranslater(const string str_SubMonthCMD);
 

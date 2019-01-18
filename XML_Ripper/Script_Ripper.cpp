@@ -58,8 +58,6 @@ m_cls_XMLRipper(cha_xmlPath)
     SubMonthRipper();
     FileRipper();
     BakupPathRipper();
-
-    //MonthRangeGenerator();
 }
 
 /**************************************************/
@@ -87,9 +85,9 @@ void CScriptRipper::MonthRipper()
     m_str_CurrentMonth = m_cls_XMLRipper.GetL1NodeAttr_UNI("CurrentMonth", "month");
     m_str_PreviousMonth = CTool::GeneratePreMonth(m_str_CurrentMonth);
 
-    m_uni_OriginMonth = atoi(m_str_OriginMonth.c_str());
-    m_uni_CurrentMonth = atoi(m_str_CurrentMonth.c_str());
-    m_uni_PreviousMonth = atoi(m_str_PreviousMonth.c_str());
+    m_uni_OriginMonth = CTool::GenerateMonthInt(m_str_OriginMonth);
+    m_uni_CurrentMonth = CTool::GenerateMonthInt(m_str_CurrentMonth);
+    m_uni_PreviousMonth = CTool::GenerateMonthInt(m_str_PreviousMonth);
 }
 
 /**************************************************/
@@ -262,70 +260,20 @@ void CScriptRipper::MonthRangeGenerator()
     string str_InsertMonth = str_OriginMonth;
     m_vec_str_Month.push_back(str_OriginMonth);
 
-    if( (m_str_OriginMonth == m_str_CurrentMonth) && (m_str_OriginMonth.length() == m_str_CurrentMonth.length()) )
+    if( CTool::CompareString(m_str_OriginMonth, m_str_CurrentMonth) )
     {
         return;
     }
     else
     {
-        bool bol_StrCmpFlag = false;
-        bool bol_StrLengthFlag = false;
-
         do{
             str_InsertMonth = CTool::GenerateNextMonth(str_InsertMonth);
             m_vec_str_Month.push_back(str_InsertMonth);
 
-            bol_StrCmpFlag = (str_InsertMonth == m_str_CurrentMonth);
-            bol_StrLengthFlag = (str_InsertMonth.length() == m_str_CurrentMonth.length());
-
-            //cout << str_InsertMonth << endl;
-
-        }while( !bol_StrCmpFlag || !bol_StrLengthFlag );
+        }while( !CTool::CompareString(str_InsertMonth, m_str_CurrentMonth) );
 
         return;
     }
-
-    /*
-    else if( m_uni_OriginMonth < m_uni_CurrentMonth )
-    {
-        unsigned int uni_MonthCounter = m_uni_CurrentMonth - m_uni_OriginMonth;
-        string str_InsertMonth = m_str_OriginMonth;
-
-        while( uni_MonthCounter > 0 )
-        {
-            str_InsertMonth = CTool::GenerateNextMonth(str_InsertMonth);
-            m_vec_str_Month.push_back(str_InsertMonth);
-            uni_MonthCounter--;
-        }
-
-        return;
-    }
-    else
-    {
-        unsigned int uni_MonthCounter = 12 - m_uni_OriginMonth;
-        string str_InsertMonth = m_str_OriginMonth;
-
-        while( uni_MonthCounter > 0 )
-        {
-            str_InsertMonth = CTool::GenerateNextMonth(str_InsertMonth);
-            m_vec_str_Month.push_back(str_InsertMonth);
-            uni_MonthCounter--;
-        }
-
-        uni_MonthCounter = m_uni_CurrentMonth;
-        str_InsertMonth = "01";
-        m_vec_str_Month.push_back(str_InsertMonth);
-
-        while( uni_MonthCounter > 1 )
-        {
-            str_InsertMonth = CTool::GenerateNextMonth(str_InsertMonth);
-            m_vec_str_Month.push_back(str_InsertMonth);
-            uni_MonthCounter--;
-        }
-
-        return;
-    }
-    */
 }
 
 /**************************************************/
