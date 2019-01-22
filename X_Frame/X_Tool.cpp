@@ -370,6 +370,29 @@ bool CTool::ParseContainKey(const string str_Main, const string str_Key)
         return false;
 }
 
+bool CTool::ParseDate(const string str_Input, unsigned int& uni_Year, unsigned int& uni_Month, unsigned int& uni_Day)
+{
+    smatch str_Match;
+    regex REP_DateFormat("^(.*)(20)(\\d{2})(\\d{2})(\\d{2})$");
+
+    if( regex_match(str_Input, str_Match, REP_DateFormat) )
+    {
+        string str_Year = str_Match[3];
+        string str_Month = str_Match[4];
+        string str_Day = str_Match[5];
+
+        uni_Year = 2000 + atoi(str_Year.c_str());
+        uni_Month = atoi(str_Month.c_str());
+        uni_Day = atoi(str_Day.c_str());
+
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 bool CTool::CompareString(const string str_CmpA, const string str_CmpB)
 {
     if( str_CmpA.length() != str_CmpB.length() )

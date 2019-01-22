@@ -41,6 +41,7 @@ public:
     
     static bool ParseNumber(const string str_Input, int& int_RetNum);
     static bool ParseContainKey(const string str_Main, const string str_Key);
+    static bool ParseDate(const string str_Input, unsigned int& uni_Year, unsigned int& uni_Month, unsigned int& uni_Day);
 
     static bool CompareString(const string str_CmpA, const string str_CmpB);
 

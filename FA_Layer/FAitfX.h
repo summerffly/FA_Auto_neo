@@ -27,6 +27,16 @@ typedef struct
     unsigned int uni_UnitValueABS;
 }UNIT_INFO;
 
+typedef struct
+{
+    unsigned int uni_Year;
+    unsigned int uni_Month;
+    unsigned int uni_Day;
+    int int_Expense;
+    int int_Income;
+}UNIT_LOTTERY;
+
+
 class CFAitfX
 {
 public:
@@ -95,11 +105,19 @@ public:
     unsigned int GetMonthTrendVectorMax(const vector<TREND_INFO> vec_stc_TrendInfo);
     void DrawMonthTrendVector(const vector<TREND_INFO> vec_stc_TrendInfo, const string str_MonthKey);
 
-    unsigned int GenerateMonthVector(vector<UNIT_INFO> &vec_stc_UnitInfoo, const string str_SelMonth);
+    unsigned int GenerateMonthVector(vector<UNIT_INFO> &vec_stc_UnitInfo, const string str_SelMonth);
     void AnalysisMonthProportion(const string str_SelMonth);
     void CompareMonth(const string str_SelMonth, const string str_CmpMonth);
 
     void ForecastFutureSum(const string str_SelMonth, const int int_MonthPatch);
+
+    /****************************************/
+    //   lottery 统计区
+    /****************************************/
+
+    //void DrawLotteryTrend(const vector<UNIT_LOTTERY> vec_stc_LotteryInfo);
+
+    void GenerateLotteryVector(vector<UNIT_LOTTERY> &vec_stc_LotteryInfo);
 
     /****************************************/
     //   展示区

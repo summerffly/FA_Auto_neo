@@ -1533,6 +1533,48 @@ void CFAitfX::ForecastFutureSum(const string str_SelMonth, const int int_MonthPa
 }
 
 /**************************************************/
+//   生成 Lottery Vector
+/**************************************************/
+void CFAitfX::GenerateLotteryVector(vector<UNIT_LOTTERY> &vec_stc_LotteryInfo)
+{
+    vec_stc_LotteryInfo.clear();
+
+    UNIT_LOTTERY stc_UnitLottery;
+
+    string str_RangeTop = "# lottery";
+    string str_RangeBottom = "## Total";
+
+    unsigned int uni_RangeTop = m_ptr_FM_tt_lottery->GetUniqueSearchLineIndex(str_RangeTop.c_str());
+    unsigned int uni_RangeBottom = m_ptr_FM_tt_lottery->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
+
+    for(int i = uni_RangeTop+1; i < uni_RangeBottom ; i++)
+    {
+        if( LTYPE_FBIRC_LINEUINT == m_ptr_FM_tt_lottery->GetLineType(i) )
+        {
+            string str_LineContent = m_ptr_FM_tt_lottery->GetLineContent(i);
+            CTool::ParseDate(str_LineContent, stc_UnitLottery.uni_Year, stc_UnitLottery.uni_Month, stc_UnitLottery.uni_Day);
+
+            if( LTYPE_FBIRC_LINEUINT == m_ptr_FM_tt_lottery->GetLineType(i+1) )
+            {
+                stc_UnitLottery.int_Expense = m_ptr_FM_tt_lottery->GetLineValue(i);
+                stc_UnitLottery.int_Income = m_ptr_FM_tt_lottery->GetLineValue(++i);
+            }
+            else
+            {
+                stc_UnitLottery.int_Expense = m_ptr_FM_tt_lottery->GetLineValue(i);
+                stc_UnitLottery.int_Income = 0;
+            }
+            
+            vec_stc_LotteryInfo.push_back(stc_UnitLottery);
+        }
+        else if( LTYPE_BLANK == m_ptr_FM_tt_lottery->GetLineType(i) )
+        {
+            continue;
+        }
+    }
+}
+
+/**************************************************/
 //   展示 Month 收支
 //   OFlag == 1 >>> 嵌入显示模式
 //   OFlag == 2 >>> 嵌入显示模式
