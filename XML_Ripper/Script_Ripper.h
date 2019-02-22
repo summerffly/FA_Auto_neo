@@ -45,6 +45,7 @@ public:
     /****************************************/
     //   Month 操作区
     /****************************************/
+    void ExMonthGenerator();
     void MonthRangeGenerator();
     bool IsIncludeMonthRange(const string str_SelMonth);
 

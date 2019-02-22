@@ -34,12 +34,14 @@ int main(int argc, char **argv, char *env[])
     //***********************************//
     //### 初始化
     // CTool::Month初始化后
+    // 才能ExMonthGenerator
     // 才能MonthRangeGenerator
     //***********************************//
 
     CTool::SetOriginMonth(ptr_ScriptRipper->GetOriginMonth());
     CTool::SetCurrentMonth(ptr_ScriptRipper->GetCurrentMonth());
 
+    ptr_ScriptRipper->ExMonthGenerator();
     ptr_ScriptRipper->MonthRangeGenerator();
 
     CCMDHandler *ptr_CMDHandler = Singleton<CCMDHandler>::GetInstance();
