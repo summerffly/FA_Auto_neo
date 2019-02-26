@@ -49,6 +49,8 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_UPDATE_EXMONTH, CMD_HELP_UPDATE_EXMONTH, "", OnCmdUpdateExMonth)
 
+    X_ON_CMD_TYPE(X_CMD_TYPE_SHOW_EXMONTH, CMD_HELP_SHOW_EXMONTH, "", OnCmdShowExMonth)
+
 	X_ON_CMD_TYPE(X_CMD_TYPE_CHECK_SUBMONTH, CMD_HELP_CHECK_SUBMONTH, \
         CMD_HELP_PATCH_CHECK_SUBMONTH, OnCmdCheckSubMonth)
 
@@ -258,7 +260,7 @@ void CCMDHandler::CMD_Init()
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
     cout << "***          初始月度: " << ms_ptr_ScriptRipper->GetOriginMonth() << "            ***" << endl;
-    cout << "***          当前月度: " << ms_ptr_ScriptRipper->GetCurrentMonth() << "            ***" << endl;
+    cout << "***          当前月度: " << ms_ptr_ScriptRipper->GetCurrentMonth() << "           ***" << endl;
     cout << "***                                  ***" << endl;
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
@@ -498,6 +500,11 @@ void CCMDHandler::OnCmdUpdateExMonth(CMD_Packet srt_CMD)
 {
     ms_ptr_ASitfX->UpdateMonth(ms_ptr_ScriptRipper->GetPreviousMonth(), 1);
     ms_ptr_ASitfX->UpdateSum(0);
+}
+
+void CCMDHandler::OnCmdShowExMonth(CMD_Packet srt_CMD)
+{
+    ms_ptr_ASitfX->ShowMonth(ms_ptr_ScriptRipper->GetPreviousMonth());
 }
 
 void CCMDHandler::OnCmdCheckSubMonth(CMD_Packet srt_CMD)
@@ -854,8 +861,9 @@ void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
     cout << "***          BEGIN OF TEST           ***" << endl;
     cout << "****************************************" << endl;
 
-    cout << CTool::GeneratePreMonth(srt_CMD.m_str_ResParam) << endl;
-    cout << CTool::GenerateNextMonth(srt_CMD.m_str_ResParam) << endl;
+    //cout << ms_ptr_ScriptRipper->IsIncludeMonthRange(srt_CMD.m_str_ResParam) << endl;
+    vector<UNIT_LOTTERY> vec_stc_LotteryInfoTemp;
+    ms_ptr_FAitfX->GenerateLotteryVector(vec_stc_LotteryInfoTemp);
 
     cout << "****************************************" << endl;
     cout << "***           END OF TEST            ***" << endl;

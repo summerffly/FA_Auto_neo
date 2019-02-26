@@ -51,8 +51,10 @@ public:
 	static void OnCmdCheckMonth(CMD_Packet srt_CMD);
 	static void OnCmdUpdateMonth(CMD_Packet srt_CMD);
 	static void OnCmdShowMonth(CMD_Packet srt_CMD);
+	
 	static void OnCmdCheckExMonth(CMD_Packet srt_CMD);
 	static void OnCmdUpdateExMonth(CMD_Packet srt_CMD);
+	static void OnCmdShowExMonth(CMD_Packet srt_CMD);
 
 	static void OnCmdCheckSubMonth(CMD_Packet srt_CMD);
 	static void OnCmdUpdateSubMonth(CMD_Packet srt_CMD);

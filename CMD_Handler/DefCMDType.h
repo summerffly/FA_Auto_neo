@@ -20,8 +20,10 @@
 #define  X_CMD_TYPE_CHECK_MONTH    ("CheckMonth")
 #define  X_CMD_TYPE_UPDATE_MONTH   ("UpdateMonth")
 #define  X_CMD_TYPE_SHOW_MONTH     ("ShowMonth")
+
 #define  X_CMD_TYPE_CHECK_EXMONTH    ("CheckExMonth")
 #define  X_CMD_TYPE_UPDATE_EXMONTH   ("UpdateExMonth")
+#define  X_CMD_TYPE_SHOW_EXMONTH     ("ShowExMonth")
 
 #define  X_CMD_TYPE_CHECK_SUBMONTH    ("CheckSubMonth")
 #define  X_CMD_TYPE_UPDATE_SUBMONTH   ("UpdateSubMonth")
