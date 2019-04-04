@@ -27,15 +27,6 @@ typedef struct
     unsigned int uni_UnitValueABS;
 }UNIT_INFO;
 
-typedef struct
-{
-    unsigned int uni_Year;
-    unsigned int uni_Month;
-    unsigned int uni_Day;
-    int int_Expense;
-    int int_Income;
-}UNIT_LOTTERY;
-
 
 class CFAitfX
 {
@@ -83,11 +74,6 @@ public:
     int CheckTitleExpense(const string str_TitleKey, bool bol_OFlag);
     void UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag);
 
-    int CheckLottery(bool bol_OFlag);
-    void UpdateLottery(bool bol_OFlag);
-    void AppendLottery(const bool bol_LineFlag, const unsigned int int_LineValueABS,\
-                       const string str_LineDate);
-
     /****************************************/
     //   综合操作区
     /****************************************/
@@ -110,14 +96,6 @@ public:
     void CompareMonth(const string str_SelMonth, const string str_CmpMonth);
 
     void ForecastFutureSum(const string str_SelMonth, const int int_MonthPatch);
-
-    /****************************************/
-    //   lottery 统计区
-    /****************************************/
-
-    //void DrawLotteryTrend(const vector<UNIT_LOTTERY> vec_stc_LotteryInfo);
-
-    void GenerateLotteryVector(vector<UNIT_LOTTERY> &vec_stc_LotteryInfo);
 
     /****************************************/
     //   展示区
@@ -199,13 +177,11 @@ private:
     CFileManager *m_ptr_FM_sm_sa;
     CFileManager *m_ptr_FM_tt_DK;
     CFileManager *m_ptr_FM_tt_NS;
-    CFileManager *m_ptr_FM_tt_NR;
     CFileManager *m_ptr_FM_tt_travel;
-    CFileManager *m_ptr_FM_tt_lottery;
     CFileManager *m_ptr_FM_tt_BOX;
     CFileManager *m_ptr_FM_NULL;
 
-    static const unsigned int m_uni_FM_aszie = 13;
+    static const unsigned int m_uni_FM_aszie = 11;
     CFileManager *m_ptr_FM_array[m_uni_FM_aszie];
 };
 

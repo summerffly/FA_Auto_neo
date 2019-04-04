@@ -67,8 +67,6 @@ X_BEGIN_CMD_MAP(CCMDHandler)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_TRANSFER, CMD_HELP_TRANSFER, CMD_HELP_PATCH_TRANSFER, OnCmdTransfer)
 
-    X_ON_CMD_TYPE(X_CMD_TYPE_LOTTERY, CMD_HELP_LOTTERY, "", OnCmdLottery)
-
     X_ON_CMD_TYPE(X_CMD_TYPE_ANALYSIS_TREND, CMD_HELP_ANALYSIS_TREND, \
         CMD_HELP_PATCH_ANALYSIS_TREND, OnCmdAnalysisTrend)
 
@@ -260,7 +258,7 @@ void CCMDHandler::CMD_Init()
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
     cout << "***          初始月度: " << ms_ptr_ScriptRipper->GetOriginMonth() << "            ***" << endl;
-    cout << "***          当前月度: " << ms_ptr_ScriptRipper->GetCurrentMonth() << "           ***" << endl;
+    cout << "***          当前月度: " << ms_ptr_ScriptRipper->GetCurrentMonth() << "            ***" << endl;
     cout << "***                                  ***" << endl;
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
@@ -535,28 +533,13 @@ void CCMDHandler::OnCmdShowSubMonth(CMD_Packet srt_CMD)
 
 void CCMDHandler::OnCmdCheckTitle(CMD_Packet srt_CMD)
 {
-    if(srt_CMD.m_str_ParamTitle == LOTTERY)
-    {
-        ms_ptr_FAitfX->CheckLottery(true);
-    }
-    else
-    {
-        ms_ptr_FAitfX->CheckTitleExpense(srt_CMD.m_str_ParamTitle, true);
-    }
+    ms_ptr_FAitfX->CheckTitleExpense(srt_CMD.m_str_ParamTitle, true);
 }
 
 void CCMDHandler::OnCmdUpdateTitle(CMD_Packet srt_CMD)
 {
-    if(srt_CMD.m_str_ParamTitle == LOTTERY)
-    {
-        ms_ptr_FAitfX->UpdateLottery(true);
-        ms_ptr_ASitfX->UpdateSum(0);
-    }
-    else
-    {
-        ms_ptr_FAitfX->UpdateTitleExpense(srt_CMD.m_str_ParamTitle, true);
-        ms_ptr_ASitfX->UpdateSum(0);
-    }
+    ms_ptr_FAitfX->UpdateTitleExpense(srt_CMD.m_str_ParamTitle, true);
+    ms_ptr_ASitfX->UpdateSum(0);
 }
 
 void CCMDHandler::OnCmdShowTitle(CMD_Packet srt_CMD)
@@ -585,22 +568,6 @@ void CCMDHandler::OnCmdTransfer(CMD_Packet srt_CMD)
     {
         CTool::MassageOutFotmat("SRC Error", '!');
     }
-}
-
-void CCMDHandler::OnCmdLottery(CMD_Packet srt_CMD)
-{
-    //ms_ptr_FAitfX->TransferBalance("微信-零钱通", "阿里-余额宝", srt_CMD.m_int_ParamValue);
-
-    if(srt_CMD.m_int_ParamValue > 0)
-    {
-        ms_ptr_FAitfX->AppendLottery(true, srt_CMD.m_int_ParamValue, srt_CMD.m_str_ParamDate);
-    }
-    else
-    {
-        ms_ptr_FAitfX->AppendLottery(false, (-1)*srt_CMD.m_int_ParamValue, srt_CMD.m_str_ParamDate);
-    }
-    ms_ptr_FAitfX->UpdateLottery(true);
-    ms_ptr_ASitfX->UpdateSum(0);
 }
 
 void CCMDHandler::OnCmdAnalysisTrend(CMD_Packet srt_CMD)
@@ -862,8 +829,6 @@ void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
     cout << "****************************************" << endl;
 
     //cout << ms_ptr_ScriptRipper->IsIncludeMonthRange(srt_CMD.m_str_ResParam) << endl;
-    vector<UNIT_LOTTERY> vec_stc_LotteryInfoTemp;
-    ms_ptr_FAitfX->GenerateLotteryVector(vec_stc_LotteryInfoTemp);
 
     cout << "****************************************" << endl;
     cout << "***           END OF TEST            ***" << endl;

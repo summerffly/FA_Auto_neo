@@ -44,23 +44,11 @@ void CASitfX::CheckFA()
     vector<string>::iterator itr_TitleDeep;
     for(itr_TitleDeep = vec_str_TitleDeep.begin(); itr_TitleDeep != vec_str_TitleDeep.end(); itr_TitleDeep++)
     {
-        if(*itr_TitleDeep == LOTTERY)
+        if( 0 != ptr_FAitfX->CheckTitleExpense(*itr_TitleDeep, false) )
         {
-            if( 0 != ptr_FAitfX->CheckLottery(false) )
-            {
-                string str_Message = "lottery NOT Pass Check";
-                CTool::MassageOutFotmat(str_Message, '!');
-                return;
-            }
-        }
-        else
-        {
-            if( 0 != ptr_FAitfX->CheckTitleExpense(*itr_TitleDeep, false) )
-            {
-                string str_Message = CMD_TTTranslate(*itr_TitleDeep) + " NOT Pass Check";
-                CTool::MassageOutFotmat(str_Message, '!');
-                return;
-            }
+            string str_Message = CMD_TTTranslate(*itr_TitleDeep) + " NOT Pass Check";
+            CTool::MassageOutFotmat(str_Message, '!');
+            return;
         }
     }
 
@@ -109,14 +97,7 @@ void CASitfX::UpdateFA()
     vector<string>::iterator itr_TitleDeep;
     for(itr_TitleDeep = vec_str_TitleDeep.begin(); itr_TitleDeep != vec_str_TitleDeep.end(); itr_TitleDeep++)
     {
-        if(*itr_TitleDeep == LOTTERY)
-        {
-            ptr_FAitfX->UpdateLottery(false);
-        }
-        else
-        {
-            ptr_FAitfX->UpdateTitleExpense(*itr_TitleDeep, false);
-        }
+        ptr_FAitfX->UpdateTitleExpense(*itr_TitleDeep, false);
     }
 
     // Update CurrentMonth

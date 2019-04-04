@@ -38,9 +38,7 @@ CFAitfX::CFAitfX()
     m_ptr_FM_sm_sa = new CFileManager("./sa.M.md");
     m_ptr_FM_tt_DK = new CFileManager("./DK.md");
     m_ptr_FM_tt_NS = new CFileManager("./NS.md");
-    m_ptr_FM_tt_NR = new CFileManager("./NR411.md");
     m_ptr_FM_tt_travel = new CFileManager("./travel.md");
-    m_ptr_FM_tt_lottery = new CFileManager("./lottery.md");
     m_ptr_FM_tt_BOX = new CFileManager("./BOX.md");
     m_ptr_FM_NULL = NULL;
 
@@ -53,10 +51,8 @@ CFAitfX::CFAitfX()
     m_ptr_FM_array[6] = m_ptr_FM_sm_sa;
     m_ptr_FM_array[7] = m_ptr_FM_tt_DK;
     m_ptr_FM_array[8] = m_ptr_FM_tt_NS;
-    m_ptr_FM_array[9] = m_ptr_FM_tt_NR;
-    m_ptr_FM_array[10] = m_ptr_FM_tt_travel;
-    m_ptr_FM_array[11] = m_ptr_FM_tt_lottery;
-    m_ptr_FM_array[12] = m_ptr_FM_tt_BOX;
+    m_ptr_FM_array[9] = m_ptr_FM_tt_travel;
+    m_ptr_FM_array[10] = m_ptr_FM_tt_BOX;
 }
 
 /**************************************************/
@@ -174,8 +170,8 @@ void CFAitfX::SummarizeMonthCLS(int int_OFlag)
     /********** Get Life & Room Sum **********/
     int int_MonthLifeSum = m_ptr_FM_life->GetSearchLineValueSum("生活费");
     int int_MonthRoomSum = m_ptr_FM_life->GetSearchLineValueSum("房租");
-    int_MonthRoomSum += m_ptr_FM_life->GetSearchLineValueSum("水电费");
-    int_MonthRoomSum += m_ptr_FM_life->GetSearchLineValueSum("网络费");
+    int_MonthRoomSum += m_ptr_FM_life->GetSearchLineValueSum("水费");
+    int_MonthRoomSum += m_ptr_FM_life->GetSearchLineValueSum("电费");
 
     /********** Get SM Sum **********/
     vector<string> vec_str_SubMonth;
@@ -802,202 +798,6 @@ void CFAitfX::UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag)
 }
 
 /**************************************************/
-//   校验 Tt分项 Lottery
-/**************************************************/
-int CFAitfX::CheckLottery(bool bol_OFlag)
-{
-    /********** Init Index ********************/
-
-    string str_RangeTop("## lottery");
-    string str_RangeBottom("## Total");
-
-    unsigned int uni_AFLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = 2;
-    unsigned int uni_RangeBottom = m_ptr_FM_tt_lottery->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
-
-    /********** EX ********************/
-
-    int int_AFLotteryEX = m_ptr_FM_SUM->GetLineValue(uni_AFLine+1);
-
-    int int_LotteryInvestEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+2);
-    int int_LotteryRewardEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+3);
-    int int_LotteryRevenueEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+4);
-    int int_LotteryROIEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+5);
-
-    /********** CK ********************/
-
-    int int_LotteryInvestCK = 0;
-    int int_LotteryRewardCK = 0;
-    int int_LotteryRevenueCK = 0;
-    int int_LotteryROICK  = 0;
-
-    for(int i = uni_RangeTop; i <= uni_RangeBottom-1; i++)
-    {
-        int int_LotteryLineValue = m_ptr_FM_tt_lottery->GetLineValue(i);
-
-        if( int_LotteryLineValue < 0 )
-        {
-            int_LotteryInvestCK += int_LotteryLineValue;
-            int_LotteryRevenueCK += int_LotteryLineValue;
-        }
-        else if ( int_LotteryLineValue > 0 )
-        {
-            int_LotteryRewardCK += int_LotteryLineValue;
-            int_LotteryRevenueCK += int_LotteryLineValue;
-        }
-    }
-
-    int_LotteryROICK = int_LotteryRevenueCK * 100 / int_LotteryInvestCK;
-
-    /********** Output ********************/
-
-    if( bol_OFlag )
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "### lottery ROI ###" << endl;
-        cout << "AF_读取值: " << CTool::TransOutFormat(int_AFLotteryEX) << endl;
-        cout << "lottery_读取值: " << CTool::TransOutFormat(int_LotteryRevenueEX) << endl;
-        cout << "lottery_校验值: " << CTool::TransOutFormat(int_LotteryRevenueCK) << endl;
-        cout << "----------------------------------------" << endl;
-    }
-
-    /********** Return ********************/
-
-    if( int_LotteryRevenueEX != int_LotteryRevenueCK )
-    {
-        return -1;
-    }
-    else if( int_AFLotteryEX != int_LotteryRevenueCK )
-    {
-        return -2;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-/**************************************************/
-//   更新 Tt分项 Lottery
-/**************************************************/
-void CFAitfX::UpdateLottery(bool bol_OFlag)
-{
-    /********** Init Index **********/
-
-    string str_RangeTop("## lottery");
-    string str_RangeBottom("## Total");
-
-    unsigned int uni_AFLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_RangeTop.c_str());
-    unsigned int uni_RangeTop = 2;
-    unsigned int uni_RangeBottom = m_ptr_FM_tt_lottery->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
-
-    /********** UD **********/
-    int int_LotteryInvestUD = 0;
-    int int_LotteryRewardUD = 0;
-    int int_LotteryRevenueUD = 0;
-
-    for(int i = uni_RangeTop; i <= uni_RangeBottom-1; i++)
-    {
-        int int_LotteryLineValue = m_ptr_FM_tt_lottery->GetLineValue(i);
-
-        if( int_LotteryLineValue < 0 )
-        {
-            int_LotteryInvestUD += int_LotteryLineValue;
-            int_LotteryRevenueUD += int_LotteryLineValue;
-        }
-        else if ( int_LotteryLineValue > 0 )
-        {
-            int_LotteryRewardUD += int_LotteryLineValue;
-            int_LotteryRevenueUD += int_LotteryLineValue;
-        }
-    }
-
-    int int_LotteryROIUD = int_LotteryRevenueUD * 100 / (int_LotteryInvestUD * (-1));
-
-    /********** Line Modify ********************/
-
-    m_ptr_FM_tt_lottery->ModifyLineValue(uni_RangeBottom+2, int_LotteryInvestUD);
-    m_ptr_FM_tt_lottery->ModifyLineValue(uni_RangeBottom+3, int_LotteryRewardUD);
-    m_ptr_FM_tt_lottery->ModifyLineValue(uni_RangeBottom+4, int_LotteryRevenueUD);
-    m_ptr_FM_tt_lottery->ModifyLineValue(uni_RangeBottom+5, int_LotteryROIUD);
-
-    /********** Transfer Balance ********************/
-
-    int int_AFLotteryRevenueOrigin = m_ptr_FM_SUM->GetLineValue(uni_AFLine+1);
-    int int_AFLotteryRevenueDelta = int_LotteryRevenueUD - int_AFLotteryRevenueOrigin;
-
-    m_ptr_FM_SUM->ModifyLineValue(uni_AFLine+1, int_LotteryRevenueUD);
-    TransferBalance("微信-零钱通", "阿里-余额宝", int_AFLotteryRevenueDelta);
-
-    /********** Output ********************/
-
-    if( bol_OFlag )
-    {
-        cout << "----------------------------------------" << endl;
-        cout << "### lottery ROI ###" << endl;
-        cout << "lottery投资更新值: " << CTool::TransOutFormat(int_LotteryInvestUD) << endl;
-        cout << "lottery回报更新值: " << CTool::TransOutFormat(int_LotteryRewardUD) << endl;
-        cout << "lottery收益更新值: " << CTool::TransOutFormat(int_LotteryRevenueUD) << endl;
-        cout << "lottery ROI更新值: " << CTool::TransOutFormat(int_LotteryROIUD) << "%" << endl;
-        cout << "----------------------------------------" << endl;
-    }
-}
-
-/**************************************************/
-//   附加 Tt分项 Lottery
-/**************************************************/
-void CFAitfX::AppendLottery(const bool bol_LineFlag, const unsigned int uni_LineValueABS,\
-                            const string str_LineDate)
-{
-    string str_LotteryTop("## lottery");
-    string str_LotteryBottom("## Total");
-
-    unsigned int uni_AFLine = m_ptr_FM_SUM->GetUniqueSearchLineIndex(str_LotteryTop.c_str());
-    unsigned int uni_LotteryTop = 2;
-    unsigned int uni_LotteryBottom = m_ptr_FM_tt_lottery->GetUniqueSearchLineIndex(str_LotteryBottom.c_str());
-
-    int int_LotterySurplus = m_ptr_FM_tt_lottery->GetLineValue(uni_LotteryBottom+2);
-
-    string str_LineContent("足彩");
-    int int_LineValue = 0;
-    if( bol_LineFlag )
-    {
-        int_LineValue = uni_LineValueABS;
-        str_LineContent += "收入_";
-    }
-    else
-    {
-        int_LineValue = (-1) * uni_LineValueABS;
-        str_LineContent += "支出_";
-    }
-    str_LineContent += str_LineDate;
-
-    m_ptr_FM_tt_lottery->InsertLine(uni_LotteryBottom-1, LTYPE_FBIRC_LINEUINT, int_LineValue, str_LineContent);
-
-    // tips 番茄@20171212 - 注意计算总支出的时候要增加一行
-    //int int_LotterySurplusAP = m_ptr_FM_tt_lottery->CountRangeType(uni_LotteryTop, uni_LotteryBottom,\
-                                                                  LTYPE_FBIRC_LINEUINT);
-
-    // tips 番茄@20171212 - 注意计算总支出的时候要增加一行
-    //m_ptr_FM_tt_lottery->ModifyLineValue(uni_LotteryBottom+3, int_LotterySurplusAP);
-    //m_ptr_FM_SUM->ModifyLineValue(uni_AFLine+1, int_LotterySurplusAP);
-
-    // tips 番茄@20171225 - 在支出前，增加一行空行
-    if(!bol_LineFlag)
-    {
-        m_ptr_FM_tt_lottery->InsertBlankLine(uni_LotteryBottom-1);
-    }
-
-    /*
-    cout << "----------------------------------------" << endl;
-    cout << "### lottery ###" << endl;
-    cout << "lottery_初始值: " << CTool::TransOutFormat(int_LotterySurplus) << endl;
-    cout << "lottery_更新值: " << CTool::TransOutFormat(int_LotterySurplusAP) << endl;
-    cout << "----------------------------------------" << endl;
-    */
-}
-
-/**************************************************/
 //   默认从 str_FirstKey 进行操作
 /**************************************************/
 void CFAitfX::TransferBalance(const string str_FirstKey, const string str_SecondKey,
@@ -1533,48 +1333,6 @@ void CFAitfX::ForecastFutureSum(const string str_SelMonth, const int int_MonthPa
 }
 
 /**************************************************/
-//   生成 Lottery Vector
-/**************************************************/
-void CFAitfX::GenerateLotteryVector(vector<UNIT_LOTTERY> &vec_stc_LotteryInfo)
-{
-    vec_stc_LotteryInfo.clear();
-
-    UNIT_LOTTERY stc_UnitLottery;
-
-    string str_RangeTop = "# lottery";
-    string str_RangeBottom = "## Total";
-
-    unsigned int uni_RangeTop = m_ptr_FM_tt_lottery->GetUniqueSearchLineIndex(str_RangeTop.c_str());
-    unsigned int uni_RangeBottom = m_ptr_FM_tt_lottery->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
-
-    for(int i = uni_RangeTop+1; i < uni_RangeBottom ; i++)
-    {
-        if( LTYPE_FBIRC_LINEUINT == m_ptr_FM_tt_lottery->GetLineType(i) )
-        {
-            string str_LineContent = m_ptr_FM_tt_lottery->GetLineContent(i);
-            CTool::ParseDate(str_LineContent, stc_UnitLottery.uni_Year, stc_UnitLottery.uni_Month, stc_UnitLottery.uni_Day);
-
-            if( LTYPE_FBIRC_LINEUINT == m_ptr_FM_tt_lottery->GetLineType(i+1) )
-            {
-                stc_UnitLottery.int_Expense = m_ptr_FM_tt_lottery->GetLineValue(i);
-                stc_UnitLottery.int_Income = m_ptr_FM_tt_lottery->GetLineValue(++i);
-            }
-            else
-            {
-                stc_UnitLottery.int_Expense = m_ptr_FM_tt_lottery->GetLineValue(i);
-                stc_UnitLottery.int_Income = 0;
-            }
-            
-            vec_stc_LotteryInfo.push_back(stc_UnitLottery);
-        }
-        else if( LTYPE_BLANK == m_ptr_FM_tt_lottery->GetLineType(i) )
-        {
-            continue;
-        }
-    }
-}
-
-/**************************************************/
 //   展示 Month 收支
 //   OFlag == 1 >>> 嵌入显示模式
 //   OFlag == 2 >>> 嵌入显示模式
@@ -1873,28 +1631,12 @@ void CFAitfX::ShowTitle(const string str_TitleKey, const int int_OFlag)
         }
     }
 
-    if( str_TitleKey != LOTTERY )
-    {
-        int int_TotalTTExpense = GetPtrFM("TT", str_TitleKey)->GetLineValue(uni_RangeBottom+2);
+    int int_TotalTTExpense = GetPtrFM("TT", str_TitleKey)->GetLineValue(uni_RangeBottom+2);
     
-        cout << "----------------------------------------" << endl;
-        cout << "--> " << CMD_TTTranslate(str_TitleKey) << "/总支出: " << CTool::TransOutFormat(int_TotalTTExpense) << endl;
-        cout << "----------------------------------------" << endl;
-    }
-    else
-    {
-        int int_LotteryInvestEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+2);
-        int int_LotteryRewardEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+3);
-        int int_LotteryRevenueEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+4);
-        int int_LotteryROIEX = m_ptr_FM_tt_lottery->GetLineValue(uni_RangeBottom+5);
+    cout << "----------------------------------------" << endl;
+    cout << "--> " << CMD_TTTranslate(str_TitleKey) << "/总支出: " << CTool::TransOutFormat(int_TotalTTExpense) << endl;
+    cout << "----------------------------------------" << endl;
 
-        cout << "----------------------------------------" << endl;
-        cout << "--> lottery投资: " << CTool::TransOutFormat(int_LotteryInvestEX) << endl;
-        cout << "--> lottery回报: " << CTool::TransOutFormat(int_LotteryRewardEX) << endl;
-        cout << "--> lottery收益: " << CTool::TransOutFormat(int_LotteryRevenueEX) << endl;
-        cout << "--> lottery ROI: " << CTool::TransOutFormat(int_LotteryROIEX) << "%" << endl;
-        cout << "----------------------------------------" << endl;
-    }
 }
 
 /**************************************************/
@@ -2233,12 +1975,8 @@ CFileManager *CFAitfX::GetPtrFM(const string str_Type, const string str_Key)
         return m_ptr_FM_tt_DK;
     else if( (str_Type == "TT") && (str_Key == NS) )
         return m_ptr_FM_tt_NS;
-    else if( (str_Type == "TT") && (str_Key == NR) )
-        return m_ptr_FM_tt_NR;
     else if( (str_Type == "TT") && (str_Key == TRAVEL) )
         return m_ptr_FM_tt_travel;
-    else if( (str_Type == "TT") && (str_Key == LOTTERY) )
-        return m_ptr_FM_tt_lottery;
     else if( (str_Type == "TT") && (str_Key == BOX) )
         return m_ptr_FM_tt_BOX;
     else

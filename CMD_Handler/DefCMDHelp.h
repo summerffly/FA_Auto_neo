@@ -34,13 +34,12 @@ string  CMD_HELP_UPDATE_SUBMONTH  = UPDATE + " -sm SM";
 string  CMD_HELP_SHOW_SUBMONTH  = SHOW + " -sm SM";
 
 string  CMD_HELP_CHECK_TITLE = CHECK + " -tt TT";
-string  CMD_HELP_PATCH_CHECK_TITLE = "TT = " + DK + "/" + NS + "/" + NR + "/" + TRAVEL + "/" + LOTTERY;
+string  CMD_HELP_PATCH_CHECK_TITLE = "TT = " + DK + "/" + NS + "/" + NR + "/" + TRAVEL;
 string  CMD_HELP_UPDATE_TITLE = UPDATE + " -tt TT";
 string  CMD_HELP_SHOW_TITLE = SHOW + " -tt TT -sp tag";
 
 string  CMD_HELP_TRANSFER = TRANSFER + " VALUE -sp SRC";
 string  CMD_HELP_PATCH_TRANSFER = "SRC = " + WEIXIN + "/" + JINGDONG;
-string  CMD_HELP_LOTTERY = LOTTERY + " -f VALUE -d DATE";
 
 string  CMD_HELP_ANALYSIS_TREND = ANALYSIS + " " + TREND + " -sp TO";
 string  CMD_HELP_PATCH_ANALYSIS_TREND = "TO = " + EXPENSE + "/" + LIFE + "/" + ROOM + "/" + CONSUMPTION;
@@ -56,7 +55,7 @@ string  CMD_HELP_PRINT_MONTH    = PRINT + " " + MONTH + " -m MONTH";
 string  CMD_HELP_PRINT_SUBMONTH = PRINT + " -sm SM -m MONTH -sp " + TRAVERSAL;
 string  CMD_HELP_PATCH_PRINT_SUBMONTH = "SM = " + ALL + "/" + DGTLER + "/" + BOOKS + "/" + KEEP + "/" + TB + "/" + SA;
 string  CMD_HELP_PRINT_TITLE    = PRINT + " -tt TT";
-string  CMD_HELP_PATCH_PRINT_TITLE = "TT = " + DK + "/" + NS + "/" + NR + "/" + TRAVEL + "/" + LOTTERY;
+string  CMD_HELP_PATCH_PRINT_TITLE = "TT = " + DK + "/" + NS + "/" + NR + "/" + TRAVEL;
 
 string  CMD_HELP_INSERT_LINE = INSERT + " -l LINE -ip VALUE -sp CONTENT";
 string  CMD_HELP_INSERT_BLANK_LINE = INSERT + " " + BLANK + " -l LINE";

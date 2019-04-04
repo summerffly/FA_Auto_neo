@@ -65,7 +65,6 @@ public:
 	static void OnCmdShowTitle(CMD_Packet srt_CMD);
 
 	static void OnCmdTransfer(CMD_Packet srt_CMD);
-	static void OnCmdLottery(CMD_Packet srt_CMD);
 
 	static void OnCmdAnalysisTrend(CMD_Packet srt_CMD);
 	static void OnCmdAnalysisProportion(CMD_Packet srt_CMD);
