@@ -167,11 +167,21 @@ void CFAitfX::SummarizeMonthCLS(int int_OFlag)
     m_int_MonthExpenseSum = m_ptr_FM_SUM->GetSearchLineValueSum("月支出");
     m_int_MonthSurplusSum = m_ptr_FM_SUM->GetSearchLineValueSum("月结余");
 
-    /********** Get Life & Room Sum **********/
+    /********** Get Life Sum **********/
     int int_MonthLifeSum = m_ptr_FM_life->GetSearchLineValueSum("生活费");
-    int int_MonthRoomSum = m_ptr_FM_life->GetSearchLineValueSum("房租");
-    int_MonthRoomSum += m_ptr_FM_life->GetSearchLineValueSum("水费");
-    int_MonthRoomSum += m_ptr_FM_life->GetSearchLineValueSum("电费");
+
+    /********** Get Room Sum **********/
+    vector<string> vec_str_Room;
+    ptr_ScriptRipper->RoomDuplicator(vec_str_Room);
+
+    int int_MonthRoomSum = 0;
+
+    vector<string>::iterator itr_Room;
+    for(itr_Room = vec_str_Room.begin(); itr_Room != vec_str_Room.end(); itr_Room++)
+    {
+        string str_Room = *itr_Room;
+        int_MonthRoomSum += m_ptr_FM_life->GetSearchLineValueSum(str_Room.c_str());
+    }
 
     /********** Get SM Sum **********/
     vector<string> vec_str_SubMonth;
