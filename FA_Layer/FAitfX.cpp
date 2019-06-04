@@ -1613,7 +1613,7 @@ void CFAitfX::ShowTitle(const string str_TitleKey, const int int_OFlag)
                     int int_TagBlockValue = GetPtrFM("TT", str_TitleKey)->CountRangeType(uni_LastTagLine+1, i-1, LTYPE_FBIRC_LINEUINT);
                     if(str_TagContainer != "")
                     {
-                        cout << str_TagContainer << ": " << int_TagBlockValue << endl;
+                        cout << str_TagContainer << ": " << CTool::TransOutFormat(int_TagBlockValue) << endl;
                     }
                 }
             }
@@ -1631,7 +1631,7 @@ void CFAitfX::ShowTitle(const string str_TitleKey, const int int_OFlag)
                     int int_TagBlockValue = GetPtrFM("TT", str_TitleKey)->CountRangeType(uni_LastTagLine+1, i-1, LTYPE_FBIRC_LINEUINT);
                     if(str_TagContainer != "")
                     {
-                        cout << str_TagContainer << ": " << int_TagBlockValue << endl;
+                        cout << str_TagContainer << ": " << CTool::TransOutFormat(int_TagBlockValue) << endl;
                     }
 
                     uni_LastTagLine = i;
