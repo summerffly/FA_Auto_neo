@@ -1,4 +1,8 @@
 
+##############################
+### Coded by 番茄
+##############################
+
 px = ./X_Frame/
 lxml = ./XML_Ripper/
 lcmd = ./CMD_Handler/
@@ -65,3 +69,12 @@ ASitfX.o: $(las)ASitfX.h $(las)ASitfX.cpp
 .PHONY:clean
 clean:
 	rm $(px)*.o $(lxml)*.o $(lcmd)*.o $(lop)*.o $(lep)*.o $(lfa)*.o $(las)*.o *.o FA_Auto_X
+
+install:
+	cp ./FA_Auto_X ./../../FA/FA_Auto_X
+	cp ./FA_Auto_Script.xml ./../../FA/FA_Auto_Script.xml
+
+	cp ./FA_Auto_X ./X_Executable/FA_Auto_X
+	cp ./FA_Auto_Script.xml ./X_Executable/FA_Auto_Script.xml
+
+##############################

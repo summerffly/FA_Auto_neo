@@ -1,6 +1,0 @@
-
-cp ./FA_Auto_X ./../../FA/FA_Auto_X
-cp ./FA_Auto_Script.xml ./../../FA/FA_Auto_Script.xml
-
-cp ./FA_Auto_X ./X_Executable/FA_Auto_X
-cp ./FA_Auto_Script.xml ./X_Executable/FA_Auto_Script.xml
