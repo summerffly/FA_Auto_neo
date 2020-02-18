@@ -9,11 +9,13 @@
 using namespace std;
 
 
-struct timeval CTool::m_tvl_begin;
-struct timeval CTool::m_tvl_end;
+string CTool::ms_str_ExecutablePath;
 
 string CTool::ms_str_OriginMonth;
 string CTool::ms_str_CurrentMonth;
+
+struct timeval CTool::m_tvl_begin;
+struct timeval CTool::m_tvl_end;
 
 
 CTool::CTool()
@@ -26,6 +28,20 @@ CTool::~CTool()
     // Do Nothing
 }
 
+void CTool::SetExecutablePath()
+{
+    uint32_t uni_size = 256;
+    char *cha_exefilepath = (char *)malloc(256);
+    // tips 番茄@20200218 - OS X接口
+    _NSGetExecutablePath(cha_exefilepath, &uni_size);
+
+    ms_str_ExecutablePath = string(cha_exefilepath);
+    ms_str_ExecutablePath.erase(ms_str_ExecutablePath.end()-9, ms_str_ExecutablePath.end());
+
+    // tips 番茄@20200218 - Unix/Linux/OS X通用接口
+    chdir(ms_str_ExecutablePath.c_str());
+}
+
 int CTool::CheckFilesExist(vector<string> vec_str_FilePath)
 {
     int int_RetFC = 0;
@@ -33,7 +49,9 @@ int CTool::CheckFilesExist(vector<string> vec_str_FilePath)
     vector<string>::iterator itr_FilePath;
     for(itr_FilePath = vec_str_FilePath.begin(); itr_FilePath != vec_str_FilePath.end(); itr_FilePath++)
     {
-        string str_File = *itr_FilePath;
+        string str_File = ms_str_ExecutablePath;
+        str_File += *itr_FilePath;
+        //string str_File = *itr_FilePath;
         int_RetFC += access(str_File.c_str(), 0);
     }
 

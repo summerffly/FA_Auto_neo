@@ -11,6 +11,7 @@
 #include "./X_Frame/X_Tool.h"
 #include "./CMD_Handler/CMD_Handler.h"
 
+
 using namespace std;
 
 
@@ -19,7 +20,6 @@ int main(int argc, char **argv, char *env[])
     //***********************************//
     //### 检查.md文件存在
     //***********************************//
-
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
 
     vector<string> vec_str_File;

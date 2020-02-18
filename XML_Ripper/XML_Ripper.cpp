@@ -12,6 +12,10 @@
 /**************************************************/
 CXMLRipper::CXMLRipper(const char *cha_xmlPath)
 {
+    // tips 番茄@20200218
+    // 全局变量初始化，程序最早入口点
+    CTool::SetExecutablePath();
+
     m_str_FilePath = cha_xmlPath;
     pugi::xml_parse_result pxml_result = m_pxml_dom.load_file(cha_xmlPath);
     if( pxml_result.status != pugi::status_ok )

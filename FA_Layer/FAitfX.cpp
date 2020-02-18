@@ -41,6 +41,53 @@ CFAitfX::CFAitfX()
     m_ptr_FM_tt_travel = new CFileManager("./travel.md");
     m_ptr_FM_tt_BOX = new CFileManager("./BOX.md");
     m_ptr_FM_NULL = NULL;
+    
+    /*
+    string str_FilePath = CTool::GetExecutablePath(0) + "./FA_SUM.md";
+    m_ptr_FM_SUM = new CFileManager(str_FilePath.c_str());
+
+    str_FilePath.clear();
+    str_FilePath = CTool::GetExecutablePath(0) + "./life.M.md";
+    m_ptr_FM_life = new CFileManager(str_FilePath.c_str());
+
+    str_FilePath.clear();
+    str_FilePath = CTool::GetExecutablePath(0) + "./DGtler.M.md";
+    m_ptr_FM_sm_DGtler = new CFileManager(str_FilePath.c_str());
+
+    str_FilePath.clear();
+    str_FilePath = CTool::GetExecutablePath(0) + "./Books.M.md";
+    m_ptr_FM_sm_Books = new CFileManager(str_FilePath.c_str());
+
+    str_FilePath.clear();
+    str_FilePath = CTool::GetExecutablePath(0) + "./KEEP.M.md";
+    m_ptr_FM_sm_KEEP = new CFileManager(str_FilePath.c_str());
+
+    str_FilePath.clear();
+    str_FilePath = CTool::GetExecutablePath(0) + "./TB.M.md";
+    m_ptr_FM_sm_TB = new CFileManager(str_FilePath.c_str());
+
+    str_FilePath.clear();
+    str_FilePath = CTool::GetExecutablePath(0) + "./sa.M.md";
+    m_ptr_FM_sm_sa = new CFileManager(str_FilePath.c_str());
+
+    str_FilePath.clear();
+    str_FilePath = CTool::GetExecutablePath(0) + "./DK.md";
+    m_ptr_FM_tt_DK = new CFileManager(str_FilePath.c_str());
+
+    str_FilePath.clear();
+    str_FilePath = CTool::GetExecutablePath(0) + "./NS.md";
+    m_ptr_FM_tt_NS = new CFileManager(str_FilePath.c_str());
+
+    str_FilePath.clear();
+    str_FilePath = CTool::GetExecutablePath(0) + "./travel.md";
+    m_ptr_FM_tt_travel = new CFileManager(str_FilePath.c_str());
+
+    str_FilePath.clear();
+    str_FilePath = CTool::GetExecutablePath(0) + "./BOX.md";
+    m_ptr_FM_tt_BOX = new CFileManager(str_FilePath.c_str());
+
+    m_ptr_FM_NULL = NULL;
+    */
 
     m_ptr_FM_array[0] = m_ptr_FM_SUM;
     m_ptr_FM_array[1] = m_ptr_FM_life;

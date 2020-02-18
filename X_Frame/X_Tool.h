@@ -13,6 +13,10 @@
 #include <iostream>
 #include <regex>
 
+// add 番茄@20200218 - OS X头文件，不可移植
+#include <mach-o/dyld.h>
+
+
 using namespace std;
 
 
@@ -22,6 +26,7 @@ public:
     CTool();
     ~CTool();
 
+    static void SetExecutablePath();
     static int CheckFilesExist(vector<string> vec_str_FilePath);
 
     /****************************************/
@@ -53,6 +58,8 @@ public:
     static double ShowTimeGap();
 
 private:
+    static string ms_str_ExecutablePath;
+
     static string ms_str_OriginMonth;
     static string ms_str_CurrentMonth;
 
