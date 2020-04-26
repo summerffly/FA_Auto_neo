@@ -31,9 +31,8 @@ CFAitfX::CFAitfX()
     // tips 番茄@20180919 - 扩展添加点2/3
     m_ptr_FM_SUM = new CFileManager("./FA_SUM.md");
     m_ptr_FM_life = new CFileManager("./life.M.md");
-    m_ptr_FM_sm_DGtler = new CFileManager("./DGtler.M.md");
-    m_ptr_FM_sm_Books = new CFileManager("./Books.M.md");
     m_ptr_FM_sm_KEEP = new CFileManager("./KEEP.M.md");
+    m_ptr_FM_sm_DGtler = new CFileManager("./DGtler.M.md");
     m_ptr_FM_sm_TB = new CFileManager("./TB.M.md");
     m_ptr_FM_sm_sa = new CFileManager("./sa.M.md");
     m_ptr_FM_tt_DK = new CFileManager("./DK.md");
@@ -91,15 +90,14 @@ CFAitfX::CFAitfX()
 
     m_ptr_FM_array[0] = m_ptr_FM_SUM;
     m_ptr_FM_array[1] = m_ptr_FM_life;
-    m_ptr_FM_array[2] = m_ptr_FM_sm_DGtler;
-    m_ptr_FM_array[3] = m_ptr_FM_sm_Books;
-    m_ptr_FM_array[4] = m_ptr_FM_sm_KEEP;
-    m_ptr_FM_array[5] = m_ptr_FM_sm_TB;
-    m_ptr_FM_array[6] = m_ptr_FM_sm_sa;
-    m_ptr_FM_array[7] = m_ptr_FM_tt_DK;
-    m_ptr_FM_array[8] = m_ptr_FM_tt_NS;
-    m_ptr_FM_array[9] = m_ptr_FM_tt_travel;
-    m_ptr_FM_array[10] = m_ptr_FM_tt_BOX;
+    m_ptr_FM_array[2] = m_ptr_FM_sm_KEEP;
+    m_ptr_FM_array[3] = m_ptr_FM_sm_DGtler;
+    m_ptr_FM_array[4] = m_ptr_FM_sm_TB;
+    m_ptr_FM_array[5] = m_ptr_FM_sm_sa;
+    m_ptr_FM_array[6] = m_ptr_FM_tt_DK;
+    m_ptr_FM_array[7] = m_ptr_FM_tt_NS;
+    m_ptr_FM_array[8] = m_ptr_FM_tt_travel;
+    m_ptr_FM_array[9] = m_ptr_FM_tt_BOX;
 }
 
 /**************************************************/
@@ -2018,12 +2016,10 @@ CFileManager *CFAitfX::GetPtrFM(const string str_Type, const string str_Key)
         return m_ptr_FM_SUM;
     else if(str_Type == "MONTH")
         return m_ptr_FM_life;
-    else if( (str_Type == "SM") && (str_Key == DGTLER) )
-        return m_ptr_FM_sm_DGtler;
-    else if( (str_Type == "SM") && (str_Key == BOOKS) )
-        return m_ptr_FM_sm_Books;
     else if( (str_Type == "SM") && (str_Key == KEEP) )
         return m_ptr_FM_sm_KEEP;
+    else if( (str_Type == "SM") && (str_Key == DGTLER) )
+        return m_ptr_FM_sm_DGtler;
     else if( (str_Type == "SM") && (str_Key == TB) )
         return m_ptr_FM_sm_TB;
     else if( (str_Type == "SM") && (str_Key == SA) )

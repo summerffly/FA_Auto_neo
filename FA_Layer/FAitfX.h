@@ -170,9 +170,8 @@ private:
 private:    
     CFileManager *m_ptr_FM_SUM;
     CFileManager *m_ptr_FM_life;
-    CFileManager *m_ptr_FM_sm_DGtler;
-    CFileManager *m_ptr_FM_sm_Books;
     CFileManager *m_ptr_FM_sm_KEEP;
+    CFileManager *m_ptr_FM_sm_DGtler;
     CFileManager *m_ptr_FM_sm_TB;
     CFileManager *m_ptr_FM_sm_sa;
     CFileManager *m_ptr_FM_tt_DK;
@@ -181,7 +180,7 @@ private:
     CFileManager *m_ptr_FM_tt_BOX;
     CFileManager *m_ptr_FM_NULL;
 
-    static const unsigned int m_uni_FM_aszie = 11;
+    static const unsigned int m_uni_FM_aszie = 10;
     CFileManager *m_ptr_FM_array[m_uni_FM_aszie];
 };
 
