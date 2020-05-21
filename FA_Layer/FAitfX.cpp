@@ -826,7 +826,7 @@ void CFAitfX::TransferBalance(const string str_FirstKey, const string str_Second
 /**************************************************/
 void CFAitfX::AddScriptSum(const string str_SelMonth)
 {
-    string str_SUMMonthTitle = string("## life.M") + CTool::GenerateNextMonth(str_SelMonth);
+    string str_SUMMonthTitle = string("## life.M") + str_SelMonth;
     string str_SUMMonthSalary = str_SelMonth + "月薪资";
     string str_SUMMonthExpense = str_SelMonth + "月支出";
     string str_SUMMonthRest = str_SelMonth + "月结余";
