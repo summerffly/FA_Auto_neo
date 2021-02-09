@@ -36,10 +36,12 @@ void CTool::SetExecutablePath()
     _NSGetExecutablePath(cha_exefilepath, &uni_size);
 
     ms_str_ExecutablePath = string(cha_exefilepath);
-    ms_str_ExecutablePath.erase(ms_str_ExecutablePath.end()-9, ms_str_ExecutablePath.end());
+    //ms_str_ExecutablePath.erase(ms_str_ExecutablePath.end()-9, ms_str_ExecutablePath.end());
+    ms_str_ExecutablePath.erase(ms_str_ExecutablePath.end()-11, ms_str_ExecutablePath.end());
 
     // tips 番茄@20200218 - Unix/Linux/OS X通用接口
     chdir(ms_str_ExecutablePath.c_str());
+    cout << ms_str_ExecutablePath << endl;
 }
 
 int CTool::CheckFilesExist(vector<string> vec_str_FilePath)

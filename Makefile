@@ -21,8 +21,8 @@ obj_FA = $(lfa)FAitfX.o
 obj_AS = $(las)ASitfX.o
 
 
-FA_Auto_X: $(obj_X) $(obj_XML) $(obj_CMD) $(obj_OP) $(obj_EP) $(obj_FA) $(obj_AS) FA_Auto_X.o
-	g++ -o FA_Auto_X $(obj_X) $(obj_XML) $(obj_CMD) $(obj_OP) $(obj_EP) $(obj_FA) $(obj_AS) FA_Auto_X.o
+FA_Auto_neo: $(obj_X) $(obj_XML) $(obj_CMD) $(obj_OP) $(obj_EP) $(obj_FA) $(obj_AS) FA_Auto_X.o
+	g++ -o FA_Auto_neo $(obj_X) $(obj_XML) $(obj_CMD) $(obj_OP) $(obj_EP) $(obj_FA) $(obj_AS) FA_Auto_X.o
 
 FA_Auto_X.o: FA_Auto_X.cpp
 	g++ -c FA_Auto_X.cpp
@@ -68,13 +68,13 @@ ASitfX.o: $(las)ASitfX.h $(las)ASitfX.cpp
 
 .PHONY:clean
 clean:
-	rm $(px)*.o $(lxml)*.o $(lcmd)*.o $(lop)*.o $(lep)*.o $(lfa)*.o $(las)*.o *.o FA_Auto_X
+	rm $(px)*.o $(lxml)*.o $(lcmd)*.o $(lop)*.o $(lep)*.o $(lfa)*.o $(las)*.o *.o FA_Auto_neo
 
 install:
-	cp ./FA_Auto_X ./../../FA/FA_Auto_X
+	cp ./FA_Auto_neo ./../../FA/FA_Auto_neo
 	cp ./FA_Auto_Script.xml ./../../FA/FA_Auto_Script.xml
 
-	cp ./FA_Auto_X ./X_Executable/FA_Auto_X
+	cp ./FA_Auto_neo ./X_Executable/FA_Auto_neo
 	cp ./FA_Auto_Script.xml ./X_Executable/FA_Auto_Script.xml
 
 ##############################

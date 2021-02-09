@@ -249,11 +249,11 @@ void CCMDHandler::CMD_Init()
     cout << "****************************************" << endl;
     cout << "****************************************" << endl;
     cout << "***                                  ***" << endl;
-    cout << "***          FA_Auto X Pro           ***" << endl;
+    cout << "***            FA_Auto_neo           ***" << endl;
     cout << "***                                  ***" << endl;
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
-    cout << "***         Version: " << ms_ptr_ScriptRipper->GetVersion() << "_LTU       ***" << endl;
+    cout << "***           Version: " << ms_ptr_ScriptRipper->GetVersion() << "         ***" << endl;
     cout << "***                                  ***" << endl;
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
