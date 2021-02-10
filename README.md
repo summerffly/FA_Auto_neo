@@ -1,9 +1,7 @@
-# FA_Auto_X
-> Project X: FA_Automator of NeXT Generation
+# FA_Auto_neo
+> FA_Automator neo
 
-- NeXT Generation FA_Automator
-- Verify Advanced Techs of C++
+- new engine optimism
+- Apply Professional Techs of C++
 
 ---
-
-

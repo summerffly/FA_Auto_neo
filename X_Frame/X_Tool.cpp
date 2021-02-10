@@ -5,6 +5,8 @@
 //------------------------------//
 
 #include "X_Tool.h"
+// add 番茄@20200218 - macOS头文件，不可移植性，最小包含原则
+#include <mach-o/dyld.h>
 
 using namespace std;
 
@@ -30,18 +32,25 @@ CTool::~CTool()
 
 void CTool::SetExecutablePath()
 {
-    uint32_t uni_size = 256;
-    char *cha_exefilepath = (char *)malloc(256);
-    // tips 番茄@20200218 - OS X接口
-    _NSGetExecutablePath(cha_exefilepath, &uni_size);
+    uint32_t uni_size = 0;
+    char *buf = NULL;
+    // add 番茄@20210210 - macOS接口
+    _NSGetExecutablePath(buf, &uni_size);
 
-    ms_str_ExecutablePath = string(cha_exefilepath);
-    //ms_str_ExecutablePath.erase(ms_str_ExecutablePath.end()-9, ms_str_ExecutablePath.end());
-    ms_str_ExecutablePath.erase(ms_str_ExecutablePath.end()-11, ms_str_ExecutablePath.end());
+    char *p_cha_exefullpath = (char *)malloc(uni_size+1);
+    _NSGetExecutablePath(p_cha_exefullpath, &uni_size);
 
-    // tips 番茄@20200218 - Unix/Linux/OS X通用接口
+    char *p_cha_exefilename = strrchr(p_cha_exefullpath, '/');
+    string str_ExeFile = p_cha_exefilename;
+    int int_exelength = str_ExeFile.size() - 1;
+
+    ms_str_ExecutablePath = string(p_cha_exefullpath);
+    ms_str_ExecutablePath.erase(ms_str_ExecutablePath.end()-int_exelength, ms_str_ExecutablePath.end());
+
+    // add 番茄@20200218 - macOS/Unix/Linux通用接口
     chdir(ms_str_ExecutablePath.c_str());
-    cout << ms_str_ExecutablePath << endl;
+
+    free(p_cha_exefullpath);
 }
 
 int CTool::CheckFilesExist(vector<string> vec_str_FilePath)

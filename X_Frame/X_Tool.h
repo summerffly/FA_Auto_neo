@@ -13,10 +13,6 @@
 #include <iostream>
 #include <regex>
 
-// add 番茄@20200218 - OS X头文件，不可移植
-#include <mach-o/dyld.h>
-
-
 using namespace std;
 
 

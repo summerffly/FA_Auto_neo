@@ -11,6 +11,9 @@ lep = ./EP_Layer/
 lfa = ./FA_Layer/
 las = ./AS_Layer/
 
+ptest = ./neo_TEST/
+pexe = ./../../FA/
+
 
 obj_X = $(px)RegExLib.o $(px)X_Tool.o
 obj_XML = $(lxml)pugixml.o $(lxml)XML_Ripper.o $(lxml)Script_Ripper.o
@@ -21,11 +24,11 @@ obj_FA = $(lfa)FAitfX.o
 obj_AS = $(las)ASitfX.o
 
 
-FA_Auto_neo: $(obj_X) $(obj_XML) $(obj_CMD) $(obj_OP) $(obj_EP) $(obj_FA) $(obj_AS) FA_Auto_X.o
-	g++ -o FA_Auto_neo $(obj_X) $(obj_XML) $(obj_CMD) $(obj_OP) $(obj_EP) $(obj_FA) $(obj_AS) FA_Auto_X.o
+FA_Auto_neo: $(obj_X) $(obj_XML) $(obj_CMD) $(obj_OP) $(obj_EP) $(obj_FA) $(obj_AS) FA_Auto_neo.o
+	g++ -o FA_Auto_neo $(obj_X) $(obj_XML) $(obj_CMD) $(obj_OP) $(obj_EP) $(obj_FA) $(obj_AS) FA_Auto_neo.o
 
-FA_Auto_X.o: FA_Auto_X.cpp
-	g++ -c FA_Auto_X.cpp
+FA_Auto_neo.o: FA_Auto_neo.cpp
+	g++ -c FA_Auto_neo.cpp
 
 RegExLib.o: $(px)RegExLib.h $(px)RegExLib.cpp
 	g++ -c $(px)RegExLib.cpp
@@ -69,12 +72,14 @@ ASitfX.o: $(las)ASitfX.h $(las)ASitfX.cpp
 .PHONY:clean
 clean:
 	rm $(px)*.o $(lxml)*.o $(lcmd)*.o $(lop)*.o $(lep)*.o $(lfa)*.o $(las)*.o *.o FA_Auto_neo
+	rm $(ptest)FA_Auto_neo
+	rm $(pexe)FA_Auto_neo
 
 install:
-	cp ./FA_Auto_neo ./../../FA/FA_Auto_neo
-	cp ./FA_Auto_Script.xml ./../../FA/FA_Auto_Script.xml
+	cp -f ./FA_Auto_neo $(ptest)FA_Auto_neo
+	cp -f ./FA_Auto_Script.xml $(ptest)FA_Auto_Script.xml
 
-	cp ./FA_Auto_neo ./X_Executable/FA_Auto_neo
-	cp ./FA_Auto_Script.xml ./X_Executable/FA_Auto_Script.xml
+	cp -f ./FA_Auto_neo $(pexe)FA_Auto_neo
+	cp -f ./FA_Auto_Script.xml $(pexe)FA_Auto_Script.xml
 
 ##############################
