@@ -152,7 +152,7 @@ void CCMDHandler::CMD_Loop()
     
     while(1)
     {
-        cout << "CMD >>> ";
+        cout << "[CMD] # ";
         cin.getline(CMD_linebuffer, MAX_COMMAND);
 
         CMD_Packet xCmdPacket = CMD_Packet();
@@ -161,7 +161,7 @@ void CCMDHandler::CMD_Loop()
 
         if(-1 == xCmdPacket.CMDRipper(CMD_linebuffer))
         {
-            CTool::MassageOutFotmat("Blank CMD", '!');
+            //CTool::MassageOutFotmat("Blank CMD", '!');
             continue;
         }
 
