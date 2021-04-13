@@ -249,7 +249,8 @@ void CCMDHandler::CMD_Init()
     cout << "****************************************" << endl;
     cout << "****************************************" << endl;
     cout << "***                                  ***" << endl;
-    cout << "***            FA_Auto_neo           ***" << endl;
+    //cout << "***            FA_Auto_neo           ***" << endl;
+    printf("***            \033[1;34mFA_Auto_neo\033[0m           ***\n");
     cout << "***                                  ***" << endl;
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
@@ -262,7 +263,8 @@ void CCMDHandler::CMD_Init()
     cout << "***                                  ***" << endl;
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
-    cout << "***      >>>  番茄_summer  <<<       ***" << endl;
+    //cout << "***      >>>  番茄_summer  <<<       ***" << endl;
+    printf("***      >>>  \033[0;34m番茄_summer\033[0m  <<<       ***\n");
     cout << "***                                  ***" << endl;
     cout << "****************************************" << endl;
     cout << "****************************************" << endl;
@@ -829,6 +831,23 @@ void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
     cout << "****************************************" << endl;
 
     //cout << ms_ptr_ScriptRipper->IsIncludeMonthRange(srt_CMD.m_str_ResParam) << endl;
+    printf("\033[0;30m black \033[0m");
+    printf("\033[0;31m red \033[0m");
+    printf("\033[0;32m green \033[0m");
+    printf("\033[0;33m yellow \033[0m");
+    printf("\033[0;34m blue \033[0m");
+    printf("\033[0;35m magenta \033[0m");
+    printf("\033[0;36m cyan \033[0m");
+    printf("\033[0;37m white \n\033[0m");
+
+    printf("\033[1;30m black \033[0m");
+    printf("\033[1;31m red \033[0m");
+    printf("\033[1;32m green \033[0m");
+    printf("\033[1;33m yellow \033[0m");
+    printf("\033[1;34m blue \033[0m");
+    printf("\033[1;35m magenta \033[0m");
+    printf("\033[1;36m cyan \033[0m");
+    printf("\033[1;37m white \n\033[0m");
 
     cout << "****************************************" << endl;
     cout << "***           END OF TEST            ***" << endl;
