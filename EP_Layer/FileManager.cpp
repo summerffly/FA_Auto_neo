@@ -272,6 +272,27 @@ unsigned int CFileManager::GetFirstSearchLineIndex(const char *cha_Key)
     return m_vec_uni_LineIndex.at(0);
 }
 
+unsigned int CFileManager::GetFirstSearchLineIndex(const char *cha_Key_A, const char *cha_Key_B)
+{
+    m_vec_uni_LineIndex.clear();
+
+    for(int i=1; i <= m_int_LineNum; i++)
+    {
+        if( m_vec_cls_Line.at(i).IsContainKey(cha_Key_A) || m_vec_cls_Line.at(i).IsContainKey(cha_Key_B) )
+        {
+            m_vec_uni_LineIndex.push_back(i);
+        }
+    }
+
+    if(0 == m_vec_uni_LineIndex.size())
+    {
+        CTool::MassageOutFotmat("No Search Line Found", '!');
+        return 0;
+    }
+
+    return m_vec_uni_LineIndex.at(0);
+}
+
 int CFileManager::GetUniqueSearchLineValue(const char *cha_Key)
 {
     m_vec_uni_LineIndex.clear();
