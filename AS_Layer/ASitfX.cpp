@@ -633,7 +633,7 @@ void CASitfX::AppendNextMonth(const string str_SelMonth)
     vector<string>::iterator itr_SubMonth;
     for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
     {
-        ptr_FAitfX->AddScriptSubMonth(*itr_SubMonth, CTool::GenerateNextMonth(str_SelMonth));
+        ptr_FAitfX->AddScriptSubMonth(*itr_SubMonth, str_SelMonth);
     }
 }
 
