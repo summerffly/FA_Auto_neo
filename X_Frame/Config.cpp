@@ -13,14 +13,13 @@
 // Getting keys and values from given file
 /**************************************************/
 Config::Config( std::string filename, std::string delimiter, std::string comment ) : m_Delimiter(delimiter), m_Comment(comment)
-{  
-	//   
-
+{
 	std::ifstream in( filename.c_str() );  
 
-	if( !in ) throw File_not_found( filename );   
+	if( !in )
+		throw File_not_found( filename );
 
-	in >> (*this);  
+	in >> (*this);
 }
 
 /**************************************************/
@@ -53,7 +52,7 @@ void Config::Trim( std::string& inout_s )
 
 std::ostream& operator<<( std::ostream& os, const Config& cf )
 {  
-	// Save a Config to os  
+	// Save a Config to os
 	for( Config::mapci p = cf.m_Contents.begin();
 		p != cf.m_Contents.end();  
 		++p )  
@@ -73,8 +72,8 @@ void Config::Remove( const std::string& key )
 
 std::istream& operator>>( std::istream& is, Config& cf )
 {  
-	// Load a Config from is  
-	// Read in keys and values, keeping internal whitespace  
+	// Load a Config from is
+	// Read in keys and values, keeping internal whitespace
 	typedef std::string::size_type pos;
 	const std::string& delim  = cf.m_Delimiter;  // separator
 	const std::string& comm   = cf.m_Comment;    // comment
@@ -135,11 +134,11 @@ std::istream& operator>>( std::istream& is, Config& cf )
 			Config::Trim(key);
 			Config::Trim(line);
 			cf.m_Contents[key] = line;  // overwrites if key is repeated  
-		}  
-	}  
+		}
+	}
 
-	return is;  
-}  
+	return is;
+}
 
 bool Config::FileExist(std::string filename)
 {
@@ -155,9 +154,8 @@ void Config::ReadFile( std::string filename, std::string delimiter, std::string 
 	m_Delimiter = delimiter;
 	m_Comment = comment;
 	std::ifstream in( filename.c_str() );
-
-	if( !in ) throw File_not_found( filename );
-
+	if( !in )
+		throw File_not_found( filename );
 	in >> (*this);
 }
 
