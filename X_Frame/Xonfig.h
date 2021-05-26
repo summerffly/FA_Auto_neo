@@ -1,12 +1,12 @@
 
 /**************************************************/
-/*          Generic Configuration Class           */
+/*          Advanced Configuration Class          */
 /*             Coded by summer @ CMF              */
 /*           Created on: May 06, 2021             */
 /**************************************************/
 
-#ifndef _CONFIG_H_
-#define _CONFIG_H_
+#ifndef _XONFIG_H_
+#define _XONFIG_H_
 
 #pragma once
 
@@ -17,7 +17,7 @@
 #include <sstream>
 
 
-class Config
+class Xonfig
 {
 /***** Data *****/
 protected:  
@@ -30,19 +30,20 @@ protected:
 
 /***** Methods *****/
 public:  
-	Config( std::string filename, std::string delimiter = "=", std::string comment = "#" );
-	Config();
+	Xonfig( std::string filename, std::string delimiter = "=", std::string comment = "#" );
+	Xonfig();
+
+	bool FileExist( std::string filename );
+	void ReadFile( std::string filename, std::string delimiter = "=", std::string comment = "#" );
+
+	// Check whether key exists in configuration
+	bool KeyExists( const std::string& in_key ) const;
 
 	// Search for key and read value or optional default value, call as read<T>
 	template <class T> T Read( const std::string& in_key ) const;
 	template <class T> T Read( const std::string& in_key, const T& in_value ) const;
 	template <class T> bool ReadInto( T& out_var, const std::string& in_key ) const;
-	template <class T> bool ReadInto( T& out_var, const std::string& in_key, const T& in_value ) const;  
-	bool FileExist(std::string filename);
-	void ReadFile(std::string filename,std::string delimiter = "=",std::string comment = "#" );
-
-	// Check whether key exists in configuration
-	bool KeyExists( const std::string& in_key ) const;  
+	template <class T> bool ReadInto( T& out_var, const std::string& in_key, const T& in_value ) const;
 
 	// Modify keys and values  
 	template<class T> void Add( const std::string& in_key, const T& in_value );
@@ -53,16 +54,19 @@ public:
 	{
 		return m_Delimiter;
 	}
+
 	std::string GetComment() const
 	{
 		return m_Comment;
 	}
+
 	std::string SetDelimiter( const std::string& in_s )  
 	{
 		std::string old = m_Delimiter;
 		m_Delimiter = in_s;
 		return old;
 	}
+
 	std::string SetComment( const std::string& in_s )
 	{
 		std::string old = m_Comment;
@@ -70,13 +74,14 @@ public:
 		return old;
 	}
 
-	// Write or read configuration  
-	friend std::ostream& operator<<( std::ostream& os, const Config& cf );
-	friend std::istream& operator>>( std::istream& is, Config& cf );
+	// Write or Read Configuration
+	friend std::ostream& operator<<( std::ostream& os, const Xonfig& cf );
+	friend std::istream& operator>>( std::istream& is, Xonfig& cf );
 
 protected:  
-	template<class T> static std::string T_as_string( const T& t );  
-	template<class T> static T string_as_T( const std::string& s );  
+	template<class T> static std::string T_as_string( const T& t );
+	template<class T> static T string_as_T( const std::string& s );
+
 	static void Trim( std::string& inout_s );
 
 /***** Exception Types *****/
@@ -98,7 +103,7 @@ public:
 
 /*** static ***/
 template <class T> 
-std::string Config::T_as_string( const T& t )
+std::string Xonfig::T_as_string( const T& t )
 {
 	// Convert from a T to a string
 	// Type T must support << operator
@@ -109,8 +114,8 @@ std::string Config::T_as_string( const T& t )
 
 /*** static ***/
 template <class T> 
-T Config::string_as_T( const std::string& s )
-{  
+T Xonfig::string_as_T( const std::string& s )
+{
 	// Convert from a string to a T
 	// Type T must support >> operator
 	T t;
@@ -120,43 +125,43 @@ T Config::string_as_T( const std::string& s )
 }
 
 /*** static / specialized template ***/
-template <>  
-inline std::string Config::string_as_T<std::string>( const std::string& s )
-{  
+template <> 
+inline std::string Xonfig::string_as_T<std::string>( const std::string& s )
+{
 	// Convert from a string to a string
 	// In other words, do nothing
 	return s;
 }
 
 /*** static / specialized template ***/
-template <>  
-inline bool Config::string_as_T<bool>( const std::string& s )
-{  
-	// Convert from a string to a bool  
-	// Interpret "false", "F", "no", "n", "0" as false  
-	// Interpret "true", "T", "yes", "y", "1", "-1", or anything else as true  
+template <> 
+inline bool Xonfig::string_as_T<bool>( const std::string& s )
+{
+	// Convert from a string to a bool
+	// Interpret "false", "F", "no", "n", "0" as false
+	// Interpret "true", "T", "yes", "y", "1", "-1", or anything else as true
 	bool b = true;
 	std::string sup = s;
 	for( std::string::iterator p = sup.begin(); p != sup.end(); ++p )
 		*p = toupper(*p);   // make string all caps
 	if( sup==std::string("FALSE") || sup==std::string("F") || 
 		sup==std::string("NO") || sup==std::string("N") || 
-		sup==std::string("0") || sup==std::string("NONE") )  
+		sup==std::string("0") || sup==std::string("NONE") )
 		b = false;
 	return b;
 }
 
-template<class T>
-T Config::Read( const std::string& key ) const
+template<class T> 
+T Xonfig::Read( const std::string& key ) const
 {
 	// Read the value corresponding to key
-	mapci p = m_Contents.find(key);  
-	if( p == m_Contents.end() ) throw Key_not_found(key);  
-	return string_as_T<T>( p->second );  
+	mapci p = m_Contents.find(key);
+	if( p == m_Contents.end() ) throw Key_not_found(key);
+	return string_as_T<T>( p->second );
 }
 
 template<class T>
-T Config::Read( const std::string& key, const T& value ) const
+T Xonfig::Read( const std::string& key, const T& value ) const
 {  
 	// Return the value corresponding to key or given default value  
 	// if key is not found  
@@ -166,7 +171,7 @@ T Config::Read( const std::string& key, const T& value ) const
 }  
 
 template<class T>
-bool Config::ReadInto( T& var, const std::string& key ) const
+bool Xonfig::ReadInto( T& var, const std::string& key ) const
 {  
 	// Get the value corresponding to key and store in var  
 	// Return true if key is found  
@@ -178,7 +183,7 @@ bool Config::ReadInto( T& var, const std::string& key ) const
 }  
 
 template<class T>  
-bool Config::ReadInto( T& var, const std::string& key, const T& value ) const
+bool Xonfig::ReadInto( T& var, const std::string& key, const T& value ) const
 {  
 	// Get the value corresponding to key and store in var  
 	// Return true if key is found  
@@ -193,8 +198,8 @@ bool Config::ReadInto( T& var, const std::string& key, const T& value ) const
 }  
 
 template<class T> 
-void Config::Add( const std::string& in_key, const T& value )
-{  
+void Xonfig::Add( const std::string& in_key, const T& value )
+{
 	// Add a key with given value  
 	std::string v = T_as_string( value );  
 	std::string key=in_key;  
@@ -202,6 +207,24 @@ void Config::Add( const std::string& in_key, const T& value )
 	Trim(v);  
 	m_Contents[key] = v;
 	return;  
+}
+
+void Xonfig::Remove( const std::string& key )
+{
+	// Remove key and its value
+	m_Contents.erase( m_Contents.find( key ) );
+	return;
+}
+
+/**************************************************/
+// Remove leading and trailing whitespace
+/**************************************************/
+/*** static ***/
+void Xonfig::Trim( std::string& inout_s )
+{
+	static const char whitespace[] = " \n\t\v\r\f";
+	inout_s.erase( 0, inout_s.find_first_not_of(whitespace) );
+	inout_s.erase( inout_s.find_last_not_of(whitespace) + 1U );
 }
 
 
