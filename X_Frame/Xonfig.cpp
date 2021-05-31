@@ -63,6 +63,9 @@ std::istream& operator>>( std::istream& is, Xonfig& cf )
 
 	while( is || nextline.length() > 0 )
 	{
+		// Store original entire line
+		cf.m_Lines.push_back(nextline);
+
 		// Read an entire line at a time
 		std::string line;
 		if( nextline.length() > 0 )
@@ -78,7 +81,7 @@ std::istream& operator>>( std::istream& is, Xonfig& cf )
 		// Ignore comments
 		line = line.substr( 0, line.find(comm) );
 
-		// Parse the line if it contains a delimiter  
+		// Parse the line if it contains a delimiter
 		pos delimPos = line.find( delim );
 		if( delimPos < std::string::npos )
 		{
@@ -108,8 +111,8 @@ std::istream& operator>>( std::istream& is, Xonfig& cf )
 				Xonfig::Trim(nlcopy);
 				if( nlcopy != "" )
 					line += "\n";
-				line += nextline;  
-				terminate = false;  
+				line += nextline;
+				terminate = false;
 			}
 
 			// Store key and value

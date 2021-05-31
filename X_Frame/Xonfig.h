@@ -11,25 +11,28 @@
 #pragma once
 
 #include <string>
-#include <map>
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
+#include <map>
+#include <vector>
 
 
 class Xonfig
 {
 /***** Data *****/
-protected:  
+protected:
 	std::string m_Delimiter;   // separator between key and value
 	std::string m_Comment;     // separator between value and comments
 	std::map<std::string,std::string> m_Contents;   // extracted keys and values
+	std::vector<std::string> m_Lines;   // original entire line contents
 
 	typedef std::map<std::string,std::string>::iterator mapi;
 	typedef std::map<std::string,std::string>::const_iterator mapci;
 
 /***** Methods *****/
-public:  
+public:
 	Xonfig( std::string filename, std::string delimiter = "=", std::string comment = "#" );
 	Xonfig();
 
@@ -200,13 +203,13 @@ bool Xonfig::ReadInto( T& var, const std::string& key, const T& value ) const
 template<class T> 
 void Xonfig::Add( const std::string& in_key, const T& value )
 {
-	// Add a key with given value  
-	std::string v = T_as_string( value );  
-	std::string key=in_key;  
-	Trim(key);  
-	Trim(v);  
+	// Add a key with given value
+	std::string v = T_as_string( value );
+	std::string key=in_key;
+	Trim(key);
+	Trim(v);
 	m_Contents[key] = v;
-	return;  
+	return;
 }
 
 void Xonfig::Remove( const std::string& key )
