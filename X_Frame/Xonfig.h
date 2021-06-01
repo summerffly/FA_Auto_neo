@@ -18,6 +18,15 @@
 #include <map>
 #include <vector>
 
+typedef struct
+{
+	std::string key;
+	std::string value;
+	std::string comment;
+
+	std::string line;
+}LINE_DETAIL;
+
 
 class Xonfig
 {
@@ -25,11 +34,12 @@ class Xonfig
 protected:
 	std::string m_Delimiter;   // separator between key and value
 	std::string m_Comment;     // separator between value and comments
-	std::map<std::string,std::string> m_Contents;   // extracted keys and values
-	std::vector<std::string> m_Lines;   // original entire line contents
+	std::map<std::string, std::string> m_Contents;   // extracted keys and values
+	std::vector<std::string>           m_Lines;      // original entire lines
 
 	typedef std::map<std::string,std::string>::iterator mapi;
 	typedef std::map<std::string,std::string>::const_iterator mapci;
+	typedef std::vector<std::string>::const_iterator vecci;
 
 /***** Methods *****/
 public:
@@ -48,7 +58,7 @@ public:
 	template <class T> bool ReadInto( T& out_var, const std::string& in_key ) const;
 	template <class T> bool ReadInto( T& out_var, const std::string& in_key, const T& in_value ) const;
 
-	// Modify keys and values  
+	// Modify keys and values
 	template<class T> void Add( const std::string& in_key, const T& in_value );
 	void Remove( const std::string& in_key );
 
@@ -81,7 +91,7 @@ public:
 	friend std::ostream& operator<<( std::ostream& os, const Xonfig& cf );
 	friend std::istream& operator>>( std::istream& is, Xonfig& cf );
 
-protected:  
+protected:
 	template<class T> static std::string T_as_string( const T& t );
 	template<class T> static T string_as_T( const std::string& s );
 
@@ -219,9 +229,9 @@ void Xonfig::Remove( const std::string& key )
 	return;
 }
 
-/**************************************************/
-// Remove leading and trailing whitespace
-/**************************************************/
+//------------------------------------------------//
+//   Remove leading and trailing whitespace
+//------------------------------------------------//
 /*** static ***/
 void Xonfig::Trim( std::string& inout_s )
 {
