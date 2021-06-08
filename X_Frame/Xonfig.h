@@ -25,7 +25,7 @@ typedef struct
 	std::string comment;
 
 	std::string line;
-}LINE_DETAIL;
+}NEO_LINE;
 
 
 class Xonfig
@@ -35,11 +35,11 @@ protected:
 	std::string m_Delimiter;   // separator between key and value
 	std::string m_Comment;     // separator between value and comments
 	std::map<std::string, std::string> m_Contents;   // extracted keys and values
-	std::vector<std::string>           m_Lines;      // original entire lines
+	std::vector<NEO_LINE>              m_NeoLines;   // ifixit neo lines
 
 	typedef std::map<std::string,std::string>::iterator mapi;
 	typedef std::map<std::string,std::string>::const_iterator mapci;
-	typedef std::vector<std::string>::const_iterator vecci;
+	typedef std::vector<NEO_LINE>::const_iterator vecci;
 
 /***** Methods *****/
 public:

@@ -61,11 +61,11 @@ std::ostream& operator<<( std::ostream& os, const Xonfig& cf )
 //------------------------------------------------//
 std::ostream& operator<<( std::ostream& os, const Xonfig& cf )
 {
-	for( Xonfig::vecci p = cf.m_Lines.begin();
-		p != cf.m_Lines.end();
+	for( Xonfig::vecci p = cf.m_NeoLines.begin();
+		p != cf.m_NeoLines.end();
 		p++ )
 	{
-		os << (*p) /*<< std::endl*/;
+		os << p->line /*<< std::endl*/;
 	}
 	return os;
 }
@@ -77,30 +77,23 @@ std::istream& operator>>( std::istream& is, Xonfig& cf )
 {
 	// Read in keys and values, keeping internal whitespace
 	typedef std::string::size_type pos;
-	const std::string& delim  = cf.m_Delimiter;  // separator
-	const std::string& comm   = cf.m_Comment;    // comment
-	const pos skip = delim.length();        // length of separator
 
-	std::string nextline = "";  // might need to read ahead to see where value ends
+	const std::string& delim  = cf.m_Delimiter;   // separator
+	const std::string& comm   = cf.m_Comment;     // comment
+	const pos delimLen = delim.length();     // length of separator
+	const pos commLen = comm.length();       // length of comment
 
-	while( is || nextline.length() > 0 )
+	std::string line;
+	while( std::getline( is, line ) )
 	{
 		/*****  Store original entire line  *****/
-		cf.m_Lines.push_back(nextline);
+		//cf.m_Lines.push_back(nextline);
+		//if( line.length() > 0 )
 
-		/*****  Read an entire line at a time  *****/
-		std::string line;
-		if( nextline.length() > 0 )
-		{
-			line = nextline;  // we read ahead; use it now
-			nextline = "";
-		}
-		else
-		{
-			std::getline( is, line );
-		}
-
-		/*****  Ignore comments  *****/
+		/*****  Extract the comments  *****/
+		std::string note;
+		pos commPos = line.find( comm );
+		note = line.substr( commPos+commLen );
 		line = line.substr( 0, line.find(comm) );
 
 		// Parse the line if it contains a delimiter
@@ -109,7 +102,7 @@ std::istream& operator>>( std::istream& is, Xonfig& cf )
 		{
 			/*****  Extract the key  *****/
 			std::string key = line.substr( 0, delimPos );
-			line.replace( 0, delimPos+skip, "" );
+			line.replace( 0, delimPos+delimLen, "" );
 
 			// See if value continues on the next line
 			// Stop at blank line, next line with a key, end of stream, or end of file sentry
