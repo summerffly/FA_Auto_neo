@@ -35,16 +35,16 @@ Xonfig::Xonfig() : m_Delimiter( std::string(1,'=') ), m_Comment( std::string(1,'
 //------------------------------------------------//
 bool Xonfig::KeyExists( const std::string& key ) const
 {
-	mapci p = m_Contents.find( key );
-	return ( p != m_Contents.end() );
+	mapci p = m_kv_Map.find( key );
+	return ( p != m_kv_Map.end() );
 }
 
 #if 0
-// Save a Config to os
+// Save a Config to os   // Origin
 std::ostream& operator<<( std::ostream& os, const Xonfig& cf )
 {
-	for( Xonfig::mapci p = cf.m_Contents.begin();
-		p != cf.m_Contents.end();
+	for( Xonfig::mapci p = cf.m_kv_Map.begin();
+		p != cf.m_kv_Map.end();
 		++p )
 	{
 		os << p->first << " " << cf.m_Delimiter << " ";
@@ -61,11 +61,11 @@ std::ostream& operator<<( std::ostream& os, const Xonfig& cf )
 //------------------------------------------------//
 std::ostream& operator<<( std::ostream& os, const Xonfig& cf )
 {
-	for( Xonfig::vecci p = cf.m_NeoLines.begin();
-		p != cf.m_NeoLines.end();
+	for( Xonfig::vecci p = cf.m_neo_Lines.begin();
+		p != cf.m_neo_Lines.end();
 		p++ )
 	{
-		os << p->line /*<< std::endl*/;
+		os << p->fullline /*<< std::endl*/;
 	}
 	return os;
 }
@@ -80,21 +80,25 @@ std::istream& operator>>( std::istream& is, Xonfig& cf )
 
 	const std::string& delim  = cf.m_Delimiter;   // separator
 	const std::string& comm   = cf.m_Comment;     // comment
-	const pos delimLen = delim.length();     // length of separator
-	const pos commLen = comm.length();       // length of comment
+	const pos delimLen = delim.length();   // length of separator
+	const pos commLen = comm.length();     // length of comment
+
+	cf.m_neo_Lines.clear();
 
 	std::string line;
+	NEO_LINE neo_line;
 	while( std::getline( is, line ) )
 	{
 		/*****  Store original entire line  *****/
-		//cf.m_Lines.push_back(nextline);
-		//if( line.length() > 0 )
+		memset(&neo_line, 0, sizeof(NEO_LINE));
+		neo_line.fullline = line;
 
 		/*****  Extract the comments  *****/
 		std::string note;
 		pos commPos = line.find( comm );
 		note = line.substr( commPos+commLen );
 		line = line.substr( 0, line.find(comm) );
+		neo_line.comment = note;
 
 		// Parse the line if it contains a delimiter
 		pos delimPos = line.find( delim );
@@ -104,9 +108,9 @@ std::istream& operator>>( std::istream& is, Xonfig& cf )
 			std::string key = line.substr( 0, delimPos );
 			line.replace( 0, delimPos+delimLen, "" );
 
+		#if 0   // DO NOT support multi-line value
 			// See if value continues on the next line
 			// Stop at blank line, next line with a key, end of stream, or end of file sentry
-			#if 0   // NO NEED to support multi-line value
 			bool terminate = false;
 			while( !terminate && is )
 			{
@@ -130,13 +134,17 @@ std::istream& operator>>( std::istream& is, Xonfig& cf )
 				line += nextline;
 				terminate = false;
 			}
-			#endif
+		#endif
 
 			/***  Store key and value  ***/
 			Xonfig::Trim(key);
 			Xonfig::Trim(line);
-			cf.m_Contents[key] = line;   // overwrites if key is repeated
+			cf.m_kv_Map[key] = line;   // overwrites if key is repeated
+
+			neo_line.key = key;
+			neo_line.value = line;	
 		}
+		cf.m_neo_Lines.push_back(neo_line);
 	}
 
 	return is;

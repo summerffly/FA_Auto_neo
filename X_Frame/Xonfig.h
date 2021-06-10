@@ -24,7 +24,7 @@ typedef struct
 	std::string value;
 	std::string comment;
 
-	std::string line;
+	std::string fullline;
 }NEO_LINE;
 
 
@@ -33,9 +33,9 @@ class Xonfig
 /***** Data *****/
 protected:
 	std::string m_Delimiter;   // separator between key and value
-	std::string m_Comment;     // separator between value and comments
-	std::map<std::string, std::string> m_Contents;   // extracted keys and values
-	std::vector<NEO_LINE>              m_NeoLines;   // ifixit neo lines
+	std::string m_Comment;     // separator between value and comment
+	std::map<std::string, std::string> m_kv_Map;      // extracted keys and values
+	std::vector<NEO_LINE>              m_neo_Lines;   // parsed neo lines
 
 	typedef std::map<std::string,std::string>::iterator mapi;
 	typedef std::map<std::string,std::string>::const_iterator mapci;
@@ -168,32 +168,35 @@ template<class T>
 T Xonfig::Read( const std::string& key ) const
 {
 	// Read the value corresponding to key
-	mapci p = m_Contents.find(key);
-	if( p == m_Contents.end() ) throw Key_not_found(key);
+	mapci p = m_kv_Map.find(key);
+	if( p == m_kv_Map.end() )
+		throw Key_not_found(key);
 	return string_as_T<T>( p->second );
 }
 
 template<class T>
 T Xonfig::Read( const std::string& key, const T& value ) const
-{  
-	// Return the value corresponding to key or given default value  
-	// if key is not found  
-	mapci p = m_Contents.find(key);  
-	if( p == m_Contents.end() ) return value;  
-	return string_as_T<T>( p->second );  
+{
+	// Return the value corresponding to key
+	// Return given default value if key is not found
+	mapci p = m_kv_Map.find(key);
+	if( p == m_kv_Map.end() )
+		return value;
+	return string_as_T<T>( p->second );
 }  
 
 template<class T>
 bool Xonfig::ReadInto( T& var, const std::string& key ) const
-{  
-	// Get the value corresponding to key and store in var  
-	// Return true if key is found  
-	// Otherwise leave var untouched  
-	mapci p = m_Contents.find(key);  
-	bool found = ( p != m_Contents.end() );  
-	if( found ) var = string_as_T<T>( p->second );  
-	return found;  
-}  
+{
+	// Get the value corresponding to key and store in var
+	// Return true if key is found
+	// Otherwise leave var untouched
+	mapci p = m_kv_Map.find(key);
+	bool found = ( p != m_kv_Map.end() );
+	if( found )
+		var = string_as_T<T>( p->second );
+	return found;
+}
 
 template<class T>  
 bool Xonfig::ReadInto( T& var, const std::string& key, const T& value ) const
@@ -201,14 +204,14 @@ bool Xonfig::ReadInto( T& var, const std::string& key, const T& value ) const
 	// Get the value corresponding to key and store in var  
 	// Return true if key is found  
 	// Otherwise set var to given default  
-	mapci p = m_Contents.find(key);  
-	bool found = ( p != m_Contents.end() );  
-	if( found )  
-		var = string_as_T<T>( p->second );  
-	else 
-		var = value;  
-	return found;  
-}  
+	mapci p = m_kv_Map.find(key);
+	bool found = ( p != m_kv_Map.end() );
+	if( found )
+		var = string_as_T<T>( p->second );
+	else
+		var = value;
+	return found;
+}
 
 template<class T> 
 void Xonfig::Add( const std::string& in_key, const T& value )
@@ -218,14 +221,16 @@ void Xonfig::Add( const std::string& in_key, const T& value )
 	std::string key=in_key;
 	Trim(key);
 	Trim(v);
-	m_Contents[key] = v;
+	m_kv_Map[key] = v;
+
 	return;
 }
 
 void Xonfig::Remove( const std::string& key )
 {
 	// Remove key and its value
-	m_Contents.erase( m_Contents.find( key ) );
+	m_kv_Map.erase( m_kv_Map.find( key ) );
+
 	return;
 }
 
