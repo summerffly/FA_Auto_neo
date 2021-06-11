@@ -275,6 +275,16 @@ int CMD_Packet::CMDParser()
         m_str_CmdType = X_CMD_TYPE_TEST;
         return 0;
     }
+    else if(str_CmdPro_A == TESTT)
+    {
+        m_str_CmdType = X_CMD_TYPE_TESTT;
+        return 0;
+    }
+    else if(str_CmdPro_A == TESTTT)
+    {
+        m_str_CmdType = X_CMD_TYPE_TESTTT;
+        return 0;
+    }
 
     if((m_int_CmdProNum == 1) && (int_ParamType == 0))
     {

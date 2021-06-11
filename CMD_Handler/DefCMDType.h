@@ -65,7 +65,9 @@
 
 #define  X_CMD_TYPE_HELP    ("Help")
 
-#define  X_CMD_TYPE_TEST    ("Test")
+#define  X_CMD_TYPE_TEST      ("Test")
+#define  X_CMD_TYPE_TESTT     ("Testt")
+#define  X_CMD_TYPE_TESTTT    ("Testtt")
 
 #define  X_CMD_TYPE_CANCEL      ("Cancel")
 #define  X_CMD_TYPE_EXIT        ("Exit")

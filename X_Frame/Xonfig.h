@@ -39,6 +39,7 @@ protected:
 
 	typedef std::map<std::string,std::string>::iterator mapi;
 	typedef std::map<std::string,std::string>::const_iterator mapci;
+	typedef std::vector<NEO_LINE>::iterator veci;
 	typedef std::vector<NEO_LINE>::const_iterator vecci;
 
 /***** Methods *****/
@@ -58,8 +59,9 @@ public:
 	template <class T> bool ReadInto( T& out_var, const std::string& in_key ) const;
 	template <class T> bool ReadInto( T& out_var, const std::string& in_key, const T& in_value ) const;
 
-	// Modify keys and values
-	template<class T> void Add( const std::string& in_key, const T& in_value );
+	// Operation to keys and values 
+	//template<class T> void Add( const std::string& in_key, const T& in_value );
+	template<class T> void Modify( const std::string& in_key, const T& in_value );
 	void Remove( const std::string& in_key );
 
 	// Check or change configuration syntax  
@@ -105,6 +107,7 @@ public:
 		File_not_found( const std::string& filename_ = std::string() )
 			: filename(filename_) {}
 	};
+	
 	// thrown only by T read(key) variant of read()
 	struct Key_not_found
 	{
@@ -114,7 +117,7 @@ public:
 	};
 };
 
-/*** static ***/
+//######  static  ######//
 template <class T> 
 std::string Xonfig::T_as_string( const T& t )
 {
@@ -125,7 +128,7 @@ std::string Xonfig::T_as_string( const T& t )
 	return ost.str();
 }
 
-/*** static ***/
+//######  static  ######//
 template <class T> 
 T Xonfig::string_as_T( const std::string& s )
 {
@@ -137,7 +140,8 @@ T Xonfig::string_as_T( const std::string& s )
 	return t;
 }
 
-/*** static / specialized template ***/
+//######         static         ######//
+//######  specialized template  ######//
 template <> 
 inline std::string Xonfig::string_as_T<std::string>( const std::string& s )
 {
@@ -146,7 +150,8 @@ inline std::string Xonfig::string_as_T<std::string>( const std::string& s )
 	return s;
 }
 
-/*** static / specialized template ***/
+//######         static         ######//
+//######  specialized template  ######//
 template <> 
 inline bool Xonfig::string_as_T<bool>( const std::string& s )
 {
@@ -213,6 +218,7 @@ bool Xonfig::ReadInto( T& var, const std::string& key, const T& value ) const
 	return found;
 }
 
+#if 0   // do not work
 template<class T> 
 void Xonfig::Add( const std::string& in_key, const T& value )
 {
@@ -225,26 +231,33 @@ void Xonfig::Add( const std::string& in_key, const T& value )
 
 	return;
 }
+#endif
 
-void Xonfig::Remove( const std::string& key )
+template<class T> 
+void Xonfig::Modify( const std::string& in_key, const T& in_value )
 {
-	// Remove key and its value
-	m_kv_Map.erase( m_kv_Map.find( key ) );
+	// Modify a key with given value in map
+	std::string key = in_key;
+	std::string value = T_as_string( in_value );
+	Trim(key);
+	Trim(value);
+	m_kv_Map[key] = value;
+
+	// Modify fullline in vector
+	for( veci it = m_neo_Lines.begin(); it != m_neo_Lines.end(); it++ )
+	{
+		if( it->key == in_key )
+		{
+			it->value = value;
+			it->fullline = it->key + " " + m_Delimiter + " " + it->value;
+			if( !it->comment.empty() )
+				it->fullline += "   " + m_Comment + it->comment;
+			break;
+		}
+	}
 
 	return;
 }
-
-//------------------------------------------------//
-//   Remove leading and trailing whitespace
-//------------------------------------------------//
-/*** static ***/
-void Xonfig::Trim( std::string& inout_s )
-{
-	static const char whitespace[] = " \n\t\v\r\f";
-	inout_s.erase( 0, inout_s.find_first_not_of(whitespace) );
-	inout_s.erase( inout_s.find_last_not_of(whitespace) + 1U );
-}
-
 
 #endif
 

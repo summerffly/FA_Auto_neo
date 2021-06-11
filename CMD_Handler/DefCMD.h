@@ -97,6 +97,8 @@ extern string TIME;
 
 extern string HELP;
 extern string TEST;
+extern string TESTT;
+extern string TESTTT;
 
 extern string CANCEL;
 extern string EXIT;

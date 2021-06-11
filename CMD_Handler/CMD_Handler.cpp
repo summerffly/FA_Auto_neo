@@ -19,6 +19,8 @@ string CCMDHandler::ms_str_FM_Key = "";
 string CCMDHandler::ms_str_FM_Month = "";
 bool CCMDHandler::ms_bol_PR_Valid = false;
 
+Xonfig xonfig("FA_Auto_neo.cfg");
+
 
 /**************************************************/
 //   CMD_MAP()宏
@@ -116,6 +118,10 @@ X_BEGIN_CMD_MAP(CCMDHandler)
     X_ON_CMD_TYPE(X_CMD_TYPE_HELP, CMD_HELP_HELP, "", OnCmdHelp)
 
     X_ON_CMD_TYPE(X_CMD_TYPE_TEST, "", "", OnCmdTest)
+
+    X_ON_CMD_TYPE(X_CMD_TYPE_TESTT, "", "", OnCmdTestt)
+
+    X_ON_CMD_TYPE(X_CMD_TYPE_TESTTT, "", "", OnCmdTesttt)
 
 	X_ON_CMD_TYPE(X_CMD_TYPE_CANCEL, CMD_HELP_CANCEL, "", OnCmdCancel)
 
@@ -851,6 +857,43 @@ void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
 
     cout << "****************************************" << endl;
     cout << "***           END OF TEST            ***" << endl;
+    cout << "****************************************" << endl;
+}
+
+void CCMDHandler::OnCmdTestt(CMD_Packet srt_CMD)
+{
+    cout << "****************************************" << endl;
+    cout << "***          BEGIN OF TESTT          ***" << endl;
+    cout << "****************************************" << endl;
+
+    string emptyString = "";
+    int FileCount = xonfig.Read("FileCount", 0);
+    string File_1 = xonfig.Read("File_1", emptyString);
+    string File_2 = xonfig.Read("File_2", emptyString);
+    string File_3 = xonfig.Read("File_3", emptyString);
+    
+    cout << FileCount << endl;
+    cout << File_1 << endl;
+    cout << File_2 << endl;
+    cout << File_3 << endl;
+
+    cout << "****************************************" << endl;
+    cout << "***           END OF TESTT           ***" << endl;
+    cout << "****************************************" << endl;
+}
+
+void CCMDHandler::OnCmdTesttt(CMD_Packet srt_CMD)
+{
+    cout << "****************************************" << endl;
+    cout << "***         BEGIN OF TESTTT          ***" << endl;
+    cout << "****************************************" << endl;
+
+    xonfig.Modify("FileCount", 12345);
+    ofstream out( "FA_Auto_neo.cfg" );
+    out << xonfig;
+
+    cout << "****************************************" << endl;
+    cout << "***          END OF TESTTT           ***" << endl;
     cout << "****************************************" << endl;
 }
 

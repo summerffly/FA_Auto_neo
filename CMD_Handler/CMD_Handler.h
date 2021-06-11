@@ -14,6 +14,8 @@
 #include "./../FA_Layer/FAitfX.h"
 #include "./../AS_Layer/ASitfX.h"
 
+#include "./../X_Frame/Xonfig.h"
+
 using namespace std;
 
 
@@ -95,6 +97,8 @@ public:
 
 	static void OnCmdHelp(CMD_Packet srt_CMD);
 	static void OnCmdTest(CMD_Packet srt_CMD);
+	static void OnCmdTestt(CMD_Packet srt_CMD);
+	static void OnCmdTesttt(CMD_Packet srt_CMD);
 
 	static void OnCmdCancel(CMD_Packet srt_CMD);
 	static void OnCmdExit(CMD_Packet srt_CMD);

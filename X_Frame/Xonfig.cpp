@@ -31,6 +31,28 @@ Xonfig::Xonfig() : m_Delimiter( std::string(1,'=') ), m_Comment( std::string(1,'
 }
 
 //------------------------------------------------//
+//   Indicate whether file exists
+//------------------------------------------------//
+bool Xonfig::FileExist( std::string filename )
+{
+	bool exist = false;
+	std::ifstream in( filename.c_str() );
+	if( in )
+		exist = true;
+	return exist;
+}
+
+void Xonfig::ReadFile( std::string filename, std::string delimiter, std::string comment )
+{
+	m_Delimiter = delimiter;
+	m_Comment = comment;
+	std::ifstream in( filename.c_str() );
+	if( !in )
+		throw File_not_found( filename );
+	in >> (*this);
+}
+
+//------------------------------------------------//
 //   Indicate whether key is found
 //------------------------------------------------//
 bool Xonfig::KeyExists( const std::string& key ) const
@@ -39,25 +61,9 @@ bool Xonfig::KeyExists( const std::string& key ) const
 	return ( p != m_kv_Map.end() );
 }
 
-#if 0
-// Save a Config to os   // Origin
-std::ostream& operator<<( std::ostream& os, const Xonfig& cf )
-{
-	for( Xonfig::mapci p = cf.m_kv_Map.begin();
-		p != cf.m_kv_Map.end();
-		++p )
-	{
-		os << p->first << " " << cf.m_Delimiter << " ";
-		os << p->second << std::endl;
-	}
-	return os;
-}
-#endif
-
+//######  operator overloading  ######//
 //------------------------------------------------//
-//   Save a Config to os
-//   Optimize operator << overloading
-//   Save Config by original format
+//   Save a Config to os by original format
 //------------------------------------------------//
 std::ostream& operator<<( std::ostream& os, const Xonfig& cf )
 {
@@ -65,11 +71,12 @@ std::ostream& operator<<( std::ostream& os, const Xonfig& cf )
 		p != cf.m_neo_Lines.end();
 		p++ )
 	{
-		os << p->fullline /*<< std::endl*/;
+		os << p->fullline << std::endl;
 	}
 	return os;
 }
 
+//######  operator overloading  ######//
 //------------------------------------------------//
 //   Load a Config from is
 //------------------------------------------------//
@@ -96,9 +103,11 @@ std::istream& operator>>( std::istream& is, Xonfig& cf )
 		/*****  Extract the comments  *****/
 		std::string note;
 		pos commPos = line.find( comm );
-		note = line.substr( commPos+commLen );
-		line = line.substr( 0, line.find(comm) );
-		neo_line.comment = note;
+		if( commPos < std::string::npos )
+		{
+			note = line.substr( commPos+commLen );
+			line = line.substr( 0, line.find(comm) );
+		}
 
 		// Parse the line if it contains a delimiter
 		pos delimPos = line.find( delim );
@@ -136,13 +145,14 @@ std::istream& operator>>( std::istream& is, Xonfig& cf )
 			}
 		#endif
 
-			/***  Store key and value  ***/
+			/*****  Store key and value  *****/
 			Xonfig::Trim(key);
 			Xonfig::Trim(line);
 			cf.m_kv_Map[key] = line;   // overwrites if key is repeated
 
 			neo_line.key = key;
-			neo_line.value = line;	
+			neo_line.value = line;
+			neo_line.comment = note;
 		}
 		cf.m_neo_Lines.push_back(neo_line);
 	}
@@ -150,24 +160,35 @@ std::istream& operator>>( std::istream& is, Xonfig& cf )
 	return is;
 }
 
-bool Xonfig::FileExist( std::string filename )
+//######  static  ######//
+//------------------------------------------------//
+//   Remove leading and trailing whitespace
+//------------------------------------------------//
+void Xonfig::Trim( std::string& inout_s )
 {
-	bool exist = false;
-	std::ifstream in( filename.c_str() );
-	if( in )
-		exist = true;
-	return exist;
+	static const char whitespace[] = " \n\t\v\r\f";
+	inout_s.erase( 0, inout_s.find_first_not_of(whitespace) );
+	inout_s.erase( inout_s.find_last_not_of(whitespace) + 1U );
 }
 
-void Xonfig::ReadFile( std::string filename, std::string delimiter, std::string comment )
+void Xonfig::Remove( const std::string& in_key )
 {
-	m_Delimiter = delimiter;
-	m_Comment = comment;
-	std::ifstream in( filename.c_str() );
-	if( !in )
-		throw File_not_found( filename );
-	in >> (*this);
+	// Remove key and its value from map
+	m_kv_Map.erase( m_kv_Map.find( in_key ) );
+
+	// Remove fullline from vector
+	for( veci it = m_neo_Lines.begin(); it != m_neo_Lines.end(); it++ )
+	{
+		if( it->key == in_key )
+		{
+			m_neo_Lines.erase(it);
+			break;
+		}
+	}
+
+	return;
 }
+
 
 /**************************************************/
 /*             River flows in summer              */

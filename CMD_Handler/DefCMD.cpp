@@ -94,6 +94,8 @@ string TIME = "time";
 
 string HELP = "help";
 string TEST = "test";
+string TESTT = "testt";
+string TESTTT = "testtt";
 
 string CANCEL = "cancel";
 string EXIT = "exit";
