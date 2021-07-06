@@ -15,7 +15,7 @@ ptest = ./neo_TEST/
 pexe = ./../../FA/
 
 
-obj_X = $(px)RegExLib.o $(px)X_Tool.o $(px)Xonfig.o
+obj_X = $(px)RegExLib.o $(px)X_Tool.o $(px)Xonfig.o $(px)Xonfig_Loader.o
 obj_XML = $(lxml)pugixml.o $(lxml)XML_Ripper.o $(lxml)Script_Ripper.o
 obj_CMD = $(lcmd)DefCMD.o $(lcmd)CMD_Packet.o $(lcmd)CMD_Handler.o
 obj_OP = $(lop)FileOPer.o
@@ -38,6 +38,9 @@ X_Tool.o: $(px)X_Tool.h $(px)X_Tool.cpp
 
 Xonfig.o: $(px)Xonfig.h $(px)Xonfig.cpp
 	g++ -c $(px)Xonfig.cpp
+
+Xonfig_Loader.o: $(px)Xonfig_Loader.h $(px)Xonfig_Loader.cpp
+	g++ -c $(px)Xonfig_Loader.cpp
 
 pugixml.o: $(lxml)pugixml.cpp
 	g++ -c $(lxml)pugixml.cpp

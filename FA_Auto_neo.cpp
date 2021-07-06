@@ -21,6 +21,7 @@ int main(int argc, char **argv, char *env[])
     //### 检查.md文件存在
     //***********************************//
     CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     vector<string> vec_str_File;
     ptr_ScriptRipper->FileDuplicator(vec_str_File);

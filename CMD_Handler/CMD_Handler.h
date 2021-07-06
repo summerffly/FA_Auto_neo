@@ -15,6 +15,7 @@
 #include "./../AS_Layer/ASitfX.h"
 
 #include "./../X_Frame/Xonfig.h"
+#include "./../X_Frame/Xonfig_Loader.h"
 
 using namespace std;
 

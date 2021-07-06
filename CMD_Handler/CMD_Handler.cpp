@@ -19,7 +19,7 @@ string CCMDHandler::ms_str_FM_Key = "";
 string CCMDHandler::ms_str_FM_Month = "";
 bool CCMDHandler::ms_bol_PR_Valid = false;
 
-Xonfig xonfig("FA_Auto_neo.cfg");
+Xonfig xonfig("FA_Auto_neo.ini");
 
 
 /**************************************************/
@@ -888,9 +888,9 @@ void CCMDHandler::OnCmdTesttt(CMD_Packet srt_CMD)
     cout << "***         BEGIN OF TESTTT          ***" << endl;
     cout << "****************************************" << endl;
 
-    xonfig.Modify("FileCount", 12345);
-    ofstream out( "FA_Auto_neo.cfg" );
-    out << xonfig;
+    //xonfig.Modify("FileCount", 12345);
+    //ofstream out( "FA_Auto_neo.ini" );
+    //out << xonfig;
 
     cout << "****************************************" << endl;
     cout << "***          END OF TESTTT           ***" << endl;
