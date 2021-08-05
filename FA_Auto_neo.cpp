@@ -39,8 +39,8 @@ int main(int argc, char **argv, char *env[])
     // 才能MonthRangeGenerator
     //***********************************//
 
-    CTool::SetOriginMonth(ptr_ScriptRipper->GetOriginMonth());
-    CTool::SetCurrentMonth(ptr_ScriptRipper->GetCurrentMonth());
+    CTool::SetOriginMonth(ptr_XonfigLoader->GetOriginMonth());
+    CTool::SetCurrentMonth(ptr_XonfigLoader->GetCurrentMonth());
 
     ptr_ScriptRipper->ExMonthGenerator();
     ptr_ScriptRipper->MonthRangeGenerator();

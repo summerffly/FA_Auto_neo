@@ -11,6 +11,7 @@
 #include "./../X_Frame/X_Tool.h"
 
 CScriptRipper* CCMDHandler::ms_ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+CXonfigLoader* CCMDHandler::ms_ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 CFAitfX* CCMDHandler::ms_ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 CASitfX* CCMDHandler::ms_ptr_ASitfX = Singleton<CASitfX>::GetInstance();
 
@@ -260,16 +261,15 @@ void CCMDHandler::CMD_Init()
     cout << "***                                  ***" << endl;
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
-    cout << "***           Version: " << ms_ptr_ScriptRipper->GetVersion() << "         ***" << endl;
+    cout << "***           Version: " << ms_ptr_XonfigLoader->GetVersion() << "         ***" << endl;
     cout << "***                                  ***" << endl;
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
-    cout << "***          初始月度: " << ms_ptr_ScriptRipper->GetOriginMonth() << "            ***" << endl;
-    cout << "***          当前月度: " << ms_ptr_ScriptRipper->GetCurrentMonth() << "            ***" << endl;
+    cout << "***          初始月度: " << ms_ptr_XonfigLoader->GetOriginMonth() << "            ***" << endl;
+    cout << "***          当前月度: " << ms_ptr_XonfigLoader->GetCurrentMonth() << "            ***" << endl;
     cout << "***                                  ***" << endl;
     cout << "***  ------------------------------  ***" << endl;
     cout << "***                                  ***" << endl;
-    //cout << "***      >>>  番茄_summer  <<<       ***" << endl;
     printf("***      >>>  \033[0;34m番茄_summer\033[0m  <<<       ***\n");
     cout << "***                                  ***" << endl;
     cout << "****************************************" << endl;

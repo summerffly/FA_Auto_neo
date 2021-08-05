@@ -21,7 +21,7 @@ m_cls_Xonfig(cha_xmlPath)
 
     m_str_OriginSum = "";
     m_str_CurrentSum = "";
-    //m_str_CAFSum = "";
+    //m_str_CAFSum = "";   // tag summer@20210805 - why comments ?
 
     m_str_OriginMonth = "";
     m_str_CurrentMonth = "";
@@ -73,7 +73,9 @@ CXonfigLoader::~CXonfigLoader()
 /**************************************************/
 void CXonfigLoader::VersionRipper()
 {
-    //m_str_Version = m_cls_XMLRipper.GetRootNodeAttr("version");
+    string emptyString = "";
+
+    m_str_Version = m_cls_Xonfig.Read("FA_Auto_Version", emptyString);
 }
 
 /**************************************************/
@@ -81,11 +83,13 @@ void CXonfigLoader::VersionRipper()
 /**************************************************/
 void CXonfigLoader::MonthRipper()
 {
-    //m_str_OriginMonth = m_cls_XMLRipper.GetL1NodeAttr_UNI("OriginMonth", "month");
-    //m_str_CurrentMonth = m_cls_XMLRipper.GetL1NodeAttr_UNI("CurrentMonth", "month");
+    string emptyString = "";
 
-    //m_uni_OriginMonth = CTool::GenerateMonthInt(m_str_OriginMonth);
-    //m_uni_CurrentMonth = CTool::GenerateMonthInt(m_str_CurrentMonth);
+    m_str_OriginMonth = m_cls_Xonfig.Read("OriginMonth", emptyString);
+    m_str_CurrentMonth = m_cls_Xonfig.Read("CurrentMonth", emptyString);
+
+    m_uni_OriginMonth = CTool::GenerateMonthInt(m_str_OriginMonth);
+    m_uni_CurrentMonth = CTool::GenerateMonthInt(m_str_CurrentMonth);
 }
 
 /**************************************************/
@@ -307,8 +311,7 @@ bool CXonfigLoader::IsIncludeMonthRange(const string str_SelMonth)
 /**************************************************/
 string CXonfigLoader::GetVersion()
 {
-    // return m_str_Version;
-    return " ";
+    return m_str_Version;
 }
 
 /**************************************************/
@@ -316,8 +319,7 @@ string CXonfigLoader::GetVersion()
 /**************************************************/
 string CXonfigLoader::GetOriginMonth()
 {
-    // return m_str_OriginMonth;
-    return " ";
+    return m_str_OriginMonth;
 }
 
 /**************************************************/
@@ -325,8 +327,7 @@ string CXonfigLoader::GetOriginMonth()
 /**************************************************/
 string CXonfigLoader::GetCurrentMonth()
 {
-    // return m_str_CurrentMonth;
-    return " ";
+    return m_str_CurrentMonth;
 }
 
 /**************************************************/

@@ -84,8 +84,10 @@ clean:
 install:
 	cp -f ./FA_Auto_neo $(ptest)FA_Auto_neo
 	cp -f ./FA_Auto_Script.xml $(ptest)FA_Auto_Script.xml
+	cp -f ./FA_Auto_neo.ini $(ptest)FA_Auto_neo.ini
 
 	cp -f ./FA_Auto_neo $(pexe)FA_Auto_neo
 	cp -f ./FA_Auto_Script.xml $(pexe)FA_Auto_Script.xml
+	cp -f ./FA_Auto_neo.ini $(pexe)FA_Auto_neo.ini
 
 ##############################

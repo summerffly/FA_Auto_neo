@@ -106,6 +106,7 @@ public:
 
 private:
 	static CScriptRipper *ms_ptr_ScriptRipper;
+	static CXonfigLoader *ms_ptr_XonfigLoader;
     static CFAitfX *ms_ptr_FAitfX;
     static CASitfX *ms_ptr_ASitfX;
 
