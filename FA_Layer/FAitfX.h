@@ -10,6 +10,7 @@
 #include "./../X_Frame/X_Tool.h"
 #include "./../X_Frame/Singleton.h"
 #include "./../XML_Ripper/Script_Ripper.h"
+#include "./../X_Frame/Xonfig_Loader.h"
 #include "./../EP_Layer/FileManager.h"
 
 using namespace std;

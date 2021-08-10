@@ -105,14 +105,14 @@ void CFAitfX::LoadSum(int int_OFlag)
 /**************************************************/
 void CFAitfX::SummarizeMonth(int int_OFlag)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     int int_MonthSalarySum = 0;
     int int_MonthExpenseSum = 0;
     int int_MonthSurplusSum = 0;
 
     vector<string> vec_str_MonthRange;
-    ptr_ScriptRipper->MonthRangeDuplicator(vec_str_MonthRange);
+    ptr_XonfigLoader->MonthRangeDuplicator(vec_str_MonthRange);
 
     string str_MonthKey;
     unsigned int uni_MonthLine = 0;
@@ -912,14 +912,14 @@ void CFAitfX::AddScriptSubMonth(const string str_SubMonthKey, const string str_S
 /**************************************************/
 unsigned int CFAitfX::GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
-    
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
+
     unsigned int uni_TrendIndex = 0;
     unsigned int uni_TrendSum = 0;
     TREND_INFO stc_TrendInfo;
 
-    string str_TrendMonth = ptr_ScriptRipper->GetOriginMonth();
-    string str_TerminalMonth = CTool::GenerateNextMonth(ptr_ScriptRipper->GetCurrentMonth());
+    string str_TrendMonth = ptr_XonfigLoader->GetOriginMonth();
+    string str_TerminalMonth = CTool::GenerateNextMonth(ptr_XonfigLoader->GetCurrentMonth());
 
     while( str_TrendMonth != str_TerminalMonth )
     {
@@ -927,7 +927,7 @@ unsigned int CFAitfX::GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_Trend
         string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_TrendMonth);
 
         unsigned int uni_RangeTop = m_ptr_FM_life->GetFirstSearchLineIndex(str_RangeTop.c_str());
-        unsigned int uni_RangeBottom = m_ptr_FM_life->GetFirstSearchLineIndex(str_RangeBottom.c_str());
+        unsigned int uni_RangeBottom = m_ptr_FM_life->GetFirstSearchLineIndex(str_RangeBottom.c_str(), "Update Time");
 
         if( m_ptr_FM_life->SearchRangeLineKey(str_MonthKey.c_str(), uni_RangeTop, uni_RangeBottom) )
         {
@@ -958,15 +958,15 @@ unsigned int CFAitfX::GenerateMonthTrendVector(vector<TREND_INFO> &vec_stc_Trend
 /**************************************************/
 unsigned int CFAitfX::AppendMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendInfo, const string str_MonthKey)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     unsigned int uni_TrendIndex = 0;
     unsigned int uni_VecIndex = 0;
     unsigned int uni_TrendSum = 0;
     TREND_INFO stc_TrendInfo;
 
-    string str_TrendMonth = ptr_ScriptRipper->GetOriginMonth();
-    string str_TerminalMonth = CTool::GenerateNextMonth(ptr_ScriptRipper->GetCurrentMonth());
+    string str_TrendMonth = ptr_XonfigLoader->GetOriginMonth();
+    string str_TerminalMonth = CTool::GenerateNextMonth(ptr_XonfigLoader->GetCurrentMonth());
 
     while( str_TrendMonth != str_TerminalMonth )
     {
@@ -974,7 +974,7 @@ unsigned int CFAitfX::AppendMonthTrendVector(vector<TREND_INFO> &vec_stc_TrendIn
         string str_RangeBottom = "## life.M" + CTool::GenerateNextMonth(str_TrendMonth);
 
         unsigned int uni_RangeTop = m_ptr_FM_life->GetFirstSearchLineIndex(str_RangeTop.c_str());
-        unsigned int uni_RangeBottom = m_ptr_FM_life->GetFirstSearchLineIndex(str_RangeBottom.c_str());
+        unsigned int uni_RangeBottom = m_ptr_FM_life->GetFirstSearchLineIndex(str_RangeBottom.c_str(), "Update Time");
 
         if( m_ptr_FM_life->SearchRangeLineKey(str_MonthKey.c_str(), uni_RangeTop, uni_RangeBottom) )
         {

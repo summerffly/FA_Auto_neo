@@ -253,38 +253,36 @@ void CXonfigLoader::BakupPathRipper()
 /**************************************************/
 void CXonfigLoader::ExMonthGenerator()
 {
-    // m_str_PreviousMonth = CTool::GeneratePreMonth(m_str_CurrentMonth);
-    // m_uni_PreviousMonth = CTool::GenerateMonthInt(m_str_PreviousMonth);
+    m_str_PreviousMonth = CTool::GeneratePreMonth(m_str_CurrentMonth);
+    m_uni_PreviousMonth = CTool::GenerateMonthInt(m_str_PreviousMonth);
 }
 
 /**************************************************/
 //   生成 Month Range
-//   最大月度支持到 (24-1) 个月
-//   支持 单月度 计算
-//   2017.03 ~ 2017.03 >>> 可行
+//   支持 单月度 e.g. [2017.03 ~ 2017.03]
+//   支持 最大 (24-1) 个月
 /**************************************************/
 void CXonfigLoader::MonthRangeGenerator()
 {
-    // string str_OriginMonth = m_str_OriginMonth;
-    // string str_CurrentMonth = m_str_CurrentMonth;
+    string str_OriginMonth = m_str_OriginMonth;
+    string str_CurrentMonth = m_str_CurrentMonth;
 
-    // string str_InsertMonth = str_OriginMonth;
-    // m_vec_str_Month.push_back(str_OriginMonth);
+    string str_InsertMonth = str_OriginMonth;
+    m_vec_str_Month.push_back(str_OriginMonth);
 
-    // if( CTool::CompareString(m_str_OriginMonth, m_str_CurrentMonth) )
-    // {
-    //     return;
-    // }
-    // else
-    // {
-    //     do{
-    //         str_InsertMonth = CTool::GenerateNextMonth(str_InsertMonth);
-    //         m_vec_str_Month.push_back(str_InsertMonth);
+    if( CTool::CompareString(m_str_OriginMonth, m_str_CurrentMonth) )
+    {
+        return;
+    }
+    else
+    {
+        do{
+            str_InsertMonth = CTool::GenerateNextMonth(str_InsertMonth);
+            m_vec_str_Month.push_back(str_InsertMonth);
+        }while( !CTool::CompareString(str_InsertMonth, m_str_CurrentMonth) );
 
-    //     }while( !CTool::CompareString(str_InsertMonth, m_str_CurrentMonth) );
-
-    //     return;
-    // }
+        return;
+    }
 }
 
 /**************************************************/
@@ -292,16 +290,16 @@ void CXonfigLoader::MonthRangeGenerator()
 /**************************************************/
 bool CXonfigLoader::IsIncludeMonthRange(const string str_SelMonth)
 {
-    // string str_JudgeMonth(str_SelMonth);
+    string str_JudgeMonth(str_SelMonth);
 
-    // vector<string>::iterator itr_Month;
-    // for(itr_Month = m_vec_str_Month.begin(); itr_Month != m_vec_str_Month.end(); itr_Month++)
-    // {
-    //     if( CTool::CompareString(*itr_Month, str_JudgeMonth) )
-    //     {
-    //         return true;
-    //     }
-    // }
+    vector<string>::iterator itr_Month;
+    for(itr_Month = m_vec_str_Month.begin(); itr_Month != m_vec_str_Month.end(); itr_Month++)
+    {
+        if( CTool::CompareString(*itr_Month, str_JudgeMonth) )
+        {
+            return true;
+        }
+    }
 
     return false;
 }
@@ -335,8 +333,7 @@ string CXonfigLoader::GetCurrentMonth()
 /**************************************************/
 string CXonfigLoader::GetPreviousMonth()
 {
-    // return m_str_PreviousMonth;
-    return " ";
+    return m_str_PreviousMonth;
 }
 
 /**************************************************/
@@ -398,13 +395,13 @@ unsigned int CXonfigLoader::GetMonthSalary()
 /**************************************************/
 void CXonfigLoader::MonthRangeDuplicator(vector<string> &vec_str_DestMonth)
 {
-    // vec_str_DestMonth.clear();
+    vec_str_DestMonth.clear();
 
-    // vector<string>::iterator itr_Month;
-    // for(itr_Month = m_vec_str_Month.begin(); itr_Month != m_vec_str_Month.end(); itr_Month++)
-    // {
-    //     vec_str_DestMonth.push_back(*itr_Month);
-    // }
+    vector<string>::iterator itr_Month;
+    for(itr_Month = m_vec_str_Month.begin(); itr_Month != m_vec_str_Month.end(); itr_Month++)
+    {
+        vec_str_DestMonth.push_back(*itr_Month);
+    }
 }
 
 /**************************************************/
@@ -554,11 +551,10 @@ string CXonfigLoader::SubMonthTranslater(const string str_SubMonthCMD)
 /**************************************************/
 void CXonfigLoader::ModifyCurrentMonth(const string str_SelMonth)
 {
-    // m_cls_XMLRipper.SetL1NodeAttr_UNI("CurrentMonth", "month", str_SelMonth);
-    // m_cls_XMLRipper.XMLSaver();
+    m_str_CurrentMonth = str_SelMonth;
+    m_str_PreviousMonth = CTool::GeneratePreMonth(m_str_CurrentMonth);
 
-    // m_str_CurrentMonth = str_SelMonth;
-    // m_str_PreviousMonth = CTool::GeneratePreMonth(m_str_CurrentMonth);
+    m_cls_Xonfig.Modify("CurrentMonth", str_SelMonth);
 }
 
 //------------------------------//
