@@ -1086,8 +1086,9 @@ unsigned int CFAitfX::GenerateMonthVector(vector<UNIT_INFO> &vec_stc_UnitInfo, c
         return -1;
     }
     unsigned int uni_RangeTop = m_ptr_FM_life->GetSearchLineIndex(1) + 4;
-    m_ptr_FM_life->SearchLineKey(str_RangeBottom.c_str());
-    unsigned int uni_RangeBottom = m_ptr_FM_life->GetSearchLineIndex(1) - 1;
+    //m_ptr_FM_life->SearchLineKey(str_RangeBottom.c_str());
+    //unsigned int uni_RangeBottom = m_ptr_FM_life->GetSearchLineIndex(1) - 1;
+    unsigned int uni_RangeBottom = m_ptr_FM_life->GetFirstSearchLineIndex(str_RangeBottom.c_str(), "Update Time") - 1;
 
     // 建构 vector
     UNIT_INFO stc_UnitInfo;

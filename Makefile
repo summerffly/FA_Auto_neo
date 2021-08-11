@@ -78,8 +78,6 @@ ASitfX.o: $(las)ASitfX.h $(las)ASitfX.cpp
 .PHONY:clean
 clean:
 	rm $(px)*.o $(lxml)*.o $(lcmd)*.o $(lop)*.o $(lep)*.o $(lfa)*.o $(las)*.o *.o FA_Auto_neo
-	rm $(ptest)FA_Auto_neo
-	rm $(pexe)FA_Auto_neo
 
 test:
 	cp -f ./FA_Auto_neo $(ptest)FA_Auto_neo
