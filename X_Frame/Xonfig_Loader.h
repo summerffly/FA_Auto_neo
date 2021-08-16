@@ -104,8 +104,8 @@ private:
     string m_str_CurrentSum;
     string m_str_CAFSum;
 
-    unsigned int m_uni_TitleNum;
-    unsigned int m_uni_TitleDeepNum;
+    unsigned int m_uni_TitleCount;
+    unsigned int m_uni_TitleDeepCount;
     unsigned int m_uni_TailNum;
     unsigned int m_uni_CAFNum;
     unsigned int m_uni_CAFIndex;

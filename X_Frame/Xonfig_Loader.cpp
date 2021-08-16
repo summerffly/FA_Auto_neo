@@ -8,6 +8,8 @@
 
 using namespace std;
 
+static const char *emptyString = "";
+
 
 /**************************************************/
 //   CXonfigLoader 构造函数
@@ -97,8 +99,7 @@ void CXonfigLoader::MonthRipper()
 /**************************************************/
 void CXonfigLoader::SalaryRipper()
 {
-    //string str_MonthSalary = m_cls_XMLRipper.GetL1NodeAttr_UNI("MonthSalary", "value");
-    //m_uni_MonthSalary = atoi(str_MonthSalary.c_str());
+    m_uni_MonthSalary = m_cls_Xonfig.Read("MonthSalary", 0);
 }
 
 /**************************************************/
@@ -116,15 +117,19 @@ void CXonfigLoader::SumRipper()
 /**************************************************/
 void CXonfigLoader::TitleRipper()
 {
-    //string str_TitleNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_Title", "num");
-    //m_uni_TitleNum = atoi(str_TitleNum.c_str());
+    m_uni_TitleCount = m_cls_Xonfig.Read("TitleCount", 0);
 
-    //string str_Temp;
-    //for(int i=1; i<=m_uni_TitleNum; i++)
-    //{
-    //    str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_Title", "TitleItem", i,"item");
-    //    m_vec_str_Title.push_back(str_Temp);
-    //}
+    string str_Temp;
+    int index = 1;
+    char nameLabel[64];
+    while(index <= m_uni_TitleCount)
+    {
+        memset(&nameLabel, 0, sizeof(nameLabel));
+        sprintf(nameLabel, "TitleItem_%d", index++);
+        str_Temp = emptyString;
+        str_Temp = m_cls_Xonfig.Read(nameLabel, str_Temp);
+        m_vec_str_Title.push_back(str_Temp);
+    }
 }
 
 /**************************************************/
@@ -132,18 +137,29 @@ void CXonfigLoader::TitleRipper()
 /**************************************************/
 void CXonfigLoader::TitleDeepRipper()
 {
-    //string str_TitleDeepNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_TitleDeep", "num");
-    //m_uni_TitleDeepNum = atoi(str_TitleDeepNum.c_str());
+    m_uni_TitleDeepCount = m_cls_Xonfig.Read("TitleDeepCount", 0);
 
-    //string str_Temp;
-    //string str_TempKey;
-    //for(int i=1; i<=m_uni_TitleDeepNum; i++)
-    //{
-    //    str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_TitleDeep", "TitleItem", i,"cmd");
-    //    m_vec_str_TitleDeep.push_back(str_Temp);
-    //    str_TempKey = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_TitleDeep", "TitleItem", i,"key");
-    //    m_map_TitleDeep.insert(make_pair(str_Temp,str_TempKey));
-    //}
+    string str_TempCMD;
+    string str_TempKey;
+    int index = 1;
+    char nameLabel[64];
+    while(index <= m_uni_TitleDeepCount)
+    {
+        memset(&nameLabel, 0, sizeof(nameLabel));
+        sprintf(nameLabel, "TitleDeepCMD_%d", index);
+        str_TempCMD = emptyString;
+        str_TempCMD = m_cls_Xonfig.Read(nameLabel, str_TempCMD);
+
+        memset(&nameLabel, 0, sizeof(nameLabel));
+        sprintf(nameLabel, "TitleDeepKey_%d", index);
+        str_TempKey = emptyString;
+        str_TempKey = m_cls_Xonfig.Read(nameLabel, str_TempKey);
+
+        m_vec_str_TitleDeep.push_back(str_TempCMD);
+        m_map_TitleDeep.insert(make_pair(str_TempCMD, str_TempKey));
+
+        index++;
+    }
 }
 
 /**************************************************/
@@ -386,8 +402,7 @@ int CXonfigLoader::GetSubMonthNum()
 /**************************************************/
 unsigned int CXonfigLoader::GetMonthSalary()
 {
-    // return m_uni_MonthSalary;
-    return 0;
+    return m_uni_MonthSalary;
 }
 
 /**************************************************/
@@ -409,13 +424,13 @@ void CXonfigLoader::MonthRangeDuplicator(vector<string> &vec_str_DestMonth)
 /**************************************************/
 void CXonfigLoader::TitleDuplicator(vector<string> &vec_str_Dest)
 {
-    // vec_str_Dest.clear();
+    vec_str_Dest.clear();
 
-    // vector<string>::iterator itr_Title;
-    // for(itr_Title = m_vec_str_Title.begin(); itr_Title != m_vec_str_Title.end(); itr_Title++)
-    // {
-    //     vec_str_Dest.push_back(*itr_Title);
-    // }
+    vector<string>::iterator itr_Title;
+    for(itr_Title = m_vec_str_Title.begin(); itr_Title != m_vec_str_Title.end(); itr_Title++)
+    {
+        vec_str_Dest.push_back(*itr_Title);
+    }
 }
 
 /**************************************************/
@@ -423,13 +438,13 @@ void CXonfigLoader::TitleDuplicator(vector<string> &vec_str_Dest)
 /**************************************************/
 void CXonfigLoader::TitleDeepDuplicator(vector<string> &vec_str_Dest)
 {
-    // vec_str_Dest.clear();
+    vec_str_Dest.clear();
 
-    // vector<string>::iterator itr_TitleDeep;
-    // for(itr_TitleDeep = m_vec_str_TitleDeep.begin(); itr_TitleDeep != m_vec_str_TitleDeep.end(); itr_TitleDeep++)
-    // {
-    //     vec_str_Dest.push_back(*itr_TitleDeep);
-    // }
+    vector<string>::iterator itr_TitleDeep;
+    for(itr_TitleDeep = m_vec_str_TitleDeep.begin(); itr_TitleDeep != m_vec_str_TitleDeep.end(); itr_TitleDeep++)
+    {
+        vec_str_Dest.push_back(*itr_TitleDeep);
+    }
 }
 
 /**************************************************/

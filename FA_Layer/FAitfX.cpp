@@ -1190,7 +1190,6 @@ void CFAitfX::CompareMonth(const string str_SelMonth, const string str_CmpMonth)
     vector<string> vec_str_StdMonth;
     vec_str_StdMonth.push_back("生活费");
     vec_str_StdMonth.insert(vec_str_StdMonth.end(), vec_str_Room.begin(), vec_str_Room.end());
-    vec_str_StdMonth.push_back("蚂蚁还款");   // tips 番茄@20180817 - 之后需要删除
     vec_str_StdMonth.insert(vec_str_StdMonth.end(), vec_str_SubMonth.begin(), vec_str_SubMonth.end());
 
     // ...
