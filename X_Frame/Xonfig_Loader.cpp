@@ -237,15 +237,21 @@ void CXonfigLoader::SubMonthRipper()
 /**************************************************/
 void CXonfigLoader::FileRipper()
 {
-    //string str_FileNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_File", "num");
-    // m_uni_FileNum = atoi(str_FileNum.c_str());
+    m_uni_FileNum = m_cls_Xonfig.Read("FileCount", 0);
 
-    // string str_Temp;
-    // for(int i=1; i<=m_uni_FileNum; i++)
-    // {
-    //     str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_File", "File", i, "file");
-    //     m_vec_str_File.push_back(str_Temp);
-    // }
+    string str_Temp;
+    char nameLabel[64];
+    int index = 1;
+    while(index <= m_uni_TitleDeepCount)
+    {
+        memset(&nameLabel, 0, sizeof(nameLabel));
+        sprintf(nameLabel, "File_%d", index);
+        str_Temp = emptyString;
+        str_Temp = m_cls_Xonfig.Read(nameLabel, str_Temp);
+        m_vec_str_File.push_back(str_Temp);
+
+        index++;
+    }
 }
 
 /**************************************************/
@@ -508,13 +514,13 @@ void CXonfigLoader::SubMonthDuplicator(vector<string> &vec_str_Dest)
 /**************************************************/
 void CXonfigLoader::FileDuplicator(vector<string> &vec_str_Dest)
 {
-    // vec_str_Dest.clear();
+    vec_str_Dest.clear();
 
-    // vector<string>::iterator itr_FilePath;
-    // for(itr_FilePath = m_vec_str_File.begin(); itr_FilePath != m_vec_str_File.end(); itr_FilePath++)
-    // {
-    //     vec_str_Dest.push_back(*itr_FilePath);
-    // }
+    vector<string>::iterator itr_FilePath;
+    for(itr_FilePath = m_vec_str_File.begin(); itr_FilePath != m_vec_str_File.end(); itr_FilePath++)
+    {
+        vec_str_Dest.push_back(*itr_FilePath);
+    }
 }
 
 /**************************************************/

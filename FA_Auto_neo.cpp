@@ -24,7 +24,7 @@ int main(int argc, char **argv, char *env[])
     CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     vector<string> vec_str_File;
-    ptr_ScriptRipper->FileDuplicator(vec_str_File);
+    ptr_XonfigLoader->FileDuplicator(vec_str_File);
 
     if(0 != CTool::CheckFilesExist(vec_str_File))
     {
