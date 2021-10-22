@@ -8,7 +8,7 @@
 
 #include "DefCMDType.h"
 #include "DefCMD.h"
-#include "./../XML_Ripper/Script_Ripper.h"
+#include "./../X_Frame/Xonfig_Loader.h"
 
 
 /**************************************************/
@@ -16,7 +16,7 @@
 /**************************************************/
 CMD_Packet::CMD_Packet()
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     m_str_CmdType = "";
 
@@ -27,7 +27,7 @@ CMD_Packet::CMD_Packet()
     m_vec_Cmd.clear();
 
     m_int_ParamValue = 0;
-    m_str_ParamMonth = ptr_ScriptRipper->GetCurrentMonth();
+    m_str_ParamMonth = ptr_XonfigLoader->GetCurrentMonth();
     m_str_ParamSubMonth = "";
     m_str_ParamTitle = "";
     m_str_ParamDate = "";
@@ -184,8 +184,8 @@ int CMD_Packet::CMDParser()
             m_str_ParamMonth = *itr_Cmd;
             m_int_CmdProNum -= 2;
 
-            CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
-            if( !ptr_ScriptRipper->IsIncludeMonthRange(m_str_ParamMonth) )
+            CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
+            if( !ptr_XonfigLoader->IsIncludeMonthRange(m_str_ParamMonth) )
                 return -3;
 
             continue;
@@ -407,7 +407,7 @@ int CMD_Packet::CMDParser()
 /**************************************************/
 int CMD_Packet::CMDParamChecker()
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     if("" != m_str_ParamSubMonth)
     {
@@ -415,7 +415,7 @@ int CMD_Packet::CMDParamChecker()
             return 0;
 
         vector<string> vec_str_SubMonth;
-        ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+        ptr_XonfigLoader->SubMonthDuplicator(vec_str_SubMonth);
 
         vector<string>::iterator itr_SubMonth;
         for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
@@ -430,7 +430,7 @@ int CMD_Packet::CMDParamChecker()
     if("" != m_str_ParamTitle)
     {
         vector<string> vec_str_TitleDeep;
-        ptr_ScriptRipper->TitleDeepDuplicator(vec_str_TitleDeep);
+        ptr_XonfigLoader->TitleDeepDuplicator(vec_str_TitleDeep);
 
         vector<string>::iterator itr_TitleDeep;
         for(itr_TitleDeep = vec_str_TitleDeep.begin(); itr_TitleDeep != vec_str_TitleDeep.end(); itr_TitleDeep++)

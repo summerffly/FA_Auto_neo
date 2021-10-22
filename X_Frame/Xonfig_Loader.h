@@ -60,7 +60,7 @@ public:
     string GetCurrentSum();
     string GetCAFSum();
     int GetCAFIndex();
-    int GetSubMonthNum();
+    int GetSubMonthCount();
     unsigned int GetMonthSalary();
 
     void MonthRangeDuplicator(vector<string> &vec_str_DestMonth);
@@ -110,7 +110,7 @@ private:
     unsigned int m_uni_CAFNum;
     unsigned int m_uni_CAFIndex;
     unsigned int m_uni_RoomNum;
-    unsigned int m_uni_SubMonthNum;
+    unsigned int m_uni_SubMonthCount;
     unsigned int m_uni_FileNum;
     unsigned int m_uni_BakupPathNum;
     vector<string> m_vec_str_Title;

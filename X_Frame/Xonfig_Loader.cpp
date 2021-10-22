@@ -218,18 +218,29 @@ void CXonfigLoader::RoomRipper()
 /**************************************************/
 void CXonfigLoader::SubMonthRipper()
 {
-    //string str_SubMonthNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_SubMonth", "num");
-    //m_uni_SubMonthNum = atoi(str_SubMonthNum.c_str());
+    m_uni_SubMonthCount = m_cls_Xonfig.Read("SubMonthCount", 0);
 
-    //string str_Temp;
-    //string str_TempKey;
-    //for(int i=1; i<=m_uni_SubMonthNum; i++)
-    //{
-    //    str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_SubMonth", "SMItem", i, "cmd");
-    //    m_vec_str_SubMonth.push_back(str_Temp);
-    //    str_TempKey = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_SubMonth", "SMItem", i, "key");
-    //    m_map_SubMonth.insert(make_pair(str_Temp,str_TempKey));
-    //}
+    string str_TempCMD;
+    string str_TempKey;
+    int index = 1;
+    char nameLabel[64];
+    while( index <= m_uni_SubMonthCount )
+    {
+        memset(&nameLabel, 0, sizeof(nameLabel));
+        sprintf(nameLabel, "SubMonthCMD_%d", index);
+        str_TempCMD = emptyString;
+        str_TempCMD = m_cls_Xonfig.Read(nameLabel, str_TempCMD);
+
+        memset(&nameLabel, 0, sizeof(nameLabel));
+        sprintf(nameLabel, "SubMonthKey_%d", index);
+        str_TempKey = emptyString;
+        str_TempKey = m_cls_Xonfig.Read(nameLabel, str_TempKey);
+
+        m_vec_str_SubMonth.push_back(str_TempCMD);
+        m_map_SubMonth.insert(make_pair(str_TempCMD, str_TempKey));
+
+        index++;
+    }
 }
 
 /**************************************************/
@@ -397,10 +408,9 @@ int CXonfigLoader::GetCAFIndex()
 /**************************************************/
 //   获取 SubMonthNum
 /**************************************************/
-int CXonfigLoader::GetSubMonthNum()
+int CXonfigLoader::GetSubMonthCount()
 {
-    // return m_uni_SubMonthNum;
-    return 0;
+    return m_uni_SubMonthCount;
 }
 
 /**************************************************/
@@ -500,13 +510,13 @@ void CXonfigLoader::RoomDuplicator(vector<string> &vec_str_Dest)
 /**************************************************/
 void CXonfigLoader::SubMonthDuplicator(vector<string> &vec_str_Dest)
 {
-    // vec_str_Dest.clear();
+    vec_str_Dest.clear();
 
-    // vector<string>::iterator itr_SubMonth;
-    // for(itr_SubMonth = m_vec_str_SubMonth.begin(); itr_SubMonth != m_vec_str_SubMonth.end(); itr_SubMonth++)
-    // {
-    //     vec_str_Dest.push_back(*itr_SubMonth);
-    // }
+    vector<string>::iterator itr_SubMonth;
+    for(itr_SubMonth = m_vec_str_SubMonth.begin(); itr_SubMonth != m_vec_str_SubMonth.end(); itr_SubMonth++)
+    {
+        vec_str_Dest.push_back(*itr_SubMonth);
+    }
 }
 
 /**************************************************/
