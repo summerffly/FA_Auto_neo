@@ -499,18 +499,18 @@ void CCMDHandler::OnCmdShowMonth(CMD_Packet srt_CMD)
 
 void CCMDHandler::OnCmdCheckExMonth(CMD_Packet srt_CMD)
 {
-    ms_ptr_ASitfX->CheckMonth(ms_ptr_ScriptRipper->GetPreviousMonth(), 1);
+    ms_ptr_ASitfX->CheckMonth(ms_ptr_XonfigLoader->GetPreviousMonth(), 1);
 }
 
 void CCMDHandler::OnCmdUpdateExMonth(CMD_Packet srt_CMD)
 {
-    ms_ptr_ASitfX->UpdateMonth(ms_ptr_ScriptRipper->GetPreviousMonth(), 1);
+    ms_ptr_ASitfX->UpdateMonth(ms_ptr_XonfigLoader->GetPreviousMonth(), 1);
     ms_ptr_ASitfX->UpdateSum(0);
 }
 
 void CCMDHandler::OnCmdShowExMonth(CMD_Packet srt_CMD)
 {
-    ms_ptr_ASitfX->ShowMonth(ms_ptr_ScriptRipper->GetPreviousMonth());
+    ms_ptr_ASitfX->ShowMonth(ms_ptr_XonfigLoader->GetPreviousMonth());
 }
 
 void CCMDHandler::OnCmdCheckSubMonth(CMD_Packet srt_CMD)
@@ -784,7 +784,7 @@ void CCMDHandler::OnCmdCheckFile(CMD_Packet srt_CMD)
     ms_ptr_FAitfX->CheckEqualAllFile();
 
     vector<string> vec_str_BakupPath;
-    ms_ptr_ScriptRipper->BakupPathDuplicator(vec_str_BakupPath);
+    ms_ptr_XonfigLoader->BakupPathDuplicator(vec_str_BakupPath);
 
     vector<string>::iterator itr_BakupPath;
     for(itr_BakupPath = vec_str_BakupPath.begin(); itr_BakupPath != vec_str_BakupPath.end(); itr_BakupPath++)
@@ -812,7 +812,7 @@ void CCMDHandler::OnCmdWrite(CMD_Packet srt_CMD)
 void CCMDHandler::OnCmdBackup(CMD_Packet srt_CMD)
 {
     vector<string> vec_str_BakupPath;
-    ms_ptr_ScriptRipper->BakupPathDuplicator(vec_str_BakupPath);
+    ms_ptr_XonfigLoader->BakupPathDuplicator(vec_str_BakupPath);
 
     vector<string>::iterator itr_BakupPath;
     for(itr_BakupPath = vec_str_BakupPath.begin(); itr_BakupPath != vec_str_BakupPath.end(); itr_BakupPath++)
@@ -836,7 +836,6 @@ void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
     cout << "***          BEGIN OF TEST           ***" << endl;
     cout << "****************************************" << endl;
 
-    //cout << ms_ptr_ScriptRipper->IsIncludeMonthRange(srt_CMD.m_str_ResParam) << endl;
     printf("\033[0;30m black \033[0m");
     printf("\033[0;31m red \033[0m");
     printf("\033[0;32m green \033[0m");

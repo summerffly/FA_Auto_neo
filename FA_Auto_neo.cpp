@@ -44,6 +44,7 @@ int main(int argc, char **argv, char *env[])
 
     ptr_ScriptRipper->ExMonthGenerator();
     ptr_ScriptRipper->MonthRangeGenerator();
+    
     ptr_XonfigLoader->ExMonthGenerator();
     ptr_XonfigLoader->MonthRangeGenerator();
 

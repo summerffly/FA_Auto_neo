@@ -248,7 +248,7 @@ void CXonfigLoader::SubMonthRipper()
 /**************************************************/
 void CXonfigLoader::FileRipper()
 {
-    m_uni_FileNum = m_cls_Xonfig.Read("FileCount", 0);
+    m_uni_FileCount = m_cls_Xonfig.Read("FileCount", 0);
 
     string str_Temp;
     char nameLabel[64];
@@ -270,15 +270,21 @@ void CXonfigLoader::FileRipper()
 /**************************************************/
 void CXonfigLoader::BakupPathRipper()
 {
-    // string str_BakupPathNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_BakupPath", "num");
-    // m_uni_BakupPathNum = atoi(str_BakupPathNum.c_str());
+    m_uni_BakupPathCount = m_cls_Xonfig.Read("BakupPathCount", 0);
 
-    // string str_Temp;
-    // for(int i=1; i<=m_uni_BakupPathNum; i++)
-    // {
-    //     str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_BakupPath", "BakupPath", i, "path");
-    //     m_vec_str_BakupPath.push_back(str_Temp);
-    // }
+    string str_Temp;
+    char nameLabel[64];
+    int index = 1;
+    while(index <= m_uni_BakupPathCount)
+    {
+        memset(&nameLabel, 0, sizeof(nameLabel));
+        sprintf(nameLabel, "BakupPath_%d", index);
+        str_Temp = emptyString;
+        str_Temp = m_cls_Xonfig.Read(nameLabel, str_Temp);
+        m_vec_str_BakupPath.push_back(str_Temp);
+
+        index++;
+    }
 }
 
 /**************************************************/
@@ -538,13 +544,13 @@ void CXonfigLoader::FileDuplicator(vector<string> &vec_str_Dest)
 /**************************************************/
 void CXonfigLoader::BakupPathDuplicator(vector<string> &vec_str_Dest)
 {
-    // vec_str_Dest.clear();
+    vec_str_Dest.clear();
 
-    // vector<string>::iterator itr_BakupPath;
-    // for(itr_BakupPath = m_vec_str_BakupPath.begin(); itr_BakupPath != m_vec_str_BakupPath.end(); itr_BakupPath++)
-    // {
-    //     vec_str_Dest.push_back(*itr_BakupPath);
-    // }
+    vector<string>::iterator itr_BakupPath;
+    for(itr_BakupPath = m_vec_str_BakupPath.begin(); itr_BakupPath != m_vec_str_BakupPath.end(); itr_BakupPath++)
+    {
+        vec_str_Dest.push_back(*itr_BakupPath);
+    }
 }
 
 string CXonfigLoader::TitleTranslater(const string str_TitleCMD)

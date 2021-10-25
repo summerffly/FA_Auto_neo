@@ -111,8 +111,8 @@ private:
     unsigned int m_uni_CAFIndex;
     unsigned int m_uni_RoomNum;
     unsigned int m_uni_SubMonthCount;
-    unsigned int m_uni_FileNum;
-    unsigned int m_uni_BakupPathNum;
+    unsigned int m_uni_FileCount;
+    unsigned int m_uni_BakupPathCount;
     vector<string> m_vec_str_Title;
     vector<string> m_vec_str_TitleDeep;
     map<string, string> m_map_TitleDeep;
