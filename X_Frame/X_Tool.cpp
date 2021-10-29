@@ -106,8 +106,13 @@ string CTool::GenerateMonthString(const int int_Month)
     else
         sprintf(cha_Month, "%d", int_Month);
 
-    delete []cha_Month;
+    // update summer@20211029
+    // it works in OS Big Sur
+    // but not work in OS Monterey
+    // Apple changed Memory-Management-Mechanism
+    //delete []cha_Month;
     string str_Month(cha_Month);
+    delete []cha_Month;
 
     return str_Month;
 }
