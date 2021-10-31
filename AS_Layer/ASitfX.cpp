@@ -32,14 +32,14 @@ CASitfX::~CASitfX()
 /**************************************************/
 void CASitfX::CheckFA()
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
-    string str_CurMonth = ptr_ScriptRipper->GetCurrentMonth();
+    string str_CurMonth = ptr_XonfigLoader->GetCurrentMonth();
 
     // Check TitleDeep
     vector<string> vec_str_TitleDeep;
-    ptr_ScriptRipper->TitleDeepDuplicator(vec_str_TitleDeep);
+    ptr_XonfigLoader->TitleDeepDuplicator(vec_str_TitleDeep);
 
     vector<string>::iterator itr_TitleDeep;
     for(itr_TitleDeep = vec_str_TitleDeep.begin(); itr_TitleDeep != vec_str_TitleDeep.end(); itr_TitleDeep++)
@@ -85,14 +85,14 @@ void CASitfX::CheckFA()
 /**************************************************/
 void CASitfX::UpdateFA()
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
-    string str_CurMonth = ptr_ScriptRipper->GetCurrentMonth();
+    string str_CurMonth = ptr_XonfigLoader->GetCurrentMonth();
 
     // Update TitleDeep
     vector<string> vec_str_TitleDeep;
-    ptr_ScriptRipper->TitleDeepDuplicator(vec_str_TitleDeep);
+    ptr_XonfigLoader->TitleDeepDuplicator(vec_str_TitleDeep);
 
     vector<string>::iterator itr_TitleDeep;
     for(itr_TitleDeep = vec_str_TitleDeep.begin(); itr_TitleDeep != vec_str_TitleDeep.end(); itr_TitleDeep++)
@@ -112,13 +112,13 @@ void CASitfX::UpdateFA()
 /**************************************************/
 void CASitfX::ShowFA()
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
-    ptr_FAitfX->ShowLife(ptr_ScriptRipper->GetCurrentMonth(), 1);
-    ptr_FAitfX->ShowRoom(ptr_ScriptRipper->GetCurrentMonth(), 3);
-    ptr_FAitfX->ShowSM(ptr_ScriptRipper->GetCurrentMonth(), 2);
-    ptr_FAitfX->ShowMonthSurplus(ptr_ScriptRipper->GetCurrentMonth(), 2);
+    ptr_FAitfX->ShowLife(ptr_XonfigLoader->GetCurrentMonth(), 1);
+    ptr_FAitfX->ShowRoom(ptr_XonfigLoader->GetCurrentMonth(), 3);
+    ptr_FAitfX->ShowSM(ptr_XonfigLoader->GetCurrentMonth(), 2);
+    ptr_FAitfX->ShowMonthSurplus(ptr_XonfigLoader->GetCurrentMonth(), 2);
     ptr_FAitfX->LoadSum(1);
     ptr_FAitfX->SummarizeCAF(1);
 
