@@ -202,15 +202,19 @@ void CXonfigLoader::CAFRipper()
 /**************************************************/
 void CXonfigLoader::RoomRipper()
 {
-    //string str_RoomNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_Room", "num");
-    //m_uni_RoomNum = atoi(str_RoomNum.c_str());
+    m_uni_RoomCount = m_cls_Xonfig.Read("RoomCount", 0);
 
-    //string str_Temp;
-    //for(int i=1; i<=m_uni_RoomNum; i++)
-    //{
-    //    str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_Room", "RMItem", i,"item");
-    //    m_vec_str_Room.push_back(str_Temp);
-    //}
+    string str_Temp;
+    int index = 1;
+    char nameLabel[64];
+    while(index <= m_uni_RoomCount)
+    {
+        memset(&nameLabel, 0, sizeof(nameLabel));
+        sprintf(nameLabel, "RoomItem_%d", index++);
+        str_Temp = emptyString;
+        str_Temp = m_cls_Xonfig.Read(nameLabel, str_Temp);
+        m_vec_str_Room.push_back(str_Temp);
+    }
 }
 
 /**************************************************/
@@ -502,13 +506,13 @@ void CXonfigLoader::CAFDuplicator(vector<string> &vec_str_Dest)
 /**************************************************/
 void CXonfigLoader::RoomDuplicator(vector<string> &vec_str_Dest)
 {
-    // vec_str_Dest.clear();
+    vec_str_Dest.clear();
 
-    // vector<string>::iterator itr_Room;
-    // for(itr_Room = m_vec_str_Room.begin(); itr_Room != m_vec_str_Room.end(); itr_Room++)
-    // {
-    //     vec_str_Dest.push_back(*itr_Room);
-    // }
+    vector<string>::iterator itr_Room;
+    for(itr_Room = m_vec_str_Room.begin(); itr_Room != m_vec_str_Room.end(); itr_Room++)
+    {
+        vec_str_Dest.push_back(*itr_Room);
+    }
 }
 
 /**************************************************/

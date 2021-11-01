@@ -109,7 +109,7 @@ private:
     unsigned int m_uni_TailNum;
     unsigned int m_uni_CAFNum;
     unsigned int m_uni_CAFIndex;
-    unsigned int m_uni_RoomNum;
+    unsigned int m_uni_RoomCount;
     unsigned int m_uni_SubMonthCount;
     unsigned int m_uni_FileCount;
     unsigned int m_uni_BakupPathCount;
