@@ -74,11 +74,11 @@ CFAitfX::~CFAitfX()
 /**************************************************/
 void CFAitfX::LoadSum(int int_OFlag)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
-    string str_OriginSum = ptr_ScriptRipper->GetOriginSum();
-    string str_CurrentSum = ptr_ScriptRipper->GetCurrentSum();
-    string str_CAFSum = ptr_ScriptRipper->GetCAFSum();
+    string str_OriginSum = ptr_XonfigLoader->GetOriginSum();
+    string str_CurrentSum = ptr_XonfigLoader->GetCurrentSum();
+    string str_CAFSum = ptr_XonfigLoader->GetCAFSum();
 
     m_int_OriginSum = m_ptr_FM_SUM->GetUniqueSearchLineValue(str_OriginSum.c_str());
     m_int_CurrentSum = m_ptr_FM_SUM->GetUniqueSearchLineValue(str_CurrentSum.c_str());
@@ -158,7 +158,7 @@ void CFAitfX::SummarizeMonth(int int_OFlag)
 /**************************************************/
 void CFAitfX::SummarizeMonthCLS(int int_OFlag)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     /********** Get Month Sum **********/
     m_int_MonthSalarySum = m_ptr_FM_SUM->GetSearchLineValueSum("月薪资");
@@ -170,7 +170,7 @@ void CFAitfX::SummarizeMonthCLS(int int_OFlag)
 
     /********** Get Room Sum **********/
     vector<string> vec_str_Room;
-    ptr_ScriptRipper->RoomDuplicator(vec_str_Room);
+    ptr_XonfigLoader->RoomDuplicator(vec_str_Room);
 
     int int_MonthRoomSum = 0;
 
@@ -183,9 +183,9 @@ void CFAitfX::SummarizeMonthCLS(int int_OFlag)
 
     /********** Get SM Sum **********/
     vector<string> vec_str_SubMonth;
-    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+    ptr_XonfigLoader->SubMonthDuplicator(vec_str_SubMonth);
 
-    unsigned int uni_SubMonthNum = ptr_ScriptRipper->GetSubMonthNum();
+    unsigned int uni_SubMonthNum = ptr_XonfigLoader->GetSubMonthCount();
 
     int *ptr_int_SMSum = new int[uni_SubMonthNum];
     int int_SMindex = 0;
@@ -253,12 +253,12 @@ void CFAitfX::SummarizeMonthCLS(int int_OFlag)
 /**************************************************/
 void CFAitfX::SummarizeTitle(int int_OFlag)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     int int_TitleSum = 0;
 
     vector<string> vec_str_Title;
-    ptr_ScriptRipper->TitleDuplicator(vec_str_Title);
+    ptr_XonfigLoader->TitleDuplicator(vec_str_Title);
 
     string str_TitleKey;
     unsigned int uni_TitleLine = 0;
@@ -308,12 +308,12 @@ void CFAitfX::SummarizeTitle(int int_OFlag)
 /**************************************************/
 void CFAitfX::SummarizeTail(int int_OFlag)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     int int_TailSum = 0;
 
     vector<string> vec_str_Tail;
-    ptr_ScriptRipper->TailDuplicator(vec_str_Tail);
+    ptr_XonfigLoader->TailDuplicator(vec_str_Tail);
 
     if(int_OFlag == 1)
     {
@@ -361,10 +361,10 @@ void CFAitfX::SummarizeCAF(int int_OFlag)
         return;
     }
 
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     vector<string> vec_str_CAF;
-    ptr_ScriptRipper->CAFDuplicator(vec_str_CAF);
+    ptr_XonfigLoader->CAFDuplicator(vec_str_CAF);
 
     if(int_OFlag == 1)
     {

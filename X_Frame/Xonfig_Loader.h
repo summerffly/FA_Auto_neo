@@ -106,8 +106,8 @@ private:
 
     unsigned int m_uni_TitleCount;
     unsigned int m_uni_TitleDeepCount;
-    unsigned int m_uni_TailNum;
-    unsigned int m_uni_CAFNum;
+    unsigned int m_uni_TailCount;
+    unsigned int m_uni_CAFCount;
     unsigned int m_uni_CAFIndex;
     unsigned int m_uni_RoomCount;
     unsigned int m_uni_SubMonthCount;

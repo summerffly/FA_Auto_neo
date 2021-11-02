@@ -107,9 +107,11 @@ void CXonfigLoader::SalaryRipper()
 /**************************************************/
 void CXonfigLoader::SumRipper()
 {
-    //m_str_OriginSum = m_cls_XMLRipper.GetL2NodeAttr_UNI("FA_SUM", "OriginSum", "content");
-    //m_str_CurrentSum = m_cls_XMLRipper.GetL2NodeAttr_UNI("FA_SUM", "CurrentSum", "content");
-    //m_str_CAFSum = m_cls_XMLRipper.GetL2NodeAttr_UNI("FA_SUM", "CAFSum", "content");
+    string emptyString = "";
+
+    m_str_OriginSum = m_cls_Xonfig.Read("OriginSum", emptyString);
+    m_str_CurrentSum = m_cls_Xonfig.Read("CurrentSum", emptyString);
+    m_str_CAFSum = m_cls_Xonfig.Read("CAFSum", emptyString);
 }
 
 /**************************************************/
@@ -167,15 +169,19 @@ void CXonfigLoader::TitleDeepRipper()
 /**************************************************/
 void CXonfigLoader::TailRipper()
 {
-    //string str_TailNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_Tail", "num");
-    //m_uni_TailNum = atoi(str_TailNum.c_str());
+    m_uni_TailCount = m_cls_Xonfig.Read("TailCount", 0);
 
-    //string str_Temp;
-    //for(int i=1; i<=m_uni_TailNum; i++)
-    //{
-    //    str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_Tail", "TailItem", i,"item");
-    //    m_vec_str_Tail.push_back(str_Temp);
-    //}
+    string str_Temp;
+    int index = 1;
+    char nameLabel[64];
+    while(index <= m_uni_TailCount)
+    {
+        memset(&nameLabel, 0, sizeof(nameLabel));
+        sprintf(nameLabel, "TailItem_%d", index++);
+        str_Temp = emptyString;
+        str_Temp = m_cls_Xonfig.Read(nameLabel, str_Temp);
+        m_vec_str_Tail.push_back(str_Temp);
+    }
 }
 
 /**************************************************/
@@ -183,18 +189,19 @@ void CXonfigLoader::TailRipper()
 /**************************************************/
 void CXonfigLoader::CAFRipper()
 {
-    //string str_CAFNum = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_CAF", "num");
-    //m_uni_CAFNum = atoi(str_CAFNum.c_str());
+    m_uni_CAFCount = m_cls_Xonfig.Read("CAFCount", 0);
 
-    //string str_CAFIndex = m_cls_XMLRipper.GetL1NodeAttr_UNI("FA_CAF", "index");
-    //m_uni_CAFIndex = atoi(str_CAFIndex.c_str());
-
-    //string str_Temp;
-    //for(int i=1; i<=m_uni_CAFNum; i++)
-    //{
-    //    str_Temp = m_cls_XMLRipper.GetL2NodeAttr_IDX("FA_CAF", "CAFItem", i,"item");
-    //    m_vec_str_CAF.push_back(str_Temp);
-    //}
+    string str_Temp;
+    int index = 1;
+    char nameLabel[64];
+    while(index <= m_uni_CAFCount)
+    {
+        memset(&nameLabel, 0, sizeof(nameLabel));
+        sprintf(nameLabel, "CAFItem_%d", index++);
+        str_Temp = emptyString;
+        str_Temp = m_cls_Xonfig.Read(nameLabel, str_Temp);
+        m_vec_str_CAF.push_back(str_Temp);
+    }
 }
 
 /**************************************************/
@@ -384,8 +391,7 @@ string CXonfigLoader::GetPreviousMonth()
 /**************************************************/
 string CXonfigLoader::GetOriginSum()
 {
-    // return m_str_OriginSum;
-    return " ";
+    return m_str_OriginSum;
 }
 
 /**************************************************/
@@ -393,8 +399,7 @@ string CXonfigLoader::GetOriginSum()
 /**************************************************/
 string CXonfigLoader::GetCurrentSum()
 {
-    // return m_str_CurrentSum;
-    return " ";
+    return m_str_CurrentSum;
 }
 
 /**************************************************/
@@ -402,8 +407,7 @@ string CXonfigLoader::GetCurrentSum()
 /**************************************************/
 string CXonfigLoader::GetCAFSum()
 {
-    // return m_str_CAFSum;
-    return " ";
+    return m_str_CAFSum;
 }
 
 /**************************************************/
@@ -478,13 +482,13 @@ void CXonfigLoader::TitleDeepDuplicator(vector<string> &vec_str_Dest)
 /**************************************************/
 void CXonfigLoader::TailDuplicator(vector<string> &vec_str_Dest)
 {
-    // vec_str_Dest.clear();
+    vec_str_Dest.clear();
 
-    // vector<string>::iterator itr_Tail;
-    // for(itr_Tail = m_vec_str_Tail.begin(); itr_Tail != m_vec_str_Tail.end(); itr_Tail++)
-    // {
-    //     vec_str_Dest.push_back(*itr_Tail);
-    // }
+    vector<string>::iterator itr_Tail;
+    for(itr_Tail = m_vec_str_Tail.begin(); itr_Tail != m_vec_str_Tail.end(); itr_Tail++)
+    {
+        vec_str_Dest.push_back(*itr_Tail);
+    }
 }
 
 /**************************************************/
@@ -492,13 +496,13 @@ void CXonfigLoader::TailDuplicator(vector<string> &vec_str_Dest)
 /**************************************************/
 void CXonfigLoader::CAFDuplicator(vector<string> &vec_str_Dest)
 {
-    // vec_str_Dest.clear();
+    vec_str_Dest.clear();
 
-    // vector<string>::iterator itr_CAF;
-    // for(itr_CAF = m_vec_str_CAF.begin(); itr_CAF != m_vec_str_CAF.end(); itr_CAF++)
-    // {
-    //     vec_str_Dest.push_back(*itr_CAF);
-    // }
+    vector<string>::iterator itr_CAF;
+    for(itr_CAF = m_vec_str_CAF.begin(); itr_CAF != m_vec_str_CAF.end(); itr_CAF++)
+    {
+        vec_str_Dest.push_back(*itr_CAF);
+    }
 }
 
 /**************************************************/
@@ -559,32 +563,30 @@ void CXonfigLoader::BakupPathDuplicator(vector<string> &vec_str_Dest)
 
 string CXonfigLoader::TitleTranslater(const string str_TitleCMD)
 {
-    // string str_TranslateKey("");
+    string str_TranslateKey("");
 
-    // map<string, string>::iterator itr_Title;
-    // itr_Title = m_map_TitleDeep.find(str_TitleCMD);
-    // if(itr_Title != m_map_TitleDeep.end())
-    //     str_TranslateKey = itr_Title->second;
-    // else
-    //     str_TranslateKey = "ERROR";
+    map<string, string>::iterator itr_Title;
+    itr_Title = m_map_TitleDeep.find(str_TitleCMD);
+    if(itr_Title != m_map_TitleDeep.end())
+        str_TranslateKey = itr_Title->second;
+    else
+        str_TranslateKey = "ERROR";
 
-    // return str_TranslateKey;
-    return " ";
+    return str_TranslateKey;
 }
 
 string CXonfigLoader::SubMonthTranslater(const string str_SubMonthCMD)
 {
-    // string str_TranslateKey("");
+    string str_TranslateKey("");
 
-    // map<string, string>::iterator itr_SubMonth;
-    // itr_SubMonth = m_map_SubMonth.find(str_SubMonthCMD);
-    // if(itr_SubMonth != m_map_SubMonth.end())
-    //     str_TranslateKey = itr_SubMonth->second;
-    // else
-    //     str_TranslateKey = "ERROR";
+    map<string, string>::iterator itr_SubMonth;
+    itr_SubMonth = m_map_SubMonth.find(str_SubMonthCMD);
+    if(itr_SubMonth != m_map_SubMonth.end())
+        str_TranslateKey = itr_SubMonth->second;
+    else
+        str_TranslateKey = "ERROR";
 
-    // return str_TranslateKey;
-    return " ";
+    return str_TranslateKey;
 }
 
 /**************************************************/
