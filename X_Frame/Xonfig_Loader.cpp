@@ -190,6 +190,7 @@ void CXonfigLoader::TailRipper()
 void CXonfigLoader::CAFRipper()
 {
     m_uni_CAFCount = m_cls_Xonfig.Read("CAFCount", 0);
+    m_uni_CAFIndex = m_cls_Xonfig.Read("CAFInedx", 0);
 
     string str_Temp;
     int index = 1;
@@ -415,8 +416,7 @@ string CXonfigLoader::GetCAFSum()
 /**************************************************/
 int CXonfigLoader::GetCAFIndex()
 {
-    // return m_uni_CAFIndex;
-    return 0;
+    return m_uni_CAFIndex;
 }
 
 /**************************************************/

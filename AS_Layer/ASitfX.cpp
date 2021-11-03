@@ -614,11 +614,11 @@ void CASitfX::PrintSubMonthTraversal(const string str_SubMonthKey, bool bol_NumF
 /**************************************************/
 void CASitfX::AppendNextMonth(const string str_SelMonth)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
     // 修改Script
-    ptr_ScriptRipper->ModifyCurrentMonth(str_SelMonth);
+    ptr_XonfigLoader->ModifyCurrentMonth(str_SelMonth);
 
     // 添加Sum脚本
     ptr_FAitfX->AddScriptSum(str_SelMonth);
@@ -628,7 +628,7 @@ void CASitfX::AppendNextMonth(const string str_SelMonth)
 
     // 添加SubMonth脚本
     vector<string> vec_str_SubMonth;
-    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+    ptr_XonfigLoader->SubMonthDuplicator(vec_str_SubMonth);
 
     vector<string>::iterator itr_SubMonth;
     for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)

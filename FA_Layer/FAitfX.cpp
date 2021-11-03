@@ -392,9 +392,9 @@ void CFAitfX::SummarizeCAF(int int_OFlag)
 /**************************************************/
 void CFAitfX::UpdateCurrentSum(const int int_CurrentSum)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
-    string str_CurrentSum = ptr_ScriptRipper->GetCurrentSum();
+    string str_CurrentSum = ptr_XonfigLoader->GetCurrentSum();
     m_ptr_FM_SUM->ModifyUniqueSearchLineValue(str_CurrentSum.c_str(), int_CurrentSum);
 }
 
@@ -403,10 +403,10 @@ void CFAitfX::UpdateCurrentSum(const int int_CurrentSum)
 /**************************************************/
 int CFAitfX::CheckCAF()
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     vector<string> vec_str_CAF;
-    ptr_ScriptRipper->CAFDuplicator(vec_str_CAF);
+    ptr_XonfigLoader->CAFDuplicator(vec_str_CAF);
 
     int int_CAFSum = 0;
     vector<string>::iterator itr_CAF;
@@ -438,21 +438,23 @@ void CFAitfX::UpdateCAF(const int int_CAFSum)
         return;
     }
 
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     int int_CAFDelta = int_CAFSum - m_int_CAFSum;
 
     // 修改 CAF Sum
-    string str_CAFSum = ptr_ScriptRipper->GetCAFSum();
+    string str_CAFSum = ptr_XonfigLoader->GetCAFSum();
     m_ptr_FM_SUM->ModifyUniqueSearchLineValue(str_CAFSum.c_str(), int_CAFSum);
     m_int_CAFSum = int_CAFSum;
 
     // 修改 CAF 子项
     vector<string> vec_str_CAF;
-    ptr_ScriptRipper->CAFDuplicator(vec_str_CAF);
+    ptr_XonfigLoader->CAFDuplicator(vec_str_CAF);
     vector<string>::iterator itr_CAF = vec_str_CAF.begin();
-    itr_CAF += ptr_ScriptRipper->GetCAFIndex() -1;
+    itr_CAF += ptr_XonfigLoader->GetCAFIndex() -1;
 
+    // tips summer@20211103
+    // 将CAF-Delta计入CAF-Index分项
     string str_CAFKey = *itr_CAF;
     int int_CAFCount = m_ptr_FM_SUM->GetUniqueSearchLineValue(str_CAFKey.c_str());
     int_CAFCount += int_CAFDelta;
@@ -845,7 +847,7 @@ void CFAitfX::AddScriptSum(const string str_SelMonth)
 /**************************************************/
 void CFAitfX::AddScriptMonth(const string str_SelMonth)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     string str_lifeMonthTitle = string("## life.M") + str_SelMonth;
     string str_lifeMonthSalary = str_SelMonth + "月薪资";
@@ -867,7 +869,7 @@ void CFAitfX::AddScriptMonth(const string str_SelMonth)
     m_ptr_FM_life->InsertLine(uni_InsertLine++, LTYPE_FBIRC_LINEUINT, 0, str_lifeMonthLife);
     
     vector<string> vec_str_Room;
-    ptr_ScriptRipper->RoomDuplicator(vec_str_Room);
+    ptr_XonfigLoader->RoomDuplicator(vec_str_Room);
 
     vector<string>::iterator itr_Room;
     for(itr_Room = vec_str_Room.begin(); itr_Room != vec_str_Room.end(); itr_Room++)
@@ -877,7 +879,7 @@ void CFAitfX::AddScriptMonth(const string str_SelMonth)
     }
 
     vector<string> vec_str_SubMonth;
-    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+    ptr_XonfigLoader->SubMonthDuplicator(vec_str_SubMonth);
 
     m_ptr_FM_life->InsertBlankLine(uni_InsertLine++);
     vector<string>::iterator itr_SubMonth;
@@ -1161,7 +1163,7 @@ void CFAitfX::AnalysisMonthProportion(const string str_SelMonth)
 /**************************************************/
 void CFAitfX::CompareMonth(const string str_SelMonth, const string str_CmpMonth)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     // 建构 Sel_vector
     vector<UNIT_INFO> vec_stc_SelUnitInfo;
@@ -1173,10 +1175,10 @@ void CFAitfX::CompareMonth(const string str_SelMonth, const string str_CmpMonth)
 
     // 构建 analysis_vector
     vector<string> vec_str_Room;
-    ptr_ScriptRipper->RoomDuplicator(vec_str_Room);
+    ptr_XonfigLoader->RoomDuplicator(vec_str_Room);
 
     vector<string> vec_str_SubMonth;
-    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+    ptr_XonfigLoader->SubMonthDuplicator(vec_str_SubMonth);
 
     vector<string> vec_str_TransSubMonth;
     vec_str_TransSubMonth.clear();
@@ -1423,11 +1425,11 @@ void CFAitfX::ShowLife(const string str_SelMonth, int int_OFlag)
 /**************************************************/
 void CFAitfX::ShowRoom(const string str_SelMonth, int int_OFlag)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     int int_TotalRMExpense = 0;
     vector<string> vec_str_Room;
-    ptr_ScriptRipper->RoomDuplicator(vec_str_Room);
+    ptr_XonfigLoader->RoomDuplicator(vec_str_Room);
 
     if(int_OFlag > 0)
     {
@@ -1473,11 +1475,11 @@ void CFAitfX::ShowRoom(const string str_SelMonth, int int_OFlag)
 /**************************************************/
 void CFAitfX::ShowSM(const string str_SelMonth, int int_OFlag)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     int int_TotalSMExpense = 0;
     vector<string> vec_str_SubMonth;
-    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+    ptr_XonfigLoader->SubMonthDuplicator(vec_str_SubMonth);
 
     if(int_OFlag > 0)
     {
@@ -1993,14 +1995,14 @@ CFileManager *CFAitfX::GetPtrFM(const string str_Type, const string str_Key)
 
 string CMD_SMTranslate(const string str_SubMonthKey)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
-    return ptr_ScriptRipper->SubMonthTranslater(str_SubMonthKey);
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
+    return ptr_XonfigLoader->SubMonthTranslater(str_SubMonthKey);
 }
 
 string CMD_TTTranslate(const string str_TitleKey)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
-    return ptr_ScriptRipper->TitleTranslater(str_TitleKey);
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
+    return ptr_XonfigLoader->TitleTranslater(str_TitleKey);
 }
 
 
