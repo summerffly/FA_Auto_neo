@@ -1288,9 +1288,9 @@ void CFAitfX::CompareMonth(const string str_SelMonth, const string str_CmpMonth)
 /**************************************************/
 void CFAitfX::ForecastFutureSum(const string str_SelMonth, const int int_MonthPatch)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
-    if(ptr_ScriptRipper->GetCurrentMonth() == ptr_ScriptRipper->GetOriginMonth())
+    if(ptr_XonfigLoader->GetCurrentMonth() == ptr_XonfigLoader->GetOriginMonth())
     {
         // tips 番茄@20180706 - 后期需要完善优化
         CTool::MassageOutFotmat("OriginMonth-UnSupported", '!');
@@ -1301,7 +1301,7 @@ void CFAitfX::ForecastFutureSum(const string str_SelMonth, const int int_MonthPa
     int int_SurveyCounter = 0;
     int int_AverageMonthExpense = 0;
 
-    string str_SurveyMonth = ptr_ScriptRipper->GetCurrentMonth();
+    string str_SurveyMonth = ptr_XonfigLoader->GetCurrentMonth();
 
     for(int i=0; ; i++)
     {
@@ -1313,15 +1313,15 @@ void CFAitfX::ForecastFutureSum(const string str_SelMonth, const int int_MonthPa
         int_SurveySum += m_ptr_FM_life->GetLineValue(uni_SurveyMonthTop+2);
         int_SurveyCounter++;
 
-        if(str_SurveyMonth == ptr_ScriptRipper->GetOriginMonth())
+        if(str_SurveyMonth == ptr_XonfigLoader->GetOriginMonth())
             break;
     }
 
     int_AverageMonthExpense = int_SurveySum / int_SurveyCounter;
 
-    int int_MonthSalary = ptr_ScriptRipper->GetMonthSalary();
+    int int_MonthSalary = ptr_XonfigLoader->GetMonthSalary();
     int int_MonthSurplus = int_MonthSalary + int_AverageMonthExpense;
-    int int_MonthCounter = CTool::CountMonth(ptr_ScriptRipper->GetCurrentMonth(), str_SelMonth);
+    int int_MonthCounter = CTool::CountMonth(ptr_XonfigLoader->GetCurrentMonth(), str_SelMonth);
     int_MonthCounter--;
 
     int int_FutureSum = m_int_CurrentSum + (int_MonthSurplus * int_MonthCounter);

@@ -20,7 +20,7 @@ int main(int argc, char **argv, char *env[])
     //***********************************//
     //### 检查.md文件存在
     //***********************************//
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    //CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
     CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 
     vector<string> vec_str_File;
@@ -42,13 +42,13 @@ int main(int argc, char **argv, char *env[])
     CTool::SetOriginMonth(ptr_XonfigLoader->GetOriginMonth());
     CTool::SetCurrentMonth(ptr_XonfigLoader->GetCurrentMonth());
 
-    ptr_ScriptRipper->ExMonthGenerator();
-    ptr_ScriptRipper->MonthRangeGenerator();
+    //ptr_ScriptRipper->ExMonthGenerator();
+    //ptr_ScriptRipper->MonthRangeGenerator();
     
     ptr_XonfigLoader->ExMonthGenerator();
     ptr_XonfigLoader->MonthRangeGenerator();
 
-    CCMDHandler *ptr_CMDHandler = Singleton<CCMDHandler>::GetInstance();
+    CCMDHandler *ptr_CMDHandler = Singleton<CCMDHandler>::GetInstance();    
     ptr_CMDHandler->CMD_Init();
 
     //***********************************//

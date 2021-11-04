@@ -474,14 +474,14 @@ void CASitfX::AnalysisMonthTrend_ROOM()
 /**************************************************/
 void CASitfX::AnalysisMonthTrend_CSM()
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
     vector<TREND_INFO> vec_stc_TrendInfo;
     unsigned int uni_TrendSum = 0;
 
     vector<string> vec_str_SubMonth;
-    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+    ptr_XonfigLoader->SubMonthDuplicator(vec_str_SubMonth);
 
     vector<string>::iterator itr_SubMonth;
     for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
@@ -539,13 +539,13 @@ void CASitfX::AnalysisMonthTrend(const string str_MonthKey)
 /**************************************************/
 void CASitfX::ShowAllSubMonth(const string str_SelMonth)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
     int int_TotalSMExpense = 0;
 
     vector<string> vec_str_SubMonth;
-    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+    ptr_XonfigLoader->SubMonthDuplicator(vec_str_SubMonth);
 
     vector<string>::iterator itr_SubMonth;
     for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
@@ -566,7 +566,7 @@ void CASitfX::ShowAllSubMonth(const string str_SelMonth)
 /**************************************************/
 void CASitfX::PrintAllSubMonth(const string str_SelMonth, bool bol_NumFlag)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
     cout << "----------------------------------------" << endl;
@@ -574,7 +574,7 @@ void CASitfX::PrintAllSubMonth(const string str_SelMonth, bool bol_NumFlag)
     cout << endl;
 
     vector<string> vec_str_SubMonth;
-    ptr_ScriptRipper->SubMonthDuplicator(vec_str_SubMonth);
+    ptr_XonfigLoader->SubMonthDuplicator(vec_str_SubMonth);
 
     vector<string>::iterator itr_SubMonth;
     for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
@@ -590,7 +590,7 @@ void CASitfX::PrintAllSubMonth(const string str_SelMonth, bool bol_NumFlag)
 /**************************************************/
 void CASitfX::PrintSubMonthTraversal(const string str_SubMonthKey, bool bol_NumFlag)
 {
-    CScriptRipper *ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+    CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
     cout << "----------------------------------------" << endl;
@@ -598,7 +598,7 @@ void CASitfX::PrintSubMonthTraversal(const string str_SubMonthKey, bool bol_NumF
     cout << endl;
 
     vector<string> vec_str_Month;
-    ptr_ScriptRipper->MonthRangeDuplicator(vec_str_Month);
+    ptr_XonfigLoader->MonthRangeDuplicator(vec_str_Month);
 
     vector<string>::iterator itr_Month;
     for(itr_Month = vec_str_Month.begin(); itr_Month != vec_str_Month.end(); itr_Month++)

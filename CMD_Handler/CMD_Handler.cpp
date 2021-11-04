@@ -20,7 +20,7 @@ string CCMDHandler::ms_str_FM_Key = "";
 string CCMDHandler::ms_str_FM_Month = "";
 bool CCMDHandler::ms_bol_PR_Valid = false;
 
-Xonfig xonfig("FA_Auto_neo.ini");
+//Xonfig xonfig("FA_Auto_neo.ini");
 
 
 /**************************************************/
@@ -866,15 +866,15 @@ void CCMDHandler::OnCmdTestt(CMD_Packet srt_CMD)
     cout << "****************************************" << endl;
 
     string emptyString = "";
-    int FileCount = xonfig.Read("FileCount", 0);
-    string File_1 = xonfig.Read("File_1", emptyString);
-    string File_2 = xonfig.Read("File_2", emptyString);
-    string File_3 = xonfig.Read("File_3", emptyString);
+    //int FileCount = xonfig.Read("FileCount", 0);
+    //string File_1 = xonfig.Read("File_1", emptyString);
+    //string File_2 = xonfig.Read("File_2", emptyString);
+    //string File_3 = xonfig.Read("File_3", emptyString);
     
-    cout << FileCount << endl;
-    cout << File_1 << endl;
-    cout << File_2 << endl;
-    cout << File_3 << endl;
+    //cout << FileCount << endl;
+    //cout << File_1 << endl;
+    //cout << File_2 << endl;
+    //cout << File_3 << endl;
 
     cout << "****************************************" << endl;
     cout << "***           END OF TESTT           ***" << endl;

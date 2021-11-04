@@ -10,7 +10,6 @@
 #include "./../CMD_Handler/DefCMD.h"
 #include "./../X_Frame/X_Tool.h"
 #include "./../X_Frame/Singleton.h"
-#include "./../XML_Ripper/Script_Ripper.h"
 #include "./../FA_Layer/FAitfX.h"
 
 using namespace std;
