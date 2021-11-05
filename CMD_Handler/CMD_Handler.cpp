@@ -10,7 +10,7 @@
 #include "./../X_Frame/DefLib.h"
 #include "./../X_Frame/X_Tool.h"
 
-CScriptRipper* CCMDHandler::ms_ptr_ScriptRipper = Singleton<CScriptRipper>::GetInstance("./FA_Auto_Script.xml");
+CTool *ms_ptr_Tool = new CTool();
 CXonfigLoader* CCMDHandler::ms_ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
 CFAitfX* CCMDHandler::ms_ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 CASitfX* CCMDHandler::ms_ptr_ASitfX = Singleton<CASitfX>::GetInstance();
@@ -19,8 +19,6 @@ string CCMDHandler::ms_str_FM_Type = "";
 string CCMDHandler::ms_str_FM_Key = "";
 string CCMDHandler::ms_str_FM_Month = "";
 bool CCMDHandler::ms_bol_PR_Valid = false;
-
-//Xonfig xonfig("FA_Auto_neo.ini");
 
 
 /**************************************************/

@@ -11,7 +11,7 @@
 
 #include "pugiconfig.hpp"
 #include "pugixml.hpp"
-#include "./../X_Frame/X_Tool.h"
+#include "../X_Frame/X_Tool.h"
 
 using namespace std;
 

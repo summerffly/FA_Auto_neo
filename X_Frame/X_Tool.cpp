@@ -22,7 +22,29 @@ struct timeval CTool::m_tvl_end;
 
 CTool::CTool()
 {
-    // Do Nothing
+    // add 番茄@20211105
+    // 程序最早入口点
+	// 全局/静态变量初始化
+
+    uint32_t uni_size = 0;
+    char *buf = NULL;
+    // add 番茄@20210210 - macOS接口
+    _NSGetExecutablePath(buf, &uni_size);
+
+    char *p_cha_exefullpath = (char *)malloc(uni_size+1);
+    _NSGetExecutablePath(p_cha_exefullpath, &uni_size);
+
+    char *p_cha_exefilename = strrchr(p_cha_exefullpath, '/');
+    string str_ExeFile = p_cha_exefilename;
+    int int_exelength = str_ExeFile.size() - 1;
+
+    ms_str_ExecutablePath = string(p_cha_exefullpath);
+    ms_str_ExecutablePath.erase(ms_str_ExecutablePath.end()-int_exelength, ms_str_ExecutablePath.end());
+
+    // add 番茄@20200218 - macOS/Unix/Linux通用接口
+    chdir(ms_str_ExecutablePath.c_str());
+
+    free(p_cha_exefullpath);
 }
 
 CTool::~CTool()

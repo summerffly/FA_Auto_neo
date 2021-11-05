@@ -10,12 +10,9 @@
 #include <string>
 
 #include "CMD_Pump.h"
-#include "./../XML_Ripper/Script_Ripper.h"
-#include "./../FA_Layer/FAitfX.h"
-#include "./../AS_Layer/ASitfX.h"
-
-#include "./../X_Frame/Xonfig.h"
-#include "./../X_Frame/Xonfig_Loader.h"
+#include "../FA_Layer/FAitfX.h"
+#include "../AS_Layer/ASitfX.h"
+#include "../X_Frame/Xonfig_Loader.h"
 
 using namespace std;
 
@@ -105,7 +102,7 @@ public:
 	static void OnCmdExit(CMD_Packet srt_CMD);
 
 private:
-	static CScriptRipper *ms_ptr_ScriptRipper;
+	static CTool *ms_ptr_Tool;
 	static CXonfigLoader *ms_ptr_XonfigLoader;
     static CFAitfX *ms_ptr_FAitfX;
     static CASitfX *ms_ptr_ASitfX;

@@ -265,7 +265,7 @@ void CXonfigLoader::FileRipper()
     string str_Temp;
     char nameLabel[64];
     int index = 1;
-    while(index <= m_uni_TitleDeepCount)
+    while(index <= m_uni_FileCount)
     {
         memset(&nameLabel, 0, sizeof(nameLabel));
         sprintf(nameLabel, "File_%d", index);
