@@ -23,7 +23,7 @@ public:
     // 单例访问
     friend class Singleton<CXonfigLoader>;
 
-    CXonfigLoader(const char *cha_xmlPath);
+    CXonfigLoader(const char *cha_XonifgPath);
     ~CXonfigLoader();
 
     /****************************************/
@@ -86,7 +86,7 @@ public:
 
 private:
     Xonfig m_cls_Xonfig;
-    string m_str_ScriptFilePath;
+    string m_str_XonfigFilePath;
 
     string m_str_Version;
 

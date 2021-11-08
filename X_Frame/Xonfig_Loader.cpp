@@ -14,10 +14,10 @@ static const char *emptyString = "";
 /**************************************************/
 //   CXonfigLoader 构造函数
 /**************************************************/
-CXonfigLoader::CXonfigLoader(const char *cha_xmlPath):
-m_cls_Xonfig(cha_xmlPath)
+CXonfigLoader::CXonfigLoader(const char *cha_XonifgPath):
+m_cls_Xonfig(cha_XonifgPath)
 {
-    m_str_ScriptFilePath = cha_xmlPath;
+    m_str_XonfigFilePath = cha_XonifgPath;
 
     m_str_Version = "";
 
@@ -598,6 +598,12 @@ void CXonfigLoader::ModifyCurrentMonth(const string str_SelMonth)
     m_str_PreviousMonth = CTool::GeneratePreMonth(m_str_CurrentMonth);
 
     m_cls_Xonfig.Modify("CurrentMonth", str_SelMonth);
+
+    std::ofstream out( m_str_XonfigFilePath.c_str() );
+	if( out )
+		out << m_cls_Xonfig;
+    else
+        CTool::MassageOutFotmat("Error-Xonfig Output", '!');
 }
 
 //------------------------------//
