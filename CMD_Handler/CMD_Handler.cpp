@@ -251,27 +251,38 @@ void CCMDHandler::CMD_Init()
     ms_ptr_FAitfX->SummarizeTail(0);
     ms_ptr_FAitfX->SummarizeCAF(0);
 
-    cout << "****************************************" << endl;
-    cout << "****************************************" << endl;
-    cout << "***                                  ***" << endl;
-    //cout << "***            FA_Auto_neo           ***" << endl;
-    printf("***            \033[1;34mFA_Auto_neo\033[0m           ***\n");
-    cout << "***                                  ***" << endl;
-    cout << "***  ------------------------------  ***" << endl;
-    cout << "***                                  ***" << endl;
-    cout << "***           Version: " << ms_ptr_XonfigLoader->GetVersion() << "         ***" << endl;
-    cout << "***                                  ***" << endl;
-    cout << "***  ------------------------------  ***" << endl;
-    cout << "***                                  ***" << endl;
-    cout << "***          初始月度: " << ms_ptr_XonfigLoader->GetOriginMonth() << "            ***" << endl;
-    cout << "***          当前月度: " << ms_ptr_XonfigLoader->GetCurrentMonth() << "            ***" << endl;
-    cout << "***                                  ***" << endl;
-    cout << "***  ------------------------------  ***" << endl;
-    cout << "***                                  ***" << endl;
-    printf("***      >>>  \033[0;34m番茄_summer\033[0m  <<<       ***\n");
-    cout << "***                                  ***" << endl;
-    cout << "****************************************" << endl;
-    cout << "****************************************" << endl;
+    cout << "\033[0;35m"
+         << "****************************************" << endl
+         << "****************************************" << endl
+         << "***                                  ***" << endl
+         << "***           " << "\033[0m"
+                             << "\033[1;37mFA_Auto_neo\033[0m"
+                                    << "\033[0;35m" << "            ***" << endl
+         << "***                                  ***" << endl
+         << "***  ------------------------------  ***" << endl
+         << "***                                  ***" << endl
+         << "***          " << "\033[0m"
+                            << "Version: " << ms_ptr_XonfigLoader->GetVersion() 
+                                    << "\033[0;35m" << "          ***" << endl
+         << "***                                  ***" << endl
+         << "***  ------------------------------  ***" << endl
+         << "***                                  ***" << endl
+         << "***          " << "\033[0m"
+                            << "初始月度: " << ms_ptr_XonfigLoader->GetOriginMonth()
+                                           << "\033[0;35m" << "            ***" << endl
+         << "***          " << "\033[0m"
+                            << "当前月度: " << ms_ptr_XonfigLoader->GetCurrentMonth()
+                                           << "\033[0;35m" << "            ***" << endl
+         << "***                                  ***" << endl
+         << "***  ------------------------------  ***" << endl
+         << "***                                  ***" << endl
+         << "***      " << "\033[0m"
+                        << ">>>  \033[0;32m番茄_summer\033[0m  <<<"
+                                << "\033[0;35m" << "       ***" << endl
+         << "***                                  ***" << endl
+         << "****************************************" << endl
+         << "****************************************" << endl
+         << "\033[0m";
 }
 
 void CCMDHandler::CMD_PrintRecode(CMD_Packet srt_CMD)
