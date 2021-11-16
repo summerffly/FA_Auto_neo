@@ -157,8 +157,9 @@ void CCMDHandler::CMD_Loop()
     
     while(1)
     {
-        cout << "[CMD] # ";
+        cout << "[CMD] # " << "\033[0;32m";
         cin.getline(CMD_linebuffer, MAX_COMMAND);
+        cout << "\033[0m";
 
         CMD_Packet xCmdPacket = CMD_Packet();
 
@@ -251,34 +252,34 @@ void CCMDHandler::CMD_Init()
     ms_ptr_FAitfX->SummarizeTail(0);
     ms_ptr_FAitfX->SummarizeCAF(0);
 
-    cout << "\033[0;35m"
+    cout << "\033[0;36m"
          << "****************************************" << endl
          << "****************************************" << endl
          << "***                                  ***" << endl
-         << "***           " << "\033[0m"
-                             << "\033[1;37mFA_Auto_neo\033[0m"
-                                    << "\033[0;35m" << "            ***" << endl
+         << "***          "
+                << "\033[1;33m FA_Auto_neo \033[0;36m"
+                                   << "           ***" << endl
          << "***                                  ***" << endl
          << "***  ------------------------------  ***" << endl
          << "***                                  ***" << endl
-         << "***          " << "\033[0m"
-                            << "Version: " << ms_ptr_XonfigLoader->GetVersion() 
-                                    << "\033[0;35m" << "          ***" << endl
+         << "***         "
+                << "\033[1;33m Version: " << ms_ptr_XonfigLoader->GetVersion() << "\033[0;36m"
+                                    << "          ***" << endl
          << "***                                  ***" << endl
          << "***  ------------------------------  ***" << endl
          << "***                                  ***" << endl
-         << "***          " << "\033[0m"
-                            << "初始月度: " << ms_ptr_XonfigLoader->GetOriginMonth()
-                                           << "\033[0;35m" << "            ***" << endl
-         << "***          " << "\033[0m"
-                            << "当前月度: " << ms_ptr_XonfigLoader->GetCurrentMonth()
-                                           << "\033[0;35m" << "            ***" << endl
+         << "***         "
+                << "\033[0m 初始月度: " << ms_ptr_XonfigLoader->GetOriginMonth() << "\033[0;36m"
+                                  << "            ***" << endl
+         << "***         "
+                << "\033[0m 当前月度: " << ms_ptr_XonfigLoader->GetCurrentMonth() << "\033[0;36m"
+                                  << "            ***" << endl
          << "***                                  ***" << endl
          << "***  ------------------------------  ***" << endl
          << "***                                  ***" << endl
-         << "***      " << "\033[0m"
-                        << ">>>  \033[0;32m番茄_summer\033[0m  <<<"
-                                << "\033[0;35m" << "       ***" << endl
+         << "***      "
+                << "\033[0;34m>>>  番茄_summer  <<<\033[0;36m"
+                                       << "       ***" << endl
          << "***                                  ***" << endl
          << "****************************************" << endl
          << "****************************************" << endl
