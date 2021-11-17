@@ -115,7 +115,7 @@ void CASitfX::ShowFA()
     CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
-    ptr_FAitfX->ShowLife(ptr_XonfigLoader->GetCurrentMonth(), 1);
+    ptr_FAitfX->ShowLife(ptr_XonfigLoader->GetCurrentMonth(), 2);
     ptr_FAitfX->ShowRoom(ptr_XonfigLoader->GetCurrentMonth(), 3);
     ptr_FAitfX->ShowSM(ptr_XonfigLoader->GetCurrentMonth(), 2);
     ptr_FAitfX->ShowMonthSurplus(ptr_XonfigLoader->GetCurrentMonth(), 2);
@@ -233,7 +233,6 @@ void CASitfX::ShowSum()
     ptr_FAitfX->SummarizeTitle(1);
     ptr_FAitfX->SummarizeMonthCLS(1);
     ptr_FAitfX->SummarizeTail(1);
-
 
     ptr_FAitfX->LoadSum(1);
     ptr_FAitfX->SummarizeCAF(1);
@@ -372,7 +371,7 @@ void CASitfX::ShowMonth(const string str_SelMonth)
 {
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
-    ptr_FAitfX->ShowLife(str_SelMonth, 1);
+    ptr_FAitfX->ShowLife(str_SelMonth, 2);
     ptr_FAitfX->ShowRoom(str_SelMonth, 2);
     ptr_FAitfX->ShowSM(str_SelMonth, 2);
     ptr_FAitfX->ShowMonthSurplus(str_SelMonth, 2);

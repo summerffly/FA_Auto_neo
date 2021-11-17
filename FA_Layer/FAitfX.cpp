@@ -1367,8 +1367,8 @@ void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_OFlag)
 
     if(int_OFlag == 2)
     {
-        cout << "----------------------------------------" << endl;
-        cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
+        cout << "------------------------------" << endl;
+        cout << "\033[0;31m" << str_SelMonth << "月/支出: \033[0m" << CTool::TransOutFormat(int_MonthExpense) << endl;
     }
 
     if(int_OFlag == 3)
@@ -1391,7 +1391,7 @@ void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_OFlag)
 /**************************************************/
 //   展示 life 支出
 //   OFlag == 1 >>> 嵌入显示模式
-//   OFlag == 2 >>> NONE (预留)
+//   OFlag == 2 >>> 嵌入显示模式
 //   OFlag == 3 >>> NONE (预留)
 //   OFlag == 4 >>> 完整显示模式
 /**************************************************/
@@ -1405,9 +1405,22 @@ void CFAitfX::ShowLife(const string str_SelMonth, int int_OFlag)
     string str_LifeItem = str_SelMonth + "月_生活费";
     int int_LifeExpense = m_ptr_FM_life->GetFirstSearchLineValue(str_LifeItem.c_str());
 
+    string str_MetroItem = str_SelMonth + "月_地铁商务座";
+    int int_MetroExpense = m_ptr_FM_life->GetFirstSearchLineValue(str_MetroItem.c_str());
+
+    int int_TotalLifeExpense = 0;
+    int_TotalLifeExpense = int_LifeExpense + int_MetroExpense;
+
     if( int_OFlag > 0 )
     {
         cout << str_SelMonth << "月/生活费: " << CTool::TransOutFormat(int_LifeExpense) << endl;
+        cout << str_SelMonth << "月/地铁商务座: " << CTool::TransOutFormat(int_MetroExpense) << endl;
+    }
+
+    if( int_OFlag == 2 )
+    {
+        cout << "------------------------------" << endl;
+        cout << "\033[0;35m" << str_SelMonth << "月/LIFE支出: \033[0m" << CTool::TransOutFormat(int_TotalLifeExpense) << endl;
     }
 
     if( int_OFlag == 4 )
@@ -1433,7 +1446,7 @@ void CFAitfX::ShowRoom(const string str_SelMonth, int int_OFlag)
 
     if(int_OFlag > 0)
     {
-        cout << "----------------------------------------" << endl;
+        cout << "------------------------------" << endl;
     }
 
     vector<string>::iterator itr_Room;
@@ -1442,6 +1455,7 @@ void CFAitfX::ShowRoom(const string str_SelMonth, int int_OFlag)
         string str_RMItem = str_SelMonth + "月_" + *itr_Room;
         int int_RMExpense = m_ptr_FM_life->GetFirstSearchLineValue(str_RMItem.c_str());
         int_TotalRMExpense += int_RMExpense;
+        
         if( (int_OFlag > 0) && (int_OFlag != 3) )
         {
             cout << str_SelMonth << "月/" << *itr_Room << ": " << CTool::TransOutFormat(int_RMExpense) << endl;
@@ -1450,7 +1464,9 @@ void CFAitfX::ShowRoom(const string str_SelMonth, int int_OFlag)
 
     if( int_OFlag == 2 )
     {
-        cout << "--> " << str_SelMonth << "月/ROOM支出: " << CTool::TransOutFormat(int_TotalRMExpense) << endl;
+        cout << "------------------------------" << endl;
+        //cout << "--> " << str_SelMonth << "月/ROOM支出: " << CTool::TransOutFormat(int_TotalRMExpense) << endl;
+        cout << "\033[0;35m" << str_SelMonth << "月/ROOM支出: \033[0m" << CTool::TransOutFormat(int_TotalRMExpense) << endl;
     }
 
     if( int_OFlag == 3 )
@@ -1483,7 +1499,7 @@ void CFAitfX::ShowSM(const string str_SelMonth, int int_OFlag)
 
     if(int_OFlag > 0)
     {
-        cout << "----------------------------------------" << endl;
+        cout << "------------------------------" << endl;
     }
 
     vector<string>::iterator itr_SubMonth;
@@ -1497,7 +1513,8 @@ void CFAitfX::ShowSM(const string str_SelMonth, int int_OFlag)
 
     if( int_OFlag == 2 )
     {
-        cout << "--> " << str_SelMonth << "月/CSM支出: " << CTool::TransOutFormat(int_TotalSMExpense) << endl;
+        cout << "------------------------------" << endl;
+        cout << "\033[0;35m" << str_SelMonth << "月/CSM支出: \033[0m" << CTool::TransOutFormat(int_TotalSMExpense) << endl;
     }
 
     if( int_OFlag == 4 )
