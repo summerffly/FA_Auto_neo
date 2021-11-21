@@ -1392,7 +1392,7 @@ void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_OFlag)
 //   展示 life 支出
 //   OFlag == 1 >>> 嵌入显示模式
 //   OFlag == 2 >>> 嵌入显示模式
-//   OFlag == 3 >>> NONE (预留)
+//   OFlag == 3 >>> 嵌入显示模式
 //   OFlag == 4 >>> 完整显示模式
 /**************************************************/
 void CFAitfX::ShowLife(const string str_SelMonth, int int_OFlag)
@@ -1411,7 +1411,7 @@ void CFAitfX::ShowLife(const string str_SelMonth, int int_OFlag)
     int int_TotalLifeExpense = 0;
     int_TotalLifeExpense = int_LifeExpense + int_MetroExpense;
 
-    if( int_OFlag > 0 )
+    if( (int_OFlag > 0) && (int_OFlag != 3) )
     {
         cout << str_SelMonth << "月/生活费: " << CTool::TransOutFormat(int_LifeExpense) << endl;
         cout << str_SelMonth << "月/地铁商务座: " << CTool::TransOutFormat(int_MetroExpense) << endl;
@@ -1421,6 +1421,11 @@ void CFAitfX::ShowLife(const string str_SelMonth, int int_OFlag)
     {
         cout << "------------------------------" << endl;
         cout << "\033[0;35m" << str_SelMonth << "月/LIFE支出: \033[0m" << CTool::TransOutFormat(int_TotalLifeExpense) << endl;
+    }
+
+    if( int_OFlag == 3 )
+    {
+        cout << str_SelMonth << "月/LIFE支出: " << CTool::TransOutFormat(int_TotalLifeExpense) << endl;
     }
 
     if( int_OFlag == 4 )
@@ -1508,13 +1513,22 @@ void CFAitfX::ShowSM(const string str_SelMonth, int int_OFlag)
         string str_SMItem = CMD_SMTranslate(*itr_SubMonth) + ".M" + str_SelMonth;
         int int_SMExpense = m_ptr_FM_life->GetFirstSearchLineValue(str_SMItem.c_str());
         int_TotalSMExpense += int_SMExpense;
-        cout << str_SelMonth << "月/" << CMD_SMTranslate(*itr_SubMonth) << ": " << CTool::TransOutFormat(int_SMExpense) << endl;
+
+        if( (int_OFlag > 0) && (int_OFlag != 3) )
+        {
+            cout << str_SelMonth << "月/" << CMD_SMTranslate(*itr_SubMonth) << ": " << CTool::TransOutFormat(int_SMExpense) << endl;
+        }
     }
 
     if( int_OFlag == 2 )
     {
         cout << "------------------------------" << endl;
         cout << "\033[0;35m" << str_SelMonth << "月/CSM支出: \033[0m" << CTool::TransOutFormat(int_TotalSMExpense) << endl;
+    }
+
+    if( int_OFlag == 3 )
+    {
+        cout << str_SelMonth << "月/CSM支出: " << CTool::TransOutFormat(int_TotalSMExpense) << endl;
     }
 
     if( int_OFlag == 4 )
