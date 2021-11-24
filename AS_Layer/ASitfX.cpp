@@ -118,7 +118,7 @@ void CASitfX::ShowFA()
     ptr_FAitfX->ShowLife(ptr_XonfigLoader->GetCurrentMonth(), 3);
     ptr_FAitfX->ShowRoom(ptr_XonfigLoader->GetCurrentMonth(), 3);
     ptr_FAitfX->ShowSM(ptr_XonfigLoader->GetCurrentMonth(), 3);
-    ptr_FAitfX->ShowMonthSurplus(ptr_XonfigLoader->GetCurrentMonth(), 2);
+    ptr_FAitfX->ShowMonthSurplus(ptr_XonfigLoader->GetCurrentMonth(), 1);
     ptr_FAitfX->LoadSum(1);
     ptr_FAitfX->SummarizeCAF(1);
 
@@ -374,7 +374,7 @@ void CASitfX::ShowMonth(const string str_SelMonth)
     ptr_FAitfX->ShowLife(str_SelMonth, 2);
     ptr_FAitfX->ShowRoom(str_SelMonth, 2);
     ptr_FAitfX->ShowSM(str_SelMonth, 2);
-    ptr_FAitfX->ShowMonthSurplus(str_SelMonth, 2);
+    ptr_FAitfX->ShowMonthSurplus(str_SelMonth, 1);
 
     cout << "----------------------------------------" << endl;
 }

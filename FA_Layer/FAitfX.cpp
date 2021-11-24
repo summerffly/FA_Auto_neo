@@ -86,9 +86,9 @@ void CFAitfX::LoadSum(int int_OFlag)
 
     if(int_OFlag == 1)
     {
-        cout << "----------------------------------------" << endl;
-        cout << str_OriginSum << ": " << CTool::TransOutFormat(m_int_OriginSum) << endl;
-        cout << str_CurrentSum << ": " << CTool::TransOutFormat(m_int_CurrentSum) << endl;
+        cout << "------------------------------" << endl;
+        cout << "\033[0;36m" << str_OriginSum << ": \033[0m" << CTool::TransOutFormat(m_int_OriginSum) << endl;
+        cout << "\033[0;34m" << str_CurrentSum << ": \033[0m" << CTool::TransOutFormat(m_int_CurrentSum) << endl;
     }
 
     if(int_OFlag == 2)
@@ -368,8 +368,8 @@ void CFAitfX::SummarizeCAF(int int_OFlag)
 
     if(int_OFlag == 1)
     {
-        cout << "----------------------------------------" << endl;
-        cout << "--> 可支配财富: " << CTool::TransOutFormat(m_int_CAFSum) << endl;
+        cout << "------------------------------" << endl;
+        cout << "\033[0;34m" << "--> 可支配财富: \033[0m" << CTool::TransOutFormat(m_int_CAFSum) << endl;
     }
 
     int int_CAFSum = 0;
@@ -1359,10 +1359,10 @@ void CFAitfX::ShowMonthSurplus(const string str_SelMonth, int int_OFlag)
 
     if(int_OFlag == 1)
     {
-        cout << "----------------------------------------" << endl;
-        cout << str_SelMonth << "月/薪资: " << CTool::TransOutFormat(uni_MonthSalary) << endl;
-        cout << str_SelMonth << "月/支出: " << CTool::TransOutFormat(int_MonthExpense) << endl;
-        cout << str_SelMonth << "月/结余: " << CTool::TransOutFormat(int_MonthRest) << endl;
+        cout << "------------------------------" << endl;
+        cout << "\033[0;31m" << str_SelMonth << "月/薪资: \033[0m" << CTool::TransOutFormat(uni_MonthSalary) << endl;
+        cout << "\033[0;31m" << str_SelMonth << "月/支出: \033[0m" << CTool::TransOutFormat(int_MonthExpense) << endl;
+        cout << "\033[0;31m" << str_SelMonth << "月/结余: \033[0m" << CTool::TransOutFormat(int_MonthRest) << endl;
     }
 
     if(int_OFlag == 2)
