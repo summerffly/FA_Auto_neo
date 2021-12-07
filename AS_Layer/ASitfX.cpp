@@ -232,9 +232,10 @@ void CASitfX::ShowSum()
 
     ptr_FAitfX->SummarizeTitle(1);
     ptr_FAitfX->SummarizeMonthCLS(1);
-    ptr_FAitfX->SummarizeTail(1);
-
+    
     ptr_FAitfX->LoadSum(1);
+    
+    ptr_FAitfX->SummarizeTail(1);
     ptr_FAitfX->SummarizeCAF(1);
 
     cout << "----------------------------------------" << endl;

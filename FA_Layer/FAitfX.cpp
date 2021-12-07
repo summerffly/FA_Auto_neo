@@ -201,7 +201,6 @@ void CFAitfX::SummarizeMonthCLS(int int_OFlag)
     if(int_OFlag == 1)
     {
         cout << "----------------------------------------" << endl;
-        cout << "--> Month累计收入: " << CTool::TransOutFormat(m_int_MonthSalarySum) << endl;
         cout << "Life累计支出: " << CTool::TransOutFormat(int_MonthLifeSum) << endl;
         cout << "Room累计支出: " << CTool::TransOutFormat(int_MonthRoomSum) << endl;
 
@@ -213,8 +212,9 @@ void CFAitfX::SummarizeMonthCLS(int int_OFlag)
             int_SMindex++;
         }
 
-        cout << "--> Month累计支出: " << CTool::TransOutFormat(m_int_MonthExpenseSum) << endl;
-        cout << "--> Month累计结余: " << CTool::TransOutFormat(m_int_MonthSurplusSum) << endl;
+        cout << "\033[0;34m--> Month累计收入: \033[0m" << CTool::TransOutFormat(m_int_MonthSalarySum) << endl;
+        cout << "\033[0;31m--> Month累计支出: \033[0m" << CTool::TransOutFormat(m_int_MonthExpenseSum) << endl;
+        cout << "\033[0;31m--> Month累计结余: \033[0m" << CTool::TransOutFormat(m_int_MonthSurplusSum) << endl;
     }
 
     if(int_OFlag == 2)
@@ -293,7 +293,7 @@ void CFAitfX::SummarizeTitle(int int_OFlag)
 
     if(int_OFlag == 1)
     {
-        cout << "--> Title累计支出: " << CTool::TransOutFormat(m_int_TitleSum) << endl;
+        cout << "\033[0;31m--> Title累计支出: \033[0m" << CTool::TransOutFormat(m_int_TitleSum) << endl;
     }
     else if(int_OFlag == 2)
     {
