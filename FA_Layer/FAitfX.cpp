@@ -200,7 +200,7 @@ void CFAitfX::SummarizeMonthCLS(int int_OFlag)
 
     if(int_OFlag == 1)
     {
-        cout << "----------------------------------------" << endl;
+        cout << "------------------------------" << endl;
         cout << "Life累计支出: " << CTool::TransOutFormat(int_MonthLifeSum) << endl;
         cout << "Room累计支出: " << CTool::TransOutFormat(int_MonthRoomSum) << endl;
 
@@ -265,7 +265,7 @@ void CFAitfX::SummarizeTitle(int int_OFlag)
 
     if(int_OFlag == 1)
     {
-        cout << "----------------------------------------" << endl;
+        cout << "------------------------------" << endl;
     }
 
     if(int_OFlag == 2)
@@ -804,6 +804,44 @@ void CFAitfX::UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag)
         cout << "Tt_初始值: " << CTool::TransOutFormat(int_TitleExpense) << endl;
         cout << "Tt_更新值: " << CTool::TransOutFormat(int_TitleExpenseUD) << endl;
         cout << "----------------------------------------" << endl;
+    }
+}
+
+/**************************************************/
+//   校验 Tt分项子项 支出
+/**************************************************/
+int CFAitfX::CheckSubTitleExpense(const string str_TitleKey, bool bol_OFlag)
+{
+    //string str_RangeTop = "## " + CMD_TTTranslate(str_TitleKey);
+    string str_RangeBottom("## Total");
+
+    unsigned int uni_RangeTop = 2;
+    unsigned int uni_RangeBottom = GetPtrFM("TT", str_TitleKey)->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
+
+    vector<unsigned int> vec_uni_LineIndex;
+    GetPtrFM("TT", str_TitleKey)->GetSearchLineIndexVector("### ", vec_uni_LineIndex);
+
+    int int_SubTitleExpenseEX = GetPtrFM("TT", str_TitleKey)->GetLineValue(uni_RangeBottom+2);
+    int int_SubTitleExpenseCK = GetPtrFM("TT", str_TitleKey)->CountRangeType(uni_RangeTop, uni_RangeBottom-1,\
+                                       LTYPE_FBIRC_LINEUINT);
+
+    if( bol_OFlag )
+    {
+        cout << "----------------------------------------" << endl;
+        //cout << "### " << CMD_TTTranslate(str_TitleKey) << "/支出 ###" << endl;
+        //cout << "AF_读取值: " << CTool::TransOutFormat(int_AFTitleExpenseEX) << endl;
+        //cout << "Tt_读取值: " << CTool::TransOutFormat(int_TitleExpenseEX) << endl;
+        //cout << "Tt_校验值: " << CTool::TransOutFormat(int_TitleExpenseCK) << endl;
+        cout << "----------------------------------------" << endl;
+    }
+
+    if( int_SubTitleExpenseCK != int_SubTitleExpenseEX )
+    {
+        return -1;
+    }
+    else
+    {
+        return 0;
     }
 }
 
