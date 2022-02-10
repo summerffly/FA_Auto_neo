@@ -814,35 +814,56 @@ int CFAitfX::CheckSubTitleExpense(const string str_TitleKey, bool bol_OFlag)
 {
     //string str_RangeTop = "## " + CMD_TTTranslate(str_TitleKey);
     string str_RangeBottom("## Total");
-
-    unsigned int uni_RangeTop = 2;
+    //unsigned int uni_RangeTop = 2;
     unsigned int uni_RangeBottom = GetPtrFM("TT", str_TitleKey)->GetUniqueSearchLineIndex(str_RangeBottom.c_str());
 
     vector<unsigned int> vec_uni_LineIndex;
     GetPtrFM("TT", str_TitleKey)->GetSearchLineIndexVector("### ", vec_uni_LineIndex);
 
-    int int_SubTitleExpenseEX = GetPtrFM("TT", str_TitleKey)->GetLineValue(uni_RangeBottom+2);
-    int int_SubTitleExpenseCK = GetPtrFM("TT", str_TitleKey)->CountRangeType(uni_RangeTop, uni_RangeBottom-1,\
-                                       LTYPE_FBIRC_LINEUINT);
-
-    if( bol_OFlag )
+    int int_IndexSize = vec_uni_LineIndex.size();
+    if( int_IndexSize == 0)
     {
-        cout << "----------------------------------------" << endl;
-        //cout << "### " << CMD_TTTranslate(str_TitleKey) << "/支出 ###" << endl;
-        //cout << "AF_读取值: " << CTool::TransOutFormat(int_AFTitleExpenseEX) << endl;
-        //cout << "Tt_读取值: " << CTool::TransOutFormat(int_TitleExpenseEX) << endl;
-        //cout << "Tt_校验值: " << CTool::TransOutFormat(int_TitleExpenseCK) << endl;
-        cout << "----------------------------------------" << endl;
-    }
-
-    if( int_SubTitleExpenseCK != int_SubTitleExpenseEX )
-    {
-        return -1;
+        return 1;
     }
     else
     {
-        return 0;
+        for(int i=0; i<int_IndexSize ;i++ )
+        {
+            if( LTYPE_FBIRC_SUBTITLESUM != GetPtrFM("TT", str_TitleKey)->GetLineType(vec_uni_LineIndex[i]+1) )
+                continue;
+
+            int int_SubTitleExpenseEX = 0;
+            int int_SubTitleExpenseCK = 0;
+            if( i == int_IndexSize-1 )
+            {
+                int_SubTitleExpenseEX = GetPtrFM("TT", str_TitleKey)->GetLineValue(vec_uni_LineIndex[i]+1);
+                int_SubTitleExpenseCK = GetPtrFM("TT", str_TitleKey)->CountRangeType(vec_uni_LineIndex[i]+2, uni_RangeBottom-1,\
+                                                LTYPE_FBIRC_LINEUINT);
+            }
+            else
+            {
+                int_SubTitleExpenseEX = GetPtrFM("TT", str_TitleKey)->GetLineValue(vec_uni_LineIndex[i]+1);
+                int_SubTitleExpenseCK = GetPtrFM("TT", str_TitleKey)->CountRangeType(vec_uni_LineIndex[i]+2, vec_uni_LineIndex[i+1]-1,\
+                                                LTYPE_FBIRC_LINEUINT);
+            }
+
+            if( bol_OFlag )
+            {
+                cout << "----------------------------------------" << endl;
+                cout <<  GetPtrFM("TT", str_TitleKey)->GetFullLine(vec_uni_LineIndex[i]) << endl;
+                cout << "SubTt_读取值: " << CTool::TransOutFormat(int_SubTitleExpenseEX) << endl;
+                cout << "SubTt_校验值: " << CTool::TransOutFormat(int_SubTitleExpenseCK) << endl;
+                cout << "----------------------------------------" << endl;
+            }
+
+            if( int_SubTitleExpenseCK != int_SubTitleExpenseEX )
+            {
+                return -1;
+            }
+        }
     }
+
+    return 0;
 }
 
 /**************************************************/

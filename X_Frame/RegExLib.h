@@ -35,6 +35,7 @@ extern regex REP_EOF;
 
 extern regex REP_FBric_Aggr;
 extern regex REP_FBric_TitleSum;
+extern regex REP_FBric_SubTitleSum;
 extern regex REP_FBric_MonthSum;
 extern regex REP_FBric_LineUnit;
 extern regex REP_FBric_RateOI;

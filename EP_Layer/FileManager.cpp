@@ -340,7 +340,7 @@ int CFileManager::GetFirstSearchLineValue(const char *cha_Key)
     return m_vec_cls_Line.at(m_vec_uni_LineIndex.at(0)).GetLineValue();
 }
 
-void CFileManager::GetSearchLineIndexVector(const char *cha_Key, vector<unsigned int> vec_uni_LineIndex)
+void CFileManager::GetSearchLineIndexVector(const char *cha_Key, vector<unsigned int> &vec_uni_LineIndex)
 {
     vec_uni_LineIndex.clear();
 

@@ -30,12 +30,12 @@
 #define LTYPE_TIMESTAMP     13   // 更新时间戳
 #define LTYPE_EOF           14   // 结束线
 
-#define LTYPE_FBIRC_AGGR        21   // 总金额
-#define LTYPE_FBIRC_TITLESUM    22   // 单项金额
-#define LTYPE_FBIRC_MONTHSUM    23   // 月度金额
-#define LTYPE_FBIRC_LINEUINT    24   // 单行金额
-#define LTYPE_FBIRC_RATEOI      25   // ROI
-
+#define LTYPE_FBIRC_AGGR           21   // 总金额
+#define LTYPE_FBIRC_TITLESUM       22   // 单项金额
+#define LTYPE_FBIRC_MONTHSUM       23   // 月度金额
+#define LTYPE_FBIRC_LINEUINT       24   // 单行金额
+#define LTYPE_FBIRC_RATEOI         25   // ROI
+#define LTYPE_FBIRC_SUBTITLESUM    26   // 单项子项金额
 
 #endif
 

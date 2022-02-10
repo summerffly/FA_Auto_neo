@@ -864,6 +864,9 @@ void CCMDHandler::OnCmdTest(CMD_Packet srt_CMD)
     printf("\033[1;36m cyan \033[0m");
     printf("\033[1;37m white \n\033[0m");
 
+    cout << endl;
+    ms_ptr_FAitfX->CheckSubTitleExpense("dk", true);
+
     cout << "****************************************" << endl;
     cout << "***           END OF TEST            ***" << endl;
     cout << "****************************************" << endl;

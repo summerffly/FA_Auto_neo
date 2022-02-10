@@ -167,6 +167,16 @@ int CLineEPer::LineParser()
             
             break;
         }
+        else if( regex_match(m_str_FullLine, str_Match, REP_FBric_SubTitleSum) )
+        {
+            m_uni_LineType = LTYPE_FBIRC_SUBTITLESUM;
+            ValuePMParser(str_Match[2]);
+            string str_ValueTemp = str_Match[3];
+            m_uni_LineValueABS = atoi(str_ValueTemp.c_str());
+            m_str_LineContent = "";
+            
+            break;
+        }
         else if( regex_match(m_str_FullLine, str_Match, REP_FBric_LineUnit) )
         {
             m_uni_LineType = LTYPE_FBIRC_LINEUINT;
