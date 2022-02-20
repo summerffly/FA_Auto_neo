@@ -32,10 +32,11 @@
 
 #define LTYPE_FBIRC_AGGR           21   // 总金额
 #define LTYPE_FBIRC_TITLESUM       22   // 单项金额
-#define LTYPE_FBIRC_MONTHSUM       23   // 月度金额
-#define LTYPE_FBIRC_LINEUINT       24   // 单行金额
-#define LTYPE_FBIRC_RATEOI         25   // ROI
-#define LTYPE_FBIRC_SUBTITLESUM    26   // 单项子项金额
+#define LTYPE_FBIRC_SUBTITLESUM    23   // 单项子项金额
+#define LTYPE_FBIRC_MONTHSUM       24   // 月度金额
+#define LTYPE_FBIRC_LINEUINT       25   // 单行金额
+#define LTYPE_FBIRC_RATEOI         26   // ROI
+
 
 #endif
 

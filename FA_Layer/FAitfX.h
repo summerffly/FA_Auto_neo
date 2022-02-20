@@ -74,6 +74,7 @@ public:
     int CheckTitleExpense(const string str_TitleKey, bool bol_OFlag);
     void UpdateTitleExpense(const string str_TitleKey, bool bol_OFlag);
     int CheckSubTitleExpense(const string str_TitleKey, bool bol_OFlag);
+    void UpdateSubTitleExpense(const string str_TitleKey, bool bol_OFlag);
 
     /****************************************/
     //   综合操作区

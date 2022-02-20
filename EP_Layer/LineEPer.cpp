@@ -362,6 +362,18 @@ void CLineEPer::UpdateFullLine()
                 m_str_FullLine += cha_ValueABS;
             }
             break;
+        case(LTYPE_FBIRC_SUBTITLESUM):
+            {
+                m_str_FullLine.clear();
+                m_str_FullLine += ">> ";
+                if(m_bol_LineValuePM)
+                    m_str_FullLine += "+";
+                else
+                    m_str_FullLine += "-";
+                sprintf(cha_ValueABS, "%d", m_uni_LineValueABS);
+                m_str_FullLine += cha_ValueABS;
+            }
+            break;
         case(LTYPE_FBIRC_MONTHSUM):
             {
                 m_str_FullLine.clear();
