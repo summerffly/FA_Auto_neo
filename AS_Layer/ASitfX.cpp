@@ -617,14 +617,16 @@ void CASitfX::AppendNextMonth(const string str_SelMonth)
     CXonfigLoader *ptr_XonfigLoader = Singleton<CXonfigLoader>::GetInstance("./FA_Auto_neo.ini");
     CFAitfX *ptr_FAitfX = Singleton<CFAitfX>::GetInstance();
 
+    string str_NextMonth = CTool::GenerateNextMonth(str_SelMonth);
+
     // 修改Script
-    ptr_XonfigLoader->ModifyCurrentMonth(str_SelMonth);
+    ptr_XonfigLoader->ModifyCurrentMonth(str_NextMonth);
 
     // 添加Sum脚本
-    ptr_FAitfX->AddScriptSum(str_SelMonth);
+    ptr_FAitfX->AddScriptSum(str_NextMonth);
 
     // 添加Month脚本
-    ptr_FAitfX->AddScriptMonth(str_SelMonth);
+    ptr_FAitfX->AddScriptMonth(str_NextMonth);
 
     // 添加SubMonth脚本
     vector<string> vec_str_SubMonth;
@@ -633,7 +635,7 @@ void CASitfX::AppendNextMonth(const string str_SelMonth)
     vector<string>::iterator itr_SubMonth;
     for(itr_SubMonth = vec_str_SubMonth.begin(); itr_SubMonth != vec_str_SubMonth.end(); itr_SubMonth++)
     {
-        ptr_FAitfX->AddScriptSubMonth(*itr_SubMonth, str_SelMonth);
+        ptr_FAitfX->AddScriptSubMonth(*itr_SubMonth, str_NextMonth);
     }
 }
 

@@ -786,7 +786,8 @@ void CCMDHandler::OnCmdDeleteLine(CMD_Packet srt_CMD)
 
 void CCMDHandler::OnCmdAppendMonth(CMD_Packet srt_CMD)
 {
-    ms_ptr_ASitfX->AppendNextMonth(srt_CMD.m_str_ResParam);
+    //ms_ptr_ASitfX->AppendNextMonth(srt_CMD.m_str_ResParam);
+    ms_ptr_ASitfX->AppendNextMonth(srt_CMD.m_str_ParamMonth);
 }
 
 void CCMDHandler::OnCmdCheckFile(CMD_Packet srt_CMD)
