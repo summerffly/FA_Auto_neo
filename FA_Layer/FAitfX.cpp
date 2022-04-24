@@ -823,7 +823,7 @@ int CFAitfX::CheckSubTitleExpense(const string str_TitleKey, bool bol_OFlag)
     int int_IndexSize = vec_uni_LineIndex.size();
     if( int_IndexSize == 0)
     {
-        return -1;
+        return 0;
     }
     else
     {

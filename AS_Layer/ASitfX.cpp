@@ -44,7 +44,8 @@ void CASitfX::CheckFA()
     vector<string>::iterator itr_TitleDeep;
     for(itr_TitleDeep = vec_str_TitleDeep.begin(); itr_TitleDeep != vec_str_TitleDeep.end(); itr_TitleDeep++)
     {
-        if( 0 != ptr_FAitfX->CheckTitleExpense(*itr_TitleDeep, false) )
+        if(( 0 != ptr_FAitfX->CheckTitleExpense(*itr_TitleDeep, false) )
+            || ( 0 != ptr_FAitfX->CheckSubTitleExpense(*itr_TitleDeep, false) ))
         {
             string str_Message = CMD_TTTranslate(*itr_TitleDeep) + " NOT Pass Check";
             CTool::MassageOutFotmat(str_Message, '!');

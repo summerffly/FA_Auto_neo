@@ -262,7 +262,7 @@ void CCMDHandler::CMD_Init()
          << "***                                  ***" << endl
          << "***  ------------------------------  ***" << endl
          << "***                                  ***" << endl
-         << "***         "
+         << "***        "
                 << "\033[1;33m Version: " << ms_ptr_XonfigLoader->GetVersion() << "\033[0;36m"
                                     << "          ***" << endl
          << "***                                  ***" << endl
@@ -552,6 +552,7 @@ void CCMDHandler::OnCmdShowSubMonth(CMD_Packet srt_CMD)
 void CCMDHandler::OnCmdCheckTitle(CMD_Packet srt_CMD)
 {
     ms_ptr_FAitfX->CheckTitleExpense(srt_CMD.m_str_ParamTitle, true);
+    ms_ptr_FAitfX->CheckSubTitleExpense(srt_CMD.m_str_ParamTitle, true);
 }
 
 void CCMDHandler::OnCmdUpdateTitle(CMD_Packet srt_CMD)
