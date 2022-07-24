@@ -1516,7 +1516,7 @@ void CFAitfX::ShowLife(const string str_SelMonth, int int_OFlag)
     string str_LifeItem = str_SelMonth + "月_生活费";
     int int_LifeExpense = m_ptr_FM_life->GetFirstSearchLineValue(str_LifeItem.c_str());
 
-    string str_MetroItem = str_SelMonth + "月_地铁商务座";
+    string str_MetroItem = str_SelMonth + "月_通勤费";
     int int_MetroExpense = m_ptr_FM_life->GetFirstSearchLineValue(str_MetroItem.c_str());
 
     int int_TotalLifeExpense = 0;
@@ -1525,7 +1525,7 @@ void CFAitfX::ShowLife(const string str_SelMonth, int int_OFlag)
     if( (int_OFlag > 0) && (int_OFlag != 3) )
     {
         cout << str_SelMonth << "月/生活费: " << CTool::TransOutFormat(int_LifeExpense) << endl;
-        cout << str_SelMonth << "月/地铁商务座: " << CTool::TransOutFormat(int_MetroExpense) << endl;
+        cout << str_SelMonth << "月/通勤费: " << CTool::TransOutFormat(int_MetroExpense) << endl;
     }
 
     if( int_OFlag == 2 )
