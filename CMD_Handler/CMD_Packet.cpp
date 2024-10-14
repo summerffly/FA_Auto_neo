@@ -4,6 +4,7 @@
 //   @summer studio
 //------------------------------//
 
+#include <cstring>
 #include "CMD_Packet.h"
 
 #include "DefCMDType.h"

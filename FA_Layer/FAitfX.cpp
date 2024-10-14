@@ -34,7 +34,6 @@ CFAitfX::CFAitfX()
     m_ptr_FM_sm_KEEP = new CFileManager("./KEEP.M.md");
     m_ptr_FM_sm_DGtler = new CFileManager("./DGtler.M.md");
     m_ptr_FM_sm_TB = new CFileManager("./TB.M.md");
-    m_ptr_FM_sm_sa = new CFileManager("./sa.M.md");
     m_ptr_FM_tt_DK = new CFileManager("./DK.md");
     m_ptr_FM_tt_NS = new CFileManager("./NS.md");
     m_ptr_FM_tt_travel = new CFileManager("./travel.md");
@@ -46,11 +45,10 @@ CFAitfX::CFAitfX()
     m_ptr_FM_array[2] = m_ptr_FM_sm_KEEP;
     m_ptr_FM_array[3] = m_ptr_FM_sm_DGtler;
     m_ptr_FM_array[4] = m_ptr_FM_sm_TB;
-    m_ptr_FM_array[5] = m_ptr_FM_sm_sa;
-    m_ptr_FM_array[6] = m_ptr_FM_tt_DK;
-    m_ptr_FM_array[7] = m_ptr_FM_tt_NS;
-    m_ptr_FM_array[8] = m_ptr_FM_tt_travel;
-    m_ptr_FM_array[9] = m_ptr_FM_tt_BOX;
+    m_ptr_FM_array[5] = m_ptr_FM_tt_DK;
+    m_ptr_FM_array[6] = m_ptr_FM_tt_NS;
+    m_ptr_FM_array[7] = m_ptr_FM_tt_travel;
+    m_ptr_FM_array[8] = m_ptr_FM_tt_BOX;
 }
 
 /**************************************************/
@@ -2118,8 +2116,6 @@ CFileManager *CFAitfX::GetPtrFM(const string str_Type, const string str_Key)
         return m_ptr_FM_sm_DGtler;
     else if( (str_Type == "SM") && (str_Key == TB) )
         return m_ptr_FM_sm_TB;
-    else if( (str_Type == "SM") && (str_Key == SA) )
-        return m_ptr_FM_sm_sa;
     else if( (str_Type == "TT") && (str_Key == DK) )
         return m_ptr_FM_tt_DK;
     else if( (str_Type == "TT") && (str_Key == NS) )

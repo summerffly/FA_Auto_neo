@@ -346,7 +346,7 @@ void CLineEPer::UpdateFullLine()
                     m_str_FullLine += "+";
                 else
                     m_str_FullLine += "-";
-                sprintf(cha_ValueABS, "%d", m_uni_LineValueABS);
+                snprintf(cha_ValueABS, sizeof(cha_ValueABS), "%d", m_uni_LineValueABS);
                 m_str_FullLine += cha_ValueABS;
             }
             break;
@@ -358,7 +358,7 @@ void CLineEPer::UpdateFullLine()
                     m_str_FullLine += "+";
                 else
                     m_str_FullLine += "-";
-                sprintf(cha_ValueABS, "%d", m_uni_LineValueABS);
+                snprintf(cha_ValueABS, sizeof(cha_ValueABS), "%d", m_uni_LineValueABS);
                 m_str_FullLine += cha_ValueABS;
             }
             break;
@@ -370,7 +370,7 @@ void CLineEPer::UpdateFullLine()
                     m_str_FullLine += "+";
                 else
                     m_str_FullLine += "-";
-                sprintf(cha_ValueABS, "%d", m_uni_LineValueABS);
+                snprintf(cha_ValueABS, sizeof(cha_ValueABS), "%d", m_uni_LineValueABS);
                 m_str_FullLine += cha_ValueABS;
             }
             break;
@@ -384,7 +384,7 @@ void CLineEPer::UpdateFullLine()
                     m_str_FullLine += "+";
                 else
                     m_str_FullLine += "-";
-                sprintf(cha_ValueABS, "%d", m_uni_LineValueABS);
+                snprintf(cha_ValueABS, sizeof(cha_ValueABS), "%d", m_uni_LineValueABS);
                 m_str_FullLine += cha_ValueABS;
             }
             break;
@@ -397,7 +397,7 @@ void CLineEPer::UpdateFullLine()
                 else
                     m_str_FullLine += "-";
                 m_str_FullLine += " ";
-                sprintf(cha_ValueABS, "%d", m_uni_LineValueABS);
+                snprintf(cha_ValueABS, sizeof(cha_ValueABS), "%d", m_uni_LineValueABS);
                 m_str_FullLine += cha_ValueABS;
                 m_str_FullLine += "` ";
                 m_str_FullLine += m_str_LineContent;
@@ -412,7 +412,7 @@ void CLineEPer::UpdateFullLine()
                     m_str_FullLine += "+";
                 else
                     m_str_FullLine += "-";
-                sprintf(cha_ValueABS, "%d", m_uni_LineValueABS);
+                snprintf(cha_ValueABS, sizeof(cha_ValueABS), "%d", m_uni_LineValueABS);
                 m_str_FullLine += cha_ValueABS;
                 m_str_FullLine += "%";
             }

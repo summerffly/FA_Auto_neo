@@ -5,6 +5,7 @@
 //   @summer studio
 //------------------------------//
 
+#include <cstring>
 #include "FileOPer.h"
 
 #include "./../X_Frame/DefLib.h"

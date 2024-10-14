@@ -175,14 +175,13 @@ private:
     CFileManager *m_ptr_FM_sm_KEEP;
     CFileManager *m_ptr_FM_sm_DGtler;
     CFileManager *m_ptr_FM_sm_TB;
-    CFileManager *m_ptr_FM_sm_sa;
     CFileManager *m_ptr_FM_tt_DK;
     CFileManager *m_ptr_FM_tt_NS;
     CFileManager *m_ptr_FM_tt_travel;
     CFileManager *m_ptr_FM_tt_BOX;
     CFileManager *m_ptr_FM_NULL;
 
-    static const unsigned int m_uni_FM_aszie = 10;
+    static const unsigned int m_uni_FM_aszie = 9;
     CFileManager *m_ptr_FM_array[m_uni_FM_aszie];
 };
 

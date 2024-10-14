@@ -4,9 +4,10 @@
 //   @summer studio
 //------------------------------//
 
-#include "X_Tool.h"
+#include <cstring>
 // add 番茄@20200218 - macOS头文件，不可移植性，最小包含原则
 #include <mach-o/dyld.h>
+#include "X_Tool.h"
 
 using namespace std;
 
@@ -124,9 +125,9 @@ string CTool::GenerateMonthString(const int int_Month)
     char *cha_Month = new char[3];
 
     if(int_Month < 10)
-        sprintf(cha_Month, "0%d", int_Month);
+        snprintf(cha_Month, sizeof(cha_Month), "0%d", int_Month);
     else
-        sprintf(cha_Month, "%d", int_Month);
+        snprintf(cha_Month, sizeof(cha_Month), "%d", int_Month);
 
     // update summer@20211029
     // it works in OS Big Sur
@@ -312,12 +313,12 @@ string CTool::TransOutFormat(const int int_Value)
 
     if(int_Value > 0)
     {
-        sprintf(cha_OutValue, "+%d", int_Value);
+        snprintf(cha_OutValue, sizeof(cha_OutValue), "+%d", int_Value);
         str_OutValue += cha_OutValue;
     }
     else
     {
-        sprintf(cha_OutValue, "%d", int_Value);
+        snprintf(cha_OutValue, sizeof(cha_OutValue), "%d", int_Value);
         str_OutValue += cha_OutValue;
     }
 
@@ -364,11 +365,11 @@ string CTool::TimeOut()
     char *cha_TimeStampDay = new char[20];
     char *cha_TimeStampSec = new char[20];
 
-    sprintf(cha_TimeStampDay, "%d-%02d-%02d", 1900 + ptr_stc_CurrentTime->tm_year,\
+    snprintf(cha_TimeStampDay, sizeof(cha_TimeStampDay), "%d-%02d-%02d", 1900 + ptr_stc_CurrentTime->tm_year,\
                                             1 + ptr_stc_CurrentTime->tm_mon, ptr_stc_CurrentTime->tm_mday);
-    sprintf(cha_TimeStampSec, "%02d:%02d:%02d", ptr_stc_CurrentTime->tm_hour,\
+    snprintf(cha_TimeStampSec, sizeof(cha_TimeStampSec), "%02d:%02d:%02d", ptr_stc_CurrentTime->tm_hour,\
                                           ptr_stc_CurrentTime->tm_min, ptr_stc_CurrentTime->tm_sec);
-    sprintf(cha_TimeStampFF, "%s %s", cha_TimeStampDay, cha_TimeStampSec);
+    snprintf(cha_TimeStampFF, sizeof(cha_TimeStampFF), "%s %s", cha_TimeStampDay, cha_TimeStampSec);
 
     string str_TimeOut(cha_TimeStampFF);
 

@@ -5,6 +5,7 @@
 /*           Created on: May 06, 2021             */
 /**************************************************/
 
+#include <cstring>
 #include "Xonfig.h"
 
 

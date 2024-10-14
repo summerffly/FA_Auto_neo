@@ -4,6 +4,7 @@
 //   @summer studio
 //------------------------------//
 
+#include <cstring>
 #include "Xonfig_Loader.h"
 
 using namespace std;
@@ -127,7 +128,7 @@ void CXonfigLoader::TitleRipper()
     while(index <= m_uni_TitleCount)
     {
         memset(&nameLabel, 0, sizeof(nameLabel));
-        sprintf(nameLabel, "TitleItem_%d", index++);
+        snprintf(nameLabel, sizeof(nameLabel), "TitleItem_%d", index++);
         str_Temp = emptyString;
         str_Temp = m_cls_Xonfig.Read(nameLabel, str_Temp);
         m_vec_str_Title.push_back(str_Temp);
@@ -148,12 +149,12 @@ void CXonfigLoader::TitleDeepRipper()
     while(index <= m_uni_TitleDeepCount)
     {
         memset(&nameLabel, 0, sizeof(nameLabel));
-        sprintf(nameLabel, "TitleDeepCMD_%d", index);
+        snprintf(nameLabel, sizeof(nameLabel), "TitleDeepCMD_%d", index);
         str_TempCMD = emptyString;
         str_TempCMD = m_cls_Xonfig.Read(nameLabel, str_TempCMD);
 
         memset(&nameLabel, 0, sizeof(nameLabel));
-        sprintf(nameLabel, "TitleDeepKey_%d", index);
+        snprintf(nameLabel, sizeof(nameLabel), "TitleDeepKey_%d", index);
         str_TempKey = emptyString;
         str_TempKey = m_cls_Xonfig.Read(nameLabel, str_TempKey);
 
@@ -177,7 +178,7 @@ void CXonfigLoader::TailRipper()
     while(index <= m_uni_TailCount)
     {
         memset(&nameLabel, 0, sizeof(nameLabel));
-        sprintf(nameLabel, "TailItem_%d", index++);
+        snprintf(nameLabel, sizeof(nameLabel), "TailItem_%d", index++);
         str_Temp = emptyString;
         str_Temp = m_cls_Xonfig.Read(nameLabel, str_Temp);
         m_vec_str_Tail.push_back(str_Temp);
@@ -198,7 +199,7 @@ void CXonfigLoader::CAFRipper()
     while(index <= m_uni_CAFCount)
     {
         memset(&nameLabel, 0, sizeof(nameLabel));
-        sprintf(nameLabel, "CAFItem_%d", index++);
+        snprintf(nameLabel, sizeof(nameLabel), "CAFItem_%d", index++);
         str_Temp = emptyString;
         str_Temp = m_cls_Xonfig.Read(nameLabel, str_Temp);
         m_vec_str_CAF.push_back(str_Temp);
@@ -218,7 +219,7 @@ void CXonfigLoader::RoomRipper()
     while(index <= m_uni_RoomCount)
     {
         memset(&nameLabel, 0, sizeof(nameLabel));
-        sprintf(nameLabel, "RoomItem_%d", index++);
+        snprintf(nameLabel, sizeof(nameLabel), "RoomItem_%d", index++);
         str_Temp = emptyString;
         str_Temp = m_cls_Xonfig.Read(nameLabel, str_Temp);
         m_vec_str_Room.push_back(str_Temp);
@@ -239,12 +240,12 @@ void CXonfigLoader::SubMonthRipper()
     while( index <= m_uni_SubMonthCount )
     {
         memset(&nameLabel, 0, sizeof(nameLabel));
-        sprintf(nameLabel, "SubMonthCMD_%d", index);
+        snprintf(nameLabel, sizeof(nameLabel), "SubMonthCMD_%d", index);
         str_TempCMD = emptyString;
         str_TempCMD = m_cls_Xonfig.Read(nameLabel, str_TempCMD);
 
         memset(&nameLabel, 0, sizeof(nameLabel));
-        sprintf(nameLabel, "SubMonthKey_%d", index);
+        snprintf(nameLabel, sizeof(nameLabel), "SubMonthKey_%d", index);
         str_TempKey = emptyString;
         str_TempKey = m_cls_Xonfig.Read(nameLabel, str_TempKey);
 
@@ -268,7 +269,7 @@ void CXonfigLoader::FileRipper()
     while(index <= m_uni_FileCount)
     {
         memset(&nameLabel, 0, sizeof(nameLabel));
-        sprintf(nameLabel, "File_%d", index);
+        snprintf(nameLabel, sizeof(nameLabel), "File_%d", index);
         str_Temp = emptyString;
         str_Temp = m_cls_Xonfig.Read(nameLabel, str_Temp);
         m_vec_str_File.push_back(str_Temp);
@@ -290,7 +291,7 @@ void CXonfigLoader::BakupPathRipper()
     while(index <= m_uni_BakupPathCount)
     {
         memset(&nameLabel, 0, sizeof(nameLabel));
-        sprintf(nameLabel, "BakupPath_%d", index);
+        snprintf(nameLabel, sizeof(nameLabel), "BakupPath_%d", index);
         str_Temp = emptyString;
         str_Temp = m_cls_Xonfig.Read(nameLabel, str_Temp);
         m_vec_str_BakupPath.push_back(str_Temp);
